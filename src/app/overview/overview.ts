@@ -18,6 +18,7 @@ template: `
       <h2>
       {{item.name}} - {{item.type}} - {{item.color}} - {{item.size}} - {{item.price | currency:'EUR'}}
     </h2>
+    <a [routerLink]="[/'details', clothingData.id]"></a>
     </div>
   }
   <button type="button" routerLink="/">Ga terug naar Home</button>

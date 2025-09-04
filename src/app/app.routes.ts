@@ -5,4 +5,5 @@ import { Overview } from './overview/overview';
 export const routes: Routes = [
   { path: '', component: Home },
   { path: 'overview', component: Overview }
+  { path: 'details/:id', loadComponent: () => import('./details/details').then(m => m.Details) }
 ];
