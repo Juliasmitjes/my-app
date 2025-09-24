@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { Home } from '../app/pages/home/home';
-import { NotFoundComponent } from './pages/not-found.component';
+import { Home } from './pages/home/home';
+import { NotFound } from './pages/not-found/not-found';
 
 export const routes: Routes = [
   { path: '', component: Home },
-  { path: '**', component: NotFoundComponent } // catch-all
+  { path: '**', component: NotFound } // catch-all
 ];
