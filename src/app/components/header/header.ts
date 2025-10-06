@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule} from 'lucide-angular';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-header',
@@ -37,6 +37,4 @@ export class Header {
   { label: 'Galerij', id: 'gallery' },
   { label: 'Over mij', id: 'about' },
   { label: 'Contact', id: 'contact' },
-]
-
-}
+]}
