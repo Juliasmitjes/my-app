@@ -1,3 +1,51 @@
-<p class="text-2xl font-bold mb-4" >home works! joehoee</p>
+<!-- stappen --> 
+ <app-progress [currentStep]="currentStep" [steps]="steps"> </app-progress>
 
-<button type="button" routerLink="/overview">Ga naar Overview</button>
+ <!-- stap 1 layout --> 
+  <div [ngSwitch]="currentStep" class="mb-8"> 
+    <ng-container *ngSwitchCase="0"> 
+      <app-layout-step [builderState]="builderState" (update)="updateState($event)"> 
+      </app-layout-step> 
+    </ng-container> 
+
+<!-- stap 2 kleur --> 
+  <ng-container *ngSwitchCase="1"> 
+    <app-color-step [builderState]="builderState" [themes]="colorThemes" (update)="updateState($event)"> 
+      </app-color-step> 
+    </ng-container>
+
+<!-- stap 3 lettertype --> 
+  <ng-container *ngSwitchCase="2"> 
+    <app-font-step [builderState]="builderState" [fonts]="fonts" (update)="updateState($event)"> 
+    </app-font-step> 
+  </ng-container>
+
+<!-- stap 4 navigatie -->
+  <ng-container *ngSwitchCase="3"> 
+    <app-navigation-step [builderState]="builderState" (update)="updateState($event)"> 
+    </app-navigation-step> 
+  </ng-container>
+
+<!-- stap 5 content -->
+  <ng-container *ngSwitchCase="4"> 
+    <app-content-step [builderState]="builderState" (update)="updateState($event)"> 
+    </app-content-step> 
+  </ng-container>
+
+<!-- stap 6 preview --> 
+  <ng-container *ngSwitchCase="5"> 
+    <app-preview-step [builderState]="builderState"> 
+    </app-preview-step>
+  </ng-container>
+</div>
+
+<!-- navigatie --> 
+ <div class="flex justify-between"> 
+  <button class="btn btn-outline" (click)="prevStep()" [disabled]="currentStep === 0"> 
+    Previous 
+  </button>
+
+  <button class="btn btn-primary" (click)="nextStep()" [disabled]="currentStep === steps.length - 1"> {{ currentStep === steps.length - 2 ? 'Review' : 'Next' }} 
+  </button> 
+</div>
+
