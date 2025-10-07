@@ -1,1 +1,12 @@
-<p>content-step works!</p>
+<div class="grid grid-cols-2 gap-4">
+  @for(page of ['home', 'about', 'services', 'contact', 'blog', 'portfolio']; track page){
+    <button
+    (click)="onSelectPage(page)"
+    class="px-4 py-2 rounded border"
+    [class.bg-blue-500]="builderState.pages.includes(page)"
+    [class.text-white]="builderState.pages.includes(page)"
+    [class.opacity-50]="page === 'home'"
+    [disabled]="page === 'home'">
+    {{ page | titlecase }}
+  </button>}
+</div>
