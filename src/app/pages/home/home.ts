@@ -6,21 +6,13 @@ import { FontStep } from '../../components/font-step/font-step';
 import { NavigationStep } from '../../components/navigation-step/navigation-step';
 import { ContentStep } from '../../components/content-step/content-step';
 import { PreviewStep } from '../../components/preview-step/preview-step';
-
-interface BuilderState {
-layout: 'single' | 'two-column' | 'grid' | null;
-colorTheme: 'warm' | 'light' | 'dark' | 'cool' | null;
-font: 'modern-inter' | 'modern-roboto' | 'serif-merriweather' | 'serif-playfair' | 'display-montserrat' | 'display-oswald' | null;
-logo: string;
-navigation: 'top' | 'sidebar';
-headerStyle: 'fixed' | 'scrolling';
-pages: string[];
-}
+import { BuilderState } from '../../types/builder-state';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [Progress,
+  imports: [
+    Progress,
     LayoutStep,
     ColorStep,
     FontStep,
