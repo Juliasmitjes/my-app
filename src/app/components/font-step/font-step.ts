@@ -9,6 +9,8 @@ import { BuilderState } from '../../types/builder-state';
   templateUrl: './font-step.html',
   styleUrl: './font-step.css'
 })
+
+
 export class FontStep {
   @Input() builderState!: BuilderState;
   @Input() fonts: any[] = []; 
