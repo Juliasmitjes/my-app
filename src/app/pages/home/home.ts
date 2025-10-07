@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 
 interface BuilderState {
 layout: 'single' | 'two-column' | 'grid' | null;
@@ -14,7 +13,6 @@ pages: string[];
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
@@ -32,7 +30,7 @@ colorThemes = [
 
 fontOptions = [
 { id: 'modern-inter', category: 'Modern Sans', name: 'Inter', preview: 'Clean and modern typography' },
-{ id: 'modern-roboto', category: 'Modern Sans', name: 'Roboto', preview: 'Google's signature font' },
+{ id: 'modern-roboto', category: 'Modern Sans', name: 'Roboto', preview: 'Google signature font' },
 { id: 'serif-merriweather', category: 'Classic Serif', name: 'Merriweather', preview: 'Perfect for reading' },
 { id: 'serif-playfair', category: 'Classic Serif', name: 'Playfair Display', preview: 'Elegant and sophisticated' },
 { id: 'display-montserrat', category: 'Display', name: 'Montserrat', preview: 'Bold and impactful' },
@@ -50,11 +48,7 @@ pages: ['home']
 };
 
 
-
-// <!-- vanaf hier checken -->
-
-
-updateState(updates: Partial) {
+updateState(updates: Partial<BuilderState>) {
 this.builderState = { ...this.builderState, ...updates };
 }
 
