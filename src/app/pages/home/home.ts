@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { Progress } from '../../components/progress/progress';
-import { LayoutStep } from 'src/app/components/layout-step/layout-step';
-import { ColorStep } from 'src/app/components/color-step/color-step';
-import { FontStep } from 'src/app/components/font-step/font-step';
-import { NavigationStep } from 'src/app/components/navigation-step/navigation-step';
-import { ContentStep } from 'src/app/components/content-step/content-step';
-import { PreviewStep } from 'src/app/components/preview-step/preview-step';
+import { LayoutStep } from '../../components/layout-step/layout-step';
+import { ColorStep } from '../../components/color-step/color-step';
+import { FontStep } from '../../components/font-step/font-step';
+import { NavigationStep } from '../../components/navigation-step/navigation-step';
+import { ContentStep } from '../../components/content-step/content-step';
+import { PreviewStep } from '../../components/preview-step/preview-step';
 
 interface BuilderState {
 layout: 'single' | 'two-column' | 'grid' | null;
