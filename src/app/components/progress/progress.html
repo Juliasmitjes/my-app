@@ -1,0 +1,31 @@
+<div class="flex items-center justify-center flex-wrap gap-6 mb-8">
+  <ng-container *ngFor="let step of steps; let i = index">
+    <div class="flex items-center">
+      <!-- Cirkeltje -->
+      <div
+        class="flex items-center justify-center w-10 h-10 rounded-full font-semibold text-sm transition-all duration-300"
+        [ngClass]="{
+          'bg-blue-600 text-white scale-110 shadow-md': i === currentStep,
+          'bg-green-500 text-white': i < currentStep,
+          'bg-gray-200 text-gray-600': i > currentStep
+        }"
+      >
+        {{ i + 1 }}
+      </div>
+      <!-- Label -->
+      <div class="ml-2 text-sm font-medium text-gray-700">
+        {{ step }}
+      </div>
+
+      <!-- Lijntje tussen stappen -->
+      <div
+        *ngIf="i < steps.length - 1"
+        class="w-12 h-0.5 mx-2 rounded transition-all duration-300"
+        [ngClass]="{
+          'bg-green-500': i < currentStep - 1,
+          'bg-gray-300': i >= currentStep - 1
+        }"
+      ></div>
+    </div>
+  </ng-container>
+</div>
