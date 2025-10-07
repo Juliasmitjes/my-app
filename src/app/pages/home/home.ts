@@ -1,4 +1,11 @@
 import { Component } from '@angular/core';
+import { Progress } from '../../components/progress/progress';
+import { LayoutStep } from 'src/app/components/layout-step/layout-step';
+import { ColorStep } from 'src/app/components/color-step/color-step';
+import { FontStep } from 'src/app/components/font-step/font-step';
+import { NavigationStep } from 'src/app/components/navigation-step/navigation-step';
+import { ContentStep } from 'src/app/components/content-step/content-step';
+import { PreviewStep } from 'src/app/components/preview-step/preview-step';
 
 interface BuilderState {
 layout: 'single' | 'two-column' | 'grid' | null;
@@ -13,6 +20,13 @@ pages: string[];
 @Component({
   selector: 'app-home',
   standalone: true,
+  imports: [Progress,
+    LayoutStep,
+    ColorStep,
+    FontStep,
+    NavigationStep,
+    ContentStep,
+    PreviewStep],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
