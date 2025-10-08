@@ -1,0 +1,20 @@
+<div
+  (click)="onClick()"
+  class="p-4 rounded-xl border cursor-pointer transition-all hover:shadow-md"
+  [class.border-blue-500]="selected"
+  [class.bg-blue-50]="selected"
+>
+  <div class="flex items-center justify-between mb-3">
+    <div class="flex items-center gap-2">
+      <span *ngIf="icon" class="text-xl">{{ icon }}</span>
+      <h3 class="font-semibold">{{ title }}</h3>
+    </div>
+  </div>
+
+  <p class="text-sm text-gray-500 mb-3">{{ description }}</p>
+
+  @if (preview) {
+    <div class="border rounded-md p-2 bg-gray-100 text-center text-sm text-gray-600">
+      {{ preview }}
+    </div>}
+</div>

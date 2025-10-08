@@ -1,1 +1,30 @@
-<p>layout-step works!</p>
+<div className="space-y-6">
+  <div className="text-center mb-8">
+    <h2 className="text-2xl font-bold mb-2">Choose Your Layout</h2>
+    <p className="text-muted-foreground">Select the structure that best fits your content</p>
+  </div>
+  
+  <div className="grid md:grid-cols-3 gap-6">
+    <app-option-card
+      title="Single Column"
+      description="Simple, everything below each other"
+      [selected]="builderState.layout === 'single'"
+      (clickCard)="updateState({ layout: 'single' })"
+    ></app-option-card>
+    
+  <app-option-card
+    title="Two Columns"
+    description="Sidebar + main content area"
+    [selected]="builderState.layout === 'two-column'"
+    (clickCard)="updateState({ layout: 'two-column' })"
+  ></app-option-card>
+
+  <app-option-card
+    title="Grid Layout"
+    description="Perfect for portfolios and galleries"
+    [selected]="builderState.layout === 'grid'"
+    (clickCard)="updateState({ layout: 'grid' })"
+  ></app-option-card>
+  
+  </div>
+</div>
