@@ -1,39 +1,39 @@
  <div className="space-y-6">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold mb-2">Pages & Content</h2>
-              <p className="text-muted-foreground">Choose which pages to include (max 3 additional)</p>
-            </div>
-            
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="w-5 h-5" />
-                  Page Selection
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center space-x-2 p-3 bg-gradient-subtle rounded-lg">
-                  <CheckCircle className="w-5 h-5 text-primary" />
-                  <Label className="font-medium">Home (Always included)</Label>
-                </div>
-                
-                {['about', 'blog', 'contact'].map((page) => (
-                  <div key={page} className="flex items-center space-x-2 p-3 border rounded-lg">
-                    <Checkbox
-                      id={page}
-                      checked={builderState.pages.includes(page)}
-                      onCheckedChange={() => togglePage(page)}
-                      disabled={!builderState.pages.includes(page) && builderState.pages.length >= 4}
-                    />
-                    <Label htmlFor={page} className="capitalize font-medium">
-                      {page}
-                    </Label>
-                  </div>
-                ))}
-                
-                <p className="text-sm text-muted-foreground">
-                  {builderState.pages.length - 1}/3 additional pages selected
-                </p>
-              </CardContent>
-            </Card>
-          </div>
+  <div className="text-center mb-8">
+    <h2 className="text-2xl font-bold mb-2">Pages & Content</h2>
+    <p className="text-muted-foreground">Choose which pages to include (max 3 additional)</p>
+  </div>
+  
+  <app-card>
+    <app-card-header>
+      <app-card-title className="flex items-center gap-2">
+        <FileText className="w-5 h-5" />
+        Page Selection
+      </app-card-title>
+    </app-card-header>
+    <app-card-content className="space-y-4">
+      <div className="flex items-center space-x-2 p-3 bg-gradient-subtle rounded-lg">
+        <CheckCircle className="w-5 h-5 text-primary" />
+        <Label className="font-medium">Home (Always included)</Label>
+      </div>
+      
+      {['about', 'blog', 'contact'].map((page) => (
+        <div key={page} className="flex items-center space-x-2 p-3 border rounded-lg">
+          <Checkbox
+            id={page}
+            checked={builderState.pages.includes(page)}
+            onCheckedChange={() => togglePage(page)}
+            disabled={!builderState.pages.includes(page) && builderState.pages.length >= 4}
+          />
+          <Label htmlFor={page} className="capitalize font-medium">
+            {page}
+          </Label>
+        </div>
+      ))}
+      
+      <p className="text-sm text-muted-foreground">
+        {builderState.pages.length - 1}/3 additional pages selected
+      </p>
+    </CardContent>
+  </Card>
+</div>
