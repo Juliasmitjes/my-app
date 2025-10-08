@@ -1,11 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
+import { OptionCard } from '../ui/option-card/option-card';
 
 @Component({
   selector: 'app-font-step',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, OptionCard],
   templateUrl: './font-step.html',
   styleUrl: './font-step.css'
 })

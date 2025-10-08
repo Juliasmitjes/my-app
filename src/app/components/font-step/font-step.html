@@ -1,1 +1,19 @@
-<p>font-step works!</p>
+<div className="space-y-6">
+  <div className="text-center mb-8">
+    <h2 className="text-2xl font-bold mb-2">Choose Your Typography</h2>
+    <p className="text-muted-foreground">Select fonts that reflect your style</p>
+  </div>
+  
+  <div className="grid gap-4">
+    <div class="grid md:grid-cols-2 gap-6">
+      @for (font of fonts; track font.id) {
+        <app-option-card
+          [title]="font.name"
+          [description]="font.category + ' • ' + font.preview"
+          [selected]="builderState.font === font.id"
+          (click)="selectFont(font.id)">
+        </app-option-card>
+      }
+    </div>
+  </div>
+</div>
