@@ -17,7 +17,7 @@ export class FontStep {
   @Input() fonts: any[] = []; 
   @Output() update = new EventEmitter<Partial<BuilderState>>();
 
-  selectFont(font: 'modern-inter' | 'modern-roboto' | 'serif-merriweather' | 'serif-playfair' | 'display-montserrat' | 'display-oswald') {
-    this.update.emit({ font });
-  }
+  updateState(updates: Partial<BuilderState>) {
+  this.update.emit(updates);
+}
 }

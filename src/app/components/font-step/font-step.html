@@ -11,7 +11,7 @@
           [title]="font.name"
           [description]="font.category + ' • ' + font.preview"
           [selected]="builderState.font === font.id"
-          (click)="selectFont(font.id)">
+          (click)="updateState({ font: font.id })">
         </app-option-card>
       }
     </div>

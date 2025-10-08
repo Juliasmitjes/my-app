@@ -16,10 +16,6 @@ export class LayoutStep {
   @Input() builderState!: BuilderState;
   @Output() update = new EventEmitter<Partial<BuilderState>>();
 
-  selectLayout(layout: 'single' | 'two-column' | 'grid') {
-    this.update.emit({ layout });
-  }
-
    updateState(newState: Partial<BuilderState>) {
     this.update.emit(newState);
 }

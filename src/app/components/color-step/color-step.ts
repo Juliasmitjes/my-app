@@ -17,10 +17,6 @@ export class ColorStep {
   @Input() themes: any[] = []; 
   @Output() update = new EventEmitter<Partial<BuilderState>>();
 
-  selectColorTheme(theme: 'warm' | 'light' | 'dark' | 'cool' ) {
-    this.update.emit({ colorTheme: theme });
-  }
-
    updateState(updates: Partial<BuilderState>) {
     this.update.emit(updates);
   }
