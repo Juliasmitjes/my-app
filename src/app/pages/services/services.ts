@@ -9,7 +9,7 @@ import { PreviewStep } from '../../components/preview-step/preview-step';
 import { BuilderState } from '../../types/builder-state';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-services',
   standalone: true,
   imports: [
     Progress,
@@ -19,11 +19,11 @@ import { BuilderState } from '../../types/builder-state';
     NavigationStep,
     ContentStep,
     PreviewStep],
-  templateUrl: './home.html',
-  styleUrl: './home.css'
+  templateUrl: './services.html',
+  styleUrl: './services.css'
 })
 
-export class Home {
+export class Services {
 currentStep = 0;
 steps = ['Layout', 'Colors', 'Typography', 'Navigation', 'Content', 'Preview'];
 
