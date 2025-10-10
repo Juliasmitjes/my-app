@@ -6,6 +6,7 @@ const config: Config = {
     './app/**/*.{html,ts}',
     './components/**/*.{html,ts}',
     './pages/**/*.{html,ts}'
-  ]}
+  ]
+}
 
 export default config;

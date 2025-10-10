@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Button } from '../../components/ui/button/button';
 import { LucideAngularModule } from 'lucide-angular';
@@ -12,7 +12,12 @@ import { Services } from '../services/services';
   styleUrl: './home.css'
 })
 
-export class Home {
+export class Home implements AfterViewInit{
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  ngAfterViewInit(): void {
+    this.cdr.detectChanges();
+  }
 
   scrollToContact(): void {
     const contactSection = document.getElementById('contact');
