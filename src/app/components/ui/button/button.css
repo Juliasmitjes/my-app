@@ -1,4 +1,0 @@
-.slow-scale {
-  transition: transform 0.8s ease-in-out;
-  will-change: transform;
-}
