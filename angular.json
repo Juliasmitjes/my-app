@@ -21,7 +21,9 @@
                 "input": "public"
                },
             "src/assets"
-            ],
+            ],"polyfills": [
+              "zone.js"
+              ],
             "styles": [
               "src/styles.css"
             ],

@@ -7,8 +7,8 @@ import { LucideAngularModule, X, Menu, FileText, CircleCheck } from 'lucide-angu
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideZonelessChangeDetection(),
-    provideRouter(routes), provideClientHydration(withEventReplay()),
+    provideRouter(routes), 
+    provideClientHydration(withEventReplay()),
     importProvidersFrom(LucideAngularModule.pick({ X, Menu, FileText, CircleCheck }))
   ]
 };

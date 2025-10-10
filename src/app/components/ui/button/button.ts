@@ -14,7 +14,7 @@ function cn(...classes: (string | undefined | null | false)[]) {
 })
 export class Button {
 
-@Input() variant: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link' | 'hero' | 'outline-hero' = 'default';
+  @Input() variant: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link' | 'hero' | 'outline-hero' = 'default';
   @Input() size: 'default' | 'sm' | 'lg' | 'icon' = 'default';
   @Input() disabled = false;
   @Input() class = ''; // extra custom classes
