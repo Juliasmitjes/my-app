@@ -10,7 +10,7 @@ function cn(...classes: (string | undefined | null | false)[]) {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './button.html',
-  styleUrl: './button.css'
+  styleUrls: ['./button.css']
 })
 export class Button {
 
@@ -32,7 +32,7 @@ export class Button {
       secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
       ghost: 'hover:bg-accent hover:text-accent-foreground',
       link: 'text-primary underline-offset-4 hover:underline',
-      hero: 'bg-accent text-accent-foreground hover:opacity-90 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300',
+      hero: 'bg-accent text-accent-foreground hover:opacity-90 shadow-lg hover:shadow-xl hover:scale-105 duration-300 ease-in-out slow-scale',
       'outline-hero': 'border-2 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 bg-transparent transition-all duration-300'
     };
 
