@@ -1,3 +1,89 @@
-<p>home worksddfsdfdss!</p>
+<section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+  <!-- Background Image + Overlay -->
+  <div
+    class="absolute inset-0 z-0 bg-cover bg-center"
+    style="background-image: url('assets/hero-bg.jpg')"
+  >
+    <div class="absolute inset-0 bg-primary/90"></div>
+  </div>
 
-<app-services></app-services>
+  <!-- Content -->
+  <div class="container relative z-10 px-4 py-20 mx-auto text-center">
+    <div class="max-w-4xl mx-auto space-y-8">
+      <h1
+        class="text-5xl md:text-6xl lg:text-7xl font-bold text-primary-foreground leading-tight"
+      >
+        Enterprise IT Solutions
+        <span
+          class="block mt-2 gradient-accent bg-clip-text text-transparent"
+        >
+          That Drive Results
+        </span>
+      </h1>
+
+      <p
+        class="text-xl md:text-2xl text-primary-foreground/90 max-w-2xl mx-auto"
+      >
+        Transform your business with cutting-edge technology solutions. Expert
+        IT services tailored to your unique needs.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div
+        class="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4"
+      >
+        <app-button
+          variant="hero"
+          size="lg"
+          class="w-full sm:w-auto"
+          (click)="scrollToContact()"
+        >
+          Get Started
+          <lucide-icon name="arrow-right" class="ml-2 h-5 w-5"></lucide-icon>
+        </app-button>
+
+        <app-button
+          variant="outline-hero"
+          size="lg"
+          class="w-full sm:w-auto"
+          (click)="scrollToServices()"
+        >
+          Our Services
+        </app-button>
+      </div>
+
+      <!-- Trust Indicators -->
+      <div
+        class="pt-12 grid grid-cols-3 gap-8 max-w-3xl mx-auto border-t border-primary-foreground/20 mt-12"
+      >
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-bold text-accent">500+</div>
+          <div class="text-sm text-primary-foreground/80 mt-1">
+            Projects Completed
+          </div>
+        </div>
+
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-bold text-accent">98%</div>
+          <div class="text-sm text-primary-foreground/80 mt-1">
+            Client Satisfaction
+          </div>
+        </div>
+
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-bold text-accent">24/7</div>
+          <div class="text-sm text-primary-foreground/80 mt-1">
+            Support Available
+          </div>
+        </div>
+      </div>
+
+      <app-services id="services"></app-services>
+    </div>
+  </div>
+</section>
+
+
+
+
+
