@@ -1,4 +1,45 @@
-<section class="py-16 bg-secondary">
+<section class=" bg-secondary min-h-[90vh]">
+
+<header class=" bg-background/80 backdrop-blur-sm sticky top-0 z-50">
+  <div class="container mx-auto px-4 py-4">
+    <div class="flex items-center justify-between">
+      
+      <!-- Logo links -->
+      <div class="flex items-center gap-2">
+        <div class="w-9 h-9 flex items-center justify-center bg-gradient-to-br from-primary to-accent rounded-lg shadow-sm">
+          <span class="text-white text-lg font-bold">B</span>
+        </div>
+        <span class="text-lg font-semibold text-foreground">BuildBuddy</span>
+      </div>
+
+      <!-- Stappenteller in het midden -->
+      <div class="flex flex-col items-center justify-center text-center">
+        <div class="text-sm font-semibold text-foreground">
+          Stap {{ currentStep + 1 }} van {{ steps.length }}
+        </div>
+        <div class="text-xs text-muted-foreground">
+          {{ currentStep < steps.length ? (steps[currentStep] | titlecase) : 'Voltooid' }}
+        </div>
+        <!-- Progress bar -->
+        <div class="w-40 h-1 mt-2 bg-border rounded-full overflow-hidden">
+          <div
+            class="h-full bg-accent transition-all duration-500"
+            [style.width.%]="((currentStep + 1) / steps.length) * 100"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Optionele actie rechts -->
+      <div class="hidden sm:flex items-center gap-3">
+        <button class="px-3 py-2 text-sm font-medium rounded-md border border-border hover:bg-accent/10 transition cursor-pointer">
+          Voorbeeld bekijken
+        </button>
+      </div>
+
+    </div>
+  </div>
+</header>
+
 
   <!-- stappen -->
   <app-progress [currentStep]="currentStep" [steps]="steps"></app-progress>

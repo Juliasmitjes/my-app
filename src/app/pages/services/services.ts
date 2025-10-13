@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TitleCasePipe } from '@angular/common';
 import { Progress } from '../../components/progress/progress';
 import { LayoutStep } from '../../components/layout-step/layout-step';
 import { ColorStep } from '../../components/color-step/color-step';
@@ -18,7 +19,8 @@ import { BuilderState } from '../../types/builder-state';
     FontStep,
     NavigationStep,
     ContentStep,
-    PreviewStep],
+    PreviewStep,
+    TitleCasePipe],
   templateUrl: './services.html',
   styleUrl: './services.css'
 })
