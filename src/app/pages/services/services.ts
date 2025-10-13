@@ -27,7 +27,7 @@ import { BuilderState } from '../../types/builder-state';
 
 export class Services {
 currentStep = 0;
-steps = ['Layout', 'Colors', 'Typography', 'Navigation', 'Content', 'Preview'];
+steps = ['Layout', 'Kleuren', 'Lettertype', 'Navigatie', 'Content', 'Resultaat'];
 
 colorThemes = [
 { id: 'warm', name: 'Warm', colors: ['#FF6B4A', '#FF8E73', '#FFA99C'] },
