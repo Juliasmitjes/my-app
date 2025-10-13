@@ -1,65 +1,70 @@
-<!-- stappen --> 
- <app-progress [currentStep]="currentStep" [steps]="steps"> </app-progress>
+<section class="py-16 bg-secondary">
 
- <!-- stap 1 layout --> 
+  <!-- stappen -->
+  <app-progress [currentStep]="currentStep" [steps]="steps"></app-progress>
+
   <div class="mb-8">
-    @switch (currentStep){
+    @switch (currentStep) {
       @case (0) {
-        <app-layout-step 
-          [builderState]="builderState" 
-          (update)="updateState($event)"> 
-        </app-layout-step> 
+        <app-layout-step
+          [builderState]="builderState"
+          (update)="updateState($event)">
+        </app-layout-step>
       }
 
-      <!-- stap 2 kleur --> 
       @case (1) {
-        <app-color-step 
-          [builderState]="builderState" 
-          [themes]="colorThemes" 
-          (update)="updateState($event)"> 
-        </app-color-step> 
+        <app-color-step
+          [builderState]="builderState"
+          [themes]="colorThemes"
+          (update)="updateState($event)">
+        </app-color-step>
       }
 
-      <!-- stap 3 lettertype --> 
       @case (2) {
-        <app-font-step 
-          [builderState]="builderState" 
-          [fonts]="fontOptions" 
-          (update)="updateState($event)"> 
-        </app-font-step> 
+        <app-font-step
+          [builderState]="builderState"
+          [fonts]="fontOptions"
+          (update)="updateState($event)">
+        </app-font-step>
       }
 
-      <!-- stap 4 navigatie -->
       @case (3) {
-        <app-navigation-step 
-          [builderState]="builderState" 
-          (update)="updateState($event)"> 
-        </app-navigation-step> 
+        <app-navigation-step
+          [builderState]="builderState"
+          (update)="updateState($event)">
+        </app-navigation-step>
       }
 
-      <!-- stap 5 content -->
       @case (4) {
-        <app-content-step 
-          [builderState]="builderState" 
-          (update)="updateState($event)"> 
-        </app-content-step> 
+        <app-content-step
+          [builderState]="builderState"
+          (update)="updateState($event)">
+        </app-content-step>
       }
 
-      <!-- stap 6 preview --> 
       @case (5) {
-        <app-preview-step 
-          [builderState]="builderState"> 
-        </app-preview-step> 
+        <app-preview-step
+          [builderState]="builderState">
+        </app-preview-step>
       }
-    } 
+    }
+  </div>
 
-<!-- navigatie --> 
- <div class="flex justify-between"> 
-  <button class="btn btn-outline" (click)="prevStep()" [disabled]="currentStep === 0"> 
-    Previous 
-  </button>
+  <!-- navigatie -->
+  <div class="flex justify-between">
+    <button
+      class="btn btn-outline"
+      (click)="prevStep()"
+      [disabled]="currentStep === 0">
+      Previous
+    </button>
 
-  <button class="btn btn-primary" (click)="nextStep()" [disabled]="currentStep === steps.length - 1"> {{ currentStep === steps.length - 2 ? 'Review' : 'Next' }} 
-  </button> 
-</div>
+    <button
+      class="btn btn-primary"
+      (click)="nextStep()"
+      [disabled]="currentStep === steps.length - 1">
+      {{ currentStep === steps.length - 2 ? 'Review' : 'Next' }}
+    </button>
+  </div>
 
+</section>
