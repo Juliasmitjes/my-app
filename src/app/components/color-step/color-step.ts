@@ -2,6 +2,16 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
 import { OptionCard } from '../ui/option-card/option-card';
+import { Check } from 'lucide-angular';
+
+export type ColorTheme = 'warm' | 'light' | 'dark' | 'cool';
+
+export interface ThemeDef {
+  id: ColorTheme;
+  name: string;
+  colors: string[];
+  gradient?: string;
+}
 
 @Component({
   selector: 'app-color-step',
@@ -10,14 +20,17 @@ import { OptionCard } from '../ui/option-card/option-card';
   templateUrl: './color-step.html',
   styleUrl: './color-step.css'
 })
-
-
 export class ColorStep {
   @Input() builderState!: BuilderState;
-  @Input() themes: any[] = []; 
+  @Input() themes: ThemeDef[] = [];
+
   @Output() update = new EventEmitter<Partial<BuilderState>>();
 
-   updateState(updates: Partial<BuilderState>) {
+  updateState(updates: Partial<BuilderState>) {
     this.update.emit(updates);
+  }
+
+  onSelectTheme(id: ColorTheme) {
+    this.updateState({ colorTheme: id });
   }
 }

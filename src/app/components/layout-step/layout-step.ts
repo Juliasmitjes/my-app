@@ -5,10 +5,10 @@ import { OptionCard } from '../ui/option-card/option-card';
 
 
 export interface LayoutOption {
-  id: BuilderState['layout']; // ← belangrijk: dezelfde union als BuilderState
+  id: string;
   name: string;
   description: string;
-  icon: string;
+  icon?: string;
 }
 
 @Component({

@@ -4,21 +4,22 @@
     <p class="text-muted-foreground">Pick a color theme that matches your brand</p>
   </div>
 
-  <div class="grid md:grid-cols-2 gap-6">
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
     @for (theme of themes; track theme.id) {
       <app-option-card
-        [title]="theme.name"
-        description="Background, buttons, and accents automatically adjust"
-        [selected]="builderState.colorTheme === theme.id"
-        (clickCard)="updateState({ colorTheme: theme.id })"
+        [layout]="{ id: theme.id, name: theme.name, description: 'Background, buttons, and accents automatically adjust', icon: undefined }"
+        [selected]="builderState?.colorTheme === theme.id"
+        (select)="onSelectTheme(theme.id)"
+        class="p-0"
       >
         <div class="flex space-x-1 p-3" preview>
           @for (color of theme.colors; track $index) {
-            <div
-              class="w-full h-8 rounded"
-              [style.background-color]="color"
-            ></div>
+            <div class="w-full h-8 rounded" [style.background-color]="color"></div>
           }
+        </div>
+
+        <div class="p-4 text-center">
+          <p class="font-semibold">{{ theme.name }}</p>
         </div>
       </app-option-card>
     }
