@@ -2,9 +2,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
 import { OptionCard } from '../ui/option-card/option-card';
-import { ChangeDetectionStrategy } from '@angular/core';
-
-
 
 export interface LayoutOption {
   id: string;
@@ -19,7 +16,6 @@ export interface LayoutOption {
   imports: [CommonModule, OptionCard],
   templateUrl: './layout-step.html',
   styleUrl: './layout-step.css',
-  changeDetection: ChangeDetectionStrategy.Default,
 })
 
 
