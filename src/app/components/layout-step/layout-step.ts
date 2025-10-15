@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
 import { OptionCard } from '../ui/option-card/option-card';
 
+
 export interface LayoutOption {
-  id: string;
+  id: BuilderState['layout']; // ← belangrijk: dezelfde union als BuilderState
   name: string;
   description: string;
   icon: string;
@@ -19,28 +20,30 @@ export interface LayoutOption {
 })
 export class LayoutStep implements OnChanges {
   @Input() builderState!: BuilderState;
-  @Input() selectedLayout: 'single' | 'two-column' | 'grid' | null = null;
-
+  @Input() selectedLayout: BuilderState['layout'] = null;
 
   @Output() update = new EventEmitter<Partial<BuilderState>>();
-  @Output() selectLayout = new EventEmitter<string>();
+  @Output() selectLayout = new EventEmitter<BuilderState['layout']>();
 
   layouts: LayoutOption[] = [
     { id: 'single', name: 'Single Column', description: 'Simpel, inhoud verticaal gecentreerd', icon: 'layers' },
-    { id: 'two-column', name: 'Two Columns', description: 'Zijbar met hoofdcontent', icon: 'columns' },
+    { id: 'two-column', name: 'Two Columns', description: 'Zijbar met hoofdcontent', icon: 'columns2' },
     { id: 'grid', name: 'Grid', description: 'Fotos, projecten, overzicht', icon: 'layout-grid' },
   ];
 
+ ngOnChanges(changes: SimpleChanges) {
+  if (changes['selectedLayout']) {
+  }
+}
 
-  // Sync when parent changes selectedLayout
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['selectedLayout']) {
-      // eventueel extra werk wanneer selection van parent verandert
-    }
+ trackById(index: number, item: LayoutOption) {
+    return item.id;
   }
 
-  // user clicked an option
-  onSelect(id: string) {
-    this.selectLayout.emit(id);          // parent bewaart keuze
+
+  onSelect(id: BuilderState['layout']) {
+    this.selectLayout.emit(id);
+    this.update.emit({ layout: id });
+    this.selectedLayout = id; 
   }
 }

@@ -1,24 +1,32 @@
-<div
-  class="p-6 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col items-center text-center space-y-3 hover:shadow-md"
-  [class.ring-2]="selected"
-  [class.ring-primary]="selected"
-  [class.bg-accent]="selected"
-  [class.border-gray-200]="!selected"
-  (click)="onClick()"
->
+@if (layout) {
   <div
-    class="w-16 h-16 rounded-xl flex items-center justify-center transition-colors"
-    [class.bg-primary]="selected"
-    [class.text-primary-foreground]="selected"
-    [class.bg-secondary]="!selected"
+    class="p-6 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col items-center text-center space-y-3 hover:shadow-md"
+    [class.ring-2]="selected"
+    [class.ring-primary]="selected"
+    [class.bg-accent]="selected"
+    [class.border-gray-200]="!selected"
+    (click)="onClick()"
   >
-    <lucide-icon [name]="layout.icon" class="w-8 h-8"></lucide-icon>
-  </div>
+    <div
+      class="w-16 h-16 rounded-xl flex items-center justify-center transition-colors"
+      [class.bg-primary]="selected"
+      [class.text-primary-foreground]="selected"
+      [class.bg-secondary]="!selected"
+    >
+      @if (layout.icon) {
+        <lucide-icon [name]="layout.icon" class="w-8 h-8"></lucide-icon>
+      } @else {
+        <div class="w-8 h-8 bg-gray-200 rounded flex items-center justify-center text-xs">SVG</div>
+      }
+    </div>
 
-  <div>
-    <h3 class="font-semibold text-lg">{{ layout.name }}</h3>
-    <p class="text-sm text-muted-foreground mt-1">
-      {{ layout.description }}
-    </p>
+    <div>
+      <h3 class="font-semibold text-lg">{{ layout.name }}</h3>
+      <p class="text-sm text-muted-foreground mt-1" [class.opacity-60]="!selected">
+        {{ layout.description }}
+      </p>
+    </div>
   </div>
-</div>
+} @else {
+  <div class="p-6 rounded-2xl border opacity-0 pointer-events-none"></div>
+}

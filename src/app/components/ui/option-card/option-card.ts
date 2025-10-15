@@ -13,6 +13,7 @@ import { LayoutOption } from '../../layout-step/layout-step';
   styleUrl: './option-card.css',
   changeDetection: ChangeDetectionStrategy.Default,
 })
+
 export class OptionCard {
   @Input() layout!: LayoutOption;
   @Input() icon?: string; // later een component of SVG gebruiken!! nu string voor gemak

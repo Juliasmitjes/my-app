@@ -3,7 +3,7 @@
 <header class=" bg-background/80 backdrop-blur-sm sticky top-0 z-50">
   <div class="container mx-auto px-4 py-4">
     <div class="flex items-center justify-between">
-      
+
       <!-- Logo links -->
       <div class="flex items-center gap-2">
         <div class="w-9 h-9 flex items-center justify-center bg-gradient-to-br from-primary to-accent rounded-lg shadow-sm">
@@ -41,74 +41,71 @@
 </header>
 
   <!-- stappen -->
-   <div class="mt-8 mx-20">
+  <div class="mt-8 mx-20">
     <app-progress [currentStep]="currentStep()" [steps]="steps"></app-progress>
 
-  <div class="mb-8 mt-5 bg-card rounded-xl shadow-lg p-8 min-h-[500px]">
-    @switch (currentStep()) {
-      @case (0) {
-        <app-layout-step
-          [builderState]="builderState()"
-          [selectedLayout]="builderState().layout"
-          (selectLayout)="updateState({ layout: $event })"
-          (update)="updateState($event)">
-        </app-layout-step>
+    <div class="mb-8 mt-5 bg-card rounded-xl shadow-lg p-8 min-h-[500px]">
+
+      @switch (currentStep()) {
+        @case (0) {
+          <app-layout-step
+            [builderState]="builderState()"
+            [selectedLayout]="builderState().layout"
+            (selectLayout)="updateState({ layout: $event })"
+            (update)="updateState($event)">
+          </app-layout-step>
+        }
+        @case (1) {
+          <app-color-step
+            [builderState]="builderState()"
+            [themes]="colorThemes()"
+            (update)="updateState($event)">
+          </app-color-step>
+        }
+        @case (2) {
+          <app-font-step
+            [builderState]="builderState()"
+            [fonts]="fontOptions()"
+            (update)="updateState($event)">
+          </app-font-step>
+        }
+        @case (3) {
+          <app-navigation-step
+            [builderState]="builderState()"
+            (update)="updateState($event)">
+          </app-navigation-step>
+        }
+        @case (4) {
+          <app-content-step
+            [builderState]="builderState()"
+            (update)="updateState($event)">
+          </app-content-step>
+        }
+        @case (5) {
+          <app-preview-step
+            [builderState]="builderState()">
+          </app-preview-step>
+        }
       }
 
-      @case (1) {
-        <app-color-step
-          [builderState]="builderState()"
-          [themes]="colorThemes()"
-          (update)="updateState($event)">
-        </app-color-step>
-      }
+    </div>
 
-      @case (2) {
-        <app-font-step
-          [builderState]="builderState()"
-          [fonts]="fontOptions()"
-          (update)="updateState($event)">
-        </app-font-step>
-      }
+    <!-- navigatie -->
+    <div class="flex justify-between">
+      <button
+        class="btn btn-outline"
+        (click)="prevStep()"
+        [disabled]="currentStep() === 0">
+        Previous
+      </button>
 
-      @case (3) {
-        <app-navigation-step
-          [builderState]="builderState()"
-          (update)="updateState($event)">
-        </app-navigation-step>
-      }
-
-      @case (4) {
-        <app-content-step
-          [builderState]="builderState()"
-          (update)="updateState($event)">
-        </app-content-step>
-      }
-
-      @case (5) {
-        <app-preview-step
-          [builderState]="builderState()">
-        </app-preview-step>
-      }
-    }
+      <button
+        class="btn btn-primary"
+        (click)="nextStep()"
+        [disabled]="currentStep() === steps.length - 1">
+        {{ currentStep() === steps.length - 2 ? 'Review' : 'Next' }}
+      </button>
+    </div>
   </div>
 
-  <!-- navigatie -->
-  <div class="flex justify-between">
-    <button
-      class="btn btn-outline"
-      (click)="prevStep()"
-      [disabled]="currentStep() === 0">
-      Previous
-    </button>
-
-    <button
-      class="btn btn-primary"
-      (click)="nextStep()"
-      [disabled]="currentStep() === steps.length - 1">
-      {{ currentStep() === steps.length - 2 ? 'Review' : 'Next' }}
-    </button>
-  </div>
- </div>
-  
 </section>
