@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 import { Progress } from '../../components/progress/progress';
 import { LayoutStep } from '../../components/layout-step/layout-step';
@@ -20,61 +20,60 @@ import { BuilderState } from '../../types/builder-state';
     NavigationStep,
     ContentStep,
     PreviewStep,
-    TitleCasePipe],
+    TitleCasePipe
+  ],
   templateUrl: './services.html',
   styleUrl: './services.css'
 })
-
 export class Services {
-currentStep = 0;
-steps = ['Layout', 'Kleuren', 'Lettertype', 'Navigatie', 'Content', 'Resultaat'];
+  readonly steps = ['Layout', 'Kleuren', 'Lettertype', 'Navigatie', 'Content', 'Resultaat'];
 
-colorThemes = [
-{ id: 'warm', name: 'Warm', colors: ['#FF6B4A', '#FF8E73', '#FFA99C'] },
-{ id: 'light', name: 'Light', colors: ['#E3F2FD', '#BBDEFB', '#90CAF9'] },
-{ id: 'dark', name: 'Dark', colors: ['#424242', '#616161', '#757575'] },
-{ id: 'cool', name: 'Cool', colors: ['#4FC3F7', '#29B6F6', '#03A9F4'] },
-];
+  readonly currentStep = signal(0);
+  readonly currentStepOneBased = computed(() => this.currentStep() + 1);
 
-fontOptions = [
-{ id: 'modern-inter', category: 'Modern Sans', name: 'Inter', preview: 'Clean and modern typography' },
-{ id: 'modern-roboto', category: 'Modern Sans', name: 'Roboto', preview: 'Google signature font' },
-{ id: 'serif-merriweather', category: 'Classic Serif', name: 'Merriweather', preview: 'Perfect for reading' },
-{ id: 'serif-playfair', category: 'Classic Serif', name: 'Playfair Display', preview: 'Elegant and sophisticated' },
-{ id: 'display-montserrat', category: 'Display', name: 'Montserrat', preview: 'Bold and impactful' },
-{ id: 'display-oswald', category: 'Display', name: 'Oswald', preview: 'Strong and distinctive' },
-];
+  readonly colorThemes = signal([
+    { id: 'warm', name: 'Warm', colors: ['#FF6B4A', '#FF8E73', '#FFA99C'] },
+    { id: 'light', name: 'Light', colors: ['#E3F2FD', '#BBDEFB', '#90CAF9'] },
+    { id: 'dark', name: 'Dark', colors: ['#424242', '#616161', '#757575'] },
+    { id: 'cool', name: 'Cool', colors: ['#4FC3F7', '#29B6F6', '#03A9F4'] }
+  ]);
 
-builderState: BuilderState = {
-layout: null,
-colorTheme: null,
-font: null,
-logo: '',
-navigation: 'top',
-headerStyle: 'fixed',
-pages: ['home']
-};
+  readonly fontOptions = signal([
+    { id: 'modern-inter', category: 'Modern Sans', name: 'Inter', preview: 'Clean and modern typography' },
+    { id: 'modern-roboto', category: 'Modern Sans', name: 'Roboto', preview: 'Google signature font' },
+    { id: 'serif-merriweather', category: 'Classic Serif', name: 'Merriweather', preview: 'Perfect for reading' },
+    { id: 'serif-playfair', category: 'Classic Serif', name: 'Playfair Display', preview: 'Elegant and sophisticated' },
+    { id: 'display-montserrat', category: 'Display', name: 'Montserrat', preview: 'Bold and impactful' },
+    { id: 'display-oswald', category: 'Display', name: 'Oswald', preview: 'Strong and distinctive' }
+  ]);
 
+  readonly builderState = signal<BuilderState>({
+    layout: null,
+    colorTheme: null,
+    font: null,
+    logo: '',
+    navigation: 'top',
+    headerStyle: 'fixed',
+    pages: ['home']
+  });
 
-updateState(updates: Partial<BuilderState>) {
-this.builderState = { ...this.builderState, ...updates };
-}
+  updateState(updates: Partial<BuilderState>) {
+    this.builderState.update(prev => ({ ...prev, ...updates }));
+  }
 
-nextStep() {
-if (this.currentStep < this.steps.length - 1) this.currentStep++;
-}
+  nextStep() {
+    const max = this.steps.length - 1;
+    this.currentStep.update(n => (n < max ? n + 1 : n));
+  }
 
-prevStep() {
-if (this.currentStep > 0) this.currentStep--;
-}
+  prevStep() {
+    this.currentStep.update(n => (n > 0 ? n - 1 : n));
+  }
 
-togglePage(page: string) {
-const pages = this.builderState.pages.includes(page)
-? this.builderState.pages.filter(p => p !== page)
-: [...this.builderState.pages, page];
-
-if (pages.length <= 4) {
-  this.updateState({ pages });
-}}
-
+  togglePage(page: string) {
+    this.builderState.update(prev => {
+      const pages = prev.pages.includes(page) ? prev.pages.filter(p => p !== page) : [...prev.pages, page];
+      return pages.length <= 4 ? { ...prev, pages } : prev;
+    });
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
 import { OptionCard } from '../ui/option-card/option-card';
@@ -17,40 +17,30 @@ export interface LayoutOption {
   templateUrl: './layout-step.html',
   styleUrl: './layout-step.css',
 })
-
-
-export class LayoutStep {
+export class LayoutStep implements OnChanges {
   @Input() builderState!: BuilderState;
+  @Input() selectedLayout: 'single' | 'two-column' | 'grid' | null = null;
+
+
   @Output() update = new EventEmitter<Partial<BuilderState>>();
-  @Input() selectedLayout: string | null = null;
   @Output() selectLayout = new EventEmitter<string>();
 
-   updateState(newState: Partial<BuilderState>) {
-    this.update.emit(newState);
-}
-
-layouts: LayoutOption[] = [
-    {
-      id: 'een-kolom',
-      name: 'Single Column',
-      description: 'Simpel, inhoud verticaal gecentreerd',
-      icon: 'layers',
-    },
-    {
-      id: 'twee-kolommen',
-      name: 'Two Columns',
-      description: 'Zijbar met hoofdcontent',
-      icon: 'columns',
-    },
-    {
-      id: 'grid',
-      name: 'Grid',
-      description: 'Fotos, projecten, overzicht',
-      icon: 'layout-grid',
-    },
+  layouts: LayoutOption[] = [
+    { id: 'single', name: 'Single Column', description: 'Simpel, inhoud verticaal gecentreerd', icon: 'layers' },
+    { id: 'two-column', name: 'Two Columns', description: 'Zijbar met hoofdcontent', icon: 'columns' },
+    { id: 'grid', name: 'Grid', description: 'Fotos, projecten, overzicht', icon: 'layout-grid' },
   ];
 
+
+  // Sync when parent changes selectedLayout
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['selectedLayout']) {
+      // eventueel extra werk wanneer selection van parent verandert
+    }
+  }
+
+  // user clicked an option
   onSelect(id: string) {
-    this.selectLayout.emit(id);
+    this.selectLayout.emit(id);          // parent bewaart keuze
   }
 }
