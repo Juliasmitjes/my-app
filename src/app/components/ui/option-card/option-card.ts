@@ -12,6 +12,7 @@ import { LucideAngularModule } from 'lucide-angular';
 export class OptionCard {
   @Input() icon?: string; // later een component of SVG gebruiken!! nu string voor gemak
   @Input() selected = false;
+  @Input() description?: string;
   @Output() clickCard = new EventEmitter<void>();
   @Input() layout!: { id: string; name: string; description: string; icon: string };
   @Output() select = new EventEmitter<void>();
