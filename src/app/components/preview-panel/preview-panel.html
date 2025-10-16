@@ -4,15 +4,16 @@
   <div class="backdrop" (click)="close()"></div>
 
   <aside class="panel" [ngClass]="size" role="dialog" aria-label="Live preview">
-    <header class="panel-header">
-      <div class="panel-title">
-        <span class="text-2xl font-semibold text-background leading-none tracking-tight">Voorbeeld</span>
-      </div>
-
-      <div class="panel-actions">
-        <button class="px-3 py-2 text-sm font-medium rounded-md border border-border hover:bg-accent/20 hover:text-accent transition cursor-pointer" (click)="close()">Sluiten</button>
-      </div>
-    </header>
+   <header class=" p-4 flex items-center justify-end">
+        <div class="panel-actions">
+          <button
+            class="px-3 py-2 text-sm font-medium rounded-md border border-border hover:bg-accent/20 hover:text-accent transition cursor-pointer"
+            (click)="close()"
+          >
+            Voorbeeld sluiten
+          </button>
+        </div>
+      </header>
 
     <app-preview-step
       [builderState]="builderState!"
