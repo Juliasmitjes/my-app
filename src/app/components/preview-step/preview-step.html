@@ -7,38 +7,50 @@
 
   <div class="flex-1 bg-background rounded-lg shadow-lg overflow-hidden">
     <div class="h-full flex flex-col">
-      <!-- Mini Header Preview -->
-      <div class="bg-secondary p-3 border-b border-border">
-        <div class="flex items-center justify-between">
-          <div class="font-semibold text-sm">
-            {{ logoLabel }}
-          </div>
+      <!-- Header / Sidebar: toon top-nav als niet-sidebar, anders sidebar -->
+<div *ngIf="!isSidebar" class="bg-secondary p-3 border-b border-border">
+  <div class="flex items-center justify-between">
+    <div class="font-semibold text-sm">
+      {{ logoLabel }}
+    </div>
+    <div class="flex gap-2">
+      <ng-container *ngFor="let p of pages">
+        <div class="text-xs px-2 py-1 rounded bg-background">{{ pageLabel(p) }}</div>
+      </ng-container>
+    </div>
+  </div>
+</div>
 
-          <div class="flex gap-2">
-            <ng-container *ngFor="let p of pages">
-              <div class="text-xs px-2 py-1 rounded bg-background">{{ pageLabel(p) }}</div>
-            </ng-container>
-          </div>
-        </div>
-      </div>
+<!-- Sidebar layout: plaats sidebar links en nav items verticaal -->
+<div *ngIf="isSidebar" class="h-full flex">
+  <aside class="w-44 bg-secondary p-4 border-r border-border">
+    <div class="font-semibold mb-4">{{ logoLabel }}</div>
+    <nav class="space-y-2">
+      <ng-container *ngFor="let p of pages">
+        <div class="text-sm px-3 py-2 rounded bg-background">{{ pageLabel(p) }}</div>
+      </ng-container>
+    </nav>
+  </aside>
 
-      <!-- Content Preview -->
-      <div class="flex-1 p-6 space-y-4">
-        <div class="h-4 bg-muted rounded w-3/4"></div>
-        <div class="h-4 bg-muted rounded w-1/2"></div>
+  <!-- Content area to the right of the sidebar -->
+  <div class="flex-1 p-6">
+    <!-- keep the rest of the preview content here (placeholders, grid, etc) -->
+    <div class="h-4 bg-muted rounded w-3/4 mb-3"></div>
+    <div class="h-4 bg-muted rounded w-1/2 mb-6"></div>
 
-        <div class="mt-6 grid gap-4" [style.gridTemplateColumns]="getGridColumns()">
-          <div class="h-24 bg-muted rounded"></div>
-          <!-- second column for two-column and grid -->
-            <ng-container *ngIf="builderState?.layout !== 'single'">
-              <div class="h-24 bg-muted rounded"></div>
-            </ng-container>
-          <!-- third column only for grid -->
-          <ng-container *ngIf="builderState?.layout === 'grid'">
-            <div class="h-24 bg-muted rounded"></div>
-          </ng-container>
-        </div>
-      </div>
+    <div class="mt-6 grid gap-4" [style.gridTemplateColumns]="getGridColumns()">
+      <div class="h-24 bg-muted rounded"></div>
+      <ng-container *ngIf="builderState?.layout !== 'single'">
+        <div class="h-24 bg-muted rounded"></div>
+      </ng-container>
+      <ng-container *ngIf="builderState?.layout === 'grid'">
+        <div class="h-24 bg-muted rounded"></div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+
     </div>
   </div>
 

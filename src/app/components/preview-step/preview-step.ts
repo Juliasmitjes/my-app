@@ -39,4 +39,13 @@ export class PreviewStep {
   get logoLabel(): string {
     return this.builderState?.logo || 'Your Site';
   }
+
+  get isSidebar(): boolean {
+  return this.builderState?.navigation === 'sidebar';
+  }
+
+  get isTopNav(): boolean {
+    return this.builderState?.navigation !== 'sidebar';
+  }
+
 }
