@@ -14,7 +14,7 @@
       <!-- Stappenteller -->
       <div class="flex flex-col items-center justify-center text-center">
         <div class="text-sm font-semibold text-foreground">
-          Stap {{ currentStepOneBased() }} van {{ steps.length }}
+          Stap {{ currentStepOneBased() }} van {{ steps.length -1 }}
         </div>
         <div class="text-xs text-muted-foreground italic">
           {{ currentStep() < steps.length ? (steps[currentStep()] | titlecase) : 'Voltooid' }}
@@ -44,13 +44,7 @@
 </header>
 
 <!-- SECTION MET DE CONTENT -->
-<section class="relative -mt-[55px] bg-gradient-to-br from-secondary via-primary/10 to-accent/20 min-h-full pb-16">
-
-  <!-- decoratieve vormen -->
-  <div class="absolute inset-0 -z-10">
-    <div class="absolute top-[-10%] left-[-10%] w-[400px] h-[400px] bg-accent/20 rounded-full blur-3xl animate-pulse"></div>
-    <div class="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/20 rounded-full blur-3xl animate-pulse delay-700"></div>
-  </div>
+<section class="relative -mt-[55px] bg-gradient-to-br from-secondary via-primary/10 to-accent/20 min-h-full  overflow-hidden pb-16">
 
   <!-- preview panel -->
   <app-preview-panel
