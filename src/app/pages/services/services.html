@@ -1,4 +1,4 @@
-<section class=" bg-secondary min-h-[90vh]">
+<section class=" bg-secondary min-h-[90vh] pb-10">
 
 <header class=" bg-background/80 backdrop-blur-sm sticky top-0 z-50">
   <div class="container mx-auto px-4 py-4">
@@ -105,19 +105,19 @@
 
     <!-- navigatie -->
     <div class="flex justify-between">
-      <button
-        class="btn btn-outline"
+      <app-button
+        variant="default"
         (click)="prevStep()"
         [disabled]="currentStep() === 0">
         Previous
-      </button>
+    </app-button>
 
-      <button
-        class="btn btn-primary"
+      <app-button
+         variant="default"
         (click)="nextStep()"
         [disabled]="currentStep() === steps.length - 1">
         {{ currentStep() === steps.length - 2 ? 'Review' : 'Next' }}
-      </button>
+      </app-button>
     </div>
   </div>
 

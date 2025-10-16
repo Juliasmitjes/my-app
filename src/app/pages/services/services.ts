@@ -9,6 +9,7 @@ import { ContentStep, PageDef } from '../../components/content-step/content-step
 import { PreviewStep } from '../../components/preview-step/preview-step';
 import { BuilderState } from '../../types/builder-state';
 import { PreviewPanel } from '../../components/preview-panel/preview-panel';
+import { Button } from '../../components/ui/button/button';
 
 @Component({
   selector: 'app-services',
@@ -22,17 +23,20 @@ import { PreviewPanel } from '../../components/preview-panel/preview-panel';
     ContentStep,
     PreviewStep,
     TitleCasePipe,
-    PreviewPanel
+    PreviewPanel,
+    Button
   ],
   templateUrl: './services.html',
   styleUrl: './services.css'
 })
+
+
 export class Services {
   readonly steps = ['Layout', 'Kleuren', 'Lettertype', 'Navigatie', 'Content', 'Resultaat'];
-
   readonly currentStep = signal(0);
   readonly currentStepOneBased = computed(() => this.currentStep() + 1);
   readonly showPreviewPanel = signal(false);
+  
 
 
   readonly colorThemes = signal([
