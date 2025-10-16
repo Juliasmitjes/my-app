@@ -1,28 +1,49 @@
 <div class="space-y-6 step-container">
   <div class="text-center mb-8">
-    <h2 class="text-2xl font-bold mb-2">Choose Your Colors</h2>
-    <p class="text-muted-foreground">Pick a color theme that matches your brand</p>
+    <h2 class="text-2xl font-bold mb-2">Kies jouw kleuren</h2>
+    <p class="text-muted-foreground">Kies een thema dat past bij jouw merk</p>
   </div>
 
-  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-    @for (theme of themes; track theme.id) {
-      <app-option-card
-        [layout]="{ id: theme.id, name: theme.name, description: 'Background, buttons, and accents automatically adjust', icon: undefined }"
-        [preview]="theme.colors"
-        [selected]="builderState.colorTheme === theme.id"
-        (select)="onSelectTheme(theme.id)"
-        class="p-0"
-      >
-        <div class="flex space-x-1 p-3" preview>
-          @for (color of theme.colors; track $index) {
-            <div class="w-full h-8 rounded" [style.background-color]="color"></div>
-          }
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+  @for (theme of themes; track theme.id) {
+    <div
+      class="relative group p-6 rounded-3xl cursor-pointer transition-all duration-300 flex flex-col items-center text-center space-y-4
+             bg-white/60 dark:bg-muted/30 backdrop-blur-sm border border-border/50
+             hover:shadow-lg hover:scale-[1.02]"
+      [class.scale-[1.02]]="builderState.colorTheme === theme.id"
+      [class.shadow-lg]="builderState.colorTheme === theme.id"
+      [class.bg-primary/5]="builderState.colorTheme === theme.id"
+      (click)="onSelectTheme(theme.id)"
+      role="button"
+      tabindex="0"
+      (keydown.enter)="onSelectTheme(theme.id)"
+      (keydown.space)="onSelectTheme(theme.id)"
+      aria-pressed="{{ builderState.colorTheme === theme.id }}"
+    >
+      <!-- subtiele header accent -->
+      <div class="w-full rounded-xl overflow-hidden shadow-sm mock-strip">
+        <div class="flex h-12">
+          <div class="flex-1" [style.background]="theme.colors[0]"></div>
+          <div class="flex-1" [style.background]="theme.colors[1]"></div>
+          <div class="flex-1" [style.background]="theme.colors[2]"></div>
         </div>
 
-        <div class="p-4 text-center">
-          <p class="font-semibold">{{ theme.name }}</p>
-        </div>
-      </app-option-card>
-    }
-  </div>
+        <!-- glossy overlay -->
+        <div class="gloss"></div>
+      </div>
+
+      <!-- titel met accent -->
+      <div class="w-full">
+        <p class="theme-title">{{ theme.name }}</p>
+      </div>
+
+      <!-- subtiele details onderaan -->
+      <div class="w-full flex justify-center gap-2 mt-1">
+        <div class="mini-dot" [style.background]="theme.colors[0]"></div>
+        <div class="mini-dot" [style.background]="theme.colors[1]"></div>
+        <div class="mini-dot rotate-mid" [style.background]="theme.colors[2]"></div>
+      </div>
+    </div>
+  }
+</div>
 </div>
