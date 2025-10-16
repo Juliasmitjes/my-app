@@ -24,7 +24,7 @@ export class PreviewPanel {
 
 
   iconName: string = 'monitor';
-  title: string = 'Live Preview';
+  title: string = 'Live voorbeeld';
 
   close() {
     this.closed.emit();
