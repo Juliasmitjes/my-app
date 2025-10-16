@@ -60,6 +60,8 @@
     --popover: 0 0% 100%;
     --popover-foreground: 220 26% 14%;
 
+    --button-extra: 200 90% 40%;
+
     --primary: 220 70% 15%;
     --primary-foreground: 0 0% 100%;
 
@@ -93,6 +95,8 @@
 
   --color-popover: hsl(var(--popover));
   --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-button-extra: hsl(var(--button-extra));
 
   --color-primary: hsl(var(--primary));
   --color-primary-foreground: hsl(var(--primary-foreground));

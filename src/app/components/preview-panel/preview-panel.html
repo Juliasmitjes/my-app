@@ -6,10 +6,11 @@
   <aside class="panel" [ngClass]="size" role="dialog" aria-label="Live preview">
     <header class="panel-header">
       <div class="panel-title">
-        <span class="ml-2">Voorbeeld</span>
+        <span class="text-2xl font-semibold text-accent/90 leading-none tracking-tight">Voorbeeld</span>
       </div>
+
       <div class="panel-actions">
-        <button class="btn" (click)="close()">Sluiten</button>
+        <app-button variant="outline" (click)="close()">Sluiten</app-button>
       </div>
     </header>
 
