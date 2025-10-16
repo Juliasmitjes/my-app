@@ -1,70 +1,78 @@
-<div className="space-y-6">
-  <div className="text-center mb-8">
-    <h2 className="text-2xl font-bold mb-2">Navigation & Header</h2>
-    <p className="text-muted-foreground">Configure your site's navigation and branding</p>
+<div class="animate-fade-in space-y-8">
+  <!-- Titel & Intro -->
+  <div class="text-center mb-8">
+    <h2 class="text-2xl font-bold mb-2">Navigation & Header</h2>
+    <p class="text-muted-foreground">Configure your site's navigation and branding</p>
   </div>
-  
-  <app-card>
-    <app-card-header>
-      <app-card-title class="flex items-center gap-2">
-        <!-- hier evt een iconcomponent plaatsen -->
-        <span>Logo & Navigation</span>
-      </app-card-title>
-    </app-card-header>
 
-   <app-card-content class="space-y-6">
-      <!-- LOGO INPUT -->
-      <div>
-        <label for="logo" class="font-semibold block mb-1">Logo Text</label>
-        <input
-          id="logo"
-          type="text"
-          placeholder="Enter your business name or logo text"
-          class="mt-2 border rounded p-2 w-full"
-          [value]="builderState.logo"
-          (input)="updateState({ logo: $any($event.target).value })"
-        />
-      </div>
+  <!-- LOGO INPUT -->
+  <div>
+    <label for="logo" class="text-base font-semibold mb-2 block">
+      Site Name / Logo
+    </label>
+    <input
+      id="logo"
+      type="text"
+      class="max-w-md w-full border rounded-lg p-2 focus:ring-2 focus:ring-primary outline-none transition"
+      placeholder="Enter your site name..."
+      [value]="builderState.logo || ''"
+      (input)="onLogoChange($event)"
+    />
+  </div>
 
-      <!-- NAVIGATION STYLE -->
-      <div class="space-y-4">
-        <label class="font-semibold">Navigation Style</label>
-        <div class="grid md:grid-cols-2 gap-4">
-          <app-option-card
-            title="Top Navigation"
-            description="Classic horizontal menu"
-            [selected]="builderState.navigation === 'top'"
-            (click)="updateState({ navigation: 'top' })"
-          ></app-option-card>
+  <!-- NAVIGATION STYLE -->
+  <div>
+    <label class="text-base font-semibold mb-3 block">Navigation Style</label>
 
-          <app-option-card
-            title="Sidebar Navigation"
-            description="Vertical side menu"
-            [selected]="builderState.navigation === 'sidebar'"
-            (click)="updateState({ navigation: 'sidebar' })"
-          ></app-option-card>
-        </div>
-      </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl">
+      <app-option-card
+        [layout]="{
+          id: 'top',
+          name: 'Top Navigation',
+          description: 'Standard horizontal menu',
+          icon: 'menu'
+        }"
+        [selected]="builderState.navigation === 'top'"
+        (select)="updateState({ navigation: 'top' })">
+      </app-option-card>
 
-      <!-- HEADER STYLE -->
-      <div class="space-y-4">
-        <label class="font-semibold">Header Style</label>
-        <div class="grid md:grid-cols-2 gap-4">
-          <app-option-card
-            title="Fixed Header"
-            description="Stays visible when scrolling"
-            [selected]="builderState.headerStyle === 'fixed'"
-            (click)="updateState({ headerStyle: 'fixed' })"
-          ></app-option-card>
+      <app-option-card
+        [layout]="{
+          id: 'sidebar',
+          name: 'Sidebar Navigation',
+          description: 'Vertical side menu',
+          icon: 'sidebar'
+        }"
+        [selected]="builderState.navigation === 'sidebar'"
+        (select)="updateState({ navigation: 'sidebar' })">
+      </app-option-card>
+    </div>
+  </div>
 
-          <app-option-card
-            title="Scrolling Header"
-            description="Scrolls with the page"
-            [selected]="builderState.headerStyle === 'scrolling'"
-            (click)="updateState({ headerStyle: 'scrolling' })"
-          ></app-option-card>
-        </div>
-      </div>
-    </app-card-content>
-  </app-card>
+  <!-- HEADER STYLE -->
+  <div>
+    <label class="text-base font-semibold mb-3 block">Header Style</label>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl">
+      <app-option-card
+        [layout]="{
+          id: 'fixed',
+          name: 'Fixed Header',
+          description: 'Stays at top while scrolling'
+        }"
+        [selected]="builderState.headerStyle === 'fixed'"
+        (select)="updateState({ headerStyle: 'fixed' })">
+      </app-option-card>
+
+      <app-option-card
+        [layout]="{
+          id: 'scrolling',
+          name: 'Scrolling Header',
+          description: 'Scrolls with page content'
+        }"
+        [selected]="builderState.headerStyle === 'scrolling'"
+        (select)="updateState({ headerStyle: 'scrolling' })">
+      </app-option-card>
+    </div>
+  </div>
 </div>
