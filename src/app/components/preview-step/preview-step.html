@@ -1,1 +1,52 @@
-<p>preview-step works!</p>
+<!-- preview-step.html -->
+<div class="h-full bg-muted rounded-lg p-6 flex flex-col">
+  <div class="flex items-center gap-2 mb-4">
+    <lucide-icon name="monitor" class="w-5 h-5 text-muted-foreground"></lucide-icon>
+    <h3 class="font-semibold text-sm text-muted-foreground">Live Preview</h3>
+  </div>
+
+  <div class="flex-1 bg-background rounded-lg shadow-lg overflow-hidden">
+    <div class="h-full flex flex-col">
+      <!-- Mini Header Preview -->
+      <div class="bg-secondary p-3 border-b border-border">
+        <div class="flex items-center justify-between">
+          <div class="font-semibold text-sm">
+            {{ logoLabel }}
+          </div>
+
+          <div class="flex gap-2">
+            <ng-container *ngFor="let p of pages">
+              <div class="text-xs px-2 py-1 rounded bg-background">{{ pageLabel(p) }}</div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Preview -->
+      <div class="flex-1 p-6 space-y-4">
+        <div class="h-4 bg-muted rounded w-3/4"></div>
+        <div class="h-4 bg-muted rounded w-1/2"></div>
+
+        <div class="mt-6 grid gap-4" [style.gridTemplateColumns]="getGridColumns()">
+          <div class="h-24 bg-muted rounded"></div>
+          <!-- second column for two-column and grid -->
+            <ng-container *ngIf="builderState?.layout !== 'single'">
+              <div class="h-24 bg-muted rounded"></div>
+            </ng-container>
+          <!-- third column only for grid -->
+          <ng-container *ngIf="builderState?.layout === 'grid'">
+            <div class="h-24 bg-muted rounded"></div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4 text-xs text-muted-foreground space-y-1">
+    <div>Layout: <span class="font-medium">{{ builderState.layout }}</span></div>
+    <div>Theme: <span class="font-medium">{{ builderState.colorTheme }}</span></div>
+    <div>Font: <span class="font-medium">{{ builderState.fontVariant }}</span></div>
+    <div>Navigation: <span class="font-medium">{{ builderState.navigation }}</span></div>
+    <div>Pages: <span class="font-medium">{{ pages.join(', ') }}</span></div>
+  </div>
+</div>
