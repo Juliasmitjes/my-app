@@ -29,7 +29,7 @@ export class ColorStep {
     this.update.emit(updates);
   }
 
-  onSelectTheme(id: ColorTheme) {
-    this.updateState({ colorTheme: id });
-  }
+onSelectTheme(id: string) {
+  this.update.emit({ colorTheme: id as BuilderState['colorTheme'] });
+}
 }

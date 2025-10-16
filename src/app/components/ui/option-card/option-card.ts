@@ -15,10 +15,9 @@ import { LayoutOption } from '../../layout-step/layout-step';
 })
 
 export class OptionCard {
-  @Input() layout!: LayoutOption;
-  @Input() icon?: string; // later een component of SVG gebruiken!! nu string voor gemak
+  @Input() layout?: { id: string; name: string; description?: string; icon?: string };
+  @Input() preview?: string[]; 
   @Input() selected = false;
-  @Input() description?: string;
   @Output() select = new EventEmitter<void>();
 
   onClick() {
