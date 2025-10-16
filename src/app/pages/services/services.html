@@ -39,19 +39,19 @@
           >
             Voorbeeld bekijken
           </button>
-
-          <!-- preview panel -->
-          <app-preview-panel
-            [open]="showPreviewPanel()"
-            [builderState]="builderState()"
-            size="medium"
-            (closed)="closePreviewPanel()"
-          ></app-preview-panel>
         </div>
 
     </div>
   </div>
 </header>
+
+  <!-- preview panel -->
+  <app-preview-panel
+    [open]="showPreviewPanel()"
+    [builderState]="builderState()"
+    size="medium"
+    (closed)="closePreviewPanel()"
+  ></app-preview-panel>
 
   <!-- stappen -->
   <div class="mt-8 mx-20">
