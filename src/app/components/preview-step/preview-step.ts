@@ -11,41 +11,30 @@ import { BuilderState } from '../../types/builder-state';
   templateUrl: './preview-step.html',
   styleUrl: './preview-step.css'
 })
+
+
 export class PreviewStep {
   @Input() builderState!: BuilderState;
 
-  // readable labels for pages in header
-  pageLabel(pageId: string) {
-    return pageId.charAt(0).toUpperCase() + pageId.slice(1);
-  }
-
-  // compute grid template columns based on layout
-  getGridColumns(): string {
-    switch (this.builderState?.layout) {
-      case 'grid':
-        return 'repeat(3, 1fr)';
-      case 'two-column':
-        return 'repeat(2, 1fr)';
-      default:
-        return '1fr';
-    }
-  }
-
-  // defensive helpers for template
-  get pages(): string[] {
-    return this.builderState?.pages ?? ['home'];
-  }
-
-  get logoLabel(): string {
-    return this.builderState?.logo || 'Your Site';
-  }
-
   get isSidebar(): boolean {
   return this.builderState?.navigation === 'sidebar';
+}
+get pages(): string[] {
+  return this.builderState?.pages ?? ['home'];
+}
+get logoLabel(): string {
+  return this.builderState?.logo || 'Your Site';
+}
+getGridColumns(): string {
+  switch (this.builderState?.layout) {
+    case 'grid': return 'repeat(3, 1fr)';
+    case 'two-column': return 'repeat(2, 1fr)';
+    default: return '1fr';
   }
+}
+pageLabel(p: string) {
+  return p.charAt(0).toUpperCase() + p.slice(1);
+}
 
-  get isTopNav(): boolean {
-    return this.builderState?.navigation !== 'sidebar';
-  }
 
 }
