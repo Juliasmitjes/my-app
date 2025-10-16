@@ -30,7 +30,7 @@
           id: 'top',
           name: 'Top Navigation',
           description: 'Standard horizontal menu',
-          icon: 'menu'
+          icon: 'PanelTop'
         }"
         [selected]="builderState.navigation === 'top'"
         (select)="updateState({ navigation: 'top' })">
@@ -41,7 +41,7 @@
           id: 'sidebar',
           name: 'Sidebar Navigation',
           description: 'Vertical side menu',
-          icon: 'sidebar'
+          icon: 'PanelLeft'
         }"
         [selected]="builderState.navigation === 'sidebar'"
         (select)="updateState({ navigation: 'sidebar' })">
