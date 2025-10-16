@@ -1,49 +1,56 @@
-<section class=" bg-secondary min-h-[90vh] pb-10">
-
-<header class=" bg-background/80 backdrop-blur-sm sticky top-0 z-50">
-  <div class="container mx-auto px-4 py-4">
+<!-- STICKY HEADER BUITEN DE SECTION -->
+<header class="bg-background/70 backdrop-blur-md sticky top-0 z-50 shadow-md border-b border-border/30">
+  <div class="max-w-7xl mx-auto px-6 md:px-20 py-4">
     <div class="flex items-center justify-between">
 
-      <!-- Logo links -->
+      <!-- Logo -->
       <div class="flex items-center gap-2">
-        <div class="w-9 h-9 flex items-center justify-center bg-gradient-to-br from-primary to-accent rounded-lg shadow-sm">
+        <div class="w-9 h-9 flex items-center justify-center bg-gradient-to-br from-primary to-accent rounded-xl shadow-md">
           <span class="text-white text-lg font-bold">B</span>
         </div>
-        <span class="text-lg font-semibold text-foreground">BuildBuddy</span>
+        <span class="text-lg font-semibold text-foreground tracking-tight">BuildBuddy</span>
       </div>
 
-      <!-- Stappenteller in het midden -->
+      <!-- Stappenteller -->
       <div class="flex flex-col items-center justify-center text-center">
         <div class="text-sm font-semibold text-foreground">
           Stap {{ currentStepOneBased() }} van {{ steps.length }}
         </div>
-        <div class="text-xs text-muted-foreground">
+        <div class="text-xs text-muted-foreground italic">
           {{ currentStep() < steps.length ? (steps[currentStep()] | titlecase) : 'Voltooid' }}
         </div>
         <!-- Progress bar -->
-        <div class="w-40 h-1 mt-2 bg-border rounded-full overflow-hidden">
+        <div class="w-48 h-2 mt-2 bg-border rounded-full overflow-hidden">
           <div
-            class="h-full bg-accent transition-all duration-500"
+            class="h-full bg-gradient-to-r from-accent to-primary transition-all duration-500"
             [style.width.%]="(currentStepOneBased() / steps.length) * 100"
           ></div>
         </div>
       </div>
 
-        <!-- Optionele actie rechts -->
-        <div class="hidden sm:flex items-center gap-3">
-          <button
-            class="px-3 py-2 text-sm font-medium rounded-md border border-border hover:bg-accent/10 transition cursor-pointer"
-            (click)="openPreviewPanel()"
-            aria-haspopup="dialog"
-            [attr.aria-expanded]="showPreviewPanel()"
-          >
-            Voorbeeld bekijken
-          </button>
-        </div>
-
+      <!-- Preview button -->
+      <div class="hidden sm:flex items-center gap-3">
+        <button
+          class="px-3 py-2 text-sm font-medium rounded-md border border-border hover:bg-accent/20 hover:text-accent transition cursor-pointer"
+          (click)="openPreviewPanel()"
+          aria-haspopup="dialog"
+          [attr.aria-expanded]="showPreviewPanel()"
+        >
+          Voorbeeld bekijken
+        </button>
+      </div>
     </div>
   </div>
 </header>
+
+<!-- SECTION MET DE CONTENT -->
+<section class="relative -mt-[55px] bg-gradient-to-br from-secondary via-primary/10 to-accent/10 min-h-[90vh] pb-16">
+
+  <!-- decoratieve vormen -->
+  <div class="absolute inset-0 -z-10">
+    <div class="absolute top-[-10%] left-[-10%] w-[400px] h-[400px] bg-accent/20 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/20 rounded-full blur-3xl animate-pulse delay-700"></div>
+  </div>
 
   <!-- preview panel -->
   <app-preview-panel
@@ -53,72 +60,89 @@
     (closed)="closePreviewPanel()"
   ></app-preview-panel>
 
-
   <!-- stappen -->
-  <div class="mt-8 mx-20">
-    <app-progress [currentStep]="currentStep()" [steps]="steps"></app-progress>
+   <div class="relative px-6 md:px-20">
+    <app-progress
+      [currentStep]="currentStep()"
+      [steps]="steps"
+      class="mb-10 pt-24 block"
+    ></app-progress>
 
-    <div class="mb-8 mt-5 bg-card rounded-xl shadow-lg p-8 min-h-[500px]">
+    <!-- content card -->
+    <div class="relative mb-12 bg-card/70 backdrop-blur-md rounded-2xl shadow-2xl p-10 min-h-[500px] border border-border/40 hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] transition-all duration-500">
 
- @switch (currentStep()) {
-  @case (0) {
-    <app-layout-step
-      [builderState]="builderState()"
-      [selectedLayout]="builderState().layout"
-      (selectLayout)="updateState({ layout: $event })"
-      (update)="updateState($event)">
-    </app-layout-step>
-  }
-  @case (1) {
-    <app-color-step
-      [builderState]="builderState()"
-      [themes]="colorThemes()"
-      (update)="updateState($event)">
-    </app-color-step>
-  }
-  @case (2) {
-    <app-font-step
-      [builderState]="builderState()"
-      (update)="updateState($event)">
-    </app-font-step>
-  }
-  @case (3) {
-    <app-navigation-step
-      [builderState]="builderState()"
-      (update)="updateState($event)">
-    </app-navigation-step>
-  }
-  @case (4) {
-    <app-content-step
-      [builderState]="builderState()"
-      [contents]="availablePages"
-      (toggle)="togglePage($event)"
-    ></app-content-step>
-  }
-  @case (5) {
-    <app-preview-step
-      [builderState]="builderState()">
-    </app-preview-step>
-  }
-}
+      @switch (currentStep()) {
+        @case (0) {
+          <app-layout-step
+            [builderState]="builderState()"
+            [selectedLayout]="builderState().layout"
+            (selectLayout)="updateState({ layout: $event })"
+            (update)="updateState($event)">
+          </app-layout-step>
+        }
+        @case (1) {
+          <app-color-step
+            [builderState]="builderState()"
+            [themes]="colorThemes()"
+            (update)="updateState($event)">
+          </app-color-step>
+        }
+        @case (2) {
+          <app-font-step
+            [builderState]="builderState()"
+            (update)="updateState($event)">
+          </app-font-step>
+        }
+        @case (3) {
+          <app-navigation-step
+            [builderState]="builderState()"
+            (update)="updateState($event)">
+          </app-navigation-step>
+        }
+        @case (4) {
+          <app-content-step
+            [builderState]="builderState()"
+            [contents]="availablePages"
+            (toggle)="togglePage($event)"
+          ></app-content-step>
+        }
+        @case (5) {
+          <app-preview-step
+            [builderState]="builderState()">
+          </app-preview-step>
+        }
+      }
     </div>
 
     <!-- navigatie -->
-    <div class="flex justify-between">
+    <div class="flex justify-between items-center">
       <app-button
         variant="default"
         (click)="prevStep()"
-        [disabled]="currentStep() === 0">
+        [disabled]="currentStep() === 0"
+        class="transition-all hover:scale-105 hover:bg-primary/10"
+      >
         Previous
-    </app-button>
+      </app-button>
 
       <app-button
-         variant="default"
+        variant="default"
         (click)="nextStep()"
-        [disabled]="currentStep() === steps.length - 1">
+        [disabled]="currentStep() === steps.length - 1"
+        class="transition-all hover:scale-105 hover:bg-accent/10"
+      >
         {{ currentStep() === steps.length - 2 ? 'Review' : 'Next' }}
       </app-button>
     </div>
   </div>
-
 </section>
+
+<style>
+@keyframes pulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+.animate-pulse {
+  animation: pulse 6s ease-in-out infinite;
+}
+</style>
