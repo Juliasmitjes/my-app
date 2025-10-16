@@ -89,21 +89,14 @@ readonly colorThemes = signal([
 ]);
 
 
-  readonly fontOptions = signal([
-    { id: 'modern-inter', category: 'Modern Sans', name: 'Inter', preview: 'Clean and modern typography' },
-    { id: 'modern-roboto', category: 'Modern Sans', name: 'Roboto', preview: 'Google signature font' },
-    { id: 'serif-merriweather', category: 'Classic Serif', name: 'Merriweather', preview: 'Perfect for reading' },
-    { id: 'serif-playfair', category: 'Classic Serif', name: 'Playfair Display', preview: 'Elegant and sophisticated' },
-    { id: 'display-montserrat', category: 'Display', name: 'Montserrat', preview: 'Bold and impactful' },
-    { id: 'display-oswald', category: 'Display', name: 'Oswald', preview: 'Strong and distinctive' }
-  ]);
 
-  availablePages: PageDef[] = [
-    { id: 'home', name: 'Home', description: 'Main landing page', required: true, icon: 'House' },
-    { id: 'about', name: 'About', description: 'Tell your story', icon: 'info' },
-    { id: 'blog', name: 'Blog', description: 'Share posts', icon: 'file-text' },
-    { id: 'contact', name: 'Contact', description: 'Get in touch', icon: 'mail' },
-  ];
+
+availablePages: PageDef[] = [
+  { id: 'home', name: 'Home', description: 'Hoofdpagina van de website', required: true, icon: 'House' },
+  { id: 'about', name: 'Over', description: 'Vertel jouw verhaal', icon: 'info' },
+  { id: 'blog', name: 'Blog', description: 'Deel berichten of nieuws', icon: 'file-text' },
+  { id: 'contact', name: 'Contact', description: 'Neem contact op', icon: 'mail' },
+];
 
   readonly builderState = signal<BuilderState>({
     layout: null,
@@ -141,7 +134,6 @@ readonly colorThemes = signal([
     this.currentStep.update(n => (n > 0 ? n - 1 : n));
   }
 
-  // togglePage is called when ContentStep emits toggle
   togglePage(page: string) {
     this.builderState.update(prev => {
       const pages = prev.pages.includes(page) ? prev.pages.filter(p => p !== page) : [...prev.pages, page];
