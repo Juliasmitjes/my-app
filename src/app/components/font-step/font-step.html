@@ -17,7 +17,7 @@
               description: variant.sample
             }"
             [selected]="isSelected(style.id, variant.id)"
-            (select)="updateState({ fontStyle: style.id, fontVariant: variant.id })">
+            (select)="onSelectVariant(style.id, variant.id)">
           </app-option-card>
         }
       </div>

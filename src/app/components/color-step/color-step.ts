@@ -3,15 +3,6 @@ import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
 import { OptionCard } from '../ui/option-card/option-card';
 
-export type ColorTheme = 'warm' | 'light' | 'dark' | 'cool';
-
-export interface ThemeDef {
-  id: ColorTheme;
-  name: string;
-  colors: string[];
-  gradient?: string;
-}
-
 @Component({
   selector: 'app-color-step',
   standalone: true,
@@ -21,7 +12,7 @@ export interface ThemeDef {
 })
 export class ColorStep {
   @Input() builderState!: BuilderState;
-  @Input() themes: ThemeDef[] = [];
+  @Input() themes: { id: string; name: string; colors: string[]; gradient?: string }[] = [];
 
   @Output() update = new EventEmitter<Partial<BuilderState>>();
 
@@ -29,7 +20,7 @@ export class ColorStep {
     this.update.emit(updates);
   }
 
-onSelectTheme(id: string) {
-  this.update.emit({ colorTheme: id as BuilderState['colorTheme'] });
-}
+  onSelectTheme(id: string) {
+    this.update.emit({ colorTheme: id as BuilderState['colorTheme'] });
+  }
 }

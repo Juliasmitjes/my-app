@@ -50,7 +50,8 @@ export class Services {
   readonly builderState = signal<BuilderState>({
     layout: null,
     colorTheme: null,
-    font: null,
+    fontStyle: null,
+    fontVariant: null,
     logo: '',
     navigation: 'top',
     headerStyle: 'fixed',
