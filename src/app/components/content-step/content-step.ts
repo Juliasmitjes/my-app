@@ -8,14 +8,6 @@ import { CardContent } from '../ui/card/card-content';
 import { Label } from '../ui/label/label';
 import { LucideAngularModule } from 'lucide-angular';
 
-interface PageOption {
-  id: string;
-  name: string;
-  description: string;
-  icon: string;
-  required?: boolean;
-}
-
 @Component({
   selector: 'app-content-step',
   standalone: true,
@@ -29,38 +21,36 @@ interface PageOption {
     LucideAngularModule,
   ],
   templateUrl: './content-step.html',
-  styleUrl: './content-step.css',
+  styleUrl: './content-step.css'
 })
 export class ContentStep {
-  @Input() builderState!: BuilderState;
+  @Input() builderState?: BuilderState;
+  @Input() contents: string[] = []; // verwacht bv ['about','blog','contact']
   @Output() update = new EventEmitter<Partial<BuilderState>>();
+  @Output() toggle = new EventEmitter<string>();
 
-  // publieke lijst van beschikbare pagina's (component beheert data)
-  availablePages: PageOption[] = [
-    { id: 'home', name: 'Home', description: 'Main landing page', icon: 'home', required: true },
-    { id: 'about', name: 'About', description: 'Tell your story', icon: 'info' },
-    { id: 'blog', name: 'Blog', description: 'Share your thoughts', icon: 'file-text' },
-    { id: 'contact', name: 'Contact', description: 'Get in touch', icon: 'mail' },
-  ];
-
-  /** Toggle logica zoals React onTogglePage */
-  togglePage(pageId: string) {
-    const isSelected = this.builderState.pages.includes(pageId);
-    const maxReached = this.builderState.pages.length >= 4 && !isSelected;
-    if (maxReached) return;
-
-    let updatedPages = this.builderState.pages;
-    if (isSelected) updatedPages = updatedPages.filter((p) => p !== pageId);
-    else updatedPages = [...updatedPages, pageId];
-
-    this.update.emit({ pages: updatedPages });
+  get pages(): string[] {
+    return this.builderState?.pages ?? ['home'];
   }
 
-  isSelected(pageId: string): boolean {
-    return this.builderState.pages.includes(pageId);
-  }
+  onSelectPage(page: string) {
+    if (!this.builderState) return;
 
-  isDisabled(page: PageOption): boolean {
-    return page.required || (this.builderState.pages.length >= 4 && !this.isSelected(page.id));
+    const isSelected = this.pages.includes(page);
+
+    if (page === 'home') return;
+
+    if (isSelected) {
+      const newPages = this.pages.filter(p => p !== page);
+      this.update.emit({ pages: newPages });
+      this.toggle.emit(page);
+      return;
+    }
+
+    if (this.pages.length >= 4) return;
+
+    const newPages = [...this.pages, page];
+    this.update.emit({ pages: newPages });
+    this.toggle.emit(page);
   }
 }

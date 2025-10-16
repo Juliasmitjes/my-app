@@ -1,55 +1,42 @@
-<div class="animate-fade-in space-y-8">
+<div class="space-y-6">
   <div class="text-center mb-8">
     <h2 class="text-2xl font-bold mb-2">Pages & Content</h2>
-    <p class="text-muted-foreground mb-6">
-      Choose which pages to include (max 4 total)
-    </p>
+    <p class="text-muted-foreground">Choose which pages to include (max 3 additional)</p>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    @for (page of availablePages; track page.id) {
-      <app-card class="p-6 transition-all duration-300">
-        <div class="flex items-start gap-4">
+  <app-card>
+    <app-card-header>
+      <app-card-title class="flex items-center gap-2">
+        <lucide-icon name="FileText" class="w-5 h-5"></lucide-icon>
+        Page Selection
+      </app-card-title>
+    </app-card-header>
+
+    <app-card-content class="space-y-4">
+      <!-- Always included Home -->
+      <div class="flex items-center space-x-2 p-3 bg-gradient-subtle rounded-lg">
+        <lucide-icon name="CircleCheck" class="w-5 h-5 text-primary"></lucide-icon>
+        <app-label class="font-medium">Home (Always included)</app-label>
+      </div>
+
+      <!-- Loop over other available pages provided via contents input -->
+     @for (page of contents; track page) {
+        <div class="flex items-center space-x-2 p-3 border rounded-lg">
           <input
             type="checkbox"
-            [id]="page.id"
-            class="accent-primary mt-1"
-            [checked]="isSelected(page.id)"
-            [disabled]="isDisabled(page)"
-            (change)="!page.required && togglePage(page.id)"
+            [id]="page"
+            [checked]="pages.includes(page)"
+            (change)="onSelectPage(page)"
+            [disabled]="!pages.includes(page) && pages.length >= 4"
           />
-
-          <div class="flex-1">
-            <Label
-              [for]="page.id"
-              class="flex items-center gap-2 cursor-pointer"
-            >
-              <lucide-icon
-                [name]="page.icon"
-                class="w-5 h-5 text-foreground"
-              ></lucide-icon>
-
-              <span class="font-semibold">{{ page.name }}</span>
-
-              @if (page.required) {
-                <span class="text-xs text-muted-foreground">
-                  (Required)
-                </span>
-              }
-            </Label>
-
-            <p class="text-sm text-muted-foreground mt-1">
-              {{ page.description }}
-            </p>
-          </div>
+          <app-label [for]="page" class="capitalize font-medium">{{ page }}</app-label>
         </div>
-      </app-card>
-    }
-  </div>
+      }
 
-  @if (builderState.pages.length >= 4) {
-    <p class="text-sm text-muted-foreground mt-4 text-center">
-      Maximum 4 pages reached
-    </p>
-  }
+     <p class="text-sm text-muted-foreground">
+        {{ pages.length - 1 }}/3 additional pages selected
+      </p>
+
+    </app-card-content>
+  </app-card>
 </div>
