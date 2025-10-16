@@ -1,36 +1,43 @@
-<div class="space-y-6">
-  <div class="text-center mb-8">
-    <h2 class="text-2xl font-bold mb-2">Pages & Content</h2>
-    <p class="text-muted-foreground">Choose which pages to include (max 3 additional)</p>
+<div class="step-container min-h-screen flex flex-col justify-center items-center text-center space-y-10">
+  <!-- Titel -->
+  <div>
+    <h2 class="text-2xl font-bold mb-2">Inhoud</h2>
+    <p class="text-muted-foreground">Selecteer welke pagina’s je wilt opnemen (maximaal 3 extra)</p>
   </div>
 
-  <app-card>
-    <app-card-header>
-      <app-card-title class="flex items-center gap-2">
-        Page Selection
-      </app-card-title>
-    </app-card-header>
+  <!-- Kaart -->
+  <div
+    class="w-full max-w-3xl mx-auto bg-white/60 dark:bg-muted/30 backdrop-blur-sm border border-border/50 rounded-3xl p-8 shadow-sm flex flex-col items-center"
+  >
+    <div class="text-center mb-6">
+      <h3 class="text-lg font-semibold text-foreground mb-1">Pagina-selectie</h3>
+      <p class="text-sm text-muted-foreground">Kies de onderdelen van jouw website</p>
+    </div>
 
-    <app-card-content class="space-y-4">
-      <!-- Toon elk gestructureerd item -->
+    <div class="space-y-4 w-full max-w-md mx-auto text-left">
       @for (item of contents; track item.id) {
-        <div class="flex items-start gap-3 p-3 border rounded-lg">
+        <div
+          class="flex items-start gap-4 p-4 rounded-2xl border border-border/50 bg-background/40 hover:bg-accent/5 transition cursor-pointer"
+          (click)="onSelectPage(item.id, item.required)"
+        >
           <input
             type="checkbox"
+            class="mt-1 accent-accent h-4 w-4 cursor-pointer"
             [id]="item.id"
             [checked]="pages.includes(item.id)"
             (change)="onSelectPage(item.id, item.required)"
             [disabled]="item.required || (!pages.includes(item.id) && pages.length >= 4)"
+            (click)="$event.stopPropagation()"
           />
 
           <div class="flex-1">
             <label [for]="item.id" class="flex items-center gap-2 cursor-pointer">
               @if (item.icon) {
-                <lucide-icon [name]="item.icon" class="w-5 h-5"></lucide-icon>
+                <lucide-icon [name]="item.icon" class="w-5 h-5 text-accent"></lucide-icon>
               }
-              <span class="font-medium capitalize">{{ item.name }}</span>
+              <span class="font-medium text-foreground">{{ item.name }}</span>
               @if (item.required) {
-                <span class="text-xs text-muted-foreground ml-2">(Required)</span>
+                <span class="text-xs text-muted-foreground ml-2">(verplicht)</span>
               }
             </label>
 
@@ -39,9 +46,19 @@
         </div>
       }
 
-      <p class="text-sm text-muted-foreground">
-        {{ additionalPagesCount }}/3 additional pages selected
-      </p>
-    </app-card-content>
-  </app-card>
+      <!-- Teller -->
+      <div class="text-center mt-6">
+        <p class="text-sm text-muted-foreground">
+          <span
+            class="font-medium text-foreground"
+            [class.text-accent]="additionalPagesCount < 3"
+            [class.text-red-500]="additionalPagesCount >= 3"
+          >
+            {{ additionalPagesCount }}
+          </span>
+          / 3 extra pagina’s geselecteerd
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
