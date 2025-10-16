@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Button } from '../../components/ui/button/button';
 import { LucideAngularModule } from 'lucide-angular';
 import { Services } from '../services/services';
+import { Footer } from '../../components/footer/footer'
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, Button, LucideAngularModule, Services],
+  imports: [CommonModule, Button, LucideAngularModule, Services, Footer],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
