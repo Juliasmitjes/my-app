@@ -4,12 +4,11 @@ import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { BuilderState } from '../../types/builder-state';
 import { PreviewStep } from '../preview-step/preview-step';
-import { Button } from '../../components/ui/button/button';
 
 @Component({
   selector: 'app-preview-panel',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule, PreviewStep, Button ],
+  imports: [CommonModule, LucideAngularModule, PreviewStep ],
   templateUrl: './preview-panel.html',
   styleUrls: ['./preview-panel.css']
 })
