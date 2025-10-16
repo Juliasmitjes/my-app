@@ -1,5 +1,23 @@
 @import "tailwindcss";
 
+/* === Globale animatie voor alle "step" componenten === */
+.step-container,
+[class*='-step'] {
+  display: block;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 .gradient-hero {
   background-image: linear-gradient(
