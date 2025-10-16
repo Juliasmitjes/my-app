@@ -1,18 +1,17 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
-import { OptionCard } from '../ui/option-card/option-card';
 
 @Component({
   selector: 'app-color-step',
   standalone: true,
-  imports: [CommonModule, OptionCard],
+  imports: [CommonModule],
   templateUrl: './color-step.html',
   styleUrl: './color-step.css'
 })
 export class ColorStep {
   @Input() builderState!: BuilderState;
-  @Input() themes: { id: string; name: string; colors: string[]; gradient?: string }[] = [];
+  @Input() themes: { id: string; name: string; colors: string[]; gradient?: string; description?: string }[] = [];
 
   @Output() update = new EventEmitter<Partial<BuilderState>>();
 

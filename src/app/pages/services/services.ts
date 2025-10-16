@@ -38,10 +38,10 @@ export class Services {
   readonly showPreviewPanel = signal(false);
   
   readonly colorThemes = signal([
-    { id: 'warm', name: 'Warm', colors: ['#FF6B4A', '#FF8E73', '#FFA99C'] },
-    { id: 'light', name: 'Light', colors: ['#E3F2FD', '#BBDEFB', '#90CAF9'] },
-    { id: 'dark', name: 'Dark', colors: ['#424242', '#616161', '#757575'] },
-    { id: 'cool', name: 'Cool', colors: ['#4FC3F7', '#29B6F6', '#03A9F4'] }
+    { id: 'warm', name: 'Warm', description: 'Warme kleur', colors: ['#FF6B4A', '#FF8E73', '#FFA99C'] },
+    { id: 'light', name: 'Light',  description: 'Lichte kleur', colors: ['#E3F2FD', '#BBDEFB', '#90CAF9'] },
+    { id: 'dark', name: 'Dark',  description: 'Donkere kleur', colors: ['#424242', '#616161', '#757575'] },
+    { id: 'cool', name: 'Cool',  description: 'Koude kleur', colors: ['#4FC3F7', '#29B6F6', '#03A9F4'] }
   ]);
 
   readonly fontOptions = signal([
@@ -83,7 +83,6 @@ export class Services {
     this.showPreviewPanel.update(v => !v);
   }
 
-  
   updateState(updates: Partial<BuilderState>) {
     this.builderState.update(prev => ({ ...prev, ...updates }));
   }
