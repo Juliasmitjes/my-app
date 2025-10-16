@@ -1,0 +1,18 @@
+:host {
+  display: block;
+  height: 100%;
+  animation: fadeIn 0.4s ease;
+}
+
+.preview-component * {
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+img {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+}

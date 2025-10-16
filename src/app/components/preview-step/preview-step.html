@@ -1,92 +1,82 @@
-<!-- preview-step.html -->
-<div class="h-full bg-muted rounded-lg p-6 flex flex-col">
-  <div class="flex items-center gap-2 mb-4">
-  <lucide-icon [name]="iconName" class="w-5 h-5 text-muted-foreground"></lucide-icon>
-  <h3 class="font-semibold text-sm text-muted-foreground">{{ title }}</h3>
-</div>
+<div class="h-full rounded-xl p-8 flex flex-col md:flex-row gap-6 bg-gradient-to-br"
+     [style.background]="selectedThemeColors[1]"
+     [style.backgroundImage]="'linear-gradient(135deg,' + selectedThemeColors[1] + ',' + selectedThemeColors[2] + ')'">
 
+  <!-- Left side: preview content -->
+  <div class="flex-1 flex flex-col bg-white/70 dark:bg-neutral-900/70 rounded-2xl shadow-xl backdrop-blur-sm overflow-hidden">
 
-  <div class="flex-1 bg-background rounded-lg shadow-lg overflow-hidden">
-    <div class="h-full flex flex-col">
-
-      <!-- Top header (when not sidebar) -->
-       @if (!isSidebar){
-         <div class="bg-secondary p-3 border-b border-border">
-        <div class="flex items-center justify-between">
-          <div class="font-semibold text-sm">{{ logoLabel }}</div>
-          <div class="flex gap-2">
-            @for (p of pages; track p) {
-              <ng-container>
-              <div class="text-xs px-2 py-1 rounded bg-background">{{ pageLabel(p) }}</div>
-            </ng-container>
-            }
-          </div>
-        </div>
+    <!-- Header -->
+    <div class="flex items-center justify-between p-4 border-b border-border/40"
+         [style.background]="selectedThemeColors[0]"
+         [style.color]="'#fff'">
+      <div class="flex items-center gap-2">
+        <lucide-icon [name]="iconName" class="w-5 h-5"></lucide-icon>
+        <h3 class="font-semibold text-sm tracking-wide uppercase">{{ title }}</h3>
       </div>
-      }
-     
+      <span class="text-xs opacity-90">{{ logoLabel }}</span>
+    </div>
 
-      <!-- Main area: sidebar + content or full-width content under header -->
-      <div class="flex-1 h-full">
-        <!-- Sidebar path -->
-      @if (isSidebar){
-        <div class="h-full flex">
-          <aside class="w-44 bg-secondary p-4 border-r border-border">
-            <div class="font-semibold mb-4">{{ logoLabel }}</div>
-            <nav class="space-y-2">
-              @for (p of pages; track p){
-              <ng-container>
-                <div class="text-sm px-3 py-2 rounded bg-background">{{ pageLabel(p) }}</div>
-              </ng-container>
+    <!-- Content area -->
+    <div class="flex-1 p-6">
+      @if (isSidebar) {
+        <div class="flex h-full">
+          <aside class="w-40 p-3 rounded-lg mr-4"
+                 [style.background]="selectedThemeColors[0]"
+                 [style.color]="'#fff'">
+            <div class="font-semibold mb-3">{{ logoLabel }}</div>
+            <nav class="space-y-2 text-sm">
+              @for (p of pages; track p) {
+                <div class="rounded px-2 py-1 bg-white/20">{{ pageLabel(p) }}</div>
               }
             </nav>
           </aside>
-
-          <div class="flex-1 p-6">
+          <div class="flex-1">
             <ng-container *ngTemplateOutlet="previewContent"></ng-container>
           </div>
         </div>
-         }
+      } @else {
+        <ng-container *ngTemplateOutlet="previewContent"></ng-container>
+      }
+    </div>
 
-
-        <!-- Top-header path -->
-        @if (!isSidebar){
-         <div class="p-6">
-          <ng-container *ngTemplateOutlet="previewContent"></ng-container>
-        </div>
-       }
+    <!-- Footer -->
+    <div class="p-4 bg-white/60 dark:bg-neutral-900/60 border-t border-border/40 text-xs rounded-b-2xl">
+      <div class="flex flex-wrap gap-x-4 gap-y-1 text-muted-foreground">
+        <div><strong>Layout:</strong> {{ builderState.layout }}</div>
+        <div><strong>Theme:</strong> {{ builderState.colorTheme }}</div>
+        <div><strong>Font:</strong> {{ builderState.fontVariant }}</div>
+        <div><strong>Navigation:</strong> {{ builderState.navigation }}</div>
       </div>
     </div>
   </div>
 
-  <!-- Shared footer info -->
-  <div class="mt-4 text-xs text-muted-foreground space-y-1">
-    <div>Layout: <span class="font-medium">{{ builderState.layout }}</span></div>
-    <div>Theme: <span class="font-medium">{{ builderState.colorTheme }}</span></div>
-    <div>Font: <span class="font-medium">{{ builderState.fontVariant }}</span></div>
-    <div>Navigation: <span class="font-medium">{{ builderState.navigation }}</span></div>
-    <div>Pages: <span class="font-medium">{{ pages.join(', ') }}</span></div>
+  <!-- Right side: Mascotte -->
+  <div class="w-48 flex items-center justify-center">
+    <img [src]="mascotUrl"
+         alt="Mascot"
+         class="w-40 h-40 object-contain drop-shadow-lg transition-transform duration-500 hover:scale-105" />
   </div>
 </div>
 
-<!-- Shared preview content -->
+<!-- Content blocks -->
 <ng-template #previewContent>
   <div class="flex-1 flex flex-col">
-    <div class="h-4 bg-muted rounded w-3/4 mb-3"></div>
-    <div class="h-4 bg-muted rounded w-1/2 mb-6"></div>
+    <div class="h-4 rounded w-3/4 mb-3"
+         [style.background]="selectedThemeColors[0]"></div>
+    <div class="h-4 rounded w-1/2 mb-6"
+         [style.background]="selectedThemeColors[2]"></div>
 
-    <div class="mt-6 grid gap-4" [style.gridTemplateColumns]="getGridColumns()">
-      <div class="h-24 bg-muted rounded"></div>
-      @if (builderState.layout !== 'single'){
-        <ng-container>
-          <div class="h-24 bg-muted rounded"></div>
-        </ng-container>
+    <div class="mt-6 grid gap-4"
+         [style.gridTemplateColumns]="getGridColumns()">
+      <div class="h-24 rounded"
+           [style.background]="selectedThemeColors[1]"></div>
+      @if (builderState.layout !== 'single') {
+        <div class="h-24 rounded"
+             [style.background]="selectedThemeColors[1]"></div>
       }
-      
-      @if (builderState.layout === 'grid'){
-      <ng-container>
-        <div class="h-24 bg-muted rounded"></div>
-      </ng-container>
+      @if (builderState.layout === 'grid') {
+        <div class="h-24 rounded"
+             [style.background]="selectedThemeColors[1]"></div>
       }
     </div>
   </div>

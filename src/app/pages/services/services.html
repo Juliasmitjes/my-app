@@ -107,8 +107,12 @@
         }
         @case (5) {
           <app-preview-step
-            [builderState]="builderState()">
-          </app-preview-step>
+          [builderState]="builderState()"
+          [colorThemes]="colorThemes()"
+          iconName="monitor"
+          title="Jouw resultaat"
+          [mascotUrl]="'/assets/mascot.png'">
+        </app-preview-step>
         }
       }
     </div>
