@@ -1,12 +1,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OptionCard } from '../ui/option-card/option-card';
 import { BuilderState } from '../../types/builder-state';
 
 @Component({
   selector: 'app-font-step',
   standalone: true,
-  imports: [CommonModule, OptionCard],
+  imports: [CommonModule],
   templateUrl: './font-step.html',
   styleUrl: './font-step.css'
 })
@@ -18,6 +17,7 @@ export class FontStep {
     {
       id: 'modern-sans',
       name: 'Modern Sans',
+      description: 'letters',
       variants: [
         { id: 'inter', name: 'Inter', sample: 'Clean and modern' },
         { id: 'roboto', name: 'Roboto', sample: 'Geometric and friendly' },
@@ -26,6 +26,7 @@ export class FontStep {
     {
       id: 'classic-serif',
       name: 'Classic Serif',
+      description: 'chique',
       variants: [
         { id: 'merriweather', name: 'Merriweather', sample: 'Traditional elegance' },
         { id: 'playfair', name: 'Playfair Display', sample: 'High-contrast style' },
@@ -34,6 +35,7 @@ export class FontStep {
     {
       id: 'display',
       name: 'Display',
+      description: 'modern',
       variants: [
         { id: 'montserrat', name: 'Montserrat', sample: 'Urban and bold' },
         { id: 'oswald', name: 'Oswald', sample: 'Condensed impact' },

@@ -3,12 +3,15 @@
   <p class="text-muted-foreground mb-6 text-center">Hoe wil je jouw content weergeven?</p>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <ng-container *ngFor="let layout of layouts; trackBy: trackById">
+    @for (layout of layouts;track layout.id){
+       <ng-container>
       <app-option-card
         [layout]="layout"
         [selected]="selectedLayout === layout.id"
         (select)="onSelect(layout.id)"
       ></app-option-card>
     </ng-container>
+    }
+   
   </div>
 </div>
