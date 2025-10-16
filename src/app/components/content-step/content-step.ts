@@ -13,7 +13,7 @@ export interface PageDef {
   name: string;
   description?: string;
   required?: boolean;
-  icon?: string; // optioneel: lucide icon name
+  icon?: string;
 }
 
 @Component({

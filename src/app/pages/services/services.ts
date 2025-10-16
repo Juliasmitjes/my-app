@@ -48,7 +48,7 @@ export class Services {
   ]);
 
   availablePages: PageDef[] = [
-    { id: 'home', name: 'Home', description: 'Main landing page', required: true, icon: 'home' },
+    { id: 'home', name: 'Home', description: 'Main landing page', required: true, icon: 'House' },
     { id: 'about', name: 'About', description: 'Tell your story', icon: 'info' },
     { id: 'blog', name: 'Blog', description: 'Share posts', icon: 'file-text' },
     { id: 'contact', name: 'Contact', description: 'Get in touch', icon: 'mail' },
