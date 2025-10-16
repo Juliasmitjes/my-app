@@ -37,8 +37,6 @@ export class Services {
   readonly currentStepOneBased = computed(() => this.currentStep() + 1);
   readonly showPreviewPanel = signal(false);
   
-
-
   readonly colorThemes = signal([
     { id: 'warm', name: 'Warm', colors: ['#FF6B4A', '#FF8E73', '#FFA99C'] },
     { id: 'light', name: 'Light', colors: ['#E3F2FD', '#BBDEFB', '#90CAF9'] },

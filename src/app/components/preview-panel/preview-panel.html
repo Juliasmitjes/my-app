@@ -6,11 +6,11 @@
   <aside class="panel" [ngClass]="size" role="dialog" aria-label="Live preview">
     <header class="panel-header">
       <div class="panel-title">
-        <span class="text-2xl font-semibold text-accent/90 leading-none tracking-tight">Voorbeeld</span>
+        <span class="text-2xl font-semibold text-background leading-none tracking-tight">Voorbeeld</span>
       </div>
 
       <div class="panel-actions">
-        <app-button variant="outline" (click)="close()">Sluiten</app-button>
+        <button class="px-3 py-2 text-sm font-medium rounded-md border border-border hover:bg-accent/20 hover:text-accent transition cursor-pointer" (click)="close()">Sluiten</button>
       </div>
     </header>
 
@@ -20,10 +20,6 @@
       title="Live Preview"
       class="preview-component">
     </app-preview-step>
-
-    <div class="panel-body">
-      <app-preview-step [builderState]="builderState!" class="preview-component"></app-preview-step>
-    </div>
   </aside>
 </div>
  }

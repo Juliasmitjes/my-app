@@ -5,6 +5,8 @@ export interface BuilderState {
   /** Kleurenthema van de website */
   colorTheme: 'warm' | 'light' | 'dark' | 'cool' | null;
 
+  
+
   /** Hoofdtypografie-categorie, bv. “modern-sans” of “display” */
   fontStyle: 'modern-sans' | 'classic-serif' | 'display' | null;
 
