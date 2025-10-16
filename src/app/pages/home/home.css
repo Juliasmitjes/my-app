@@ -1,3 +1,19 @@
 .gradient-accent {
   background: linear-gradient(to right, #7dd3fc, #818cf8, #c084fc);
 }
+
+@keyframes slowZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+@keyframes gradient-x {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 20s ease infinite;
+}
+.animate-bounce-slow {
+  animation: bounce 3s ease-in-out infinite;
+}
