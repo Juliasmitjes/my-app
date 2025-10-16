@@ -28,5 +28,5 @@ export interface BuilderState {
   headerStyle: 'fixed' | 'scrolling' | null;
 
   /** Pagina’s binnen de sitebuilder */
-  pages: string['about','blog','contact'];
+  pages: string[];
 }

@@ -5,7 +5,7 @@ import { LayoutStep } from '../../components/layout-step/layout-step';
 import { ColorStep } from '../../components/color-step/color-step';
 import { FontStep } from '../../components/font-step/font-step';
 import { NavigationStep } from '../../components/navigation-step/navigation-step';
-import { ContentStep } from '../../components/content-step/content-step';
+import { ContentStep, PageDef } from '../../components/content-step/content-step';
 import { PreviewStep } from '../../components/preview-step/preview-step';
 import { BuilderState } from '../../types/builder-state';
 
@@ -47,6 +47,13 @@ export class Services {
     { id: 'display-oswald', category: 'Display', name: 'Oswald', preview: 'Strong and distinctive' }
   ]);
 
+  availablePages: PageDef[] = [
+    { id: 'home', name: 'Home', description: 'Main landing page', required: true, icon: 'home' },
+    { id: 'about', name: 'About', description: 'Tell your story', icon: 'info' },
+    { id: 'blog', name: 'Blog', description: 'Share posts', icon: 'file-text' },
+    { id: 'contact', name: 'Contact', description: 'Get in touch', icon: 'mail' },
+  ];
+
   readonly builderState = signal<BuilderState>({
     layout: null,
     colorTheme: null,
@@ -71,6 +78,7 @@ export class Services {
     this.currentStep.update(n => (n > 0 ? n - 1 : n));
   }
 
+  // togglePage is called when ContentStep emits toggle
   togglePage(page: string) {
     this.builderState.update(prev => {
       const pages = prev.pages.includes(page) ? prev.pages.filter(p => p !== page) : [...prev.pages, page];

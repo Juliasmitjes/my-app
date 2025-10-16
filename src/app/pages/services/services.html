@@ -47,46 +47,47 @@
     <div class="mb-8 mt-5 bg-card rounded-xl shadow-lg p-8 min-h-[500px]">
 
       @switch (currentStep()) {
-        @case (0) {
-          <app-layout-step
-            [builderState]="builderState()"
-            [selectedLayout]="builderState().layout"
-            (selectLayout)="updateState({ layout: $event })"
-            (update)="updateState($event)">
-          </app-layout-step>
-        }
-        @case (1) {
-          <app-color-step
-            [builderState]="builderState()"
-            [themes]="colorThemes()"
-            (update)="updateState($event)">
-          </app-color-step>
-        }
-        @case (2) {
-          <app-font-step
-            [builderState]="builderState()"
-            (update)="updateState($event)">
-          </app-font-step>
-        }
-        @case (3) {
-          <app-navigation-step
-            [builderState]="builderState()"
-            (update)="updateState($event)">
-          </app-navigation-step>
-        }
-        @case (4) {
-          <app-content-step
-            [builderState]="builderState()"
-            (update)="updateState($event)">
-          </app-content-step>
-        }
-        @case (5) {
-          <app-preview-step
-            [builderState]="builderState()">
-          </app-preview-step>
-        }
-      }
-
+  @case (0) {
+    <app-layout-step
+      [builderState]="builderState()"
+      [selectedLayout]="builderState().layout"
+      (selectLayout)="updateState({ layout: $event })"
+      (update)="updateState($event)">
+    </app-layout-step>
+  }
+  @case (1) {
+    <app-color-step
+      [builderState]="builderState()"
+      [themes]="colorThemes()"
+      (update)="updateState($event)">
+    </app-color-step>
+  }
+  @case (2) {
+    <app-font-step
+      [builderState]="builderState()"
+      (update)="updateState($event)">
+    </app-font-step>
+  }
+  @case (3) {
+    <app-navigation-step
+      [builderState]="builderState()"
+      (update)="updateState($event)">
+    </app-navigation-step>
+  }
+  @case (4) {
+    <app-content-step
+      [builderState]="builderState()"
+      [contents]="availablePages"
+      (update)="updateState($event)"
+      (toggle)="togglePage($event)">
+    </app-content-step>
+  }
+  @case (5) {
+    <app-preview-step
+      [builderState]="builderState()">
+    </app-preview-step>
+  }
+}
     </div>
 
     <!-- navigatie -->
