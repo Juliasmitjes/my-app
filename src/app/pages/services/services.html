@@ -11,22 +11,24 @@
         <span class="text-lg font-semibold text-foreground tracking-tight">BuildBuddy</span>
       </div>
 
-      <!-- Stappenteller -->
-      <div class="flex flex-col items-center justify-center text-center">
-        <div class="text-sm font-semibold text-foreground">
-          Stap {{ currentStepOneBased() }} van {{ steps.length -1 }}
+        <!-- Stappenteller -->
+        <div class="flex flex-col items-center justify-center text-center">
+          <div class="text-sm font-semibold text-foreground">
+            Stap {{ currentStepOneBased() }} van {{ steps.length - 1 }}
+          </div>
+
+          <div class="text-xs text-muted-foreground italic">
+            {{ currentStep() < steps.length - 1 ? (steps[currentStep()] | titlecase) : 'Voltooid' }}
+          </div>
+
+          <!-- Progress bar -->
+          <div class="w-48 h-2 mt-2 bg-border rounded-full overflow-hidden">
+            <div
+              class="h-full bg-gradient-to-r from-accent to-primary transition-all duration-500"
+              [style.width.%]="(currentStepOneBased() / (steps.length - 1)) * 100"
+            ></div>
+          </div>
         </div>
-        <div class="text-xs text-muted-foreground italic">
-          {{ currentStep() < steps.length ? (steps[currentStep()] | titlecase) : 'Voltooid' }}
-        </div>
-        <!-- Progress bar -->
-        <div class="w-48 h-2 mt-2 bg-border rounded-full overflow-hidden">
-          <div
-            class="h-full bg-gradient-to-r from-accent to-primary transition-all duration-500"
-            [style.width.%]="(currentStepOneBased() / steps.length) * 100"
-          ></div>
-        </div>
-      </div>
 
       <!-- Preview button -->
       <div class="hidden sm:flex items-center gap-3">
