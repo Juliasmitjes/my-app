@@ -42,60 +42,69 @@ readonly colorThemes = signal([
     id: 'warm',
     name: 'Warm',
     description: 'Zonnig en energiek met oranje en gouden tinten',
-    colors: ['#FF7A3D', '#FFB347', '#FFD166'], // oranje-geel
+    colors: ['#FF7A3D', '#FFB347', '#FFD166'], 
   },
   {
     id: 'light',
     name: 'Licht',
     description: 'Fris en helder met zachte pastelkleuren',
-    colors: ['#FDF6E3', '#E3F2FD', '#C8E6C9'], // crème-blauw-groen
+    colors: ['#FDF6E3', '#E3F2FD', '#C8E6C9'], 
   },
   {
     id: 'dark',
     name: 'Donker',
     description: 'Diep en stijlvol met luxe accenten',
-    colors: ['#1E1E2F', '#2C2C3A', '#3B3B4F'], // blauwgrijs-paars
+    colors: ['#1E1E2F', '#2C2C3A', '#3B3B4F'], 
   },
   {
     id: 'cool',
     name: 'Koel',
     description: 'Rustig en modern met blauwe en paarse tonen',
-    colors: ['#5C6BC0', '#42A5F5', '#26C6DA'], // paars-blauw-turquoise
+    colors: ['#5C6BC0', '#42A5F5', '#26C6DA'], 
   },
   {
     id: 'earth',
     name: 'Aards',
     description: 'Natuurlijke tinten met groen en bruin voor een rustige uitstraling',
-    colors: ['#8D6E63', '#A1887F', '#C5A880'], // bruin-groen-zand
+    colors: ['#8D6E63', '#A1887F', '#C5A880'], 
   },
   {
     id: 'vibrant',
     name: 'Vibrant',
     description: 'Levendig en speels met opvallende kleuren',
-    colors: ['#FF4081', '#7C4DFF', '#448AFF'], // roze-paars-blauw
+    colors: ['#FF4081', '#7C4DFF', '#448AFF'], 
   },
   {
     id: 'ocean',
     name: 'Ocean',
     description: 'Diep en verfrissend als de zee',
-    colors: ['#00796B', '#0097A7', '#80CBC4'], // zeegroen-blauw
+    colors: ['#00796B', '#0097A7', '#80CBC4'], 
   },
   {
     id: 'sunset',
     name: 'Zonsondergang',
     description: 'Warm en dromerig met roze en perzik',
-    colors: ['#FF9A8B', '#FF6A88', '#FF99AC'], // perzik-roze
+    colors: ['#FF9A8B', '#FF6A88', '#FF99AC'], 
   },
 ]);
 
 
-
-
 availablePages: PageDef[] = [
-  { id: 'home', name: 'Home', description: 'Hoofdpagina van de website', required: true, icon: 'House' },
+  { id: 'home', name: 'Home', description: 'Hoofdpagina van de website', required: true, icon: 'house' },
   { id: 'about', name: 'Over', description: 'Vertel jouw verhaal', icon: 'info' },
   { id: 'blog', name: 'Blog', description: 'Deel berichten of nieuws', icon: 'file-text' },
   { id: 'contact', name: 'Contact', description: 'Neem contact op', icon: 'mail' },
+  { id: 'diensten', name: 'Diensten', description: 'Wat je aanbiedt of doet', icon: 'briefcase' },
+  { id: 'portfolio', name: 'Portfolio', description: 'Laat jouw werk of projecten zien', icon: 'image' },
+  { id: 'team', name: 'Team', description: 'Stel het team voor', icon: 'users' },
+  { id: 'faq', name: 'FAQ', description: 'Veelgestelde vragen', icon: 'help-circle' },
+  { id: 'reviews', name: 'Reviews', description: 'Wat anderen over je zeggen', icon: 'star' },
+  { id: 'galerij', name: 'Galerij', description: 'Een overzicht van foto’s of media', icon: 'camera' },
+  { id: 'evenementen', name: 'Evenementen', description: 'Toon aankomende activiteiten', icon: 'calendar' },
+  { id: 'shop', name: 'Shop', description: 'Verkoop producten of tickets', icon: 'shopping-bag' },
+  { id: 'donatie', name: 'Donatie', description: 'Ondersteun je initiatief', icon: 'heart' },
+  { id: 'nieuwsbrief', name: 'Nieuwsbrief', description: 'Laat bezoekers zich inschrijven', icon: 'send' },
+  { id: 'privacy', name: 'Privacybeleid', description: 'Informatie over privacy en cookies', icon: 'shield' },
 ];
 
   readonly builderState = signal<BuilderState>({

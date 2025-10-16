@@ -24,11 +24,10 @@ export interface PageDef {
 })
 export class ContentStep {
   @Input() builderState?: BuilderState;
-  @Input() contents: PageDef[] = []; // verwacht gestructureerde items
+  @Input() contents: PageDef[] = [];
   @Output() update = new EventEmitter<Partial<BuilderState>>();
   @Output() toggle = new EventEmitter<string>();
 
-  // Veilige accessor: garandeer altijd een array (minimaal ['home'])
   get pages(): string[] {
     return this.builderState?.pages ?? ['home'];
   }
@@ -39,7 +38,6 @@ export class ContentStep {
   return count;
 }
 
-  // Toggle of add/remove pagina; respecteer required en limiet (max 4 totaal)
   onSelectPage(pageId: string, required = false) {
     if (!this.builderState) return;
     if (required) return; // verplicht, kan niet worden uitgevinkt
