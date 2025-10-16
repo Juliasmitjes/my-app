@@ -1,4 +1,3 @@
-/* preview-panel.css */
 .preview-overlay {
   position: fixed;
   inset: 0;
@@ -41,13 +40,17 @@
 
 .panel-body {
   flex: 1 1 auto;
-  min-height: 0; /* critical for internal scrolling */
+  min-height: 0; 
   overflow: auto;
   padding: 12px;
 }
 
-/* ensure preview child fills available height */
 .preview-component {
-  height: 100%;
-  display: block;
+  width: 100%;
+  max-width: 800px;   
+  min-height: 550px;
+  max-height: 550px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
 }

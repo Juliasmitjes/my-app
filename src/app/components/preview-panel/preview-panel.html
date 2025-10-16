@@ -1,10 +1,11 @@
-<!-- preview-panel.html -->
- @if (open){
+@if (open) {
   <div class="preview-overlay">
-  <div class="backdrop" (click)="close()"></div>
+    <div class="backdrop" (click)="close()"></div>
 
-      <aside class="panel pb-20 flex flex-col" [ngClass]="size" role="dialog" aria-label="Live preview">
-        <header class="p-4 flex items-center justify-end">
+    <aside class="panel pb-20 flex flex-col" [ngClass]="size" role="dialog" aria-label="Live preview">
+      <header class="p-4 flex items-center justify-end">
+
+        
         <div class="panel-actions">
           <button
             class="px-3 py-2 text-sm font-medium rounded-md border border-border hover:bg-accent/20 hover:text-accent transition cursor-pointer"
@@ -15,14 +16,96 @@
         </div>
       </header>
 
-    <app-preview-step
-      [builderState]="builderState!"
-      iconName="monitor"
-      title="Live Preview"
-      class="preview-component">
-    </app-preview-step>
-  </aside>
-</div>
- }
+      <!-- BEGIN: Preview content (van preview-step) -->
+      <div class="h-full bg-muted rounded-lg p-6 flex flex-col preview-component">
+        <div class="flex items-center gap-2 mb-4">
+          <lucide-icon [name]="iconName" class="w-5 h-5 text-muted-foreground"></lucide-icon>
+          <h3 class="font-semibold text-sm text-muted-foreground">{{ title }}</h3>
+        </div>
 
- 
+        <div class="flex-1 bg-background rounded-lg shadow-lg overflow-hidden">
+          <div class="h-full flex flex-col">
+            <!-- Top header (wanneer geen sidebar) -->
+            @if (!isSidebar) {
+              <div class="bg-secondary p-3 border-b border-border">
+                <div class="flex items-center justify-between">
+                  <div class="font-semibold text-sm">{{ logoLabel }}</div>
+                  <div class="flex gap-2">
+                    @for (p of pages; track p) {
+                      <ng-container>
+                        <div class="text-xs px-2 py-1 rounded bg-background">{{ pageLabel(p) }}</div>
+                      </ng-container>
+                    }
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- Main area -->
+            <div class="flex-1 h-full">
+              <!-- Sidebar layout -->
+              @if (isSidebar) {
+                <div class="h-full flex">
+                  <aside class="w-44 bg-secondary p-4 border-r border-border">
+                    <div class="font-semibold mb-4">{{ logoLabel }}</div>
+                    <nav class="space-y-2">
+                      @for (p of pages; track p) {
+                        <ng-container>
+                          <div class="text-sm px-3 py-2 rounded bg-background">{{ pageLabel(p) }}</div>
+                        </ng-container>
+                      }
+                    </nav>
+                  </aside>
+
+                  <div class="flex-1 p-6">
+                    <ng-container *ngTemplateOutlet="previewContent"></ng-container>
+                  </div>
+                </div>
+              }
+
+              <!-- Top-header layout -->
+              @if (!isSidebar) {
+                <div class="p-6">
+                  <ng-container *ngTemplateOutlet="previewContent"></ng-container>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer info -->
+        <div class="mt-4 text-xs text-muted-foreground space-y-1">
+          <div>Layout: <span class="font-medium">{{ builderState?.layout }}</span></div>
+          <div>Theme: <span class="font-medium">{{ builderState?.colorTheme }}</span></div>
+          <div>Font: <span class="font-medium">{{ builderState?.fontVariant }}</span></div>
+          <div>Navigation: <span class="font-medium">{{ builderState?.navigation }}</span></div>
+          <div>Pages: <span class="font-medium">{{ pages.join(', ') }}</span></div>
+        </div>
+      </div>
+
+      <!-- Preview content template -->
+      <ng-template #previewContent>
+        <div class="flex-1 flex flex-col">
+          <div class="h-4 bg-muted rounded w-3/4 mb-3"></div>
+          <div class="h-4 bg-muted rounded w-1/2 mb-6"></div>
+
+          <div class="mt-6 grid gap-4" [style.gridTemplateColumns]="getGridColumns()">
+            <div class="h-24 bg-muted rounded"></div>
+            @if (builderState?.layout !== 'single') {
+              <ng-container>
+                <div class="h-24 bg-muted rounded"></div>
+              </ng-container>
+            }
+
+            @if (builderState?.layout === 'grid') {
+              <ng-container>
+                <div class="h-24 bg-muted rounded"></div>
+              </ng-container>
+            }
+          </div>
+        </div>
+      </ng-template>
+      <!-- END: Preview content -->
+    </aside>
+  </div>
+}
