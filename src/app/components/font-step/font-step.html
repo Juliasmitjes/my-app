@@ -1,12 +1,12 @@
-<div class="step-container flex flex-col items-center space-y-10">
+<div class="step-container flex flex-col items-center space-y-12">
   <!-- Titel -->
   <div class="text-center">
     <h2 class="text-2xl font-bold mb-2">Kies jouw lettertype</h2>
-    <p class="text-muted-foreground">Vind de stijl die past bij jouw uitstraling</p>
+    <p class="text-muted-foreground">Vind de stijl die bij jouw merk past</p>
   </div>
 
-  <!-- Gridcontainer, mooi gecentreerd -->
-  <div class="w-full max-w-6xl flex flex-col items-center space-y-10">
+  <!-- Gridcontainer -->
+  <div class="w-full flex flex-col items-center space-y-12">
     @for (style of fontStyles; track style.id) {
       <div class="w-full space-y-6">
         <!-- Sectietitel -->
@@ -23,7 +23,7 @@
           @for (variant of style.variants; track variant.id) {
             <div
               class="relative group p-6 rounded-3xl cursor-pointer transition-all duration-300 flex flex-col items-center text-center space-y-4
-                     bg-white/60 dark:bg-muted/30 backdrop-blur-sm border border-border/50
+                     bg-white/70 dark:bg-muted/30 backdrop-blur-sm border border-border/40
                      hover:shadow-lg hover:scale-[1.02]"
               [class.scale-[1.02]]="isSelected(style.id, variant.id)"
               [class.shadow-lg]="isSelected(style.id, variant.id)"
@@ -37,12 +37,12 @@
             >
               <!-- Mockup preview -->
               <div
-                class="rounded-xl p-5 shadow-sm bg-white/70 dark:bg-background/40 transition-all duration-300 w-full"
+                class="rounded-xl p-5 shadow-sm bg-white/80 dark:bg-background/40 transition-all duration-300 w-full"
                 [class.ring-2]="isSelected(style.id, variant.id)"
                 [class.ring-accent]="isSelected(style.id, variant.id)"
               >
                 <h4
-                  class="text-xl font-semibold mb-2 tracking-tight"
+                  class="text-xl font-semibold mb-2 tracking-tight text-foreground"
                   [ngStyle]="{'font-family': variant.id}"
                 >
                   {{ variant.name }}
@@ -55,9 +55,9 @@
                 </p>
               </div>
 
-              <!-- Accent-lijntje onderaan -->
+              <!-- Subtiele accentlijn -->
               <div
-                class="h-1 w-full mt-4 rounded-full transition-all duration-300"
+                class="h-1 w-2/3 mt-4 rounded-full transition-all duration-300"
                 [style.background]="isSelected(style.id, variant.id) ? 'var(--accent)' : 'transparent'">
               </div>
             </div>

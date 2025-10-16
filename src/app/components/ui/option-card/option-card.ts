@@ -2,7 +2,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { ChangeDetectionStrategy } from '@angular/core';
-import { LayoutOption } from '../../layout-step/layout-step';
 
 
 @Component({

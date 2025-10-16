@@ -1,78 +1,88 @@
-<div class="step-container space-y-8">
+<div class="step-container flex flex-col items-center space-y-12">
   <!-- Titel & Intro -->
-  <div class="text-center mb-8">
-    <h2 class="text-2xl font-bold mb-2">Navigation & Header</h2>
-    <p class="text-muted-foreground">Configure your site's navigation and branding</p>
+  <div class="text-center">
+    <h2 class="text-2xl font-bold mb-2">Navigatie & header</h2>
+    <p class="text-muted-foreground">Kies de navigatie en stijl van jouw website</p>
   </div>
 
-  <!-- LOGO INPUT -->
-  <div>
-    <label for="logo" class="text-base font-semibold mb-2 block">
-      Site Name / Logo
-    </label>
-    <input
-      id="logo"
-      type="text"
-      class="max-w-md w-full border rounded-lg p-2 focus:ring-2 focus:ring-primary outline-none transition"
-      placeholder="Enter your site name..."
-      [value]="builderState.logo || ''"
-      (input)="onLogoChange($event)"
-    />
-  </div>
-
-  <!-- NAVIGATION STYLE -->
-  <div>
-    <label class="text-base font-semibold mb-3 block">Navigation Style</label>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl">
-      <app-option-card
-        [layout]="{
-          id: 'top',
-          name: 'Top Navigation',
-          description: 'Standard horizontal menu',
-          icon: 'PanelTop'
-        }"
-        [selected]="builderState.navigation === 'top'"
-        (select)="updateState({ navigation: 'top' })">
-      </app-option-card>
-
-      <app-option-card
-        [layout]="{
-          id: 'sidebar',
-          name: 'Sidebar Navigation',
-          description: 'Vertical side menu',
-          icon: 'PanelLeft'
-        }"
-        [selected]="builderState.navigation === 'sidebar'"
-        (select)="updateState({ navigation: 'sidebar' })">
-      </app-option-card>
+  <!-- Content container -->
+  <div class="w-full flex flex-col items-center space-y-12">
+    <!-- LOGO INPUT -->
+    <div class="w-full text-center space-y-4">
+      <label for="logo" class="text-base font-semibold block">Bedrijfsnaam</label>
+      <input
+        id="logo"
+        type="text"
+        class="w-full max-w-md border border-border/50 bg-white/70 dark:bg-muted/20 rounded-xl p-3 text-center text-sm focus:ring-2 focus:ring-accent outline-none transition placeholder:text-muted-foreground/70"
+        placeholder="Typ de naam van je bedrijf..."
+        [value]="builderState.logo || ''"
+        (input)="onLogoChange($event)"
+      />
+      <p class="text-xs text-muted-foreground italic">Wordt gebruikt in de header en navigatie</p>
     </div>
-  </div>
 
-  <!-- HEADER STYLE -->
-  <div>
-    <label class="text-base font-semibold mb-3 block">Header Style</label>
+    <!-- NAVIGATION STYLE -->
+    <div class="w-full text-center space-y-6">
+      <div>
+        <h3 class="text-lg font-semibold mb-1">Navigatiestijl</h3>
+        <p class="text-sm text-muted-foreground">Bepaal hoe bezoekers door je site navigeren</p>
+      </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl">
-      <app-option-card
-        [layout]="{
-          id: 'fixed',
-          name: 'Fixed Header',
-          description: 'Stays at top while scrolling'
-        }"
-        [selected]="builderState.headerStyle === 'fixed'"
-        (select)="updateState({ headerStyle: 'fixed' })">
-      </app-option-card>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 justify-center max-w-2xl mx-auto">
+        <app-option-card
+          [layout]="{
+            id: 'top',
+            name: 'Bovenbalk',
+            description: 'Klassieke horizontale menubalk bovenaan',
+            icon: 'PanelTop'
+          }"
+          [selected]="builderState.navigation === 'top'"
+          (select)="updateState({ navigation: 'top' })">
+        </app-option-card>
 
-      <app-option-card
-        [layout]="{
-          id: 'scrolling',
-          name: 'Scrolling Header',
-          description: 'Scrolls with page content'
-        }"
-        [selected]="builderState.headerStyle === 'scrolling'"
-        (select)="updateState({ headerStyle: 'scrolling' })">
-      </app-option-card>
+        <app-option-card
+          [layout]="{
+            id: 'sidebar',
+            name: 'Zijbalk',
+            description: 'Compact verticaal menu aan de zijkant',
+            icon: 'PanelLeft'
+          }"
+          [selected]="builderState.navigation === 'sidebar'"
+          (select)="updateState({ navigation: 'sidebar' })">
+        </app-option-card>
+      </div>
+    </div>
+
+    <!-- HEADER STYLE -->
+    <div class="w-full text-center space-y-6">
+      <div>
+        <h3 class="text-lg font-semibold mb-1">Headerstijl</h3>
+        <p class="text-sm text-muted-foreground">Kies hoe de header zich gedraagt bij scrollen</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 justify-center max-w-2xl mx-auto">
+        <app-option-card
+          [layout]="{
+            id: 'fixed',
+            name: 'Vaste header',
+            description: 'Blijft bovenaan zichtbaar tijdens het scrollen',
+            icon: 'ArrowDownToLine'
+          }"
+          [selected]="builderState.headerStyle === 'fixed'"
+          (select)="updateState({ headerStyle: 'fixed' })">
+        </app-option-card>
+
+        <app-option-card
+          [layout]="{
+            id: 'scrolling',
+            name: 'Meescrollende header',
+            description: 'Verdwijnt uit beeld bij het scrollen',
+            icon: 'ArrowDownFromLine'
+          }"
+          [selected]="builderState.headerStyle === 'scrolling'"
+          (select)="updateState({ headerStyle: 'scrolling' })">
+        </app-option-card>
+      </div>
     </div>
   </div>
 </div>
