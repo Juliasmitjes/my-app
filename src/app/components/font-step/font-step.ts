@@ -3,6 +3,28 @@ import { CommonModule } from '@angular/common';
 import { OptionCard } from '../ui/option-card/option-card';
 import { BuilderState } from '../../types/builder-state';
 
+type FontStyleId = 'modern-sans' | 'classic-serif' | 'display';
+
+type FontVariantId =
+  | 'inter'
+  | 'roboto'
+  | 'merriweather'
+  | 'playfair'
+  | 'montserrat'
+  | 'oswald';
+
+  interface FontVariant {
+  id: FontVariantId;
+  name: string;
+  sample: string;
+}
+
+interface FontStyle {
+  id: FontStyleId;
+  name: string;
+  variants: FontVariant[];
+}
+
 @Component({
   selector: 'app-font-step',
   standalone: true,
@@ -14,7 +36,7 @@ export class FontStep {
   @Input() builderState!: BuilderState;
   @Output() update = new EventEmitter<Partial<BuilderState>>();
 
-  fontStyles = [
+ fontStyles: FontStyle[] = [
     {
       id: 'modern-sans',
       name: 'Modern Sans',
@@ -40,6 +62,7 @@ export class FontStep {
       ],
     },
   ];
+
 
   updateState(updates: Partial<BuilderState>) {
     this.update.emit(updates);

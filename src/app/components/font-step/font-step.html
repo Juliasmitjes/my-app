@@ -12,6 +12,7 @@
         @for (variant of style.variants; track variant.id) {
           <app-option-card
             [layout]="{
+              id: variant.id,
               name: variant.name,
               description: variant.sample
             }"
