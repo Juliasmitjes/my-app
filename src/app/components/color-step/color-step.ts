@@ -2,7 +2,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
 import { OptionCard } from '../ui/option-card/option-card';
-import { Check } from 'lucide-angular';
 
 export type ColorTheme = 'warm' | 'light' | 'dark' | 'cool';
 

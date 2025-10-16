@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
 import { OptionCard } from '../ui/option-card/option-card';
 
-
-
 export interface LayoutOption {
   id: string;
   name: string;

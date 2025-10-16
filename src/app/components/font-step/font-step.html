@@ -1,19 +1,25 @@
-<div className="space-y-6">
-  <div className="text-center mb-8">
-    <h2 className="text-2xl font-bold mb-2">Choose Your Typography</h2>
-    <p className="text-muted-foreground">Select fonts that reflect your style</p>
+<div class="animate-fade-in space-y-8">
+  <div class="text-center mb-8">
+    <h2 class="text-2xl font-bold mb-2">Choose Typography</h2>
+    <p class="text-muted-foreground">Select a font style for your website</p>
   </div>
-  
-  <div className="grid gap-4">
-    <div class="grid md:grid-cols-2 gap-6">
-      @for (font of fonts; track font.id) {
-        <app-option-card
-          [title]="font.name"
-          [description]="font.category + ' • ' + font.preview"
-          [selected]="builderState.font === font.id"
-          (click)="updateState({ font: font.id })">
-        </app-option-card>
-      }
+
+  @for (style of fontStyles; track style.id) {
+    <div class="space-y-4">
+      <h3 class="font-semibold text-lg mb-3">{{ style.name }}</h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        @for (variant of style.variants; track variant.id) {
+          <app-option-card
+            [layout]="{
+              name: variant.name,
+              description: variant.sample
+            }"
+            [selected]="isSelected(style.id, variant.id)"
+            (select)="updateState({ fontStyle: style.id, fontVariant: variant.id })">
+          </app-option-card>
+        }
+      </div>
     </div>
-  </div>
+  }
 </div>

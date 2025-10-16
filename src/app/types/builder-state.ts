@@ -1,16 +1,32 @@
 export interface BuilderState {
+  /** Layout type van de website */
   layout: 'single' | 'two-column' | 'grid' | null;
+
+  /** Kleurenthema van de website */
   colorTheme: 'warm' | 'light' | 'dark' | 'cool' | null;
-  font:
-    | 'modern-inter'
-    | 'modern-roboto'
-    | 'serif-merriweather'
-    | 'serif-playfair'
-    | 'display-montserrat'
-    | 'display-oswald'
+
+  /** Hoofdtypografie-categorie, bv. “modern-sans” of “display” */
+  fontStyle: 'modern-sans' | 'classic-serif' | 'display' | null;
+
+  /** Specifieke fontvariant binnen de gekozen stijl */
+  fontVariant:
+    | 'inter'
+    | 'roboto'
+    | 'merriweather'
+    | 'playfair'
+    | 'montserrat'
+    | 'oswald'
     | null;
-  logo: string;
-  navigation: 'top' | 'sidebar';
-  headerStyle: 'fixed' | 'scrolling';
+
+  /** Logo-bestandspad of -URL */
+  logo: string | null;
+
+  /** Navigatiepositie */
+  navigation: 'top' | 'sidebar' | null;
+
+  /** Header-gedrag */
+  headerStyle: 'fixed' | 'scrolling' | null;
+
+  /** Pagina’s binnen de sitebuilder */
   pages: string[];
 }
