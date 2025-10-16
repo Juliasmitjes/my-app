@@ -3,9 +3,7 @@
     <div class="backdrop" (click)="close()"></div>
 
     <aside class="panel pb-20 flex flex-col" [ngClass]="size" role="dialog" aria-label="Live preview">
-      <header class="p-4 flex items-center justify-end">
-
-        
+      <header class="p-4 flex items-center justify-end">        
         <div class="panel-actions">
           <button
             class="px-3 py-2 text-sm font-medium rounded-md border border-border hover:bg-accent/20 hover:text-accent transition cursor-pointer"
@@ -33,7 +31,8 @@
                   <div class="flex gap-2">
                     @for (p of pages; track p) {
                       <ng-container>
-                        <div class="text-xs px-2 py-1 rounded bg-background">{{ pageLabel(p) }}</div>
+                        <div class="text-xs px-2 py-1 rounded"
+                        [style.background]="selectedThemeColors[0]">{{ pageLabel(p) }}</div>
                       </ng-container>
                     }
                   </div>
@@ -86,26 +85,31 @@
       <!-- Preview content template -->
       <ng-template #previewContent>
         <div class="flex-1 flex flex-col">
-          <div class="h-4 bg-muted rounded w-3/4 mb-3"></div>
-          <div class="h-4 bg-muted rounded w-1/2 mb-6"></div>
+          <div class="h-4 rounded w-3/4 mb-3"
+          [style.background]="selectedThemeColors[2]"></div>
+          <div class="h-4 bg-muted rounded w-1/2 mb-6"
+          [style.background]="selectedThemeColors[0]"></div>
 
           <div class="mt-6 grid gap-4" [style.gridTemplateColumns]="getGridColumns()">
-            <div class="h-24 bg-muted rounded"></div>
+            <div class="h-24 rounded"
+            [style.background]="selectedThemeColors[1]"></div>
             @if (builderState?.layout !== 'single') {
               <ng-container>
-                <div class="h-24 bg-muted rounded"></div>
+                <div class="h-24 rounded"
+                [style.background]="selectedThemeColors[1]"></div>
               </ng-container>
             }
 
             @if (builderState?.layout === 'grid') {
               <ng-container>
-                <div class="h-24 bg-muted rounded"></div>
+                <div class="h-24 rounded"
+                [style.background]="selectedThemeColors[1]"></div>
               </ng-container>
             }
           </div>
         </div>
       </ng-template>
-      <!-- END: Preview content -->
+      
     </aside>
   </div>
 }

@@ -15,6 +15,13 @@ export class PreviewPanel {
   @Input() builderState?: BuilderState;
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Output() closed = new EventEmitter<void>();
+  @Input() colorThemes!: { id: string; colors: string[] }[];
+
+   get selectedThemeColors(): string[] {
+    const theme = this.colorThemes?.find(t => t.id === this.builderState?.colorTheme);
+    return theme ? theme.colors : ['#f3f3f3', '#e5e5e5', '#cccccc'];
+  }
+
 
   iconName: string = 'monitor';
   title: string = 'Live Preview';
