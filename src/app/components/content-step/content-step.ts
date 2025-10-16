@@ -41,6 +41,12 @@ export class ContentStep {
     return this.builderState?.pages ?? ['home'];
   }
 
+  get additionalPagesCount(): number {
+  const count = Math.max(0, this.pages.length - 1);
+  console.log('ContentStep additionalPagesCount', count, 'pages:', this.pages);
+  return count;
+}
+
   // Toggle of add/remove pagina; respecteer required en limiet (max 4 totaal)
   onSelectPage(pageId: string, required = false) {
     if (!this.builderState) return;

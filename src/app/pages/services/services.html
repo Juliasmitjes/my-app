@@ -78,9 +78,8 @@
     <app-content-step
       [builderState]="builderState()"
       [contents]="availablePages"
-      (update)="updateState($event)"
-      (toggle)="togglePage($event)">
-    </app-content-step>
+      (toggle)="togglePage($event)"
+    ></app-content-step>
   }
   @case (5) {
     <app-preview-step
