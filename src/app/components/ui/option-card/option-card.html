@@ -1,17 +1,21 @@
 @if (layout) {
-  <div
-    class="p-6 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col items-center text-center space-y-3 hover:shadow-md"
-    [class.ring-2]="selected"
-    [class.ring-primary]="selected"
-    [class.bg-accent]="selected"
-    [class.border-gray-200]="!selected"
-    (click)="onClick()"
-  >
+<div
+  class="relative group p-6 rounded-3xl cursor-pointer transition-all duration-300 flex flex-col items-center text-center space-y-4
+         bg-white/60 dark:bg-muted/30 backdrop-blur-sm border border-border/50
+         hover:shadow-lg hover:scale-[1.02]"
+  [class.scale-[1.02]]="selected"
+  [class.shadow-lg]="selected"
+  [class.bg-primary/5]="selected"
+  (click)="onClick()"
+>
+    <!-- Icoon -->
     <div
-      class="w-16 h-16 rounded-xl flex items-center justify-center transition-colors"
+      class="w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300 shadow-sm
+             group-hover:scale-105"
       [class.bg-primary]="selected"
       [class.text-primary-foreground]="selected"
-      [class.bg-secondary]="!selected"
+      [class.bg-muted]="!selected"
+      [class.text-foreground/80]="!selected"
     >
       @if (layout.icon) {
         <lucide-icon [name]="layout.icon" class="w-8 h-8"></lucide-icon>
@@ -20,9 +24,20 @@
       }
     </div>
 
+    <!-- Tekst -->
     <div>
-      <h3 class="font-semibold text-lg">{{ layout.name }}</h3>
-      <p class="text-sm text-muted-foreground mt-1" [class.opacity-60]="!selected">
+      <h3
+        class="font-semibold text-lg tracking-tight transition-colors duration-300"
+        [class.text-primary]="selected"
+        [class.text-foreground]="!selected"
+      >
+        {{ layout.name }}
+      </h3>
+      <p
+        class="text-sm mt-1 leading-relaxed transition-colors duration-300"
+        [class.text-muted-foreground]="!selected"
+        [class.text-foreground/70]="selected"
+      >
         {{ layout.description }}
       </p>
     </div>
