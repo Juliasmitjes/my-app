@@ -1,0 +1,22 @@
+<!-- preview-panel.html -->
+ @if (open){
+  <div class="preview-overlay">
+  <div class="backdrop" (click)="close()"></div>
+
+  <aside class="panel" [ngClass]="size" role="dialog" aria-label="Live preview">
+    <header class="panel-header">
+      <div class="panel-title">
+        <lucide-icon name="monitor" class="w-5 h-5 text-muted-foreground"></lucide-icon>
+        <span class="ml-2">Voorbeeld</span>
+      </div>
+      <div class="panel-actions">
+        <button class="btn" (click)="close()">Sluiten</button>
+      </div>
+    </header>
+
+    <div class="panel-body">
+      <app-preview-step [builderState]="builderState!" class="preview-component"></app-preview-step>
+    </div>
+  </aside>
+</div>
+ }

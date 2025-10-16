@@ -29,12 +29,25 @@
         </div>
       </div>
 
-      <!-- Optionele actie rechts -->
-      <div class="hidden sm:flex items-center gap-3">
-        <button class="px-3 py-2 text-sm font-medium rounded-md border border-border hover:bg-accent/10 transition cursor-pointer">
-          Voorbeeld bekijken
-        </button>
-      </div>
+        <!-- Optionele actie rechts -->
+        <div class="hidden sm:flex items-center gap-3">
+          <button
+            class="px-3 py-2 text-sm font-medium rounded-md border border-border hover:bg-accent/10 transition cursor-pointer"
+            (click)="openPreviewPanel()"
+            aria-haspopup="dialog"
+            [attr.aria-expanded]="showPreviewPanel()"
+          >
+            Voorbeeld bekijken
+          </button>
+
+          <!-- preview panel -->
+          <app-preview-panel
+            [open]="showPreviewPanel()"
+            [builderState]="builderState()"
+            size="medium"
+            (closed)="closePreviewPanel()"
+          ></app-preview-panel>
+        </div>
 
     </div>
   </div>
@@ -46,7 +59,7 @@
 
     <div class="mb-8 mt-5 bg-card rounded-xl shadow-lg p-8 min-h-[500px]">
 
-      @switch (currentStep()) {
+ @switch (currentStep()) {
   @case (0) {
     <app-layout-step
       [builderState]="builderState()"

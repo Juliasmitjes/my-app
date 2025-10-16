@@ -8,6 +8,7 @@ import { NavigationStep } from '../../components/navigation-step/navigation-step
 import { ContentStep, PageDef } from '../../components/content-step/content-step';
 import { PreviewStep } from '../../components/preview-step/preview-step';
 import { BuilderState } from '../../types/builder-state';
+import { PreviewPanel } from '../../components/preview-panel/preview-panel';
 
 @Component({
   selector: 'app-services',
@@ -20,7 +21,8 @@ import { BuilderState } from '../../types/builder-state';
     NavigationStep,
     ContentStep,
     PreviewStep,
-    TitleCasePipe
+    TitleCasePipe,
+    PreviewPanel
   ],
   templateUrl: './services.html',
   styleUrl: './services.css'
@@ -30,6 +32,8 @@ export class Services {
 
   readonly currentStep = signal(0);
   readonly currentStepOneBased = computed(() => this.currentStep() + 1);
+  readonly showPreviewPanel = signal(false);
+
 
   readonly colorThemes = signal([
     { id: 'warm', name: 'Warm', colors: ['#FF6B4A', '#FF8E73', '#FFA99C'] },
@@ -65,6 +69,19 @@ export class Services {
     pages: ['home']
   });
 
+  openPreviewPanel() {
+  this.showPreviewPanel.set(true);
+  }
+
+  closePreviewPanel() {
+    this.showPreviewPanel.set(false);
+  }
+
+  togglePreviewPanel() {
+    this.showPreviewPanel.update(v => !v);
+  }
+
+  
   updateState(updates: Partial<BuilderState>) {
     this.builderState.update(prev => ({ ...prev, ...updates }));
   }
