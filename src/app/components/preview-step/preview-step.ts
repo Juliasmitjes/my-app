@@ -15,7 +15,6 @@ export class PreviewStep {
   @Input() iconName: string = 'monitor-check';
   @Input() title: string = 'Live website preview';
   @Input() colorThemes: { id: string; colors: string[] }[] = [];
-  @Input() mascotUrl: string = '/assets/mascot.png'; // voeg jouw mascotte hier toe
 
   get isSidebar(): boolean {
     return this.builderState?.navigation === 'sidebar';
