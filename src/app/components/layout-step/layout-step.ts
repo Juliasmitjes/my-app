@@ -25,9 +25,9 @@ export class LayoutStep implements OnChanges {
   @Output() selectLayout = new EventEmitter<BuilderState['layout']>();
 
   layouts: LayoutOption[] = [
-    { id: 'single', name: 'Single Column', description: 'Simpel, inhoud verticaal gecentreerd', icon: 'layers' },
-    { id: 'two-column', name: 'Two Columns', description: 'Zijbar met hoofdcontent', icon: 'columns2' },
-    { id: 'grid', name: 'Grid', description: 'Fotos, projecten, overzicht', icon: 'layout-grid' },
+    { id: 'single', name: 'Eén kolom', description: 'Simpel, inhoud verticaal gecentreerd', icon: 'layers' },
+    { id: 'two-column', name: 'Twee kolommen', description: 'Zijbar met hoofdcontent', icon: 'columns2' },
+    { id: 'grid', name: 'Rooster', description: 'Fotos, projecten, overzicht', icon: 'layout-grid' },
   ];
 
  ngOnChanges(changes: SimpleChanges) {

@@ -118,7 +118,7 @@
         [disabled]="currentStep() === 0"
         class="transition-all hover:scale-105 hover:bg-primary/10"
       >
-        Previous
+        Vorige
       </app-button>
 
       <app-button
@@ -127,7 +127,7 @@
         [disabled]="currentStep() === steps.length - 1"
         class="transition-all hover:scale-105 hover:bg-accent/10"
       >
-        {{ currentStep() === steps.length - 2 ? 'Review' : 'Next' }}
+        {{ currentStep() === steps.length - 2 ? 'Resultaat' : 'Volgende' }}
       </app-button>
     </div>
   </div>

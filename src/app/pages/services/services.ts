@@ -37,12 +37,57 @@ export class Services {
   readonly currentStepOneBased = computed(() => this.currentStep() + 1);
   readonly showPreviewPanel = signal(false);
   
-  readonly colorThemes = signal([
-    { id: 'warm', name: 'Warm', description: 'Warme kleur', colors: ['#FF6B4A', '#FF8E73', '#FFA99C'] },
-    { id: 'light', name: 'Light',  description: 'Lichte kleur', colors: ['#E3F2FD', '#BBDEFB', '#90CAF9'] },
-    { id: 'dark', name: 'Dark',  description: 'Donkere kleur', colors: ['#424242', '#616161', '#757575'] },
-    { id: 'cool', name: 'Cool',  description: 'Koude kleur', colors: ['#4FC3F7', '#29B6F6', '#03A9F4'] }
-  ]);
+readonly colorThemes = signal([
+  {
+    id: 'warm',
+    name: 'Warm',
+    description: 'Zonnig en energiek met oranje en gouden tinten',
+    colors: ['#FF7A3D', '#FFB347', '#FFD166'], // oranje-geel
+  },
+  {
+    id: 'light',
+    name: 'Licht',
+    description: 'Fris en helder met zachte pastelkleuren',
+    colors: ['#FDF6E3', '#E3F2FD', '#C8E6C9'], // crème-blauw-groen
+  },
+  {
+    id: 'dark',
+    name: 'Donker',
+    description: 'Diep en stijlvol met luxe accenten',
+    colors: ['#1E1E2F', '#2C2C3A', '#3B3B4F'], // blauwgrijs-paars
+  },
+  {
+    id: 'cool',
+    name: 'Koel',
+    description: 'Rustig en modern met blauwe en paarse tonen',
+    colors: ['#5C6BC0', '#42A5F5', '#26C6DA'], // paars-blauw-turquoise
+  },
+  {
+    id: 'earth',
+    name: 'Aards',
+    description: 'Natuurlijke tinten met groen en bruin voor een rustige uitstraling',
+    colors: ['#8D6E63', '#A1887F', '#C5A880'], // bruin-groen-zand
+  },
+  {
+    id: 'vibrant',
+    name: 'Vibrant',
+    description: 'Levendig en speels met opvallende kleuren',
+    colors: ['#FF4081', '#7C4DFF', '#448AFF'], // roze-paars-blauw
+  },
+  {
+    id: 'ocean',
+    name: 'Ocean',
+    description: 'Diep en verfrissend als de zee',
+    colors: ['#00796B', '#0097A7', '#80CBC4'], // zeegroen-blauw
+  },
+  {
+    id: 'sunset',
+    name: 'Zonsondergang',
+    description: 'Warm en dromerig met roze en perzik',
+    colors: ['#FF9A8B', '#FF6A88', '#FF99AC'], // perzik-roze
+  },
+]);
+
 
   readonly fontOptions = signal([
     { id: 'modern-inter', category: 'Modern Sans', name: 'Inter', preview: 'Clean and modern typography' },
