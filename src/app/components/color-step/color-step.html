@@ -8,7 +8,7 @@
     @for (theme of themes; track theme.id) {
       <app-option-card
         [layout]="{ id: theme.id, name: theme.name, description: 'Background, buttons, and accents automatically adjust', icon: undefined }"
-        [selected]="builderState?.colorTheme === theme.id"
+        [selected]="builderState.colorTheme === theme.id"
         (select)="onSelectTheme(theme.id)"
         class="p-0"
       >

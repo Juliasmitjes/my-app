@@ -4,6 +4,7 @@ import { BuilderState } from '../../types/builder-state';
 import { OptionCard } from '../ui/option-card/option-card';
 
 
+
 export interface LayoutOption {
   id: string;
   name: string;
@@ -40,10 +41,14 @@ export class LayoutStep implements OnChanges {
     return item.id;
   }
 
+  onSelect(id: string) {
+    const allowed = ['single', 'two-column', 'grid'] as const;
+    const isAllowed = (allowed as readonly string[]).includes(id);
 
-  onSelect(id: BuilderState['layout']) {
-    this.selectLayout.emit(id);
-    this.update.emit({ layout: id });
-    this.selectedLayout = id; 
+    const value: BuilderState['layout'] = isAllowed ? (id as BuilderState['layout']) : null;
+
+    this.selectLayout.emit(value);
+    this.update.emit({ layout: value });
+    this.selectedLayout = value; 
   }
 }
