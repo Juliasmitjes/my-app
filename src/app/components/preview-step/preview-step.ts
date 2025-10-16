@@ -15,26 +15,29 @@ import { BuilderState } from '../../types/builder-state';
 
 export class PreviewStep {
   @Input() builderState!: BuilderState;
+  @Input() iconName: string = 'monitor-check';
+  @Input() title: string = 'Your final result';
+
 
   get isSidebar(): boolean {
   return this.builderState?.navigation === 'sidebar';
-}
-get pages(): string[] {
-  return this.builderState?.pages ?? ['home'];
-}
-get logoLabel(): string {
-  return this.builderState?.logo || 'Your Site';
-}
-getGridColumns(): string {
+  }
+  get pages(): string[] {
+    return this.builderState?.pages ?? ['home'];
+  }
+  get logoLabel(): string {
+    return this.builderState?.logo || 'Your Site';
+  }
+  getGridColumns(): string {
   switch (this.builderState?.layout) {
     case 'grid': return 'repeat(3, 1fr)';
     case 'two-column': return 'repeat(2, 1fr)';
     default: return '1fr';
   }
-}
-pageLabel(p: string) {
-  return p.charAt(0).toUpperCase() + p.slice(1);
-}
+  }
+  pageLabel(p: string) {
+    return p.charAt(0).toUpperCase() + p.slice(1);
+  }
 
 
 }

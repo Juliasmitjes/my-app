@@ -1,9 +1,10 @@
 <!-- preview-step.html -->
 <div class="h-full bg-muted rounded-lg p-6 flex flex-col">
   <div class="flex items-center gap-2 mb-4">
-    <lucide-icon name="monitor" class="w-5 h-5 text-muted-foreground"></lucide-icon>
-    <h3 class="font-semibold text-sm text-muted-foreground">Live Preview</h3>
-  </div>
+  <lucide-icon [name]="iconName" class="w-5 h-5 text-muted-foreground"></lucide-icon>
+  <h3 class="font-semibold text-sm text-muted-foreground">{{ title }}</h3>
+</div>
+
 
   <div class="flex-1 bg-background rounded-lg shadow-lg overflow-hidden">
     <div class="h-full flex flex-col">
