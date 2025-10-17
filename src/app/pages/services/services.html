@@ -20,7 +20,7 @@
             </div>
 
           <div class="text-xs text-muted-foreground italic">
-            {{ currentStep() < steps.length - 1 ? (steps[currentStep()] | titlecase) : 'Bekijk jouw resultaat' }}
+            {{ currentStep() < steps.length - 1 ? (steps[currentStep()] | titlecase) : 'Bekijk het resultaat' }}
           </div>
 
           <!-- Progress bar -->
@@ -110,8 +110,8 @@
           [builderState]="builderState()"
           [colorThemes]="colorThemes()"
           iconName="monitor"
-          title="Jouw resultaat"
-          [mascotUrl]="'/assets/mascot.png'">
+          title="Resultaat"
+          [mascotUrl]="'../../../assets/images/uil5.png'">
         </app-preview-step>
         }
       }

@@ -10,11 +10,13 @@ import { BuilderState } from '../../types/builder-state';
   templateUrl: './preview-step.html',
   styleUrl: './preview-step.css'
 })
+
 export class PreviewStep {
   @Input() builderState!: BuilderState;
   @Input() iconName: string = 'monitor-check';
   @Input() title: string = 'Live website preview';
   @Input() colorThemes: { id: string; colors: string[] }[] = [];
+  @Input() mascotUrl!: string;
 
   get isSidebar(): boolean {
     return this.builderState?.navigation === 'sidebar';
