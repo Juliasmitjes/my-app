@@ -1,30 +1,29 @@
 <div class="h-full rounded-xl p-8 flex flex-col md:flex-row gap-6 preview-root"
 [style.background]="selectedThemeColors[2] + 20" >
-  <!-- Left side: Mascotte -->
-    <div class="mascot-wrap w-full md:w-48 flex items-center justify-center md:justify-start">
+
+    <div class="hidden mascot-wrap w-full md:w-48 lg:flex items-center justify-center md:justify-start">
       <img 
         [src]="mascotUrl" 
         alt="Mascot"
         class="mascot-img w-32 h-32 md:w-50 md:h-50 object-contain translate-y-30" />
     </div>
 
-   <!-- Right side: preview content -->
+
   <div class="flex-1 flex flex-col rounded-2xl shadow-xl overflow-hidden preview-panel"
        aria-live="polite"
        [style.background]="'linear-gradient(135deg,' + selectedThemeColors[1] + ',' + selectedThemeColors[2] + ')'">
 
-    <!-- Header -->
     <div class="header flex items-center justify-between p-4 border-b"
          [style.background]="selectedThemeColors[0]"
          [style.color]="'#fff'">
       <div class="flex items-center gap-2">
         <lucide-icon [name]="iconName" class="w-5 h-5"></lucide-icon>
-        <h3 class="font-semibold text-sm tracking-wide uppercase">{{ title }}</h3>
+        <h3 class="hidden sm:block font-semibold text-sm tracking-wide uppercase">{{ title }}</h3>
       </div>
       <span class="text-xs opacity-90">{{ logoLabel }}</span>
     </div>
 
-    <!-- Content area -->
+
     <div class="flex-1 p-6 content-area">
       @if (isSidebar) {
         <div class="flex h-full">
@@ -50,7 +49,6 @@
       }
     </div>
 
-    <!-- Footer -->
     <div class="p-4 border-t text-xs footer">
       <div class="flex flex-wrap gap-x-4 gap-y-1 text-muted-foreground">
         <div><strong>Layout:</strong> {{ builderState.layout }}</div>
@@ -62,7 +60,7 @@
   </div>
 </div>
 
-<!-- Content blocks -->
+
 <ng-template #previewContent>
   <div class="flex-1 flex flex-col">
     <div class="h-4 rounded w-3/4 mb-3 bar"
