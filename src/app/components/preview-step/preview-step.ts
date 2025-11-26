@@ -47,4 +47,13 @@ export class PreviewStep {
     const theme = this.colorThemes.find(t => t.id === this.builderState?.colorTheme);
     return theme?.colors ?? ['#e5e7eb', '#d1d5db', '#9ca3af']; 
   }
+
+  fontMap: Record<string, string> = {
+  inter: "'Inter', sans-serif",
+  roboto: "'Roboto', sans-serif",
+  merriweather: "'Merriweather', serif",
+  playfair: "'Playfair Display', serif",
+  montserrat: "'Montserrat', sans-serif",
+  oswald: "'Oswald', sans-serif"
+};
 }

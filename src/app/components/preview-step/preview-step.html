@@ -1,5 +1,5 @@
 <div class="h-full rounded-xl p-8 flex flex-col md:flex-row gap-6 preview-root"
-[ngStyle]="{ 'font-family': builderState.fontVariant }"
+[ngStyle]="{ 'font-family': fontMap[builderState.fontVariant!] }"
 [style.background]="selectedThemeColors[2] + 20" >
 
     <div class="hidden mascot-wrap w-full md:w-48 lg:flex items-center justify-center md:justify-start">
