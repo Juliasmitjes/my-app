@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 function cn(...classes: (string | undefined | null | false)[]) {
@@ -13,11 +13,12 @@ function cn(...classes: (string | undefined | null | false)[]) {
   styleUrls: ['./button.css']
 })
 export class Button {
-
   @Input() variant: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link' | 'hero' | 'outline-hero' = 'default';
   @Input() size: 'default' | 'sm' | 'lg' | 'icon' = 'default';
   @Input() disabled = false;
   @Input() class = ''; // extra custom classes
+
+  @Output() clicked = new EventEmitter<Event>();
 
   get computedClasses() {
     const base =
@@ -44,5 +45,19 @@ export class Button {
     };
 
     return cn(base, variants[this.variant], sizes[this.size], this.class);
+  }
+
+  // Host listener onderschept clicks op de host element (app-button)
+  @HostListener('click', ['$event'])
+  onHostClick(event: Event) {
+    if (this.disabled) {
+      // voorkom dat parent (click) handlers worden aangeroepen
+      event.stopPropagation();
+      event.preventDefault();
+      return;
+    }
+
+    // emit een eigen event als extra API; parent kan nog steeds (click) gebruiken
+    this.clicked.emit(event);
   }
 }
