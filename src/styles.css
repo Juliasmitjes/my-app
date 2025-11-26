@@ -1,6 +1,13 @@
 @import "tailwindcss";
 
-/* === Globale animatie voor alle "step" componenten === */
+.inter { font-family: 'Inter', sans-serif; }
+.roboto { font-family: 'Roboto', sans-serif; }
+.merriweather { font-family: 'Merriweather', serif; }
+.playfair { font-family: 'Playfair Display', serif; }
+.montserrat { font-family: 'Montserrat', sans-serif; }
+.oswald { font-family: 'Oswald', sans-serif; }
+
+
 .step-container,
 [class*='-step'] {
   display: block;
