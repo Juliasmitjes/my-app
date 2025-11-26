@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,24 +8,36 @@ import { CommonModule } from '@angular/common';
   templateUrl: './speech-bubble.html',
   styleUrl: './speech-bubble.css'
 })
-export class SpeechBubble implements OnInit {
-  displayedText = '';
-  private fullText = 'Kies jouw stijl!';
-  private typingSpeed = 100; 
+export class SpeechBubble implements OnDestroy {
+  private _text = '';
 
-  ngOnInit() {
-    this.startTyping();
+  @Input()
+  set text(value: string) {
+    this._text = value ?? '';
+    this.startTyping(); 
   }
+  get text(): string { return this._text; }
+
+  displayedText = '';
+  private typingSpeed = 80;
+  private currentInterval: any;
 
   private startTyping() {
+    if (this.currentInterval) clearInterval(this.currentInterval);
+    this.displayedText = '';
+    if (!this._text) return;
     let index = 0;
-    const interval = setInterval(() => {
-      if (index < this.fullText.length) {
-        this.displayedText += this.fullText[index];
-        index++;
+    this.currentInterval = setInterval(() => {
+      if (index < this._text.length) {
+        this.displayedText += this._text[index++];
       } else {
-        clearInterval(interval);
+        clearInterval(this.currentInterval);
+        this.currentInterval = undefined;
       }
     }, this.typingSpeed);
+  }
+
+  ngOnDestroy() {
+    if (this.currentInterval) clearInterval(this.currentInterval);
   }
 }

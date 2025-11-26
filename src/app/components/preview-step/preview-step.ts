@@ -2,11 +2,12 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { BuilderState } from '../../types/builder-state';
+import { SpeechBubble } from '../../components/ui/speech-bubble/speech-bubble';
 
 @Component({
   selector: 'app-preview-step',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [CommonModule, LucideAngularModule, SpeechBubble],
   templateUrl: './preview-step.html',
   styleUrl: './preview-step.css'
 })

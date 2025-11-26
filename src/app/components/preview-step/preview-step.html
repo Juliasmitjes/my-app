@@ -2,6 +2,12 @@
 [style.background]="selectedThemeColors[2] + 20" >
 
     <div class="hidden mascot-wrap w-full md:w-48 lg:flex items-center justify-center md:justify-start">
+
+       <app-speech-bubble 
+        [text]="'Jouw website is klaar!'"
+        class="absolute top-65 left-46 2xl:top-65 2xl:left-45 transform -translate-x-1/2 -translate-y-full mb-4"
+        ></app-speech-bubble>
+
       <img 
         [src]="mascotUrl" 
         alt="Mascot"
