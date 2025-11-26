@@ -12,7 +12,7 @@ export class Label {
   @Input() for?: string;
   @Input() text = 'string';
 
-  // Extra Tailwind classen (zoals "text-red-500" of "mb-2")
+  
   @Input() className = '';
 }
 

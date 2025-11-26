@@ -24,7 +24,7 @@ export interface BuilderState {
   /** Navigatiepositie */
   navigation: 'top' | 'sidebar' | null;
 
-  /** Header-gedrag */
+  /** Header-gedrag */ 
   headerStyle: 'fixed' | 'scrolling' | null;
 
   /** Pagina’s binnen de sitebuilder */

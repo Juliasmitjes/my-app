@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule } from 'lucide-angular'; // of je bestaande lucide-icon import
+import { LucideAngularModule } from 'lucide-angular'; 
 
 @Component({
   selector: 'app-footer',

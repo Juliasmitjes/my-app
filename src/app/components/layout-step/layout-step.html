@@ -4,7 +4,7 @@
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
     @for (layout of layouts;track layout.id){
-       <ng-container>
+      <ng-container>
       <app-option-card
         [layout]="layout"
         [selected]="selectedLayout === layout.id"
