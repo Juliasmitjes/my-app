@@ -1,11 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
+import { FormsModule } from '@angular/forms'; 
 
 @Component({
   selector: 'app-font-step',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './font-step.html',
   styleUrl: './font-step.css'
 })
@@ -90,4 +91,6 @@ export class FontStep {
       fontVariant: variantId as BuilderState['fontVariant'],
     });
   }
+
+  userSampleText: string = 'Typ hier jouw tekst...';
 }
