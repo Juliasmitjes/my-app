@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
 import { FormsModule } from '@angular/forms'; 
+import { fontMap, googleFontsUrl } from '../../shared/fonts';
 
 @Component({
   selector: 'app-font-step',
@@ -94,4 +95,6 @@ export class FontStep {
   }
 
   userSampleText: string = '';
+
+  public fontMap = fontMap;
 }

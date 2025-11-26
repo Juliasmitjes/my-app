@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { BuilderState } from '../../types/builder-state';
+import { fontMap } from '../../shared/fonts';
 
 @Component({
   selector: 'app-preview-panel',
@@ -54,13 +55,7 @@ export class PreviewPanel {
     return p.charAt(0).toUpperCase() + p.slice(1);
   }
 
-  fontMap: Record<string, string> = {
-  inter: "'Inter', sans-serif",
-  roboto: "'Roboto', sans-serif",
-  merriweather: "'Merriweather', serif",
-  playfair: "'Playfair Display', serif",
-  montserrat: "'Montserrat', sans-serif",
-  oswald: "'Oswald', sans-serif"
-};
+
+public fontMap = fontMap;
 
 }
