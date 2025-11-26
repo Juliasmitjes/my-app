@@ -18,6 +18,9 @@ export interface BuilderState {
     | 'oswald'
     | null;
 
+  /** Tekst die de gebruiker invoert voor font-preview */
+  fontSample: string | null;
+
   /** Logo-bestandspad of -URL */
   logo: string | null;
 

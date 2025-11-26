@@ -1,5 +1,5 @@
 @if (open) {
-  <div class="preview-overlay">
+  <div class="preview-overlay" [ngStyle]="{ 'font-family': builderState?.fontVariant }">
     <div class="backdrop" (click)="close()"></div>
 
     <aside class="panel pb-20 flex flex-col" [ngClass]="size" role="dialog" aria-label="Live preview">

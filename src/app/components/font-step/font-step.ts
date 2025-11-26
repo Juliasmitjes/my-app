@@ -86,11 +86,12 @@ export class FontStep {
   }
 
   onSelectVariant(styleId: string, variantId: string) {
-    this.update.emit({
-      fontStyle: styleId as BuilderState['fontStyle'],
-      fontVariant: variantId as BuilderState['fontVariant'],
-    });
+  this.update.emit({
+    fontStyle: styleId as BuilderState['fontStyle'],
+    fontVariant: variantId as BuilderState['fontVariant'],
+    fontSample: this.userSampleText   // ⬅ NIEUW
+  });
   }
 
-  userSampleText: string = 'Typ hier jouw tekst...';
+  userSampleText: string = '';
 }
