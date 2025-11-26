@@ -4,11 +4,12 @@ import { Button } from '../../components/ui/button/button';
 import { LucideAngularModule } from 'lucide-angular';
 import { Services } from '../services/services';
 import { Footer } from '../../components/footer/footer'
+import { SpeechBubble } from '../../components/ui/speech-bubble/speech-bubble';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, Button, LucideAngularModule, Services, Footer],
+  imports: [CommonModule, Button, LucideAngularModule, Services, Footer, SpeechBubble],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
