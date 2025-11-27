@@ -2,7 +2,7 @@
   <div class="preview-overlay">
     <div class="backdrop" (click)="close()"></div>
 
-    <aside class="panel pb-20 flex flex-col" [ngClass]="size" role="dialog" aria-label="Live preview" [ngStyle]="{ 'font-family': fontMap[builderState?.fontVariant!] }">
+    <aside class="panel pb-20 flex flex-col" [ngClass]="size" role="dialog" aria-label="Live preview" >
       <header class="p-4 flex items-center justify-end">        
         <div class="panel-actions">
           <button
@@ -15,7 +15,7 @@
       </header>
 
       <!-- BEGIN: Preview content (van preview-step) -->
-      <div class="h-full bg-muted rounded-lg p-6 flex flex-col preview-component">
+      <div class="h-full bg-muted rounded-lg p-6 flex flex-col preview-component" [ngStyle]="{ 'font-family': fontMap[builderState?.fontVariant!] }">
         <div class="flex items-center gap-2 mb-4">
           <lucide-icon [name]="iconName" class="w-5 h-5 text-muted-foreground"></lucide-icon>
           <h3 class="font-semibold text-sm text-muted-foreground"
@@ -72,6 +72,7 @@
                 </div>
               }
             </div>
+            
           </div>
         </div>
 
