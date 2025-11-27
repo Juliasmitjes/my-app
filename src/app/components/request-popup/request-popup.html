@@ -1,4 +1,5 @@
-<div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50" *ngIf="visible">
+@if(visible){
+  <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
   <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
     <h2 class="text-xl font-bold mb-4">Aanvraag versturen</h2>
     <p class="mb-4">Eenmalige bouwkosten: <strong>€250</strong><br>
@@ -17,3 +18,4 @@
     </form>
   </div>
 </div>
+}
