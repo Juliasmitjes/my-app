@@ -1,17 +1,19 @@
 import emailjs from '@emailjs/browser';
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { LucideAngularModule } from 'lucide-angular';
 
 
 @Component({
   selector: 'app-request-popup',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, LucideAngularModule],
   templateUrl: './request-popup.html',
 })
 export class RequestPopup {
   @Input() visible = false;
   @Input() builderState: any; // kleur, content, font, layout, navigatie etc 
+  @Output() dismiss = new EventEmitter<void>();
 
   form = {
     name: '',
@@ -20,6 +22,10 @@ export class RequestPopup {
     phone: '',
     message: ''
   };
+
+   onDismiss() {
+    this.dismiss.emit();
+  }
 
   async sendRequest() {
     const emailjs = await import('@emailjs/browser');
@@ -54,4 +60,6 @@ export class RequestPopup {
       alert('Er ging iets mis bij het versturen.');
     }
   }
+  
+ 
 }

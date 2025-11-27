@@ -4,6 +4,16 @@
     <div
       class="w-full max-w-md mx-auto bg-white/60 dark:bg-muted/30 backdrop-blur-sm border border-border/50 rounded-3xl p-8 shadow-lg flex flex-col"
     >
+
+    <button
+        type="button"
+        (click)="onDismiss()"
+        class="absolute top-4 right-4 text-muted-foreground hover:text-accent transition curor-pointer"
+        aria-label="Popup sluiten"
+      >
+        <lucide-icon name="x" class="w-6 h-6"></lucide-icon>
+      </button>
+
       <!-- Titel -->
       <div class="text-center mb-6">
         <h2 class="text-2xl font-bold text-foreground mb-2">Aanvraag versturen</h2>

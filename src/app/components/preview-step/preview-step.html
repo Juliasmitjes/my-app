@@ -17,7 +17,8 @@
 
         <app-request-popup
           [visible]="showRequestPopup"
-          [builderState]="builderState">
+          [builderState]="builderState"
+          (dismiss)="closeRequestPopup()">
         </app-request-popup>
 
       <img 
