@@ -1,13 +1,14 @@
 import emailjs from '@emailjs/browser';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 
 
 @Component({
   selector: 'app-request-popup',
   standalone: true,
-  imports: [FormsModule, LucideAngularModule],
+  imports: [CommonModule, FormsModule, LucideAngularModule],
   templateUrl: './request-popup.html',
 })
 export class RequestPopup {
@@ -24,6 +25,7 @@ export class RequestPopup {
   };
 
    onDismiss() {
+    console.log('request-popup: onDismiss called');
     this.dismiss.emit();
   }
 
@@ -55,6 +57,7 @@ export class RequestPopup {
       );
       alert('Aanvraag succesvol verstuurd!');
       this.visible = false;
+      this.dismiss.emit();
     } catch (error) {
       console.error('EmailJS error:', error);
       alert('Er ging iets mis bij het versturen.');
