@@ -26,7 +26,7 @@
             [id]="item.id"
             [checked]="pages.includes(item.id)"
             (change)="onSelectPage(item.id, item.required)"
-            [disabled]="item.required || (!pages.includes(item.id) && pages.length >= 4)"
+            [disabled]="item.required || (!pages.includes(item.id) && pages.length >= 6)"
             (click)="$event.stopPropagation()"
           />
 
@@ -51,12 +51,12 @@
         <p class="text-sm text-muted-foreground">
           <span
             class="font-medium text-foreground"
-            [class.text-accent]="additionalPagesCount < 3"
-            [class.text-red-500]="additionalPagesCount >= 3"
+            [class.text-accent]="additionalPagesCount < 5"
+            [class.text-red-500]="additionalPagesCount >= 5"
           >
             {{ additionalPagesCount }}
           </span>
-          / 3 extra pagina’s geselecteerd
+          / 5 extra pagina’s geselecteerd
         </p>
       </div>
     </div>
