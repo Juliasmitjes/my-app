@@ -47,7 +47,7 @@ export class Services {
       id: 'light',
       name: 'Licht',
       description: 'Fris en helder met zachte pastelkleuren',
-      colors: ['#D2B48C', '#F5F5DC', '#C8E6C9'],
+      colors:['#8BC34A', '#F6B980', '#DCEDC8'],
     },
     {
       id: 'dark',
@@ -59,7 +59,8 @@ export class Services {
       id: 'cool',
       name: 'Koel',
       description: 'Rustig en modern met blauwe en paarse tonen',
-      colors: ['#5C6BC0', '#42A5F5', '#26C6DA'],
+      colors: ['#5A9BD5', '#90A4AE', '#D9EAF7' ],
+
     },
     {
       id: 'earth',

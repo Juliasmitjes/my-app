@@ -29,7 +29,8 @@
             @if (!isSidebar) {
               <div class="bg-secondary p-3 border-b border-border">
                 <div class="flex items-center justify-between">
-                  <div class="font-semibold text-sm">{{ logoLabel }}</div>
+                  <div class="font-semibold text-sm"
+                  [style.color]="selectedThemeColors[1]">{{ logoLabel }}</div>
                   <div class="flex gap-2">
                     @for (p of pages; track p) {
                       <ng-container>
@@ -50,12 +51,14 @@
               @if (isSidebar) {
                 <div class="h-full flex">
                   <aside class="w-44 bg-secondary p-4 border-r border-border">
-                    <div class="font-semibold mb-4">{{ logoLabel }}</div>
+                    <div class="font-semibold mb-4"
+                    [style.color]="selectedThemeColors[1]">{{ logoLabel }}</div>
                     <nav class="space-y-2">
                       @for (p of pages; track p) {
                         <ng-container>
-                          <div class="text-sm px-3 py-2 rounded"
-                              [style.background]="selectedThemeColors[0]">
+                          <div class="text-sm px-3 py-2 font-semibold rounded border border-2"
+                              [style.borderColor]="selectedThemeColors[2]"
+                              [style.color]="selectedThemeColors[0]">
                             {{ pageLabel(p) }}
                           </div>
                         </ng-container>
