@@ -125,19 +125,19 @@
         variant="default"
         (click)="prevStep()"
         [disabled]="currentStep() === 0"
-        class="transition-all hover:scale-105 hover:bg-primary/10"
+        [buttonClass]="'transition-all hover:scale-105 hover:bg-primary/10'"
       >
         Vorige
       </app-button>
 
      <app-button
-  variant="default"
-  (click)="nextStep()"
-  [disabled]="!canProceed"
-  class="transition-all hover:scale-105 hover:bg-accent/10"
->
-  {{ currentStep() === steps.length - 2 ? 'Resultaat' : 'Volgende' }}
-</app-button>
+        variant="default"
+        (click)="nextStep()"
+        [disabled]="!canProceed"
+        [buttonClass]="'transition-all hover:scale-105 hover:bg-accent/10 transition-transform duration-300 ease-in-out'"
+      >
+        {{ currentStep() === steps.length - 2 ? 'Resultaat' : 'Volgende' }}
+      </app-button>
 
     </div>
   </div>

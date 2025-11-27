@@ -109,6 +109,7 @@ export class Services {
     colorTheme: null,
     fontStyle: null,
     fontVariant: null,
+    fontSample: null,
     logo: '',
     navigation: 'top',
     headerStyle: 'fixed',
