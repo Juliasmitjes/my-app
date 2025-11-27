@@ -51,7 +51,7 @@ export class ContentStep {
       return;
     }
 
-    if (this.pages.length >= 6) return;
+    if (this.pages.length >= 4) return;
 
     const newPages = [...this.pages, pageId];
     this.update.emit({ pages: newPages });
