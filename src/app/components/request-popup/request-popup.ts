@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import emailjs from '@emailjs/browser';
 import { BuilderState } from '../../types/builder-state';
+import { ToastService } from '../ui/toast/toast.service';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class RequestPopup {
 @Input() builderState!: BuilderState;
 @Output() dismiss = new EventEmitter<void>();
 
+constructor(private toast: ToastService) {}
 
 form = {
 name: '',
@@ -68,11 +70,13 @@ templateParams,
 'QrIJCdETVtUM0hzai'
 );
 
-alert('Aanvraag succesvol verstuurd!');
+this.toast.success('Aanvraag succesvol verstuurd!');
+
 this.visible = false;
 this.dismiss.emit();
 } catch (error) {
 console.error('EmailJS error:', error);
-alert('Er ging iets mis bij het versturen.');
+
+this.toast.error('Er ging iets mis bij het versturen.');
 }}
 }
