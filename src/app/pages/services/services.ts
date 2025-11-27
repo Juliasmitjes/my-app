@@ -47,7 +47,7 @@ export class Services {
       id: 'light',
       name: 'Licht',
       description: 'Fris en helder met zachte pastelkleuren',
-      colors: ['#FDF6E3', '#E3F2FD', '#C8E6C9'],
+      colors: ['#D2B48C', '#F5F5DC', '#C8E6C9'],
     },
     {
       id: 'dark',

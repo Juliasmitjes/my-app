@@ -3,7 +3,7 @@ export interface BuilderState {
   layout: 'single' | 'two-column' | 'grid' | null;
 
   /** Kleurenthema van de website */
-  colorTheme: 'warm' | 'light' | 'dark' | 'cool' | null;  
+  colorTheme: 'warm' | 'light' | 'dark' | 'cool' | 'earth' | 'vibrant' | 'ocean' | 'sunset' | null;  
 
   /** Hoofdtypografie-categorie, bv. “modern-sans” of “display” */
   fontStyle: 'modern-sans' | 'classic-serif' | 'display' | null;

@@ -74,11 +74,13 @@
          [style.background]="selectedThemeColors[2]"></div>
 
      <!-- Voorbeeldzin -->
-    <p class="text-md sm:text-lg leading-relaxed text-foreground mb-6"
-       [ngStyle]="{ 'font-family': fontMap[builderState.fontVariant || ''] }">
-      {{ builderState.fontSample?.trim()?.length ? builderState.fontSample : 'Dit is een voorbeeldtekst' }}
-    </p>
-
+          <p class="text-md sm:text-lg leading-relaxed mb-6"
+        [ngStyle]="{ 
+          'font-family': fontMap[builderState.fontVariant || ''], 
+          'color': selectedThemeColors[0] 
+        }">
+        {{ builderState.fontSample?.trim()?.length ? builderState.fontSample : 'Dit is een voorbeeldtekst' }}
+      </p>
 
     <div class="mt-6 grid gap-4"
          [style.gridTemplateColumns]="getGridColumns()">
