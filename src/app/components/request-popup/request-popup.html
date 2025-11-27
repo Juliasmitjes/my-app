@@ -24,7 +24,7 @@
       </div>
 
       <!-- Formulier -->
-      <form (ngSubmit)="sendRequest()" class="space-y-4">
+      <form (ngSubmit)="sendEmail($event)" class="space-y-4">
         <input
           type="text"
           [(ngModel)]="form.name"
