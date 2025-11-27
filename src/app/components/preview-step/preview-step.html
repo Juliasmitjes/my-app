@@ -29,7 +29,6 @@
       <span class="text-xs opacity-90">{{ logoLabel }}</span>
     </div>
 
-
     <div class="flex-1 p-6 content-area">
       @if (isSidebar) {
         <div class="flex h-full">
@@ -73,6 +72,13 @@
          [style.background]="selectedThemeColors[0]"></div>
     <div class="h-4 rounded w-1/2 mb-6 bar"
          [style.background]="selectedThemeColors[2]"></div>
+
+     <!-- Voorbeeldzin -->
+    <p class="text-md sm:text-lg leading-relaxed text-foreground mb-6"
+       [ngStyle]="{ 'font-family': fontMap[builderState.fontVariant || ''] }">
+      {{ builderState.fontSample?.trim()?.length ? builderState.fontSample : 'Dit is een voorbeeldtekst' }}
+    </p>
+
 
     <div class="mt-6 grid gap-4"
          [style.gridTemplateColumns]="getGridColumns()">
