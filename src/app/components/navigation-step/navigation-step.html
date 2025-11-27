@@ -9,11 +9,11 @@
   <div class="w-full flex flex-col items-center space-y-12">
     <!-- LOGO INPUT -->
     <div class="w-full text-center space-y-4">
-      <label for="logo" class="text-base font-semibold block">Bedrijfsnaam</label>
+      <label for="logo" class="text-lg font-semibold block">Bedrijfsnaam</label>
       <input
         id="logo"
         type="text"
-        class="w-full max-w-md border border-border/50 bg-white/70 dark:bg-muted/20 rounded-xl p-3 text-center text-sm ring-2 ring-accent/30 focus:ring-accent outline-none transition placeholder:text-muted-foreground/70"
+        class="w-full max-w-md border border-border/50 bg-white/70 dark:bg-muted/20 rounded-xl p-3 text-center text-md ring-2 ring-accent/30 focus:ring-accent outline-none transition placeholder:text-muted-foreground/70"
         placeholder="Typ de naam van je bedrijf..."
         [value]="builderState.logo || ''"
         (input)="onLogoChange($event)"

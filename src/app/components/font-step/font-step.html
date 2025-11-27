@@ -60,15 +60,15 @@
 
             <!-- Naam -->
           <h4 class="text-base sm:text-lg font-medium text-foreground tracking-tight mb-1"
-    [ngStyle]="{ 'font-family': fontMap[variant.id] }">
-  {{ variant.name }}
-</h4>
+              [ngStyle]="{ 'font-family': fontMap[variant.id] }">
+            {{ variant.name }}
+          </h4>
 
             <!-- Grote voorbeeldzin -->
             <p class="text-lg sm:text-xl leading-relaxed text-foreground"
-   [ngStyle]="{ 'font-family': fontMap[variant.id] }">
-  {{ userSampleText || variant.sample }}
-</p>
+            [ngStyle]="{ 'font-family': fontMap[variant.id] }">
+            {{ userSampleText || variant.sample }}
+          </p>
           </div>
         }
       </div>
