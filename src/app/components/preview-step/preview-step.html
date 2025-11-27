@@ -5,8 +5,20 @@
 
        <app-speech-bubble 
         [text]="'Tevreden?'"
-        class="absolute top-65 left-46 2xl:top-70 2xl:left-45 transform -translate-x-1/2 -translate-y-full mb-4"
-        ></app-speech-bubble>
+        class="absolute top-65 left-46 2xl:top-70 2xl:left-43 transform -translate-x-1/2 -translate-y-full mb-4"
+        >  
+        <button
+            class="mt-2 px-4 py-2 bg-accent text-white rounded-md font-semibold"
+            (click)="openRequestPopup()"
+          >
+            Aanvraag versturen
+          </button>
+        </app-speech-bubble>
+
+        <app-request-popup
+          [visible]="showRequestPopup"
+          [builderState]="builderState">
+        </app-request-popup>
 
       <img 
         [src]="mascotUrl" 

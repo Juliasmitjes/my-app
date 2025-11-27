@@ -1,0 +1,19 @@
+<div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50" *ngIf="visible">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+    <h2 class="text-xl font-bold mb-4">Aanvraag versturen</h2>
+    <p class="mb-4">Eenmalige bouwkosten: <strong>€250</strong><br>
+       Maandelijkse servicekosten: <strong>€50</strong></p>
+
+    <form (ngSubmit)="sendRequest()">
+      <input type="text" [(ngModel)]="form.name" name="name" placeholder="Naam" required class="input"/>
+      <input type="text" [(ngModel)]="form.company" name="company" placeholder="Bedrijf (optioneel)" class="input"/>
+      <input type="email" [(ngModel)]="form.email" name="email" placeholder="Emailadres" required class="input"/>
+      <input type="tel" [(ngModel)]="form.phone" name="phone" placeholder="Telefoonnummer (optioneel)" class="input"/>
+      <textarea [(ngModel)]="form.message" name="message" placeholder="Bericht (optioneel)" class="input"></textarea>
+
+      <button type="submit" class="mt-4 px-4 py-2 bg-accent text-white rounded-md">
+        Verstuur aanvraag
+      </button>
+    </form>
+  </div>
+</div>

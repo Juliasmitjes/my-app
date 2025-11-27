@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { BuilderState } from '../../types/builder-state';
 import { SpeechBubble } from '../../components/ui/speech-bubble/speech-bubble';
+import { RequestPopup } from '../request-popup/request-popup';
 
 @Component({
   selector: 'app-preview-step',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule, SpeechBubble],
+  imports: [CommonModule, LucideAngularModule, SpeechBubble, RequestPopup],
   templateUrl: './preview-step.html',
   styleUrl: './preview-step.css'
 })
@@ -56,4 +57,12 @@ export class PreviewStep {
   montserrat: "'Montserrat', sans-serif",
   oswald: "'Oswald', sans-serif"
 };
+
+openRequestPopup() {
+  this.showRequestPopup = true;
 }
+showRequestPopup: boolean = false;
+closeRequestPopup() {
+  this.showRequestPopup = false;
+}}
+
