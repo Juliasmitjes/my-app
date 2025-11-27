@@ -59,6 +59,7 @@ export class PreviewStep {
 };
 
 openRequestPopup() {
+  console.log('Button clicked!');
   this.showRequestPopup = true;
 }
 showRequestPopup: boolean = false;

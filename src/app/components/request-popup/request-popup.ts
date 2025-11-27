@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class RequestPopup {
   @Input() visible = false;
-  @Input() builderState: any; // hier krijg je kleur, content, font, layout, navigatie mee
+  @Input() builderState: any; // kleur, content, font, layout, navigatie etc 
 
   form = {
     name: '',
@@ -22,6 +22,8 @@ export class RequestPopup {
   };
 
   async sendRequest() {
+    const emailjs = await import('@emailjs/browser');
+
     const templateParams = {
       name: this.form.name,
       company: this.form.company,
