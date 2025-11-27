@@ -101,7 +101,6 @@ export class Services {
     { id: 'shop', name: 'Shop', description: 'Verkoop producten of tickets', icon: 'ShoppingCart' },
     { id: 'donatie', name: 'Donatie', description: 'Ondersteun je initiatief', icon: 'heart' },
     { id: 'nieuwsbrief', name: 'Nieuwsbrief', description: 'Laat bezoekers zich inschrijven', icon: 'send' },
-    { id: 'privacy', name: 'Privacybeleid', description: 'Informatie over privacy en cookies', icon: 'shield' },
   ];
 
   readonly builderState = signal<BuilderState>({
