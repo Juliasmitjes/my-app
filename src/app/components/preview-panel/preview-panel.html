@@ -44,6 +44,7 @@
 
             <!-- Main area -->
             <div class="flex-1 h-full">
+
               <!-- Sidebar layout -->
               @if (isSidebar) {
                 <div class="h-full flex">
@@ -53,26 +54,38 @@
                       @for (p of pages; track p) {
                         <ng-container>
                           <div class="text-sm px-3 py-2 rounded"
-                          [style.background]="selectedThemeColors[0]">{{ pageLabel(p) }}</div>
+                              [style.background]="selectedThemeColors[0]">
+                            {{ pageLabel(p) }}
+                          </div>
                         </ng-container>
                       }
                     </nav>
                   </aside>
 
-                  <div class="flex-1 p-6">
-                    <ng-container *ngTemplateOutlet="previewContent"></ng-container>
-                  </div>
-                </div>
-              }
+              <div class="flex-1 p-6">
+                <!-- Hier komt de voorbeeldzin -->
+                <p class="text-md sm:text-lg leading-relaxed text-foreground lg:mb-2">
+                 {{ builderState?.fontSample || 'Dit is een voorbeeldtekst' }}
+                </p>
 
-              <!-- Top-header layout -->
-              @if (!isSidebar) {
-                <div class="p-6">
-                  <ng-container *ngTemplateOutlet="previewContent"></ng-container>
-                </div>
-              }
+                <ng-container *ngTemplateOutlet="previewContent"></ng-container>
+              </div>
             </div>
-            
+          }
+
+            <!-- Top-header layout -->
+            @if (!isSidebar) {
+              <div class="p-6">
+                <!-- Hier komt de voorbeeldzin -->
+                <p class="text-md sm:text-lg leading-relaxed text-foreground lg:mb-2">
+                 {{ builderState?.fontSample || 'Dit is een voorbeeldtekst' }}
+                </p>
+                <ng-container *ngTemplateOutlet="previewContent"></ng-container>
+              </div>
+            }
+          </div>
+
+
           </div>
         </div>
 

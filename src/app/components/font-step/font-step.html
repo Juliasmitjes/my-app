@@ -12,6 +12,7 @@
   <input
     type="text"
     [(ngModel)]="userSampleText"
+    (ngModelChange)="userSampleTextChange.emit($event)"
     class="w-full px-4 py-3 rounded-xl border border-border bg-white/80
            focus:outline-none ring-2 ring-accent/30 focus:ring-accent
            transition-all text-center text-md placeholder:text-muted-foreground/70"

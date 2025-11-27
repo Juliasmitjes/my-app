@@ -17,6 +17,7 @@ export class PreviewPanel {
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Output() closed = new EventEmitter<void>();
   @Input() colorThemes!: { id: string; colors: string[] }[];
+  @Input() userSampleText: string = '';
 
    get selectedThemeColors(): string[] {
     const theme = this.colorThemes?.find(t => t.id === this.builderState?.colorTheme);

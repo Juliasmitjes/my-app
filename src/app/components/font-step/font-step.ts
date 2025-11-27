@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
 import { FormsModule } from '@angular/forms'; 
-import { fontMap, googleFontsUrl } from '../../shared/fonts';
+import { fontMap } from '../../shared/fonts';
 
 @Component({
   selector: 'app-font-step',
@@ -13,7 +13,9 @@ import { fontMap, googleFontsUrl } from '../../shared/fonts';
 })
 export class FontStep {
   @Input() builderState!: BuilderState;
+  @Input() userSampleText: string = '';
   @Output() update = new EventEmitter<Partial<BuilderState>>();
+  @Output() userSampleTextChange = new EventEmitter<string>();
 
  fontStyles = [
   {
@@ -90,11 +92,9 @@ export class FontStep {
   this.update.emit({
     fontStyle: styleId as BuilderState['fontStyle'],
     fontVariant: variantId as BuilderState['fontVariant'],
-    fontSample: this.userSampleText   // ⬅ NIEUW
+    fontSample: this.userSampleText   
   });
   }
-
-  userSampleText: string = '';
 
   public fontMap = fontMap;
 }
