@@ -1,54 +1,71 @@
-<div class="h-full rounded-xl p-8 flex flex-col md:flex-row gap-6 preview-root"
-[style.background]="selectedThemeColors[2] + 20" >
+<div class="h-full rounded-xl p-4 sm:p-8 flex flex-col md:flex-row gap-4 sm:gap-6 preview-root"
+     [style.background]="selectedThemeColors[2] + 20">
 
-    <div class="hidden mascot-wrap w-full md:w-48 lg:flex items-center justify-center md:justify-start">
+    <!-- Mobiel: apart hokje voor icoon + titel -->
+      <div class="sm:hidden flex items-center justify-center gap-2 p-2 rounded-xl text-center">
+        <lucide-icon [name]="iconName" class="w-6 h-6 text-accent"></lucide-icon>
+        <h3 class="font-semibold text-base tracking-wide uppercase text-foreground">
+          {{ title }}
+        </h3>
+      </div>
 
-       <app-speech-bubble 
-        [text]="'Tevreden?'"
-        class="absolute top-65 left-46 2xl:top-70 2xl:left-43 transform -translate-x-1/2 -translate-y-full"
-        >  
-        <button
-            class="mt-2 mb-4 px-4 py-2 bg-accent text-white rounded-md font-semibold cursor-pointer hover:bg-accent/90 transition-colors"
-            (click)="openRequestPopup()"
-          >
-            Aanvraag versturen
-          </button>
-        </app-speech-bubble>
+  <!-- Mascotte -->
+  <div class="hidden mascot-wrap w-full md:w-48 lg:flex items-center justify-center md:justify-start">
+    <app-speech-bubble
+      [text]="'Tevreden?'"
+      class="absolute top-65 left-46 2xl:top-70 2xl:left-43 transform -translate-x-1/2 -translate-y-full">
+      <button
+        class="mt-2 mb-4 px-4 py-2 bg-accent text-white rounded-md font-semibold cursor-pointer hover:bg-accent/90 transition-colors"
+        (click)="openRequestPopup()">
+        Aanvraag versturen
+      </button>
+    </app-speech-bubble>
 
-        <app-request-popup
-          [visible]="showRequestPopup"
-          [builderState]="builderState"
-          (dismiss)="closeRequestPopup()">
-        </app-request-popup>
+    <app-request-popup
+      [visible]="showRequestPopup"
+      [builderState]="builderState"
+      (dismiss)="closeRequestPopup()">
+    </app-request-popup>
 
-      <img 
-        [src]="mascotUrl" 
-        alt="Mascot"
-        class="mascot-img w-32 h-32 md:w-50 md:h-50 object-contain translate-y-30" />
-    </div>
+    <img [src]="mascotUrl"
+         alt="Mascot"
+         class="mascot-img w-32 h-32 md:w-50 md:h-50 object-contain translate-y-30" />
+  </div>
 
-
-  <div class="flex-1 flex flex-col rounded-2xl shadow-xl overflow-hidden preview-panel "[ngStyle]="{ 'font-family': fontMap[builderState.fontVariant!] }"
+  <!-- Preview panel -->
+  <div class="flex-1 flex flex-col rounded-2xl shadow-xl overflow-hidden preview-panel"
+       [ngStyle]="{ 'font-family': fontMap[builderState.fontVariant!] }"
        aria-live="polite"
        [style.background]="'linear-gradient(135deg,' + selectedThemeColors[1] + ',' + selectedThemeColors[2] + ')'">
 
-    <div class="header flex items-center justify-between p-4 border-b"
-         [style.background]="selectedThemeColors[0]"
-         [style.color]="'#fff'">
-      <div class="flex items-center gap-2">
-        <lucide-icon [name]="iconName" class="w-5 h-5"></lucide-icon>
-        <h3 class="hidden sm:block font-semibold text-sm tracking-wide uppercase">{{ title }}</h3>
-      </div>
-      <span class="text-md opacity-90">{{ logoLabel }}</span>
-    </div>
+    <!-- Header -->
+        <div class="header border-b"
+            [style.background]="selectedThemeColors[0]"
+            [style.color]="'#fff'">
 
-    <div class="flex-1 p-6 content-area">
+          <!-- Desktop: icoon + titel + logoLabel samen -->
+          <div class="hidden sm:flex items-center justify-between p-4">
+            <div class="flex items-center gap-2">
+              <lucide-icon [name]="iconName" class="w-5 h-5"></lucide-icon>
+              <h3 class="font-semibold text-sm tracking-wide uppercase">{{ title }}</h3>
+            </div>
+            <span class="text-md opacity-90">{{ logoLabel }}</span>
+          </div>
+
+          <!-- Mobiel: logoLabel apart onder icoon + titel -->
+          <div class="sm:hidden p-3 text-left">
+            <span class="text-md opacity-90">{{ logoLabel }}</span>
+          </div>
+        </div>
+
+    <!-- Content -->
+    <div class="flex-1 p-4 sm:p-6 content-area">
       @if (isSidebar) {
-        <div class="flex h-full">
-          <aside class="w-40 p-3 rounded-lg mr-4 sidebar"
-            [style.background]="selectedThemeColors[0]">
+        <div class="flex flex-col sm:flex-row h-full gap-4">
+          <aside class="w-full sm:w-40 p-3 rounded-lg sidebar"
+                 [style.background]="selectedThemeColors[0]">
             <div class="font-semibold mb-3"
-            [style.color]="selectedThemeColors[2]">{{ logoLabel }}</div>
+                 [style.color]="selectedThemeColors[2]">{{ logoLabel }}</div>
             <nav class="space-y-2 text-sm">
               @for (p of pages; track p) {
                 <div class="rounded px-2 py-1 page-pill"
@@ -68,8 +85,9 @@
       }
     </div>
 
-    <div class="p-4 text-xs footer">
-      <div class="flex flex-wrap gap-x-4 gap-y-1 text-muted-foreground">
+    <!-- Footer -->
+    <div class="p-3 sm:p-4 text-xs footer text-left">
+      <div class="flex flex-col sm:flex-wrap gap-y-1 sm:gap-x-4 text-muted-foreground">
         <div><strong>Layout:</strong> {{ builderState.layout }}</div>
         <div><strong>Theme:</strong> {{ builderState.colorTheme }}</div>
         <div><strong>Font:</strong> {{ builderState.fontVariant }}</div>
@@ -79,7 +97,7 @@
   </div>
 </div>
 
-
+<!-- Preview content -->
 <ng-template #previewContent>
   <div class="flex-1 flex flex-col">
     <div class="h-4 rounded w-3/4 mb-3 bar"
@@ -87,15 +105,16 @@
     <div class="h-4 rounded w-1/2 mb-6 bar"
          [style.background]="selectedThemeColors[2]"></div>
 
-     <!-- Voorbeeldzin -->
-          <p class="text-md sm:text-lg leading-relaxed mb-6"
-        [ngStyle]="{ 
-          'font-family': fontMap[builderState.fontVariant || ''], 
-          'color': selectedThemeColors[0] 
-        }">
-        {{ builderState.fontSample?.trim()?.length ? builderState.fontSample : 'Dit is een voorbeeldtekst' }}
-      </p>
+    <!-- Voorbeeldzin -->
+    <p class="text-base sm:text-lg leading-relaxed mb-6"
+       [ngStyle]="{
+         'font-family': fontMap[builderState.fontVariant || ''],
+         'color': selectedThemeColors[0]
+       }">
+      {{ builderState.fontSample?.trim()?.length ? builderState.fontSample : 'Dit is een voorbeeldtekst' }}
+    </p>
 
+    <!-- Layout blocks -->
     <div class="mt-6 grid gap-4"
          [style.gridTemplateColumns]="getGridColumns()">
       <div class="h-24 rounded block"
