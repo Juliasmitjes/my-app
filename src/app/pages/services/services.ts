@@ -158,15 +158,27 @@ export class Services {
     }
   }
 
-  nextStep() {
-    if (!this.canProceed) return;
-    const max = this.steps.length - 1;
-    this.currentStep.update(n => (n < max ? n + 1 : n));
-  }
+ nextStep() {
+  if (!this.canProceed) return;
+  const max = this.steps.length - 1;
+  this.currentStep.update(n => (n < max ? n + 1 : n));
 
-  prevStep() {
-    this.currentStep.update(n => (n > 0 ? n - 1 : n));
+  // Scroll naar header op mobiel
+  if (window.innerWidth < 768) {
+    const section =  document.getElementById('contentSection');
+    section?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
+}
+
+prevStep() {
+  this.currentStep.update(n => (n > 0 ? n - 1 : n));
+
+  if (window.innerWidth < 768) {
+    const section =  document.getElementById('contentSection');
+    section?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
 
   togglePage(page: string) {
     this.builderState.update(prev => {
