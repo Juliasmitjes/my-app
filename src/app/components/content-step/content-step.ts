@@ -38,7 +38,15 @@ export class ContentStep {
   return count;
 }
 
-  onSelectPage(pageId: string, required = false) {
+isMobile = window.innerWidth < 768;
+
+ngOnInit() {
+  window.addEventListener('resize', () => {
+    this.isMobile = window.innerWidth < 768;
+  });
+}
+
+onSelectPage(pageId: string, required = false) {
     if (!this.builderState) return;
     if (required) return; // verplicht, kan niet worden uitgevinkt
 
@@ -56,5 +64,5 @@ export class ContentStep {
     const newPages = [...this.pages, pageId];
     this.update.emit({ pages: newPages });
     this.toggle.emit(pageId);
-  }
+  }  
 }

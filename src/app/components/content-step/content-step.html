@@ -2,48 +2,61 @@
   <!-- Titel -->
   <div>
     <h2 class="text-2xl font-bold mb-2">Inhoud</h2>
-    <p class="text-muted-foreground">Selecteer welke pagina’s je wilt opnemen (maximaal 3 onderdelen)</p>
+    <p class="text-muted-foreground">
+      Selecteer welke pagina’s je wilt opnemen (maximaal 3 onderdelen)
+    </p>
   </div>
 
   <!-- Kaart -->
   <div
-    class="w-full max-w-3xl mx-auto bg-white/60 dark:bg-muted/30 backdrop-blur-sm border border-border/50 rounded-3xl p-8 shadow-sm flex flex-col items-center"
+    class="w-full max-w-3xl mx-auto bg-white/60 dark:bg-muted/30 backdrop-blur-sm rounded-3xl p-8 shadow-sm flex flex-col items-center"
+    [ngClass]="{
+      'border border-border/50': !(additionalPagesCount > 3 && isMobile),
+      'border border-red-500': (additionalPagesCount > 3 && isMobile)
+    }"
   >
+    <!-- Titel kaart -->
     <div class="text-center mb-6">
       <h3 class="text-lg font-semibold text-foreground mb-1">Pagina-selectie</h3>
       <p class="text-sm text-muted-foreground">Kies de onderdelen van jouw website</p>
     </div>
 
+    <!-- Opties -->
     <div class="space-y-4 w-full max-w-md mx-auto text-left">
       @for (item of contents; track item.id) {
-        <div
-          class="flex items-start gap-4 p-4 rounded-2xl border border-border/50 bg-background/40 hover:bg-accent/5 transition cursor-pointer"
-          (click)="onSelectPage(item.id, item.required)"
-        >
-          <input
-            type="checkbox"
-            class="mt-1 accent-accent h-4 w-4 cursor-pointer"
-            [id]="item.id"
-            [checked]="pages.includes(item.id)"
-            (change)="onSelectPage(item.id, item.required)"
-            [disabled]="item.required || (!pages.includes(item.id) && pages.length >= 4)"
-            (click)="$event.stopPropagation()"
-          />
+        <label
+            [for]="item.id"
+            class="flex items-start gap-4 p-4 rounded-2xl border border-border/50 bg-background/40 hover:bg-accent/5 transition cursor-pointer w-full"
+            (click)="onSelectPage(item.id, item.required)"
+          >
+            <!-- Checkbox -->
+            <input
+              type="checkbox"
+              class="mt-1 accent-accent h-4 w-4 cursor-pointer"
+              [id]="item.id"
+              [checked]="pages.includes(item.id)"
+              [disabled]="item.required || (!pages.includes(item.id) && pages.length >= 4)"
+              aria-checked="{{ pages.includes(item.id) }}"
+              aria-disabled="{{ item.required || (!pages.includes(item.id) && pages.length >= 4) }}"
+            />
 
-          <div class="flex-1">
-            <label [for]="item.id" class="flex items-center gap-2 cursor-pointer">
-              @if (item.icon) {
-                <lucide-icon [name]="item.icon" class="w-5 h-5 text-accent"></lucide-icon>
-              }
-              <span class="font-medium text-foreground">{{ item.name }}</span>
-              @if (item.required) {
-                <span class="text-xs text-muted-foreground ml-2">(verplicht)</span>
-              }
-            </label>
+            <!-- Tekst + icon -->
+            <div class="flex-1">
+              <div class="flex items-center gap-2">
+                @if (item.icon) {
+                  <lucide-icon [name]="item.icon" class="w-5 h-5 text-accent"></lucide-icon>
+                }
+                <span class="font-medium text-foreground">{{ item.name }}</span>
+                @if (item.required) {
+                  <span class="text-xs text-muted-foreground ml-2">(verplicht)</span>
+                }
+              </div>
 
-            <p class="text-sm text-muted-foreground mt-1">{{ item.description }}</p>
-          </div>
-        </div>
+              <p class="text-sm text-muted-foreground mt-1">
+                {{ item.description }}
+              </p>
+            </div>
+          </label>
       }
 
       <!-- Teller -->
