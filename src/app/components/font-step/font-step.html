@@ -1,5 +1,4 @@
 <div class="space-y-16 w-full max-w-5xl mx-auto px-4 sm:px-6">
-
   <!-- Titel -->
   <div class="text-center space-y-2">
     <h2 class="text-3xl font-bold">Kies jouw lettertype</h2>
@@ -8,71 +7,47 @@
     </p>
   </div>
 
+  <!-- Input voor voorbeeldtekst -->
   <div class="max-w-xl mx-auto mt-6">
-  <input
-    type="text"
-    [(ngModel)]="userSampleText"
-    (ngModelChange)="userSampleTextChange.emit($event)"
-    class="w-full px-4 py-3 rounded-xl border border-border bg-white/80
-           focus:outline-none ring-2 ring-accent/30 focus:ring-accent
-           transition-all text-center text-md placeholder:text-muted-foreground/70"
-    placeholder="Typ hier jouw tekst..."
-  />
-</div>
+    <input
+      type="text"
+      [(ngModel)]="userSampleText"
+      (ngModelChange)="userSampleTextChange.emit($event)"
+      class="w-full px-4 py-3 rounded-xl border border-border bg-white/80
+             focus:outline-none ring-2 ring-accent/30 focus:ring-accent
+             transition-all text-center text-md placeholder:text-muted-foreground/70"
+      placeholder="Typ hier jouw tekst..."
+    />
+  </div>
 
-  <!-- STYLE CARDS -->
-  @for (style of fontStyles; track style.id) {
-    <section
-      class="p-6 sm:p-10 rounded-3xl bg-white/70 backdrop-blur-sm 
-             border border-border/40 shadow-sm space-y-10 transition-all"
-    >
+  <!-- Font preview blok -->
+  <section
+    class="p-6 sm:p-10 rounded-3xl bg-white/70 backdrop-blur-sm 
+           border border-border/40 shadow-sm space-y-8 transition-all"
+  >
 
-      <!-- Sectietitel -->
-      <div class="space-y-3">
-        <h3 class="text-xl sm:text-2xl font-semibold tracking-tight">
-          {{ style.name }}
-        </h3>
-
-        <p class="text-muted-foreground italic text-sm">
-          {{ style.description }}
+    <!-- Fonts onder elkaar -->
+    @for (variant of fontVariants; track variant.id) {
+      <div
+        class="group cursor-pointer transition-all duration-300 px-3 py-4 rounded-xl
+               hover:bg-white/60 hover:shadow-md hover:scale-[1.02]"
+        [class.scale-[1.02]]="isSelected(variant.id)"
+        [class.shadow-lg]="isSelected(variant.id)"
+        [class.ring-2]="isSelected(variant.id)"
+        [class.ring-accent]="isSelected(variant.id)"
+        (click)="onSelectVariant(variant.id)"
+        role="button"
+        tabindex="0"
+        (keydown.enter)="onSelectVariant(variant.id)"
+        (keydown.space)="onSelectVariant(variant.id)"
+        aria-pressed="{{ isSelected(variant.id) }}"
+      >
+        <!-- Voorbeeldtekst in font -->
+        <p class="text-lg sm:text-xl leading-relaxed text-foreground"
+           [ngStyle]="{ 'font-family': fontMap[variant.id] }">
+          {{ userSampleText || variant.sample }}
         </p>
-
-        <!-- Moderne blauwe glow-lijn -->
-        <div class="h-1 w-full rounded-full bg-accent/40 shadow-[0_0_12px_var(--accent)]"></div>
       </div>
-
-      <!-- Varianten -->
-      <div class="space-y-8 sm:space-y-10">
-        @for (variant of style.variants; track variant.id) {
-          <div
-            class="group cursor-pointer transition-all duration-300 px-3 py-3 sm:px-4 sm:py-4 rounded-xl
-                  hover:bg-white/60 hover:shadow-md hover:scale-[1.02]"
-            [class.scale-[1.02]]="isSelected(style.id, variant.id)"
-            [class.shadow-lg]="isSelected(style.id, variant.id)"
-            [class.ring-2]="isSelected(style.id, variant.id)"
-            [class.ring-accent]="isSelected(style.id, variant.id)"
-            (click)="onSelectVariant(style.id, variant.id)"
-            role="button"
-            tabindex="0"
-            (keydown.enter)="onSelectVariant(style.id, variant.id)"
-            (keydown.space)="onSelectVariant(style.id, variant.id)"
-            aria-pressed="{{ isSelected(style.id, variant.id) }}"
-          >
-
-            <!-- Naam -->
-          <h4 class="text-base sm:text-lg font-medium text-foreground tracking-tight mb-1"
-              [ngStyle]="{ 'font-family': fontMap[variant.id] }">
-            {{ variant.name }}
-          </h4>
-
-            <!-- Grote voorbeeldzin -->
-            <p class="text-lg sm:text-xl leading-relaxed text-foreground"
-            [ngStyle]="{ 'font-family': fontMap[variant.id] }">
-            {{ userSampleText || variant.sample }}
-          </p>
-          </div>
-        }
-      </div>
-    </section>
-  }
+    }
+  </section>
 </div>

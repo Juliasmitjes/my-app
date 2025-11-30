@@ -5,7 +5,9 @@ export const fontMap: Record<string, string> = {
   merriweather: `"Merriweather", Georgia, "Times New Roman", Times, serif`,
   playfair: `"Playfair Display", Georgia, "Times New Roman", Times, serif`,
   montserrat: `"Montserrat", "Helvetica Neue", Arial, sans-serif`,
-  oswald: `"Oswald", "Arial Narrow", Arial, sans-serif`
+  oswald: `"Oswald", "Arial Narrow", Arial, sans-serif`,
+  lora: `"Lora", Georgia, "Times New Roman", Times, serif`,
+  raleway: `"Raleway", "Helvetica Neue", Arial, sans-serif`,
 };
 
 // Google Fonts families (format voor één link)
@@ -15,7 +17,10 @@ export const googleFontFamilies = [
   'Merriweather:wght@300;400;700',
   'Playfair+Display:wght@400;700',
   'Montserrat:wght@400;600;700',
-  'Oswald:wght@300;400;500;700'
+  'Oswald:wght@300;400;500;700',
+  'Lora:wght@400;500;700',
+  'Raleway:wght@300;400;600;700',
+  'Poppins:wght@300;400;500;600;700'
 ];
 
 // helper om de Google Fonts stylesheet url te maken
