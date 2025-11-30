@@ -22,32 +22,46 @@
 
   <!-- Font preview blok -->
   <section
-    class="p-6 sm:p-10 rounded-3xl bg-white/70 backdrop-blur-sm 
-           border border-border/40 shadow-sm space-y-8 transition-all"
+    class="p-6 sm:p-10 rounded-3xl
+           bg-white/70 dark:bg-muted/40
+           backdrop-blur-xl
+           border border-border/40
+           shadow-sm
+           transition-all
+           md:shadow-xl md:bg-gradient-to-br md:from-white/80 md:to-accent/5"
   >
 
-    <!-- Fonts onder elkaar -->
-    @for (variant of fontVariants; track variant.id) {
-      <div
-        class="group cursor-pointer transition-all duration-300 px-3 py-4 rounded-xl
-               hover:bg-white/60 hover:shadow-md hover:scale-[1.02]"
-        [class.scale-[1.02]]="isSelected(variant.id)"
-        [class.shadow-lg]="isSelected(variant.id)"
-        [class.ring-2]="isSelected(variant.id)"
-        [class.ring-accent]="isSelected(variant.id)"
-        (click)="onSelectVariant(variant.id)"
-        role="button"
-        tabindex="0"
-        (keydown.enter)="onSelectVariant(variant.id)"
-        (keydown.space)="onSelectVariant(variant.id)"
-        aria-pressed="{{ isSelected(variant.id) }}"
-      >
-        <!-- Voorbeeldtekst in font -->
-        <p class="text-lg sm:text-xl leading-relaxed text-foreground"
-           [ngStyle]="{ 'font-family': fontMap[variant.id] }">
-          {{ userSampleText || variant.sample }}
-        </p>
-      </div>
-    }
+    <!-- GRID alleen op desktop -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+
+      @for (variant of fontVariants; track variant.id) {
+        <div
+          class="group cursor-pointer px-4 py-5 rounded-xl border border-border/30
+                 bg-white/60 dark:bg-muted/30
+                 transition-all duration-300
+                 hover:bg-white hover:shadow-lg hover:-translate-y-1
+                 md:hover:scale-[1.015]"
+          [class.scale-[1.02]]="isSelected(variant.id)"
+          [class.shadow-xl]="isSelected(variant.id)"
+          [class.ring-2]="isSelected(variant.id)"
+          [class.ring-accent]="isSelected(variant.id)"
+          (click)="onSelectVariant(variant.id)"
+          role="button"
+          tabindex="0"
+          (keydown.enter)="onSelectVariant(variant.id)"
+          (keydown.space)="onSelectVariant(variant.id)"
+          aria-pressed="{{ isSelected(variant.id) }}"
+        >
+          <!-- Voorbeeldtekst -->
+          <p
+            class="text-lg md:text-xl leading-relaxed text-foreground"
+            [ngStyle]="{ 'font-family': fontMap[variant.id] }"
+          >
+            {{ userSampleText || variant.sample }}
+          </p>
+        </div>
+      }
+
+    </div>
   </section>
 </div>
