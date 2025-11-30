@@ -179,7 +179,6 @@ prevStep() {
   }
 }
 
-
   togglePage(page: string) {
     this.builderState.update(prev => {
       const pages = prev.pages.includes(page) ? prev.pages.filter(p => p !== page) : [...prev.pages, page];

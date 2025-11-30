@@ -24,39 +24,39 @@
     <!-- Opties -->
     <div class="space-y-4 w-full max-w-md mx-auto text-left">
       @for (item of contents; track item.id) {
-        <label
-            [for]="item.id"
-            class="flex items-start gap-4 p-4 rounded-2xl border border-border/50 bg-background/40 hover:bg-accent/5 transition cursor-pointer w-full"
-            (click)="onSelectPage(item.id, item.required)"
-          >
-            <!-- Checkbox -->
-            <input
-              type="checkbox"
-              class="mt-1 accent-accent h-4 w-4 cursor-pointer"
-              [id]="item.id"
-              [checked]="pages.includes(item.id)"
-              [disabled]="item.required || (!pages.includes(item.id) && pages.length >= 4)"
-              aria-checked="{{ pages.includes(item.id) }}"
-              aria-disabled="{{ item.required || (!pages.includes(item.id) && pages.length >= 4) }}"
-            />
+       <label
+          for="page-{{ item.id }}"
+          class="flex items-start gap-4 p-4 rounded-2xl border border-border/50 bg-background/40 hover:bg-accent/5 transition cursor-pointer w-full"
+        >
+          <input
+            id="page-{{ item.id }}"
+            type="checkbox"
+            class="mt-1 accent-accent h-4 w-4"
+            [checked]="pages.includes(item.id)"
+            [disabled]="item.required || (!pages.includes(item.id) && pages.length >= 4)"
+            (change)="onSelectPage(item.id, item.required)"
+          />
 
-            <!-- Tekst + icon -->
-            <div class="flex-1">
-              <div class="flex items-center gap-2">
-                @if (item.icon) {
-                  <lucide-icon [name]="item.icon" class="w-5 h-5 text-accent"></lucide-icon>
-                }
-                <span class="font-medium text-foreground">{{ item.name }}</span>
-                @if (item.required) {
-                  <span class="text-xs text-muted-foreground ml-2">(verplicht)</span>
-                }
-              </div>
-
-              <p class="text-sm text-muted-foreground mt-1">
-                {{ item.description }}
-              </p>
+          <div class="flex-1">
+            <div class="flex items-center gap-2">
+              @if (item.icon) {
+                <lucide-icon
+                  [name]="item.icon"
+                  class="w-5 h-5 text-accent">
+                </lucide-icon>
+              }
+              <span class="font-medium text-foreground">{{ item.name }}</span>
+              @if (item.required) {
+                <span class="text-xs text-muted-foreground ml-2">(verplicht)</span>
+              }
             </div>
-          </label>
+
+            <p class="text-sm text-muted-foreground mt-1">
+              {{ item.description }}
+            </p>
+          </div>
+        </label>
+
       }
 
       <!-- Teller -->
