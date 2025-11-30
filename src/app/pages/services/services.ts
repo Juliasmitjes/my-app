@@ -148,7 +148,7 @@ export class Services {
       case 1: // Kleuren
         return !!state.colorTheme;
       case 2: // Lettertype
-        return !!state.fontStyle;
+        return !!state.fontVariant;
       case 3: // Navigatie
         return !!state.navigation;
       case 4: // Content
