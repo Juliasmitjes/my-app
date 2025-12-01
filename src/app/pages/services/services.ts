@@ -41,19 +41,19 @@ export class Services {
       id: 'warm',
       name: 'Warm',
       description: 'Zonnig en energiek met oranje en gouden tinten',
-      colors: ['#F4E2D1', '#C55332', '#FFFFFF', '#E6B08C', '#D98A5C', '#FFFFFF', '#FBE9DF', '#D3613D', '#FFFFFF', '#B54125'],
+      colors: ['#FAE4D0', '#D76A2A', '#FFFFFF', '#E9B384', '#E19B63', '#E7B48A', '#C9652A', '#E87536', '#FFFFFF', '#D46B2C'],
     },
     {
       id: 'light',
       name: 'Licht',
       description: 'Fris en helder met zachte pastelkleuren',
-      colors:['#8BC34A', '#F6B980', '#DCEDC8'],
-    },
+      colors: [  '#E6F5EC', '#D9EAF7', '#2f3b32', '#EBDCF9', '#D8CFF0', '#F0E6FA', '#2e2e38', '#E2F7F1' , '#2f3b32', '#EADAF5'  ],  
+     },
     {
       id: 'dark',
       name: 'Donker',
       description: 'Diep en stijlvol met luxe accenten',
-      colors: ['#1E1E2F', '#2C2C3A', '#3B3B4F'],
+      colors: ['#2A2F36', '#3E4A5C', '#1A1A1A', '#4B3A5E', '#3D2F54', '#2F3B32', '#4A3F6B', '#35524A', '#1A1A1A', '#3C2F5C'  ],
     },
     {
       id: 'cool',
@@ -65,7 +65,7 @@ export class Services {
     {
       id: 'earth',
       name: 'Aards',
-      description: 'Natuurlijke tinten met groen en bruin voor een rustige uitstraling',
+      description: 'Natuurlijke tinten voor een rustige uitstraling',
       colors: ['#8D6E63', '#A1887F', '#C5A880'],
     },
     {
