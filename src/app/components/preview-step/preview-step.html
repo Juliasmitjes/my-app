@@ -67,7 +67,7 @@
             <span class="text-md opacity-90">{{ logoLabel }}</span>
           </div>
 
-          <!-- Mobiel: logoLabel apart onder icoon + titel -->
+          <!-- Mobiel: logoLabel apart -->
           <div class="sm:hidden p-3 text-left">
             <span class="text-md opacity-90">{{ logoLabel }}</span>
           </div>
@@ -96,6 +96,17 @@
           </div>
         </div>
       } @else {
+       <!-- topbar-layout -->
+        <div class="flex flex-wrap justify-start gap-2 mb-4 text-sm px-2 sm:px-0">
+          @for (p of pages; track p) {
+            <div class="rounded px-2 py-1 page-pill"
+                [style.background]="selectedThemeColors[1]"
+                [style.color]="selectedThemeColors[2]">
+              {{ pageLabel(p) }}
+            </div>
+          }
+        </div>
+
         <ng-container *ngTemplateOutlet="previewContent"></ng-container>
       }
     </div>
