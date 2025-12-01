@@ -1,31 +1,39 @@
 <div class="h-full rounded-xl p-4 sm:p-8 flex flex-col md:flex-row gap-4 sm:gap-6 preview-root"
      [style.background]="selectedThemeColors[2] + 20">
 
-    <!-- Mobiel: apart hokje voor icoon + titel -->
-      <div class="sm:hidden flex items-center justify-center gap-2 p-2 rounded-xl text-center">
-        <lucide-icon [name]="iconName" class="w-6 h-6 text-accent"></lucide-icon>
-        <h3 class="font-semibold text-base tracking-wide uppercase text-foreground">
-          {{ title }}
-        </h3>
+    <!-- Mobiel -->
+      <div class="sm:hidden flex flex-col items-center justify-center gap-2 p-2 rounded-xl text-center">
+        <div class="flex items-center gap-2">
+          <lucide-icon [name]="iconName" class="w-6 h-6 text-accent"></lucide-icon>
+          <h3 class="font-semibold text-base tracking-wide uppercase text-accent">
+            {{ title }}
+          </h3>
+        </div>
+
+        <button
+          class="mt-2 mb-4 px-4 py-2 bg-accent text-white rounded-md font-semibold cursor-pointer hover:bg-accent/90 transition-colors"
+          (click)="openRequestPopup()">
+          Aanvraag versturen
+        </button>
       </div>
 
-  <!-- Mascotte -->
-  <div class="hidden mascot-wrap w-full md:w-48 lg:flex items-center justify-center md:justify-start">
-    <app-speech-bubble
-      [text]="'Tevreden?'"
-      class="absolute top-65 left-46 2xl:top-70 2xl:left-43 transform -translate-x-1/2 -translate-y-full">
-      <button
-        class="mt-2 mb-4 px-4 py-2 bg-accent text-white rounded-md font-semibold cursor-pointer hover:bg-accent/90 transition-colors"
-        (click)="openRequestPopup()">
-        Aanvraag versturen
-      </button>
-    </app-speech-bubble>
+      <!-- Mascotte -->
+      <div class="hidden mascot-wrap w-full md:w-48 lg:flex items-center justify-center md:justify-start">
+        <app-speech-bubble
+          [text]="'Tevreden?'"
+          class="absolute top-65 left-46 2xl:top-70 2xl:left-43 transform -translate-x-1/2 -translate-y-full">
+          <button
+            class="mt-2 mb-4 px-4 py-2 bg-accent text-white rounded-md font-semibold cursor-pointer hover:bg-accent/90 transition-colors"
+            (click)="openRequestPopup()">
+            Aanvraag versturen
+          </button>
+        </app-speech-bubble>
 
-    <app-request-popup
-      [visible]="showRequestPopup"
-      [builderState]="builderState"
-      (dismiss)="closeRequestPopup()">
-    </app-request-popup>
+        <app-request-popup
+          [visible]="showRequestPopup"
+          [builderState]="builderState"
+          (dismiss)="closeRequestPopup()">
+        </app-request-popup>
 
     <img [src]="mascotUrl"
          alt="Mascot"
