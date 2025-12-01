@@ -41,7 +41,7 @@ export class Services {
       id: 'warm',
       name: 'Warm',
       description: 'Zonnig en energiek met oranje en gouden tinten',
-      colors: ['#FF7A3D', '#FFB347', '#FFD166'],
+      colors: ['#F4E2D1', '#C55332', '#FFFFFF', '#E6B08C', '#D98A5C', '#FFFFFF', '#FBE9DF', '#D3613D', '#FFFFFF', '#B54125'],
     },
     {
       id: 'light',
