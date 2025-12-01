@@ -40,50 +40,51 @@ export class Services {
     {
       id: 'warm',
       name: 'Warm',
-      description: 'Zonnig en energiek met oranje en gouden tinten',
-      colors: ['#fff7ed', '#fed7aa', '#ea580c', '#ffedd5', '#fdba74', '#f97316', '#7c2d12', '#ffe0b2', '#ea580c', '#ffb74d'],
+      description: 'Zonnig en energiek met rode tinten',
+      colors: ['#F7F3F2','#09122C', '#872341', '#BE3144', '#E17564', '#3E1B3C', '#5D2A4A', '#FFFFFF', , '#E17564', '#4A1F39'],
     },
     {
       id: 'light',
       name: 'Licht',
       description: 'Fris en helder met zachte pastelkleuren',
-      colors: ['#fdfaf6', '#e6ddc6', '#4a7c59', '#d9cbb2', '#b6a28e', '#8fb996', '#3a4a3f', '#f5f0e8', '#4a7c59', '#cbbf9d'],  
+      colors: ['#F5EFE6', '#E8DFCA', '#6D94C5', '#FFFFFF', '#D6CBB6', '#CBDCEB', '#4A5870', '#EEF4F9', '#6D94C5', '#D4E0EA'],
      },
     {
       id: 'dark',
       name: 'Donker',
       description: 'Diep en stijlvol met luxe accenten',
-      colors: ['#fafafa', '#e5e5e5', '#374151', '#f3f4f6', '#d1d5db', '#9ca3af', '#1f2937', '#eeeeee', '#374151', '#bdbdbd'],
+      colors: ["#F2F1EE","#393E46","#948979","#FFFFFF","#DFD0B8","#E8E2D5","#2E3237","#F7F5F1","#948979","#D9D2C6"],
     },
     {
       id: 'cool',
       name: 'Koel',
-      description: 'Rustig en modern met blauwe en paarse tonen',
-      colors: ['#f0f9ff', '#e0f2fe', '#1e3a8a', '#dbeafe', '#93c5fd', '#3b82f6', '#1e40af', '#e3f2fd', '#1e3a8a', '#64b5f6'],
+      description: 'Fris en modern met blauwe tonen',
+      colors: ["#F2EFE7","#9ACBD0","#48A6A7","#FFFFFF","#DDE3DE","#CFE7E8","#006A71","#EFF4F3","#48A6A7","#D2E3E4"],
     },
     {
       id: 'earth',
       name: 'Aards',
       description: 'Natuurlijke tinten voor een rustige uitstraling',
-      colors: ['#fdfaf6', '#e6ccb2', '#7f5539', '#ede0d4', '#ddb892', '#b08968', '#5e503f', '#f5ebe0', '#7f5539', '#c19a6b'],
+      colors: ['#FAF7F3', '#F2ECE6', '#5A3E36', '#FFFFFF', '#E4D8CF', '#D4C3B9', '#6A4C42', '#EEE4DC', '#5A3E36', '#DACDC3'],
     },
     {
       id: 'vibrant',
       name: 'Vibrant',
       description: 'Levendig en speels met opvallende kleuren',
-      colors: ['#fff9c4', '#ffcc80', '#43a047', '#f48fb1', '#64b5f6', '#ff7043', '#6a1b9a', '#c8e6c9', '#1e88e5', '#ffb300'],
+      colors:["#FFF7F2","#FADFA1","#C96868","#FFFFFF","#FFEBD4","#F4D7D7","#7EACB5","#FFF3E6","#C96868","#F1DED7"],
     },
     {
       id: 'ocean',
       name: 'Ocean',
       description: 'Diep en verfrissend als de zee',
-      colors:['#fef9f4', '#d6e2de', '#2a9d8f', '#e9ece6', '#a8dadc', '#457b9d', '#264653', '#f1faee', '#e76f51', '#ffb703'],
+      colors:["#F6F8F5","#4F959D","#205781","#FFFFFF","#D2E7E5","#E8F3F2","#98D2C0","#F4FAF9","#205781","#D9ECEB"],
     },
     {
       id: 'sunset',
       name: 'Zonsondergang',
       description: 'Warm en dromerig met roze en perzik',
-      colors: ['#fff0f6', '#fbcfe8', '#be185d', '#fde2e4', '#f9bec7', '#f06292', '#7a1f3d', '#f8bbd0', '#be185d', '#f48fb1'],
+      colors: ["#FFF9F7","#FFB4A2","#FFCDB2","#FFFFFF","#FFE7E4","#FDEDEB","#8C5C82","#FFF5F4","#FFB4A2","#F9E6E8"]
+    ,
     },
   ]);
 
