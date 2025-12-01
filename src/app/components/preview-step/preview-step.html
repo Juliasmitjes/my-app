@@ -15,6 +15,13 @@
           (click)="openRequestPopup()">
           Aanvraag versturen
         </button>
+
+         <!-- Popup alleen voor mobiel -->
+          <app-request-popup
+            [visible]="showRequestPopup"
+            [builderState]="builderState"
+            (dismiss)="closeRequestPopup()">
+          </app-request-popup>
       </div>
 
       <!-- Mascotte -->
