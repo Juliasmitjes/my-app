@@ -1,17 +1,32 @@
 <div class="step-container">
-  <h2 class="text-2xl font-bold mb-2 text-center">Kies jouw layout</h2>
+  <h2 class="text-2xl font-bold mb-2 text-center">Kies de layout van jouw homepage</h2>
   <p class="text-muted-foreground mb-6 text-center">Hoe wil je jouw content weergeven?</p>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    @for (layout of layouts;track layout.id){
+    @for (layout of layouts; track layout.id) {
       <ng-container>
-      <app-option-card
-        [layout]="layout"
-        [selected]="selectedLayout === layout.id"
-        (select)="onSelect(layout.id)"
-      ></app-option-card>
-    </ng-container>
+        <app-option-card
+          [layout]="layout"
+          [selected]="selectedLayout === layout.id"
+          (select)="onSelect(layout.id)">
+        </app-option-card>
+      </ng-container>
     }
-   
+  </div>
+
+  <!-- Configuratieblok onder de layout-selectie -->
+  <div class="mt-10">
+   @if (selectedLayout === 'single') {
+        <app-single-column (change)="onConfigChange($event)"></app-single-column>
+      }
+
+      @if (selectedLayout === 'two-column') {
+        <app-two-columns (change)="onConfigChange($event)"></app-two-columns>
+      }
+
+      @if (selectedLayout === 'grid') {
+        <app-grid (change)="onConfigChange($event)"></app-grid>
+      }
+
   </div>
 </div>

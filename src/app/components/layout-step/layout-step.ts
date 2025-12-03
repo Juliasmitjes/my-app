@@ -2,6 +2,9 @@ import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from
 import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
 import { OptionCard } from '../ui/option-card/option-card';
+import { SingleColumn } from './layout-config/single-column/single-column';
+import { TwoColumns } from './layout-config/two-columns/two-columns';
+import { Grid } from './layout-config/grid/grid';
 
 export interface LayoutOption {
   id: string;
@@ -13,14 +16,14 @@ export interface LayoutOption {
 @Component({
   selector: 'app-layout-step',
   standalone: true,
-  imports: [CommonModule, OptionCard],
+  imports: [CommonModule, OptionCard, SingleColumn, TwoColumns, Grid],
   templateUrl: './layout-step.html',
   styleUrl: './layout-step.css',
 })
 export class LayoutStep implements OnChanges {
   @Input() builderState!: BuilderState;
   @Input() selectedLayout: BuilderState['layout'] = null;
-
+  selectedConfig: any = null;
   @Output() update = new EventEmitter<Partial<BuilderState>>();
   @Output() selectLayout = new EventEmitter<BuilderState['layout']>();
 
@@ -49,4 +52,9 @@ export class LayoutStep implements OnChanges {
     this.update.emit({ layout: value });
     this.selectedLayout = value; 
   }
+
+  onConfigChange(config: any) {
+  this.selectedConfig = config;
+  console.log("Nieuwe configuratie:", config);
+}
 }

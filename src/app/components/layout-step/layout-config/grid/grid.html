@@ -1,0 +1,51 @@
+<h3 class="text-xl font-semibold mb-4">Grid indeling</h3>
+
+<div class="flex items-center gap-4 mb-6">
+
+  <div>
+    <label class="block text-sm font-medium">Rijen</label>
+    <input
+      type="number"
+      min="1"
+      max="6"
+      class="border p-2 rounded w-20"
+      [(ngModel)]="rows"
+      (change)="updateGrid()"
+    />
+  </div>
+
+  <div>
+    <label class="block text-sm font-medium">Kolommen</label>
+    <input
+      type="number"
+      min="1"
+      max="6"
+      class="border p-2 rounded w-20"
+      [(ngModel)]="cols"
+      (change)="updateGrid()"
+    />
+  </div>
+
+</div>
+
+<div
+  class="grid gap-4"
+  [style.gridTemplateColumns]="'repeat(' + cols + ', 1fr)'"
+>
+
+  <div
+    *ngFor="let cell of grid; let i = index"
+    class="p-4 border rounded bg-white/50"
+  >
+    <select
+      class="w-full p-2 border rounded"
+      [(ngModel)]="grid[i]"
+      (change)="emit()"
+    >
+      <option value="text">Tekst</option>
+      <option value="image">Afbeelding</option>
+      <option value="video">Video</option>
+    </select>
+  </div>
+
+</div>
