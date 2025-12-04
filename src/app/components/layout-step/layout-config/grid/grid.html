@@ -45,14 +45,14 @@
 
 <!-- Grid -->
 <div
-  class="grid gap-6"
+  class="grid gap-6 overflow-visible"
   [style.gridTemplateColumns]="'repeat(' + cols + ', 1fr)'"
 >
   @for (cell of grid; let i = $index; track i) {
     <div
       class="p-5 rounded-2xl border border-gray-300 bg-white/60 dark:bg-muted/30
              backdrop-blur-sm shadow-sm transition-all
-             hover:shadow-lg hover:-translate-y-1 hover:bg-white/90 dark:hover:bg-muted/40"
+             hover:shadow-lg hover:-translate-y-1 hover:bg-white/90 dark:hover:bg-muted/40 relative overflow-visible"
     >
       <!-- Custom dropdown -->
       <div class="relative w-full">
@@ -70,7 +70,7 @@
 
         @if (cell.open) {
           <ul
-  class="absolute z-50 mt-2 w-full rounded-xl border border-gray-300 bg-white shadow-lg
+  class="absolute z-[9999] mt-2 w-full rounded-xl border border-gray-300 bg-white shadow-lg
          dark:bg-muted/30 dark:border-muted/40"
 >
 
