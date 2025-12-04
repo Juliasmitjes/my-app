@@ -1,51 +1,113 @@
-<h3 class="text-xl font-semibold mb-4">Grid indeling</h3>
+<h3 class="text-2xl font-bold mb-6 tracking-tight text-center">
+  Grid indeling
+</h3>
 
-<div class="flex items-center gap-4 mb-6">
+<!-- Input panel -->
+<div
+  class="flex items-center justify-center gap-8 mb-10
+         bg-white/60 dark:bg-muted/30 backdrop-blur-sm
+         border border-border/40 rounded-3xl p-6 shadow-sm"
+>
 
-  <div>
-    <label class="block text-sm font-medium">Rijen</label>
+  <!-- Rijen -->
+  <div class="flex flex-col text-center space-y-2">
+    <label class="text-sm font-medium text-muted-foreground">
+      Rijen
+    </label>
     <input
       type="number"
       min="1"
       max="6"
-      class="border p-2 rounded w-20"
+      class="w-24 px-3 py-2 rounded-xl border border-border/40 bg-white/80
+             focus:outline-none focus:ring-2 focus:ring-accent/40
+             transition-all text-center"
       [(ngModel)]="rows"
       (change)="updateGrid()"
     />
   </div>
 
-  <div>
-    <label class="block text-sm font-medium">Kolommen</label>
+  <!-- Kolommen -->
+  <div class="flex flex-col text-center space-y-2">
+    <label class="text-sm font-medium text-muted-foreground">
+      Kolommen
+    </label>
     <input
       type="number"
       min="1"
       max="6"
-      class="border p-2 rounded w-20"
+      class="w-24 px-3 py-2 rounded-xl border border-border/40 bg-white/80
+             focus:outline-none focus:ring-2 focus:ring-accent/40
+             transition-all text-center"
       [(ngModel)]="cols"
       (change)="updateGrid()"
     />
   </div>
-
 </div>
 
+<!-- Grid -->
 <div
-  class="grid gap-4"
+  class="grid gap-6"
   [style.gridTemplateColumns]="'repeat(' + cols + ', 1fr)'"
 >
 
+@for(cell of grid; let i = $index; track i) { 
+
   <div
-    *ngFor="let cell of grid; let i = index"
-    class="p-4 border rounded bg-white/50"
+    class="p-5 rounded-2xl border border-border/40 bg-white/60 dark:bg-muted/30
+           backdrop-blur-sm shadow-sm transition-all
+           hover:shadow-lg hover:-translate-y-1 hover:bg-white/90"
   >
-    <select
-      class="w-full p-2 border rounded"
-      [(ngModel)]="grid[i]"
-      (change)="emit()"
+    <div class="relative">
+  <button
+    class="w-full px-4 py-3 rounded-xl border border-border/40 bg-white/70 dark:bg-muted/30
+           backdrop-blur-sm shadow-sm flex items-center justify-between
+           transition-all hover:shadow-md"
+    (click)="cell.open = !cell.open"
+    type="button"
+  >
+    <span class="text-sm text-foreground">
+      {{ cell.labelMap[cell.value] }}
+    </span>
+    <lucide-icon name="chevron-down" class="w-4 h-4"></lucide-icon>
+  </button>
+
+  <!-- Dropdown -->
+  @if (cell.open) {
+    <div
+      class="absolute left-0 right-0 mt-2 rounded-xl bg-white/80 dark:bg-muted/30
+             backdrop-blur-md border border-border/40 shadow-xl p-2 z-20"
     >
-      <option value="text">Tekst</option>
-      <option value="image">Afbeelding</option>
-      <option value="video">Video</option>
-    </select>
-  </div>
+      <div
+        class="px-3 py-2 rounded-lg cursor-pointer text-sm
+               hover:bg-white hover:shadow-sm transition-all"
+        (click)="grid[i].value = 'text'; cell.open = false; emit()"
+      >
+        📝 Tekst
+      </div>
+
+      <div
+        class="px-3 py-2 rounded-lg cursor-pointer text-sm
+               hover:bg-white hover:shadow-sm transition-all"
+        (click)="grid[i].value = 'image'; cell.open = false; emit()"
+      >
+        🖼️ Afbeelding
+      </div>
+
+      <div
+        class="px-3 py-2 rounded-lg cursor-pointer text-sm
+               hover:bg-white hover:shadow-sm transition-all"
+        (click)="grid[i].value = 'video'; cell.open = false; emit()"
+      >
+        🎬 Video
+      </div>
+    </div>
+  }
+</div>
+
+</div>
+
+
+}
+  
 
 </div>
