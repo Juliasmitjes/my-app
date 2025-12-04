@@ -3,16 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 
-type CellType = 'text' | 'image' | 'video';
+export type CellType = 'text' | 'image' | 'video';
 
 interface GridCell {
   value: CellType;
   open: boolean;
-  labelMap: {
-    text: string;
-    image: string;
-    video: string;
-  };
+  labelMap: Record<CellType, string>;
 }
 
 @Component({
@@ -32,11 +28,13 @@ export class Grid {
 
   grid: GridCell[] = [];
 
+  // opties array type-safe
+  options: CellType[] = ['text', 'image', 'video'];
+
   constructor() {
     this.updateGrid();
   }
 
-  
   // standaard cel
   private createDefaultCell(): GridCell {
     return {
@@ -50,9 +48,7 @@ export class Grid {
     };
   }
 
- 
   // Grid op basis van rijen + kolommen
- 
   updateGrid() {
     const total = this.rows * this.cols;
 
@@ -74,7 +70,6 @@ export class Grid {
     this.grid = newGrid;
     this.emit();
   }
-
 
   emit() {
     this.change.emit(this.grid.map(cell => cell.value));
