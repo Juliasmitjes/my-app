@@ -6,7 +6,14 @@ const config: Config = {
     './app/**/*.{html,ts}',
     './components/**/*.{html,ts}',
     './pages/**/*.{html,ts}'
-  ]
+  ],
+  theme: {
+    extend: {
+      screens: {
+        '3xl': '1600px', // jouw nieuwe breakpoint
+      }
+    }
+  }
 }
 
 export default config;
