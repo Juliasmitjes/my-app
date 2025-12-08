@@ -1,24 +1,76 @@
-<h3 class="text-xl font-semibold mb-4">Indeling voor één kolom</h3>
+<div class="space-y-12 w-full max-w-4xl mx-auto px-4 sm:px-6">
 
-<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+  <!-- Titel -->
+  <div class="text-center space-y-2">
+    <h2 class="text-3xl font-bold tracking-tight">Kies jouw indeling</h2>
+    <p class="text-muted-foreground text-base">
+      Klik om de verschillende lay-outopties te bekijken
+    </p>
+  </div>
 
-  @for(option of columnOptions; track option.id) {
-    <button
-    (click)="select(option.id)"
-    class="p-4 rounded-xl border flex flex-col items-center text-center hover:bg-muted transition"
-    [class.bg-primary/10]="selectedOption === option.id"
+  <!-- GROTE SELECTIE KNOP -->
+  <div
+    class="relative group cursor-pointer p-10 rounded-3xl border border-border/40 
+           bg-white/70 dark:bg-muted/40 backdrop-blur-xl shadow-sm transition-all 
+           hover:shadow-xl hover:scale-[1.02]"
+    (click)="nextOption()"
+    role="button"
+    tabindex="0"
+    (keydown.enter)="nextOption()"
+    (keydown.space)="nextOption()"
   >
-    <span class="font-medium text-sm">{{ option.label }}</span>
 
-    @if(option.preview) {
-       <img
-      [src]="option.preview"
-      alt="preview"
-      class="mt-3 w-16 h-auto"
-    />
-    }   
-  </button>
-  }
-  
+    <!-- Preview icoon afhankelijk van optie -->
+    <div class="flex justify-center mb-6">
+
+      @switch (currentOption.type) {
+
+        @case ('image-text') {
+          <div class="flex gap-6">
+            <lucide-icon name="image" class="w-20 h-20 opacity-80"></lucide-icon>
+            <lucide-icon name="text-align-justify" class="w-20 h-20 opacity-80"></lucide-icon>
+          </div>
+        }
+
+        @case ('text-image') {
+          <div class="flex gap-6">
+            <lucide-icon name="text-align-justify" class="w-20 h-20 opacity-80"></lucide-icon>
+            <lucide-icon name="image" class="w-20 h-20 opacity-80"></lucide-icon>
+          </div>
+        }
+
+        @case ('text-video') {
+          <div class="flex gap-6">
+            <lucide-icon name="text-align-justify" class="w-20 h-20 opacity-80"></lucide-icon>
+            <lucide-icon name="video" class="w-20 h-20 opacity-80"></lucide-icon>
+          </div>
+        }
+
+        @case ('video-text') {
+          <div class="flex gap-6">
+            <lucide-icon name="video" class="w-20 h-20 opacity-80"></lucide-icon>
+            <lucide-icon name="text-align-justify" class="w-20 h-20 opacity-80"></lucide-icon>
+          </div>
+        }
+
+        @case ('text-only') {
+          <div class="flex gap-6">
+            <lucide-icon name="text-align-justify" class="w-24 h-24 opacity-80"></lucide-icon>
+          </div>
+        }
+
+      }
+
+    </div>
+
+    <!-- Titel onder de preview -->
+    <div class="text-center">
+      <h3 class="text-xl font-semibold">{{ currentOption.label }}</h3>
+      <p class="text-muted-foreground mt-1 text-sm">
+        Klik om naar de volgende indeling te gaan
+      </p>
+    </div>
+
+  </div>
 
 </div>

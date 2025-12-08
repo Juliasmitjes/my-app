@@ -1,32 +1,36 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-
-interface ColumnOption {
-  id: string;
-  label: string;
-  preview: string;
-}
+import { CommonModule } from '@angular/common';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-single-column',
   templateUrl: './single-column.html',
+  imports: [
+    CommonModule,
+    LucideAngularModule,
+  ],
 })
 
 
 export class SingleColumn {
-  @Output() change = new EventEmitter<string>();
+@Output() selectLayout = new EventEmitter<string>();
+currentIndex = 0;
 
-  selectedOption: string | null = null;
+layoutOptions = [
+  { id: 1, type: 'image-text', label: 'Afbeelding – Tekst' },
+  { id: 2, type: 'text-image', label: 'Tekst – Afbeelding' },
+  { id: 3, type: 'text-video', label: 'Tekst – Video' },
+  { id: 4, type: 'video-text', label: 'Video – Tekst' },
+  { id: 5, type: 'text-only', label: 'Alleen Tekst' },
+];
 
-  columnOptions: ColumnOption[] = [
-    { id: 'text', label: 'Tekst', preview: '/assets/previews/text.png' },
-    { id: 'image', label: 'Afbeelding', preview: '/assets/previews/image.png' },
-    { id: 'text-image', label: 'Tekst → Afbeelding', preview: '/assets/previews/text-image.png' },
-    { id: 'image-text', label: 'Afbeelding → Tekst', preview: '/assets/previews/image-text.png' },
-    { id: 'image-image-text', label: '2 Afbeeldingen → Tekst', preview: '/assets/previews/image-image-text.png' },
-  ];
+get currentOption() {
+  return this.layoutOptions[this.currentIndex];
+}
 
-  select(optionId: string) {
-    this.selectedOption = optionId;
-    this.change.emit(optionId);
-  }
+nextOption() {
+  this.currentIndex = (this.currentIndex + 1) % this.layoutOptions.length;
+  this.selectLayout.emit(this.currentOption.type)
+}
+
 }
