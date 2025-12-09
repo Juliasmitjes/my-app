@@ -4,33 +4,40 @@ import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-single-column',
+  standalone: true,
   templateUrl: './single-column.html',
   imports: [
     CommonModule,
     LucideAngularModule,
   ],
 })
-
-
 export class SingleColumn {
-@Output() selectLayout = new EventEmitter<string>();
-currentIndex = 0;
+  @Output() selectLayout = new EventEmitter<string>();
 
-layoutOptions = [
-  { id: 1, type: 'image-text', label: 'Afbeelding – Tekst' },
-  { id: 2, type: 'text-image', label: 'Tekst – Afbeelding' },
-  { id: 3, type: 'text-video', label: 'Tekst – Video' },
-  { id: 4, type: 'video-text', label: 'Video – Tekst' },
-  { id: 5, type: 'text-only', label: 'Alleen Tekst' },
-];
+  currentIndex = 0;
 
-get currentOption() {
-  return this.layoutOptions[this.currentIndex];
-}
+  layoutOptions = [
+    { id: 1, type: 'image-text', label: 'Afbeelding – Tekst' },
+    { id: 2, type: 'text-image', label: 'Tekst – Afbeelding' },
+    { id: 3, type: 'text-video', label: 'Tekst – Video' },
+    { id: 4, type: 'video-text', label: 'Video – Tekst' },
+    { id: 5, type: 'text-only', label: 'Alleen Tekst' },
+  ];
 
-nextOption() {
-  this.currentIndex = (this.currentIndex + 1) % this.layoutOptions.length;
-  this.selectLayout.emit(this.currentOption.type)
-}
+  /** Huidige optie */
+  get currentOption() {
+    return this.layoutOptions[this.currentIndex];
+  }
 
+  /** Volgende optie preview – gebruikt in de HTML */
+  get nextOptionPreview() {
+    const nextIndex = (this.currentIndex + 1) % this.layoutOptions.length;
+    return this.layoutOptions[nextIndex];
+  }
+
+  /** Ga naar de volgende layout */
+  nextOption() {
+    this.currentIndex = (this.currentIndex + 1) % this.layoutOptions.length;
+    this.selectLayout.emit(this.currentOption.type);
+  }
 }
