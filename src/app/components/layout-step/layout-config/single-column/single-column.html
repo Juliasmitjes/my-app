@@ -10,16 +10,17 @@
 
   <!-- Selectiekaart -->
   <div
-    class="relative cursor-pointer 
-           p-6 sm:p-10 rounded-3xl border border-border/40
-           bg-white/70 dark:bg-muted/40 backdrop-blur-xl shadow-sm
-           transition-all duration-300
-           hover:shadow-xl hover:scale-[1.02]"
-    (click)="nextOption()"
-    tabindex="0"
-    (keydown.enter)="nextOption()"
-    (keydown.space)="nextOption()"
-  >
+  class="relative cursor-pointer 
+         p-6 sm:p-10 rounded-3xl border border-border/40
+         bg-white/70 dark:bg-muted/40 backdrop-blur-xl shadow-sm
+         transition-all duration-300
+         hover:shadow-xl hover:scale-[1.02]
+         min-h-[320px] sm:min-h-0"
+  (click)="nextOption()"
+  tabindex="0"
+  (keydown.enter)="nextOption()"
+  (keydown.space)="nextOption()"
+>
 
     <!-- Achterste preview (volgende optie) -->
     <div
