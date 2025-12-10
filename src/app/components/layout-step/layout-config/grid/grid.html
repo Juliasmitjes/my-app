@@ -60,71 +60,73 @@
 </div>
 
 
-<!-- GRID -->
-<div
-  class="grid gap-4 sm:gap-6"
-  [style.gridTemplateColumns]="'repeat(' + cols + ', 1fr)'"
->
-  @for (cell of grid; let i = $index; track i) {
+<!-- SCROLL CONTAINER (alleen mobiel) -->
+<div class="overflow-x-auto lg:overflow-visible">
+  <!-- GRID -->
+  <div
+    class="grid gap-4 sm:gap-6 min-w-max"
+    [style.gridTemplateColumns]="'repeat(' + cols + ', 1fr)'"
+  >
+    @for (cell of grid; let i = $index; track i) {
 
-    <div
-      class="relative cursor-pointer
-             p-4 sm:p-6 rounded-3xl border border-border/40
-             bg-white/70 dark:bg-muted/40 backdrop-blur-xl shadow-sm
-             transition-all duration-300
-             hover:shadow-xl hover:scale-[1.02]
-             min-h-[180px] flex flex-col items-center justify-between"
-      (click)="nextCell(i)"
-      tabindex="0"
-      (keydown.enter)="nextCell(i)"
-      (keydown.space)="nextCell(i)"
-    >
+      <div
+        class="relative cursor-pointer
+               p-4 sm:p-6 rounded-3xl border border-border/40
+               bg-white/70 dark:bg-muted/40 backdrop-blur-xl shadow-sm
+               transition-all duration-300
+               hover:shadow-xl hover:scale-[1.02]
+               min-h-[180px] flex flex-col items-center justify-between"
+        (click)="nextCell(i)"
+        tabindex="0"
+        (keydown.enter)="nextCell(i)"
+        (keydown.space)="nextCell(i)"
+      >
 
-      <!-- Desktop preview (achterste kaart) -->
-       @if(cols <= 4){
-        <div class="absolute right-2 top-2 opacity-30 rotate-6 pointer-events-none hidden lg:block">
-        <div class="w-12 h-20 flex flex-col items-center justify-center gap-2">
-          @switch (cellNext(i)) {
-            @case ('text')  { <lucide-icon name="text-align-justify" class="w-8 h-8"></lucide-icon> }
-            @case ('image') { <lucide-icon name="image" class="w-8 h-8"></lucide-icon> }
-            @case ('video') { <lucide-icon name="video" class="w-8 h-8"></lucide-icon> }
-          }
+        <!-- Mobile preview (achterste kaart) -->
+         @if(cols < 5){
+          <div class="absolute right-2 top-2 opacity-30 rotate-6 pointer-events-none hidden lg:block">
+          <div class="w-12 h-20 flex flex-col items-center justify-center gap-2">
+            @switch (cellNext(i)) {
+              @case ('text')  { <lucide-icon name="text-align-justify" class="w-8 h-8"></lucide-icon> }
+              @case ('image') { <lucide-icon name="image" class="w-8 h-8"></lucide-icon> }
+              @case ('video') { <lucide-icon name="video" class="w-8 h-8"></lucide-icon> }
+            }
+          </div>
+        </div>
+         }
+        
+        <!-- CENTRAAL ICOONBLOK (zelfde stijl als single/two) -->
+        <div class="flex items-center justify-center flex-1 w-full mt-4">
+          <div
+            class="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center
+                   rounded-2xl p-3 ring-2 ring-accent shadow transition-all"
+          >
+            @switch (cell.value) {
+              @case ('text')  { <lucide-icon name="text-align-justify" class="w-12 h-12 sm:w-14 sm:h-14 opacity-90"></lucide-icon> }
+              @case ('image') { <lucide-icon name="image" class="w-12 h-12 sm:w-14 sm:h-14 opacity-90"></lucide-icon> }
+              @case ('video') { <lucide-icon name="video" class="w-12 h-12 sm:w-14 sm:h-14 opacity-90"></lucide-icon> }
+            }  
+            
+          </div>
+        </div>  
+        <!-- LABEL EN HINT (identiek gedrag) -->
+        <div class="w-full text-center mt-3 mb-2">
+          <div class="text-sm font-semibold text-foreground">
+            {{ cell.labelMap[cell.value] }}
+          </div>
+          <!-- MOBILE HINT -->
+          <p class="text-muted-foreground text-xs lg:hidden mt-2">
+            Tik voor volgende optie
+          </p>
+          <!-- DESKTOP HINT -->
+
+          <p class="text-muted-foreground text-sm hidden lg:block mt-3">
+            Klik voor volgende optie
+          </p>
         </div>
       </div>
-       }
-      
-      <!-- CENTRAAL ICOONBLOK (zelfde stijl als single/two) -->
-      <div class="flex items-center justify-center flex-1 w-full mt-4">
-        <div
-          class="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center
-                 rounded-2xl p-3 ring-2 ring-accent shadow transition-all"
-        >
-          @switch (cell.value) {
-            @case ('text')  { <lucide-icon name="text-align-justify" class="w-12 h-12 sm:w-14 sm:h-14 opacity-90"></lucide-icon> }
-            @case ('image') { <lucide-icon name="image" class="w-12 h-12 sm:w-14 sm:h-14 opacity-90"></lucide-icon> }
-            @case ('video') { <lucide-icon name="video" class="w-12 h-12 sm:w-14 sm:h-14 opacity-90"></lucide-icon> }
-          }
-        </div>
-      </div>
-
-      <!-- LABEL EN HINT (identiek gedrag) -->
-      <div class="w-full text-center mt-3 mb-2">
-        <div class="text-sm font-semibold text-foreground">
-          {{ cell.labelMap[cell.value] }}
-        </div>
-
-        <!-- MOBILE HINT -->
-        <p class="text-muted-foreground text-xs lg:hidden mt-2">
-          Tik voor volgende optie
-        </p>
-
-        <!-- DESKTOP HINT -->
-        <p class="text-muted-foreground text-sm hidden lg:block mt-3">
-          Klik voor volgende optie
-        </p>
-      </div>
-
-    </div>
-
-  }
+    }
+  </div>
 </div>
+
+
