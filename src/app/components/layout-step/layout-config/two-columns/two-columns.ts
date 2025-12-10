@@ -17,7 +17,7 @@ export class TwoColumns {
 
   colOptions = [
     { type: 'text',  label: 'Tekst' },
-    { type: 'image', label: 'Afbeelding' },
+    { type: 'image', label: 'Foto' },
     { type: 'video', label: 'Video' },
   ];
 

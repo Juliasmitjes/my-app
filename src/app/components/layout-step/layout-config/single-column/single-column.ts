@@ -17,8 +17,8 @@ export class SingleColumn {
   currentIndex = 0;
 
   layoutOptions = [
-  { id: 1, type: 'image-text', label: 'Afbeelding boven tekst' },
-  { id: 2, type: 'text-image', label: 'Tekst boven afbeelding' },
+  { id: 1, type: 'image-text', label: 'Foto boven tekst' },
+  { id: 2, type: 'text-image', label: 'Tekst boven foto' },
   { id: 3, type: 'text-video', label: 'Tekst boven video' },
   { id: 4, type: 'video-text', label: 'Video boven tekst' },
   { id: 5, type: 'text-only', label: 'Alleen tekst' },
