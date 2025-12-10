@@ -61,11 +61,11 @@
 
 
 <!-- SCROLL CONTAINER (alleen mobiel) -->
-<div class="overflow-x-auto ">
+<div class="overflow-x-auto lg:overflow-visible">
   <!-- GRID -->
   <div
-    class="grid gap-4 sm:gap-6 min-w-max"
-    [style.gridTemplateColumns]="'repeat(' + cols + ', 1fr)'"
+    class="grid gap-4 sm:gap-6 min-w-max sm:min-w-0"
+    [style.gridTemplateColumns]="'repeat(' + cols + ', minmax(0, 1fr))'"
   >
     @for (cell of grid; let i = $index; track i) {
 
