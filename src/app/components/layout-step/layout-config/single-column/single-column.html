@@ -1,21 +1,21 @@
-<div class="space-y-12 w-full max-w-4xl mx-auto px-4 sm:px-6">
+<div id="single-layout-top" class="space-y-12 w-full max-w-4xl mx-auto px-4 sm:px-6">
 
   <!-- Titel -->
-  <div class="text-center space-y-2">
-    <h2 class="text-3xl font-bold tracking-tight">Kies jouw indeling</h2>
-    <p class="text-muted-foreground text-base">
+  <div class="text-center space-y-1 sm:space-y-2">
+    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Kies jouw indeling</h2>
+    <p class="text-muted-foreground text-sm sm:text-base">
       Klik om de verschillende lay-outopties te bekijken
     </p>
   </div>
 
   <!-- Selectiekaart -->
   <div
-    class="relative cursor-pointer p-10 rounded-3xl border border-border/40
+    class="relative cursor-pointer 
+           p-6 sm:p-10 rounded-3xl border border-border/40
            bg-white/70 dark:bg-muted/40 backdrop-blur-xl shadow-sm
            transition-all duration-300
            hover:shadow-xl hover:scale-[1.02]"
     (click)="nextOption()"
-    role="button"
     tabindex="0"
     (keydown.enter)="nextOption()"
     (keydown.space)="nextOption()"
@@ -23,102 +23,100 @@
 
     <!-- Achterste preview (volgende optie) -->
     <div
-      class="absolute right-4 top-4 opacity-40 rotate-6
-             transition-all duration-300 pointer-events-none
-             group-hover:rotate-3 group-hover:opacity-60"
-    >
-      <div class="w-20 h-32 flex flex-col items-center justify-center gap-3"> 
+  class="absolute right-2 top-2 sm:right-4 sm:top-4 opacity-30 rotate-6
+         transition-all duration-300 pointer-events-none hidden sm:block"
+>
+      <div class="w-14 h-20 sm:w-20 sm:h-32 flex flex-col items-center justify-center gap-2 sm:gap-3">
+
         @switch (nextOptionPreview.type) {
+
           @case ('image-text') {
-            <div class="flex flex-col gap-3">
-              <lucide-icon name="image" class="w-10 h-10"></lucide-icon>
-              <lucide-icon name="text-align-justify" class="w-10 h-10"></lucide-icon>
+            <div class="flex flex-col gap-2 sm:gap-3">
+              <lucide-icon name="image" class="w-8 h-8 sm:w-10 sm:h-10"></lucide-icon>
+              <lucide-icon name="text-align-justify" class="w-8 h-8 sm:w-10 sm:h-10"></lucide-icon>
             </div>
           }
 
           @case ('text-image') {
-            <div class="flex flex-col gap-3">
-              <lucide-icon name="text-align-justify" class="w-10 h-10"></lucide-icon>
-              <lucide-icon name="image" class="w-10 h-10"></lucide-icon>
+            <div class="flex flex-col gap-2 sm:gap-3">
+              <lucide-icon name="text-align-justify" class="w-8 h-8 sm:w-10 sm:h-10"></lucide-icon>
+              <lucide-icon name="image" class="w-8 h-8 sm:w-10 sm:h-10"></lucide-icon>
             </div>
           }
 
           @case ('text-video') {
-            <div class="flex flex-col gap-3">
-              <lucide-icon name="text-align-justify" class="w-10 h-10"></lucide-icon>
-              <lucide-icon name="video" class="w-10 h-10"></lucide-icon>
+            <div class="flex flex-col gap-2 sm:gap-3">
+              <lucide-icon name="text-align-justify" class="w-8 h-8 sm:w-10 sm:h-10"></lucide-icon>
+              <lucide-icon name="video" class="w-8 h-8 sm:w-10 sm:h-10"></lucide-icon>
             </div>
           }
 
           @case ('video-text') {
-            <div class="flex flex-col gap-3">
-              <lucide-icon name="video" class="w-10 h-10"></lucide-icon>
-              <lucide-icon name="text-align-justify" class="w-10 h-10"></lucide-icon>
+            <div class="flex flex-col gap-2 sm:gap-3">
+              <lucide-icon name="video" class="w-8 h-8 sm:w-10 sm:h-10"></lucide-icon>
+              <lucide-icon name="text-align-justify" class="w-8 h-8 sm:w-10 sm:h-10"></lucide-icon>
             </div>
           }
 
           @case ('text-only') {
-            <div class="flex flex-col gap-3">
-              <lucide-icon name="text-align-justify" class="w-10 h-10"></lucide-icon>
-            </div>
+            <lucide-icon name="text-align-justify" class="w-8 h-8 sm:w-10 sm:h-10"></lucide-icon>
           }
+
         }
       </div>
     </div>
 
-    <!-- Huidige optie (met blauwe ring rond iconen) -->
-    <div class="flex justify-center mb-6">
+    <!-- Huidige optie (met ring) -->
+    <div class="flex justify-center mb-4 sm:mb-6">
       <div
-        class="w-32 h-48 flex flex-col items-center justify-center gap-6
-               rounded-2xl p-6 transition-all duration-300"
-        [class.ring-2]="true"
-        [class.ring-accent]="true"
-        [class.shadow-lg]="true"
+        class="w-28 h-40 sm:w-32 sm:h-48 flex flex-col items-center justify-center
+               gap-4 sm:gap-6 rounded-2xl p-4 sm:p-6
+               transition-all duration-300
+               ring-2 ring-accent shadow-lg"
       >
+
         @switch (currentOption.type) {
 
           @case ('image-text') {
-            <div class="flex flex-col gap-4">
-              <lucide-icon name="image" class="w-20 h-20 opacity-80"></lucide-icon>
-              <lucide-icon name="text-align-justify" class="w-20 h-20 opacity-80"></lucide-icon>
+            <div class="flex flex-col gap-3 sm:gap-4">
+              <lucide-icon name="image" class="w-14 h-14 sm:w-20 sm:h-20 opacity-80"></lucide-icon>
+              <lucide-icon name="text-align-justify" class="w-14 h-14 sm:w-20 sm:h-20 opacity-80"></lucide-icon>
             </div>
           }
 
           @case ('text-image') {
-            <div class="flex flex-col gap-4">
-              <lucide-icon name="text-align-justify" class="w-20 h-20 opacity-80"></lucide-icon>
-              <lucide-icon name="image" class="w-20 h-20 opacity-80"></lucide-icon>
+            <div class="flex flex-col gap-3 sm:gap-4">
+              <lucide-icon name="text-align-justify" class="w-14 h-14 sm:w-20 sm:h-20 opacity-80"></lucide-icon>
+              <lucide-icon name="image" class="w-14 h-14 sm:w-20 sm:h-20 opacity-80"></lucide-icon>
             </div>
           }
 
           @case ('text-video') {
-            <div class="flex flex-col gap-4">
-              <lucide-icon name="text-align-justify" class="w-20 h-20 opacity-80"></lucide-icon>
-              <lucide-icon name="video" class="w-20 h-20 opacity-80"></lucide-icon>
+            <div class="flex flex-col gap-3 sm:gap-4">
+              <lucide-icon name="text-align-justify" class="w-14 h-14 sm:w-20 sm:h-20 opacity-80"></lucide-icon>
+              <lucide-icon name="video" class="w-14 h-14 sm:w-20 sm:h-20 opacity-80"></lucide-icon>
             </div>
           }
 
           @case ('video-text') {
-            <div class="flex flex-col gap-4">
-              <lucide-icon name="video" class="w-20 h-20 opacity-80"></lucide-icon>
-              <lucide-icon name="text-align-justify" class="w-20 h-20 opacity-80"></lucide-icon>
+            <div class="flex flex-col gap-3 sm:gap-4">
+              <lucide-icon name="video" class="w-14 h-14 sm:w-20 sm:h-20 opacity-80"></lucide-icon>
+              <lucide-icon name="text-align-justify" class="w-14 h-14 sm:w-20 sm:h-20 opacity-80"></lucide-icon>
             </div>
           }
 
           @case ('text-only') {
-            <div class="flex flex-col gap-4">
-              <lucide-icon name="text-align-justify" class="w-20 h-20 opacity-80"></lucide-icon>
-            </div>
+            <lucide-icon name="text-align-justify" class="w-14 h-14 sm:w-20 sm:h-20 opacity-80"></lucide-icon>
           }
 
         }
       </div>
     </div>
 
-    <!-- Titel onder de preview -->
+    <!-- Titel -->
     <div class="text-center">
-      <h3 class="text-xl font-semibold">{{ currentOption.label }}</h3>
-      <p class="text-muted-foreground mt-1 text-sm">
+      <h3 class="text-lg sm:text-xl font-semibold">{{ currentOption.label }}</h3>
+      <p class="text-muted-foreground mt-1 text-xs sm:text-sm">
         Klik om naar de volgende indeling te gaan
       </p>
     </div>

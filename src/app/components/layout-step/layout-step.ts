@@ -43,15 +43,23 @@ export class LayoutStep implements OnChanges {
   }
 
   onSelect(id: string) {
-    const allowed = ['single', 'two-column', 'grid'] as const;
-    const isAllowed = (allowed as readonly string[]).includes(id);
+  const allowed = ['single', 'two-column', 'grid'] as const;
+  const isAllowed = (allowed as readonly string[]).includes(id);
 
-    const value: BuilderState['layout'] = isAllowed ? (id as BuilderState['layout']) : null;
+  const value: BuilderState['layout'] = isAllowed ? (id as BuilderState['layout']) : null;
 
-    this.selectLayout.emit(value);
-    this.update.emit({ layout: value });
-    this.selectedLayout = value; 
+  this.selectLayout.emit(value);
+  this.update.emit({ layout: value });
+  this.selectedLayout = value;
+
+  /** Auto-scroll alleen voor mobiel */
+  if (value === 'single' && window.innerWidth < 640) {
+    setTimeout(() => {
+      const el = document.getElementById('single-layout-top');
+      el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
   }
+}
 
   onConfigChange(config: any) {
   this.selectedConfig = config;
