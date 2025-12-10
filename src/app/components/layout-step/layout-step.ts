@@ -59,7 +59,20 @@ export class LayoutStep implements OnChanges {
       el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 50);
   }
-}
+
+   else if (value === 'two-column' && window.innerWidth < 640) {
+    setTimeout(() => {
+      const el = document.getElementById('two-layout-top');
+      el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+  }
+
+  else if (value === 'grid' && window.innerWidth < 640) {
+    setTimeout(() => {
+      const el = document.getElementById('grid-layout-top');
+      el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+}}
 
   onConfigChange(config: any) {
   this.selectedConfig = config;
