@@ -17,12 +17,12 @@ export class SingleColumn {
   currentIndex = 0;
 
   layoutOptions = [
-    { id: 1, type: 'image-text', label: 'Afbeelding – Tekst' },
-    { id: 2, type: 'text-image', label: 'Tekst – Afbeelding' },
-    { id: 3, type: 'text-video', label: 'Tekst – Video' },
-    { id: 4, type: 'video-text', label: 'Video – Tekst' },
-    { id: 5, type: 'text-only', label: 'Alleen Tekst' },
-  ];
+  { id: 1, type: 'image-text', label: 'Afbeelding boven tekst' },
+  { id: 2, type: 'text-image', label: 'Tekst boven afbeelding' },
+  { id: 3, type: 'text-video', label: 'Tekst boven video' },
+  { id: 4, type: 'video-text', label: 'Video boven tekst' },
+  { id: 5, type: 'text-only', label: 'Alleen tekst' },
+];
 
   /** Huidige optie */
   get currentOption() {
