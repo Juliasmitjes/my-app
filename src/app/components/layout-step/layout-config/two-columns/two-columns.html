@@ -1,33 +1,147 @@
-<h3 class="text-xl font-semibold mb-4">Indeling voor twee kolommen</h3>
+<div id="two-layout-top" class="space-y-12 w-full max-w-5xl mx-auto px-4 sm:px-6">
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-  <!-- Kolom 1 -->
-  <div>
-    <h4 class="font-medium mb-2">Kolom 1</h4>
-    <select
-      class="w-full p-2 border rounded"
-      [(ngModel)]="col1"
-      (change)="emit()"
-    >
-      <option value="text">Tekst</option>
-      <option value="image">Afbeelding</option>
-      <option value="video">Video</option>
-    </select>
+  <!-- Titel -->
+  <div class="text-center space-y-1 sm:space-y-2">
+    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Kies jouw indeling</h2>
+    <p class="text-muted-foreground text-sm sm:text-base">
+      Stel de inhoud per kolom in
+    </p>
   </div>
 
-  <!-- Kolom 2 -->
-  <div>
-    <h4 class="font-medium mb-2">Kolom 2</h4>
-    <select
-      class="w-full p-2 border rounded"
-      [(ngModel)]="col2"
-      (change)="emit()"
-    >
-      <option value="text">Tekst</option>
-      <option value="image">Afbeelding</option>
-      <option value="video">Video</option>
-    </select>
-  </div>
+  <!-- Twee kaarten naast elkaar -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
+    <!-- KOL 1 -->
+    <div
+      class="relative cursor-pointer 
+             p-6 sm:p-10 rounded-3xl border border-border/40
+             bg-white/70 dark:bg-muted/40 backdrop-blur-xl shadow-sm
+             transition-all duration-300
+             hover:shadow-xl hover:scale-[1.02]
+             min-h-[320px] sm:min-h-0"
+      (click)="nextCol1()"
+      tabindex="0"
+      (keydown.enter)="nextCol1()"
+      (keydown.space)="nextCol1()"
+    >
+
+      <!-- Achterste preview -->
+      <div
+        class="absolute right-2 top-2 sm:right-4 sm:top-4 opacity-30 rotate-6
+               pointer-events-none hidden sm:block transition-all duration-300"
+      >
+        <div class="w-14 h-20 sm:w-20 sm:h-32 flex flex-col items-center justify-center gap-2 sm:gap-3">
+          @switch (col1Next.type) {
+            @case ('text') { <lucide-icon name="text-align-justify" class="w-10 h-10"></lucide-icon> }
+            @case ('image') { <lucide-icon name="image" class="w-10 h-10"></lucide-icon> }
+            @case ('video') { <lucide-icon name="video" class="w-10 h-10"></lucide-icon> }
+          }
+        </div>
+      </div>
+
+      <!-- Huidige optie -->
+      <div class="flex justify-center mb-4 sm:mb-6">
+        <div
+          class="w-28 h-40 sm:w-32 sm:h-48
+                 flex flex-col items-center justify-center gap-4 sm:gap-6
+                 rounded-2xl p-4 sm:p-6
+                 ring-2 ring-accent shadow-lg transition-all"
+        >
+          @switch (col1Current.type) {
+            @case ('text')  { <lucide-icon name="text-align-justify" class="w-16 h-16 opacity-80"></lucide-icon> }
+            @case ('image') { <lucide-icon name="image" class="w-16 h-16 opacity-80"></lucide-icon> }
+            @case ('video') { <lucide-icon name="video" class="w-16 h-16 opacity-80"></lucide-icon> }
+          }
+        </div>
+      </div>
+
+      <!-- Titelblok -->
+      <div class="text-center min-h-[3.5rem] sm:min-h-0 relative">
+
+        <h3 class="text-lg sm:text-xl font-semibold">
+          {{ col1Current.label }}
+        </h3>
+
+        <!-- mobiel -->
+        <p class="text-muted-foreground mt-1 text-xs
+           absolute left-1/2 -translate-x-1/2 w-[80%] text-center bottom-4
+           block sm:hidden">
+          Klik om volgende optie te bekijken
+        </p>
+
+        <!-- desktop -->
+        <p class="text-muted-foreground mt-5 text-sm hidden sm:block">
+          Klik om volgende optie te bekijken
+        </p>
+      </div>
+
+    </div>
+
+    <!-- KOL 2 (identiek) -->
+    <div
+      class="relative cursor-pointer 
+             p-6 sm:p-10 rounded-3xl border border-border/40
+             bg-white/70 dark:bg-muted/40 backdrop-blur-xl shadow-sm
+             transition-all duration-300
+             hover:shadow-xl hover:scale-[1.02]
+             min-h-[320px] sm:min-h-0"
+      (click)="nextCol2()"
+      tabindex="0"
+      (keydown.enter)="nextCol2()"
+      (keydown.space)="nextCol2()"
+    >
+
+      <!-- Achterste preview -->
+      <div
+        class="absolute right-2 top-2 sm:right-4 sm:top-4 opacity-30 rotate-6
+               pointer-events-none hidden sm:block transition-all duration-300"
+      >
+        <div class="w-14 h-20 sm:w-20 sm:h-32 flex flex-col items-center justify-center gap-2 sm:gap-3">
+          @switch (col2Next.type) {
+            @case ('text')  { <lucide-icon name="text-align-justify" class="w-10 h-10"></lucide-icon> }
+            @case ('image') { <lucide-icon name="image" class="w-10 h-10"></lucide-icon> }
+            @case ('video') { <lucide-icon name="video" class="w-10 h-10"></lucide-icon> }
+          }
+        </div>
+      </div>
+
+      <!-- Huidige optie -->
+      <div class="flex justify-center mb-4 sm:mb-6">
+        <div
+          class="w-28 h-40 sm:w-32 sm:h-48
+                 flex flex-col items-center justify-center gap-4 sm:gap-6
+                 rounded-2xl p-4 sm:p-6
+                 ring-2 ring-accent shadow-lg transition-all"
+        >
+          @switch (col2Current.type) {
+            @case ('text')  { <lucide-icon name="text-align-justify" class="w-16 h-16 opacity-80"></lucide-icon> }
+            @case ('image') { <lucide-icon name="image" class="w-16 h-16 opacity-80"></lucide-icon> }
+            @case ('video') { <lucide-icon name="video" class="w-16 h-16 opacity-80"></lucide-icon> }
+          }
+        </div>
+      </div>
+
+      <!-- Titelblok -->
+      <div class="text-center min-h-[3.5rem] sm:min-h-0 relative">
+
+        <h3 class="text-lg sm:text-xl font-semibold">
+          {{ col2Current.label }}
+        </h3>
+
+        <!-- mobiel -->
+        <p class="text-muted-foreground mt-1 text-xs
+           absolute left-1/2 -translate-x-1/2 w-[80%] text-center bottom-4
+           block sm:hidden">
+          Klik om volgende optie te bekijken
+        </p>
+
+        <!-- desktop -->
+        <p class="text-muted-foreground mt-5 text-sm hidden sm:block">
+          Klik om volgende optie te bekijken
+        </p>
+      </div>
+
+    </div>
+
+  </div>
 </div>
