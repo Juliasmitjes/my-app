@@ -39,7 +39,7 @@ export class Grid {
       value: 'text',
       labelMap: {
         text: 'Tekst',
-        image: 'Afbeelding',
+        image: 'Foto',
         video: 'Video'
       }
     };

@@ -59,8 +59,8 @@
       (keydown.space)="nextCell(i)"
     >
 
-      <!-- Desktop preview (achterste kaart, zelfde als single/two) -->
-      <div class="absolute right-2 top-2 opacity-30 rotate-6 pointer-events-none hidden sm:block">
+      <!-- Desktop preview (achterste kaart) -->
+      <div class="absolute right-2 top-2 opacity-30 rotate-6 pointer-events-none hidden lg:block">
         <div class="w-12 h-20 flex flex-col items-center justify-center gap-2">
           @switch (cellNext(i)) {
             @case ('text')  { <lucide-icon name="text-align-justify" class="w-8 h-8"></lucide-icon> }
@@ -91,13 +91,13 @@
         </div>
 
         <!-- MOBILE HINT -->
-        <p class="text-muted-foreground text-xs sm:hidden mt-1">
-          Tik om te wisselen
+        <p class="text-muted-foreground text-xs lg:hidden mt-2">
+          Tik voor volgende optie
         </p>
 
         <!-- DESKTOP HINT -->
-        <p class="text-muted-foreground text-sm hidden sm:block mt-2">
-          Klik om te wisselen naar de volgende optie
+        <p class="text-muted-foreground text-sm hidden lg:block mt-2">
+          Klik voor volgende optie
         </p>
       </div>
 
