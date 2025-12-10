@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
@@ -20,6 +20,7 @@ interface GridCell {
   ]
 })
 export class Grid {
+  @Input() locked = false;
   @Output() change = new EventEmitter<CellType[]>();
 
   rows = 2;

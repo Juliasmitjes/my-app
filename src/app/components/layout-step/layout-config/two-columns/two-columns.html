@@ -9,18 +9,19 @@
   <div class="grid grid-cols-2 gap-4 sm:gap-6">
 
     <!-- KOL 1 -->
-    <div
-      class="relative cursor-pointer 
-             p-6 sm:p-10 rounded-3xl border border-border/40
-             bg-white/70 dark:bg-muted/40 backdrop-blur-xl shadow-sm
-             transition-all duration-300
-             hover:shadow-xl hover:scale-[1.02]
-             "
-      (click)="nextCol1()"
-      tabindex="0"
-      (keydown.enter)="nextCol1()"
-      (keydown.space)="nextCol1()"
-    >
+          <div
+        class="relative 
+              p-6 sm:p-10 rounded-3xl border border-border/40
+              bg-white/70 dark:bg-muted/40 backdrop-blur-xl shadow-sm
+              transition-all duration-300"
+        (click)="!locked && nextCol1()"
+        [ngClass]="locked
+          ? 'cursor-default opacity-80 hover:shadow-none hover:scale-100 bg-muted/40'
+          : 'cursor-pointer hover:shadow-xl hover:scale-[1.02]'"
+        tabindex="0"
+        (keydown.enter)="!locked && nextCol1()"
+        (keydown.space)="!locked && nextCol1()"
+      >
 
       <!-- Achterste preview -->
       <div
@@ -72,18 +73,20 @@
     </div>
 
     <!-- KOL 2 (identiek) -->
-    <div
-      class="relative cursor-pointer 
-             p-6 sm:p-10 rounded-3xl border border-border/40
-             bg-white/70 dark:bg-muted/40 backdrop-blur-xl shadow-sm
-             transition-all duration-300
-             hover:shadow-xl hover:scale-[1.02]
-           "
-      (click)="nextCol2()"
-      tabindex="0"
-      (keydown.enter)="nextCol2()"
-      (keydown.space)="nextCol2()"
-    >
+        <div
+        class="relative 
+              p-6 sm:p-10 rounded-3xl border border-border/40
+              bg-white/70 dark:bg-muted/40 backdrop-blur-xl shadow-sm
+              transition-all duration-300"
+        (click)="!locked && nextCol2()"
+        [ngClass]="locked
+          ? 'bg-muted/40 cursor-default opacity-80 hover:shadow-none hover:scale-100'
+          : 'bg-white/70 cursor-pointer hover:shadow-xl hover:scale-[1.02]'
+        "
+        tabindex="0"
+        (keydown.enter)="!locked && nextCol2()"
+        (keydown.space)="!locked && nextCol2()"
+      >
 
       <!-- Achterste preview -->
       <div

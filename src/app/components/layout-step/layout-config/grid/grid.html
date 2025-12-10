@@ -9,7 +9,6 @@
          border border-border/40 rounded-3xl p-4 sm:p-6
          shadow-sm hover:shadow-md transition-all"
 >
-
   <h4 class="hidden md:block mb-2 text-center font-medium text-muted-foreground">
     Pas je grid aan
   </h4>
@@ -23,16 +22,15 @@
         type="number"
         min="1"
         max="6"
-        class="
-          w-20 sm:w-24 px-3 py-2 rounded-xl
-          border border-border/60 bg-white/90
-          hover:border-accent/60 hover:bg-white
-          focus:outline-none focus:ring-2 focus:ring-accent/40
-          text-center dark:bg-muted/30 dark:border-muted/40
-          transition-all
-        "
+        class="w-20 sm:w-24 px-3 py-2 rounded-xl
+               border border-border/60 bg-white/90
+               hover:border-accent/60 hover:bg-white
+               focus:outline-none focus:ring-2 focus:ring-accent/40
+               text-center dark:bg-muted/30 dark:border-muted/40
+               transition-all"
         [(ngModel)]="rows"
-        (change)="updateGrid()"
+        (change)="!locked && updateGrid()"
+        [disabled]="locked"
       />
     </div>
 
@@ -43,48 +41,53 @@
         type="number"
         min="1"
         max="6"
-        class="
-          w-20 sm:w-24 px-3 py-2 rounded-xl
-          border border-border/60 bg-white/90
-          hover:border-accent/60 hover:bg-white
-          focus:outline-none focus:ring-2 focus:ring-accent/40
-          text-center dark:bg-muted/30 dark:border-muted/40
-          transition-all
-        "
+        class="w-20 sm:w-24 px-3 py-2 rounded-xl
+               border border-border/60 bg-white/90
+               hover:border-accent/60 hover:bg-white
+               focus:outline-none focus:ring-2 focus:ring-accent/40
+               text-center dark:bg-muted/30 dark:border-muted/40
+               transition-all"
         [(ngModel)]="cols"
-        (change)="updateGrid()"
+        (change)="!locked && updateGrid()"
+        [disabled]="locked"
       />
     </div>
 
   </div>
 </div>
 
-
 <!-- SCROLL CONTAINER (alleen mobiel) -->
 <div class="overflow-x-auto lg:overflow-visible">
-  <!-- GRID -->
+
   <div
     class="grid gap-4 sm:gap-6 min-w-max sm:min-w-0"
     [style.gridTemplateColumns]="'repeat(' + cols + ', minmax(0, 1fr))'"
   >
+
     @for (cell of grid; let i = $index; track i) {
 
+      <!-- CELL WRAPPER -->
       <div
-        class="relative cursor-pointer
-               p-4 sm:p-6 rounded-3xl border border-border/40
-               bg-white/70 dark:bg-muted/40 backdrop-blur-xl shadow-sm
-               transition-all duration-300
-               hover:shadow-xl hover:scale-[1.02]
-               min-h-[180px] flex flex-col items-center justify-between"
-        (click)="nextCell(i)"
+        class="
+          relative
+          p-4 sm:p-6 rounded-3xl border border-border/40
+          backdrop-blur-xl shadow-sm
+          transition-all duration-300
+          min-h-[180px] flex flex-col items-center justify-between
+        "
+        [ngClass]="locked
+          ? 'bg-muted/40 cursor-default opacity-80 hover:shadow-none hover:scale-100'
+          : 'bg-white/70 cursor-pointer hover:shadow-xl hover:scale-[1.02]'
+        "
+        (click)="!locked && nextCell(i)"
         tabindex="0"
-        (keydown.enter)="nextCell(i)"
-        (keydown.space)="nextCell(i)"
+        (keydown.enter)="!locked && nextCell(i)"
+        (keydown.space)="!locked && nextCell(i)"
       >
 
-        <!-- Mobile preview (achterste kaart) -->
-         @if(cols < 5){
-          <div class="absolute right-2 top-2 opacity-30 rotate-6 pointer-events-none hidden lg:block">
+        <!-- Mobile preview (next icon) -->
+        @if(cols < 5){
+        <div class="absolute right-2 top-2 opacity-30 rotate-6 pointer-events-none hidden lg:block">
           <div class="w-12 h-20 flex flex-col items-center justify-center gap-2">
             @switch (cellNext(i)) {
               @case ('text')  { <lucide-icon name="text-align-justify" class="w-8 h-8"></lucide-icon> }
@@ -93,40 +96,40 @@
             }
           </div>
         </div>
-         }
-        
-        <!-- CENTRAAL ICOONBLOK (zelfde stijl als single/two) -->
+        }
+
+        <!-- Icon block -->
         <div class="flex items-center justify-center flex-1 w-full mt-4">
           <div
             class="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center
                    rounded-2xl p-3 ring-2 ring-accent shadow transition-all"
+            [ngClass]="locked ? 'opacity-50' : 'opacity-100'"
           >
             @switch (cell.value) {
-              @case ('text')  { <lucide-icon name="text-align-justify" class="w-12 h-12 sm:w-14 sm:h-14 opacity-90"></lucide-icon> }
-              @case ('image') { <lucide-icon name="image" class="w-12 h-12 sm:w-14 sm:h-14 opacity-90"></lucide-icon> }
-              @case ('video') { <lucide-icon name="video" class="w-12 h-12 sm:w-14 sm:h-14 opacity-90"></lucide-icon> }
-            }  
-            
+              @case ('text')  { <lucide-icon name="text-align-justify" class="w-12 h-12 sm:w-14 sm:h-14"></lucide-icon> }
+              @case ('image') { <lucide-icon name="image" class="w-12 h-12 sm:w-14 sm:h-14"></lucide-icon> }
+              @case ('video') { <lucide-icon name="video" class="w-12 h-12 sm:w-14 sm:h-14"></lucide-icon> }
+            }
           </div>
-        </div>  
-        <!-- LABEL EN HINT (identiek gedrag) -->
+        </div>
+
+        <!-- Labels -->
         <div class="w-full text-center mt-3 mb-2">
           <div class="text-sm font-semibold text-foreground">
             {{ cell.labelMap[cell.value] }}
           </div>
-          <!-- MOBILE HINT -->
+
           <p class="text-muted-foreground text-xs lg:hidden mt-2">
             Tik voor volgende optie
           </p>
-          <!-- DESKTOP HINT -->
 
           <p class="text-muted-foreground text-sm hidden lg:block mt-3">
             Klik voor volgende optie
           </p>
         </div>
+
       </div>
+
     }
   </div>
 </div>
-
-

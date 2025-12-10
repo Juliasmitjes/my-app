@@ -15,18 +15,48 @@
   </div>
 
   <!-- Configuratieblok onder de layout-selectie -->
-  <div class="mt-10">
-   @if (selectedLayout === 'single') {
-        <app-single-column (change)="onConfigChange($event)"></app-single-column>
-      }
+<div class="mt-10">
+  @if (selectedLayout === 'single') {
+    <app-single-column
+      (change)="onConfigChange($event)"
+      [locked]="locked"
+    ></app-single-column>
+  }
 
-      @if (selectedLayout === 'two-column') {
-        <app-two-columns (change)="onConfigChange($event)"></app-two-columns>
-      }
+  @if (selectedLayout === 'two-column') {
+    <app-two-columns
+      (change)="onConfigChange($event)"
+      [locked]="locked"
+    ></app-two-columns>
+  }
 
-      @if (selectedLayout === 'grid') {
-        <app-grid (change)="onConfigChange($event)"></app-grid>
-      }
+  @if (selectedLayout === 'grid') {
+    <app-grid
+      (change)="onConfigChange($event)"
+      [locked]="locked"
+    ></app-grid>
+  }
+</div>
 
+<!-- BEVESTIGING  -->
+@if (selectedLayout && !locked) {
+  <div class="mt-8 flex justify-center">
+    <button
+      (click)="confirmLayout()"
+      class="px-6 py-3 rounded-2xl bg-accent text-accent-foreground
+             font-semibold shadow hover:shadow-md hover:scale-[1.02]
+             transition-all"
+    >
+      Indeling bevestigen
+    </button>
   </div>
+}
+
+<!-- Locked state feedback -->
+@if (locked) {
+  <p class="text-center text-muted-foreground mt-6">
+    Indeling staat vast. Upload nu jouw onderdelen.
+  </p>
+}
+
 </div>

@@ -13,10 +13,14 @@
          transition-all duration-300
          hover:shadow-xl hover:scale-[1.02]
          min-h-[280px] sm:min-h-0"
-  (click)="nextOption()"
+  (click)="!locked && nextOption()"
+   [ngClass]="locked
+          ? 'bg-muted/40 cursor-default opacity-80 hover:shadow-none hover:scale-100'
+          : 'bg-white/70 cursor-pointer hover:shadow-xl hover:scale-[1.02]'
+        "
   tabindex="0"
-  (keydown.enter)="nextOption()"
-  (keydown.space)="nextOption()"
+  (keydown.enter)="!locked && nextOption()"
+  (keydown.space)="!locked && nextOption()"
 >
 
     <!-- Achterste preview (volgende optie) -->

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 
@@ -12,6 +12,7 @@ import { LucideAngularModule } from 'lucide-angular';
   ],
 })
 export class SingleColumn {
+  @Input() locked = false;
   @Output() selectLayout = new EventEmitter<string>();
 
   currentIndex = 0;

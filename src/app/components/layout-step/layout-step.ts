@@ -26,6 +26,7 @@ export class LayoutStep implements OnChanges {
   selectedConfig: any = null;
   @Output() update = new EventEmitter<Partial<BuilderState>>();
   @Output() selectLayout = new EventEmitter<BuilderState['layout']>();
+  locked=false;
 
   layouts: LayoutOption[] = [
     { id: 'single', name: 'Eén kolom', description: 'Simpel, inhoud verticaal gecentreerd', icon: 'layers' },
@@ -43,6 +44,7 @@ export class LayoutStep implements OnChanges {
   }
 
   onSelect(id: string) {
+  this.locked=false;
   const allowed = ['single', 'two-column', 'grid'] as const;
   const isAllowed = (allowed as readonly string[]).includes(id);
 
@@ -74,8 +76,18 @@ export class LayoutStep implements OnChanges {
     }, 50);
 }}
 
+
+
   onConfigChange(config: any) {
   this.selectedConfig = config;
   console.log("Nieuwe configuratie:", config);
 }
-}
+
+confirmLayout() {
+  this.locked = true;
+  this.update.emit({
+    layoutLocked: true,
+    layout: this.selectedLayout,
+    layoutConfig: this.selectedConfig
+  });
+}}
