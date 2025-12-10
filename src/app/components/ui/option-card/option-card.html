@@ -1,8 +1,7 @@
 @if (layout) {
 <div
-  class="relative group p-6 rounded-3xl cursor-pointer transition-all duration-300 flex flex-col items-center text-center space-y-4
-         bg-white/60 dark:bg-muted/30 backdrop-blur-sm border border-border/50
-         hover:shadow-lg hover:scale-[1.02]"
+  class="relative group p-6 sm:pt-6 rounded-3xl cursor-pointer transition-all duration-300 flex flex-col items-center text-center space-y-4 bg-white/60 dark:bg-muted/30 backdrop-blur-sm border border-border/50
+         hover:shadow-lg hover:scale-[1.02] sm:min-h-[180px]"
   [class.scale-[1.02]]="selected"
   [class.shadow-lg]="selected"
   [class.bg-primary/5]="selected"
