@@ -7,7 +7,6 @@ export type CellType = 'text' | 'image' | 'video';
 
 interface GridCell {
   value: CellType;
-  open: boolean;
   labelMap: Record<CellType, string>;
 }
 
@@ -35,11 +34,9 @@ export class Grid {
     this.updateGrid();
   }
 
-  // standaard cel
   private createDefaultCell(): GridCell {
     return {
       value: 'text',
-      open: false,
       labelMap: {
         text: 'Tekst',
         image: 'Afbeelding',
@@ -48,22 +45,17 @@ export class Grid {
     };
   }
 
-  // Grid op basis van rijen + kolommen
   updateGrid() {
-    const total = this.rows * this.cols;
+    const total = Math.max(1, this.rows) * Math.max(1, this.cols);
 
     const newGrid: GridCell[] = Array.from({ length: total }, (_, i) => {
       const prev = this.grid[i];
-
-      // behoud vorige keuze
       if (prev) {
         return {
           ...this.createDefaultCell(),
           value: prev.value
         };
       }
-
-      // nieuwe cel
       return this.createDefaultCell();
     });
 
@@ -75,17 +67,24 @@ export class Grid {
     this.change.emit(this.grid.map(cell => cell.value));
   }
 
-  setCellValue(index: number, type: CellType) {
-    this.grid[index].value = type;
-    this.grid[index].open = false;
+  /** Cycle naar de volgende optie voor een cel (click) */
+  nextCell(index: number) {
+    const current = this.grid[index].value;
+    const nextIndex = (this.options.indexOf(current) + 1) % this.options.length;
+    this.grid[index].value = this.options[nextIndex];
     this.emit();
   }
 
-  toggle(index: number) {
-    this.grid[index].open = !this.grid[index].open;
+  /** Helper voor template: wat is de volgende optie (voor preview) */
+  cellNext(index: number): CellType {
+    const current = this.grid[index].value;
+    const nextIndex = (this.options.indexOf(current) + 1) % this.options.length;
+    return this.options[nextIndex];
   }
 
-  closeAll() {
-    this.grid.forEach(cell => (cell.open = false));
+  /** Template helper: ARIA state */
+  cellSelected(index: number) {
+    // placeholder for future selected states; returns false for now
+    return false;
   }
 }
