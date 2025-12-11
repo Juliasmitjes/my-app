@@ -73,4 +73,6 @@ export interface BuilderState {
 
   /** Layoutconfiguratie (per layout-type anders) */
   layoutConfig?: LayoutConfig;
+
+  uploads?: any[];
 }
