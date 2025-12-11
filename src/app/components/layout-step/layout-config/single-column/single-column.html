@@ -7,24 +7,22 @@
 
   <!-- Selectiekaart -->
   <div
-  class="relative cursor-pointer 
-         p-6 sm:p-10 rounded-3xl border border-border/40
-         bg-white/70 dark:bg-muted/40 backdrop-blur-xl shadow-sm
-         transition-all duration-300
-         hover:shadow-xl hover:scale-[1.02]
-         min-h-[280px] sm:min-h-0"
-  (click)="!locked && nextOption()"
-   [ngClass]="locked
-          ? 'bg-muted/40 cursor-default opacity-80 hover:shadow-none hover:scale-100'
-          : 'bg-white/70 cursor-pointer hover:shadow-xl hover:scale-[1.02]'
-        "
-  tabindex="0"
-  (keydown.enter)="!locked && nextOption()"
-  (keydown.space)="!locked && nextOption()"
->
+    class="relative
+           p-6 sm:p-10 rounded-3xl border border-border/40
+           bg-white/70 dark:bg-muted/40 backdrop-blur-xl shadow-sm
+           transition-all duration-300
+           min-h-[280px] sm:min-h-0"
+    (click)="!locked && nextOption()"
+     [ngClass]="locked
+            ? 'bg-muted/40 cursor-default opacity-80 hover:shadow-none hover:scale-100'
+            : 'bg-white/70 cursor-pointer hover:shadow-xl hover:scale-[1.02]'
+          "
+    tabindex="0"
+    (keydown.enter)="!locked && nextOption()"
+    (keydown.space)="!locked && nextOption()"
+  >
 
-
-    <!-- Huidige optie (met ring) -->
+    <!-- Huidige optie -->
     <div class="flex justify-center mb-4 sm:mb-6">
       <div
         class="w-28 h-40 sm:w-32 sm:h-48 flex flex-col items-center justify-center

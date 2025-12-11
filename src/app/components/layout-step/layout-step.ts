@@ -76,18 +76,17 @@ export class LayoutStep implements OnChanges {
     }, 50);
 }}
 
-
-
   onConfigChange(config: any) {
   this.selectedConfig = config;
-  console.log("Nieuwe configuratie:", config);
+  console.log("LayoutStep: onConfigChange received", config);
 }
 
 confirmLayout() {
-  this.locked = true;
-  this.update.emit({
-    layoutLocked: true,
-    layout: this.selectedLayout,
-    layoutConfig: this.selectedConfig
-  });
-}}
+    console.log('LayoutStep: confirmLayout - selectedLayout, selectedConfig', this.selectedLayout, this.selectedConfig);
+    this.locked = true;
+    this.update.emit({
+      layoutLocked: true,
+      layout: this.selectedLayout,
+      layoutConfig: this.selectedConfig
+    });
+  }}
