@@ -23,20 +23,6 @@
         (keydown.space)="!locked && nextCol1()"
       >
 
-      <!-- Achterste preview -->
-      <div
-        class="absolute right-2 top-2 sm:right-4 sm:top-4 opacity-30 rotate-6
-               pointer-events-none hidden lg:block transition-all duration-300"
-      >
-        <div class="w-14 h-20 sm:w-20 sm:h-32 flex flex-col items-center justify-center gap-2 sm:gap-3">
-          @switch (col1Next.type) {
-            @case ('text') { <lucide-icon name="text-align-justify" class="w-10 h-10"></lucide-icon> }
-            @case ('image') { <lucide-icon name="image" class="w-10 h-10"></lucide-icon> }
-            @case ('video') { <lucide-icon name="video" class="w-10 h-10"></lucide-icon> }
-          }
-        </div>
-      </div>
-
       <!-- Huidige optie -->
       <div class="flex justify-center mb-4 sm:mb-6">
         <div
@@ -88,19 +74,6 @@
         (keydown.space)="!locked && nextCol2()"
       >
 
-      <!-- Achterste preview -->
-      <div
-        class="absolute right-2 top-2 sm:right-4 sm:top-4 opacity-30 rotate-6
-               pointer-events-none hidden lg:block transition-all duration-300"
-      >
-        <div class="w-14 h-20 sm:w-20 sm:h-32 flex flex-col items-center justify-center gap-2 sm:gap-3">
-          @switch (col2Next.type) {
-            @case ('text')  { <lucide-icon name="text-align-justify" class="w-10 h-10"></lucide-icon> }
-            @case ('image') { <lucide-icon name="image" class="w-10 h-10"></lucide-icon> }
-            @case ('video') { <lucide-icon name="video" class="w-10 h-10"></lucide-icon> }
-          }
-        </div>
-      </div>
 
       <!-- Huidige optie -->
       <div class="flex justify-center mb-4 sm:mb-6">

@@ -23,50 +23,6 @@
   (keydown.space)="!locked && nextOption()"
 >
 
-    <!-- Achterste preview (volgende optie) -->
-    <div
-  class="absolute right-2 top-2 sm:right-4 sm:top-4 opacity-30 rotate-6
-         transition-all duration-300 pointer-events-none hidden lg:block"
->
-      <div class="w-14 h-20 sm:w-20 sm:h-32 flex flex-col items-center justify-center gap-2 sm:gap-3">
-
-        @switch (nextOptionPreview.type) {
-
-          @case ('image-text') {
-            <div class="flex flex-col gap-2 sm:gap-3">
-              <lucide-icon name="image" class="w-8 h-8 sm:w-10 sm:h-10"></lucide-icon>
-              <lucide-icon name="text-align-justify" class="w-8 h-8 sm:w-10 sm:h-10"></lucide-icon>
-            </div>
-          }
-
-          @case ('text-image') {
-            <div class="flex flex-col gap-2 sm:gap-3">
-              <lucide-icon name="text-align-justify" class="w-8 h-8 sm:w-10 sm:h-10"></lucide-icon>
-              <lucide-icon name="image" class="w-8 h-8 sm:w-10 sm:h-10"></lucide-icon>
-            </div>
-          }
-
-          @case ('text-video') {
-            <div class="flex flex-col gap-2 sm:gap-3">
-              <lucide-icon name="text-align-justify" class="w-8 h-8 sm:w-10 sm:h-10"></lucide-icon>
-              <lucide-icon name="video" class="w-8 h-8 sm:w-10 sm:h-10"></lucide-icon>
-            </div>
-          }
-
-          @case ('video-text') {
-            <div class="flex flex-col gap-2 sm:gap-3">
-              <lucide-icon name="video" class="w-8 h-8 sm:w-10 sm:h-10"></lucide-icon>
-              <lucide-icon name="text-align-justify" class="w-8 h-8 sm:w-10 sm:h-10"></lucide-icon>
-            </div>
-          }
-
-          @case ('text-only') {
-            <lucide-icon name="text-align-justify" class="w-8 h-8 sm:w-10 sm:h-10"></lucide-icon>
-          }
-
-        }
-      </div>
-    </div>
 
     <!-- Huidige optie (met ring) -->
     <div class="flex justify-center mb-4 sm:mb-6">

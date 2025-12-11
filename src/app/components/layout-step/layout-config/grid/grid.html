@@ -85,18 +85,7 @@
         (keydown.space)="!locked && nextCell(i)"
       >
 
-        <!-- Mobile preview (next icon) -->
-        @if(cols < 5){
-        <div class="absolute right-2 top-2 opacity-30 rotate-6 pointer-events-none hidden lg:block">
-          <div class="w-12 h-20 flex flex-col items-center justify-center gap-2">
-            @switch (cellNext(i)) {
-              @case ('text')  { <lucide-icon name="text-align-justify" class="w-8 h-8"></lucide-icon> }
-              @case ('image') { <lucide-icon name="image" class="w-8 h-8"></lucide-icon> }
-              @case ('video') { <lucide-icon name="video" class="w-8 h-8"></lucide-icon> }
-            }
-          </div>
-        </div>
-        }
+
 
         <!-- Icon block -->
         <div class="flex items-center justify-center flex-1 w-full mt-4">
