@@ -73,18 +73,20 @@
     <div class="text-center min-h-[3.5rem] sm:min-h-0">
       <h3 class="text-lg sm:text-xl font-semibold">{{ currentOption.label }}</h3>
 
-      <!-- subtitel mobiel -->
-      <p class="text-muted-foreground mt-1 text-xs 
-        absolute left-1/2 -translate-x-1/2 w-[80%] text-center bottom-5
-        block sm:hidden">
-        Tik voor volgende optie
-      </p>
-
-      <!-- subtitel desktop -->
-          <p class="text-muted-foreground mt-5 text-sm
-        hidden sm:block"> Klik voor volgende optie </p>
-    </div>
-
+     
+      @if (!locked) {
+         <!-- mobiel -->
+        <p class="text-muted-foreground mt-1 text-xs 
+          absolute left-1/2 -translate-x-1/2 w-[80%] text-center bottom-5
+          block sm:hidden">
+          Tik voor volgende optie
+        </p>
+      <!-- desktop -->
+        <p class="text-muted-foreground mt-5 text-sm
+          hidden sm:block">
+          Klik voor volgende optie
+        </p>
+      }
   </div>
 
 </div>

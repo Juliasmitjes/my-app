@@ -45,17 +45,21 @@
           {{ col1Current.label }}
         </h3>
 
+        @if(!locked){
         <!-- mobiel -->
         <p class="text-muted-foreground mt-4 text-xs text-center block sm:hidden">
           Tik voor volgende optie
         </p>
+        }
 
+
+        @if(!locked){
         <!-- desktop -->
         <p class="text-muted-foreground mt-5 text-sm hidden sm:block">
           Klik voor volgende optie
         </p>
+        }        
       </div>
-
     </div>
 
     <!-- KOL 2 (identiek) -->
@@ -97,15 +101,16 @@
           {{ col2Current.label }}
         </h3>
 
+        @if(!locked){
         <!-- mobiel -->
-          <p class="text-muted-foreground mt-4 text-xs block sm:hidden">
-            Tik voor volgende optie
-          </p>
-
+        <p class="text-muted-foreground mt-4 text-xs text-center block sm:hidden">
+          Tik voor volgende optie
+        </p>
         <!-- desktop -->
         <p class="text-muted-foreground mt-5 text-sm hidden sm:block">
           Klik voor volgende optie
         </p>
+        }        
       </div>
 
     </div>
