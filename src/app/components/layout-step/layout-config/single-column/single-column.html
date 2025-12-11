@@ -11,16 +11,40 @@
            p-6 sm:p-10 rounded-3xl border border-border/40
            backdrop-blur-xl
            transition-all duration-300
-           min-h-[280px] sm:min-h-0"
+           min-h-[280px] sm:min-h-0 overflow-hidden"
     (click)="!locked && nextOption()"
-     [ngClass]="locked
-            ? 'bg-muted/40 cursor-default opacity-80 hover:shadow-none hover:scale-100'
-            : 'bg-white/70 cursor-pointer hover:shadow-xl hover:scale-[1.02]'
-          "
+    [ngClass]="locked
+      ? 'bg-muted/40 cursor-default opacity-80 hover:shadow-none hover:scale-100'
+      : 'bg-white/70 cursor-pointer hover:shadow-xl hover:scale-[1.02]'"
     tabindex="0"
     (keydown.enter)="!locked && nextOption()"
     (keydown.space)="!locked && nextOption()"
   >
+
+    <!-- OVERLAY BIJ LOCKED -->
+    @if (locked) {
+      <div
+        class="absolute inset-0 z-20
+               bg-black/30 backdrop-blur-sm
+               flex items-center justify-center gap-4
+               rounded-3xl"
+        (click)="$event.stopPropagation()"
+      >
+
+        <button
+          class="px-5 py-2.5 rounded-xl bg-white text-black shadow-lg font-semibold hover:scale-[1.03] transition"
+          (click)="unlockLayoutFromChild.emit(); $event.stopPropagation()">
+          Aanpassen
+        </button>
+
+        <button
+          class="px-5 py-2.5 rounded-xl bg-accent text-accent-foreground shadow-lg font-semibold hover:scale-[1.03] transition"
+          (click)="confirmLayoutFromChild.emit(); $event.stopPropagation()">
+          Verder
+        </button>
+
+      </div>
+    }
 
     <!-- Huidige optie -->
     <div class="flex justify-center mb-4 sm:mb-6">
@@ -73,20 +97,21 @@
     <div class="text-center min-h-[3.5rem] sm:min-h-0">
       <h3 class="text-lg sm:text-xl font-semibold">{{ currentOption.label }}</h3>
 
-     
       @if (!locked) {
-         <!-- mobiel -->
+        <!-- mobiel -->
         <p class="text-muted-foreground mt-1 text-xs 
           absolute left-1/2 -translate-x-1/2 w-[80%] text-center bottom-5
           block sm:hidden">
           Tik voor volgende optie
         </p>
-      <!-- desktop -->
-        <p class="text-muted-foreground mt-5 text-sm
-          hidden sm:block">
+
+        <!-- desktop -->
+        <p class="text-muted-foreground mt-5 text-sm hidden sm:block">
           Klik voor volgende optie
         </p>
       }
+    </div>
+
   </div>
 
 </div>

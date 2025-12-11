@@ -18,9 +18,11 @@
 <div class="mt-10">
   @if (selectedLayout === 'single') {
   <app-single-column
-    (configChange)="onConfigChange($event)"
     [locked]="locked"
-  ></app-single-column>
+    (configChange)="onConfigChange($event)"
+    (confirmLayoutFromChild)="confirmLayout()"
+    (unlockLayoutFromChild)="unlockLayout()"
+></app-single-column>
 }
 
   @if (selectedLayout === 'two-column') {

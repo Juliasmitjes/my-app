@@ -14,6 +14,8 @@ import { LucideAngularModule } from 'lucide-angular';
 export class SingleColumn implements OnInit {
   @Input() locked = false;
   @Output() configChange = new EventEmitter<{ layout: string | null; config?: any }>();
+  @Output() confirmLayoutFromChild = new EventEmitter<void>();
+  @Output() unlockLayoutFromChild = new EventEmitter<void>();
 
   currentIndex = 0;
 
