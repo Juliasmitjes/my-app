@@ -89,4 +89,18 @@ confirmLayout() {
       layout: this.selectedLayout,
       layoutConfig: this.selectedConfig
     });
-  }}
+  }
+
+unlockLayout() {
+  this.locked = false;
+
+  this.update.emit({
+    layoutLocked: false,
+    layout: this.selectedLayout,
+    layoutConfig: this.selectedConfig
+  });
+
+  console.log("LayoutStep: layout unlocked");
+}
+
+}

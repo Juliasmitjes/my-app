@@ -46,8 +46,7 @@
       (click)="confirmLayout()"
       class="px-6 py-3 rounded-2xl bg-accent text-accent-foreground
              font-semibold shadow hover:shadow-md hover:scale-[1.02]
-             transition-all"
-    >
+             transition-all cursor-pointer" >
       Indeling bevestigen
     </button>
   </div>
@@ -58,6 +57,18 @@
   <p class="text-center text-muted-foreground mt-6">
     Indeling staat vast. Upload nu jouw onderdelen.
   </p>
+
+   <div class="mt-6 flex justify-center">
+    <button
+      type="button"
+      (click)="unlockLayout()"
+      class="px-6 py-3 rounded-2xl bg-muted dark:bg-muted/40 text-foreground
+             font-semibold shadow hover:shadow-md hover:scale-[1.02]
+             transition-all cursor-pointer border border-border/40"
+    >
+      Indeling ontgrendelen
+    </button>
+  </div>
 }
 
 </div>
