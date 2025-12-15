@@ -1,26 +1,80 @@
 <div class="step-container">
+
   <h2 class="text-2xl font-bold mb-2 text-center">Kies de layout van jouw homepage</h2>
   <p class="text-muted-foreground mb-6 text-center">Hoe wil je jouw content weergeven?</p>
 
+  <!-- Layout opties -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
     @for (layout of layouts; track layout.id) {
-      <ng-container>
-        <app-option-card
-          [layout]="layout"
-          [selected]="selectedLayout === layout.id"
-          (select)="onSelect(layout.id)">
-        </app-option-card>
-      </ng-container>
+      <app-option-card
+        [layout]="layout"
+        [selected]="selectedLayout === layout.id"
+        (select)="onSelect(layout.id)"
+      ></app-option-card>
     }
   </div>
 
-  <!-- Configuratieblok onder de layout-selectie -->
-<div class="mt-10">
-  @if (selectedLayout === 'single') {
-  <app-single-column
-    [locked]="locked"
-    (configChange)="onConfigChange($event)"
-></app-single-column>
+  <!-- Configuratieblok -->
+  <div class="mt-10">
+
+    @if (selectedLayout === 'single') {
+      <app-single-column
+        [locked]="locked"
+        (configChange)="onConfigChange($event)"
+      ></app-single-column>
+    }
+
+    @if (selectedLayout === 'two-column') {
+      <app-two-columns
+        [locked]="locked"
+        (configChange)="onConfigChange($event)"
+      ></app-two-columns>
+    }
+
+    @if (selectedLayout === 'grid') {
+      <app-grid
+        [locked]="locked"
+        (configChange)="onConfigChange($event)"
+      ></app-grid>
+    }
+
+  </div>
+
+  <!-- Bevestigen -->
+  @if (selectedLayout && !locked) {
+    <div class="mt-8 flex justify-center">
+      <button
+        type="button"
+        (click)="confirmLayout()"
+        class="px-6 py-3 rounded-2xl bg-accent text-accent-foreground
+               font-semibold shadow hover:shadow-md hover:scale-[1.02]
+               transition-all cursor-pointer"
+      >
+        Indeling bevestigen
+      </button>
+    </div>
+  }
+
+  <!-- Locked state -->
+  @if (locked) {
+    <p class="text-center text-muted-foreground mt-6">
+      Indeling staat vast. Upload nu jouw onderdelen.
+    </p>
+
+    <div class="mt-6 flex justify-center">
+      <button
+        type="button"
+        (click)="unlockLayout()"
+        class="px-6 py-3 rounded-2xl bg-muted dark:bg-muted/40 text-foreground
+               font-semibold shadow hover:shadow-md hover:scale-[1.02]
+               transition-all cursor-pointer border border-border/40"
+      >
+        Indeling ontgrendelen
+      </button>
+    </div>
+  }
+
+</div>
 
 <input
   type="file"
@@ -28,77 +82,11 @@
   class="hidden"
   (change)="handleFileSelected($event)"
 />
-}
-
-  @if (selectedLayout === 'two-column') {
-    <app-two-columns
-    [locked]="locked"
-    (configChange)="onConfigChange($event)"
-    ></app-two-columns>
-
-    <input
-      type="file"
-      #fileInput
-      class="hidden"
-      (change)="handleFileSelected($event)"
-    />
-  }
-
-  @if (selectedLayout === 'grid') {
-    <app-grid
-      [locked]="locked"
-      (configChange)="onConfigChange($event)"
-    ></app-grid>
-
-    <input
-      type="file"
-      #fileInput
-      class="hidden"
-      (change)="handleFileSelected($event)"
-    />
-  }
-</div>
-
-<!-- BEVESTIGING  -->
-@if (selectedLayout && !locked) {
-  <div class="mt-8 flex justify-center">
-    <button
-      type="button" 
-      (click)="confirmLayout()"
-      class="px-6 py-3 rounded-2xl bg-accent text-accent-foreground
-             font-semibold shadow hover:shadow-md hover:scale-[1.02]
-             transition-all cursor-pointer" >
-      Indeling bevestigen
-    </button>
-  </div>
-}
-
-<!-- Locked state feedback -->
-@if (locked) {
-  <p class="text-center text-muted-foreground mt-6">
-    Indeling staat vast. Upload nu jouw onderdelen.
-  </p>
-
-   <div class="mt-6 flex justify-center">
-    <button
-      type="button"
-      (click)="unlockLayout()"
-      class="px-6 py-3 rounded-2xl bg-muted dark:bg-muted/40 text-foreground
-             font-semibold shadow hover:shadow-md hover:scale-[1.02]
-             transition-all cursor-pointer border border-border/40"
-    >
-      Indeling ontgrendelen
-    </button>
-  </div>
-}
-
-</div>
 
 @if (showTextEditor) {
   <div class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
     <div class="bg-white/80 backdrop-blur-xl p-6 rounded-3xl shadow-xl w-[90%] max-w-lg space-y-6 border border-border/40">
 
-      <!-- Upload tekst button -->
       <button
         class="px-5 py-3 rounded-xl bg-white/70 border border-border/40
                shadow-sm hover:shadow-md hover:bg-white transition-all
@@ -111,7 +99,6 @@
 
       <h3 class="text-lg font-semibold text-center">Of voer jouw tekst in</h3>
 
-      <!-- Mooie textarea -->
       <textarea
         [(ngModel)]="textEditorValue"
         rows="6"
@@ -121,7 +108,6 @@
         placeholder="Typ hier jouw tekst..."
       ></textarea>
 
-      <!-- Buttons -->
       <div class="flex justify-end gap-3 pt-2">
         <button
           class="px-4 py-2 rounded-xl bg-muted/60 text-foreground
