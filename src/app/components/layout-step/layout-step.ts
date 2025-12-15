@@ -5,7 +5,6 @@ import { OptionCard } from '../ui/option-card/option-card';
 import { SingleColumn } from './layout-config/single-column/single-column';
 import { TwoColumns } from './layout-config/two-columns/two-columns';
 import { Grid } from './layout-config/grid/grid';
-import { ContentUploader, UploadSlot } from '../layout-step/content-uploader/content-uploader'; 
 
 export interface LayoutOption {
   id: string;
@@ -17,7 +16,7 @@ export interface LayoutOption {
 @Component({
   selector: 'app-layout-step',
   standalone: true,
-  imports: [CommonModule, OptionCard, SingleColumn, TwoColumns, Grid, ContentUploader],
+  imports: [CommonModule, OptionCard, SingleColumn, TwoColumns, Grid],
   templateUrl: './layout-step.html',
   styleUrl: './layout-step.css',
 })
@@ -108,85 +107,5 @@ export class LayoutStep implements OnChanges {
     this.update.emit({
       uploads: this.uploads
     });
-  }
-
-  /**
-   * ============================================================
-   *  DIT IS DE COMPLETE getUploadSlots() MAPPING
-   * ============================================================
-   */
-  getUploadSlots(): UploadSlot[] {
-    if (!this.selectedLayout || !this.selectedConfig) return [];
-
-    const variant = this.selectedConfig?.layout;
-
-    /**
-     * --------------------------------
-     * SINGLE COLUMN
-     * --------------------------------
-     */
-    if (this.selectedLayout === 'single') {
-      const map: any = {
-        'image-text': [
-          { id: 'img', type: 'image', label: 'Afbeelding' },
-          { id: 'txt', type: 'text', label: 'Tekst' },
-        ],
-        'text-image': [
-          { id: 'txt', type: 'text', label: 'Tekst' },
-          { id: 'img', type: 'image', label: 'Afbeelding' },
-        ],
-        'text-video': [
-          { id: 'txt', type: 'text', label: 'Tekst' },
-          { id: 'vid', type: 'video', label: 'Video' },
-        ],
-        'video-text': [
-          { id: 'vid', type: 'video', label: 'Video' },
-          { id: 'txt', type: 'text', label: 'Tekst' },
-        ],
-        'text-only': [
-          { id: 'txt', type: 'text', label: 'Tekst' },
-        ],
-      };
-
-      return map[variant] ?? [];
-    }
-
-    /**
-     * --------------------------------
-     * TWO COLUMN
-     *
-     * Using BuilderState → TwoColumnConfig:
-     *   left:  'text' | 'image' | 'video'
-     *   right: 'text' | 'image' | 'video'
-     * --------------------------------
-     */
-    if (this.selectedLayout === 'two-column') {
-      const cfg = this.selectedConfig.config as TwoColumnConfig;
-
-      return [
-        { id: 'left', type: cfg.left, label: 'Linkerkolom' },
-        { id: 'right', type: cfg.right, label: 'Rechterkolom' }
-      ];
-    }
-
-    /**
-     * --------------------------------
-     * GRID
-     *
-     * Using BuilderState → GridLayoutConfig:
-     *   rows, cols, cells[]
-     * --------------------------------
-     */
-    if (this.selectedLayout === 'grid') {
-      const cfg = this.selectedConfig.config as GridLayoutConfig;
-
-      return cfg.cells.map((cell, i) => ({
-        id: `cell-${i}`,
-        type: cell.value,
-        label: `Vak ${i + 1}`
-      }));
-    }
-
-    return [];
   }
 }

@@ -57,14 +57,8 @@
 <!-- Locked state feedback -->
 @if (locked) {
   <p class="text-center text-muted-foreground mt-6">
-    Indeling staat vast. Upload nu jouw onderdelen.  
+    Indeling staat vast. Upload nu jouw onderdelen.
   </p>
-
-  <app-content-uploader
-    [slots]="getUploadSlots()"
-    (change)="onUploadsChange($event)"
-    class="block mt-10"
-  ></app-content-uploader>
 
    <div class="mt-6 flex justify-center">
     <button

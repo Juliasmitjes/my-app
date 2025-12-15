@@ -8,7 +8,7 @@ import { LucideAngularModule } from 'lucide-angular';
   templateUrl: './single-column.html',
   imports: [
     CommonModule,
-    LucideAngularModule,
+    LucideAngularModule
   ],
 })
 export class SingleColumn implements OnInit {
@@ -60,4 +60,5 @@ export class SingleColumn implements OnInit {
     console.log('SingleColumn: emitChange', payload); // debug
     this.configChange.emit(payload);
   }
+
 }
