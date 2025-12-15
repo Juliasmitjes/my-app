@@ -111,9 +111,6 @@ export class SingleColumn implements OnInit {
 
 handleUpload(type: 'image' | 'text' | 'video', event: Event) {
   event.stopPropagation();
-
-  console.log('Upload type:', type);
-
   this.configChange.emit({
     layout: this.selectedLayout,
     config: {

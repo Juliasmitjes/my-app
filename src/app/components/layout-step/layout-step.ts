@@ -77,19 +77,13 @@ export class LayoutStep implements OnChanges {
   }
 
  onConfigChange(event: any) {
-  console.log("LayoutStep: onConfigChange received", event);
-
   this.selectedConfig = event;
 
   if (event.config?.uploadType) {
-    console.log("Calling startUploadFlow with:", event.config.uploadType);
-
     this.startUploadFlow(event.config.uploadType);
   }
 }
   confirmLayout() {
-    console.log('LayoutStep: confirmLayout - selectedLayout, selectedConfig', this.selectedLayout, this.selectedConfig);
-
     this.locked = true;
 
     this.update.emit({
@@ -105,8 +99,6 @@ export class LayoutStep implements OnChanges {
       layoutLocked: false,
       layout: this.selectedLayout,
     });
-
-    console.log("LayoutStep: layout unlocked");
   }
 
   onUploadsChange(uploadData: any) {
@@ -130,27 +122,26 @@ startUploadFlow(type: 'image' | 'text' | 'video') {
       break;
 
     case 'text':
-      // open teksteditor popup
-      console.log("Opening text editor...");
-
       this.openTextEditor();
       break;
   }
 }
+
+uploadTextFile() {
+  this.fileInput.nativeElement.accept = '.txt,.md,.rtf,.html,.json,.csv';
+  this.fileInput.nativeElement.click();
+}
+
 
 handleFileSelected(event: Event) {
   const input = event.target as HTMLInputElement;
   const file = input.files?.[0];
   if (!file) return;
 
-  console.log('Uploaded file:', file);
-
   // hier kun je het bestand opslaan in je builder state
 }
 
 openTextEditor() {
-  console.log("openTextEditor() called");
-
   this.textEditorValue = '';
   this.showTextEditor = true;
 }
@@ -161,9 +152,6 @@ cancelTextEditor() {
 
 saveTextEditor() {
   this.showTextEditor = false;
-
-  console.log("Saved text:", this.textEditorValue);
-
   // Sla op in builder state
   this.update.emit({
     uploads: {

@@ -82,27 +82,44 @@
 
 @if (showTextEditor) {
   <div class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-2xl shadow-xl w-[90%] max-w-lg space-y-4">
+    <div class="bg-white/80 backdrop-blur-xl p-6 rounded-3xl shadow-xl w-[90%] max-w-lg space-y-6 border border-border/40">
 
-      <h3 class="text-lg font-semibold">Voer jouw tekst in</h3>
+      <!-- Upload tekst button -->
+      <button
+        class="px-5 py-3 rounded-xl bg-white/70 border border-border/40
+               shadow-sm hover:shadow-md hover:bg-white transition-all
+               flex items-center gap-2 justify-center font-medium text-foreground
+               ring-1 ring-accent/20 hover:ring-accent/40 cursor-pointer"
+        (click)="uploadTextFile()"
+      >
+        Upload tekstbestand
+      </button>
 
+      <h3 class="text-lg font-semibold text-center">Of voer jouw tekst in</h3>
+
+      <!-- Mooie textarea -->
       <textarea
         [(ngModel)]="textEditorValue"
         rows="6"
-        class="w-full p-3 border rounded-xl"
+        class="w-full p-4 rounded-2xl bg-muted/30 shadow-inner
+               focus:outline-none focus:ring-2 focus:ring-accent/40
+               placeholder:text-muted-foreground/70 transition-all"
         placeholder="Typ hier jouw tekst..."
       ></textarea>
 
-      <div class="flex justify-end gap-3">
+      <!-- Buttons -->
+      <div class="flex justify-end gap-3 pt-2">
         <button
-          class="px-4 py-2 rounded-xl bg-muted"
+          class="px-4 py-2 rounded-xl bg-muted/60 text-foreground
+                 hover:bg-muted transition cursor-pointer"
           (click)="cancelTextEditor()"
         >
           Annuleren
         </button>
 
         <button
-          class="px-4 py-2 rounded-xl bg-accent text-accent-foreground"
+          class="px-4 py-2 rounded-xl bg-accent text-accent-foreground
+                 shadow hover:shadow-md hover:scale-[1.02] transition cursor-pointer"
           (click)="saveTextEditor()"
         >
           Opslaan
