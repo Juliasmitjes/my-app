@@ -137,8 +137,21 @@ handleFileSelected(event: Event) {
   const input = event.target as HTMLInputElement;
   const file = input.files?.[0];
   if (!file) return;
+  // opslaan op builder state: 
+  const isImage = file.type.startsWith('image');
+  const isVideo = file.type.startsWith('video');
 
-  // hier kun je het bestand opslaan in je builder state
+  if (isImage) {
+    this.uploads = { ...this.uploads, image: file };
+  }
+
+  if (isVideo) {
+    this.uploads = { ...this.uploads, video: file };
+  }
+
+  this.update.emit({
+    uploads: this.uploads
+  });
 }
 
 openTextEditor() {
@@ -152,12 +165,15 @@ cancelTextEditor() {
 
 saveTextEditor() {
   this.showTextEditor = false;
-  // Sla op in builder state
+
+  this.uploads = {
+    ...this.uploads,
+    text: this.textEditorValue
+  };
+
   this.update.emit({
-    uploads: {
-      ...this.uploads,
-      text: this.textEditorValue
-    }
+    uploads: this.uploads
   });
 }
+
 }

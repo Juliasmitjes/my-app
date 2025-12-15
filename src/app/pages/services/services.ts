@@ -114,7 +114,8 @@ export class Services {
     logo: '',
     navigation: 'top',
     headerStyle: 'fixed',
-    pages: ['home']
+    pages: ['home'],
+    uploads: {}
   });
 
   openPreviewPanel() {

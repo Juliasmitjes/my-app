@@ -1,3 +1,9 @@
+export interface BuilderUploads {
+  image?: File | string;
+  video?: File | string;
+  text?: string;
+}
+
 export interface BuilderState {
   /** Layout type van de website */
   layout: 'single' | 'two-column' | 'grid' | null;
@@ -45,5 +51,6 @@ export interface BuilderState {
   /** Locked state: is de layout bevestigd zodat content geüpload kan worden */
   layoutLocked?: boolean;
 
-  uploads?: any[];
+  /** Uploads */
+  uploads?: BuilderUploads;
 }
