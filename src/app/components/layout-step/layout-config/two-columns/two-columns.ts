@@ -2,6 +2,8 @@ import { Component, EventEmitter, Output, Input  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 
+
+
 @Component({
   selector: 'app-two-columns',
   standalone: true,
@@ -11,15 +13,17 @@ import { LucideAngularModule } from 'lucide-angular';
     LucideAngularModule,
   ],
 })
+
 export class TwoColumns {
   @Input() locked = false;
   @Output() selectLayout = new EventEmitter<{ col1: string, col2: string }>();
+  @Output() configChange = new EventEmitter<any>();
 
   colOptions = [
-    { type: 'text',  label: 'Tekst' },
-    { type: 'image', label: 'Foto' },
-    { type: 'video', label: 'Video' },
-  ];
+  { type: 'text', label: 'Tekst' },
+  { type: 'image', label: 'Foto' },
+  { type: 'video', label: 'Video' },
+] as const;
 
   col1Index = 0;
   col2Index = 0;
@@ -51,4 +55,16 @@ export class TwoColumns {
       col2: this.col2Current.type
     });
   }
+
+ handleUpload(col: 1 | 2, type: 'text' | 'image' | 'video', event: Event) {
+  event.stopPropagation();
+
+  this.configChange.emit({
+    layout: 'two-column',
+    config: {
+      col,
+      uploadType: type
+    }
+  });
+}
 }

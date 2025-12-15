@@ -23,6 +23,22 @@
         (keydown.space)="!locked && nextCol1()"
       >
 
+      @if (locked) {
+          <div
+            class="absolute inset-0 z-20 bg-black/30 backdrop-blur-sm
+                  flex items-center justify-center rounded-3xl"
+            (click)="$event.stopPropagation()"
+          >
+            <button
+              class="px-4 py-2 rounded-xl bg-white text-black font-medium shadow-lg
+                    hover:bg-white/90 transition w-40 cursor-pointer"
+              (click)="handleUpload(1, col1Current.type, $event)"
+            >
+              Upload {{ col1Current.label }}
+            </button>
+          </div>
+          }
+
       <!-- Huidige optie -->
       <div class="flex justify-center mb-4 sm:mb-6">
         <div
@@ -62,7 +78,9 @@
       </div>
     </div>
 
-    <!-- KOL 2 (identiek) -->
+
+
+    <!-- KOL 2 -->
         <div
         class="relative 
               p-6 sm:p-10 rounded-3xl border border-border/40
@@ -77,6 +95,22 @@
         (keydown.enter)="!locked && nextCol2()"
         (keydown.space)="!locked && nextCol2()"
       >
+
+      @if (locked) {
+        <div
+          class="absolute inset-0 z-20 bg-black/30 backdrop-blur-sm
+                flex items-center justify-center rounded-3xl"
+          (click)="$event.stopPropagation()"
+        >
+          <button
+            class="px-4 py-2 rounded-xl bg-white text-black font-medium shadow-lg
+                  hover:bg-white/90 transition w-40 cursor-pointer"
+            (click)="handleUpload(2, col2Current.type, $event)"
+          >
+            Upload {{ col2Current.label }}
+          </button>
+        </div>
+        }
 
 
       <!-- Huidige optie -->
