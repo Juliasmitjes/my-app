@@ -2,6 +2,14 @@ import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 
+type UploadType = 'image' | 'text' | 'video';
+
+interface OverlayButton {
+  label: string;
+  type: UploadType;
+}
+
+
 @Component({
   selector: 'app-single-column',
   standalone: true,
@@ -11,11 +19,13 @@ import { LucideAngularModule } from 'lucide-angular';
     LucideAngularModule
   ],
 })
+
 export class SingleColumn implements OnInit {
   @Input() locked = false;
   @Output() configChange = new EventEmitter<{ layout: string | null; config?: any }>();
   @Output() confirmLayoutFromChild = new EventEmitter<void>();
   @Output() unlockLayoutFromChild = new EventEmitter<void>();
+  
 
   currentIndex = 0;
 
@@ -61,4 +71,55 @@ export class SingleColumn implements OnInit {
     this.configChange.emit(payload);
   }
 
+
+  get overlayButtons(): OverlayButton[] {
+  switch (this.currentOption.type) {
+
+    case 'image-text':
+      return [
+        { label: 'Upload foto', type: 'image' },
+        { label: 'Upload tekst', type: 'text' }
+      ];
+
+    case 'text-image':
+      return [
+        { label: 'Upload tekst', type: 'text' },
+        { label: 'Upload foto', type: 'image' }
+      ];
+
+    case 'text-video':
+      return [
+        { label: 'Upload tekst', type: 'text' },
+        { label: 'Upload video', type: 'video' }
+      ];
+
+    case 'video-text':
+      return [
+        { label: 'Upload video', type: 'video' },
+        { label: 'Upload tekst', type: 'text' }
+      ];
+
+    case 'text-only':
+      return [
+        { label: 'Upload tekst', type: 'text' }
+      ];
+
+    default:
+      return [];
+  }
+}
+
+handleUpload(type: 'image' | 'text' | 'video', event: Event) {
+  event.stopPropagation();
+
+  console.log('Upload type:', type);
+
+  this.configChange.emit({
+    layout: this.selectedLayout,
+    config: {
+      variantIndex: this.currentIndex,
+      uploadType: type
+    }
+  });
+}
 }

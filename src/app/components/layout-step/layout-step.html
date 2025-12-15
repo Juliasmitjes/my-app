@@ -20,9 +20,14 @@
   <app-single-column
     [locked]="locked"
     (configChange)="onConfigChange($event)"
-    (confirmLayoutFromChild)="confirmLayout()"
-    (unlockLayoutFromChild)="unlockLayout()"
 ></app-single-column>
+
+<input
+  type="file"
+  #fileInput
+  class="hidden"
+  (change)="handleFileSelected($event)"
+/>
 }
 
   @if (selectedLayout === 'two-column') {

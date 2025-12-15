@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
 import { OptionCard } from '../ui/option-card/option-card';
@@ -23,6 +23,7 @@ export interface LayoutOption {
 export class LayoutStep implements OnChanges {
   @Input() builderState!: BuilderState;
   @Input() selectedLayout: BuilderState['layout'] = null;
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   selectedConfig: any = null;
 
@@ -72,11 +73,13 @@ export class LayoutStep implements OnChanges {
     }
   }
 
-  onConfigChange(config: any) {
-    this.selectedConfig = config;
-    console.log("LayoutStep: onConfigChange received", config);
-  }
+ onConfigChange(event: any) {
+  this.selectedConfig = event;
 
+  if (event.config?.uploadType) {
+    this.startUploadFlow(event.config.uploadType);
+  }
+}
   confirmLayout() {
     console.log('LayoutStep: confirmLayout - selectedLayout, selectedConfig', this.selectedLayout, this.selectedConfig);
 
@@ -106,4 +109,39 @@ export class LayoutStep implements OnChanges {
       uploads: this.uploads
     });
   }
+
+startUploadFlow(type: 'image' | 'text' | 'video') {
+  switch (type) {
+    case 'image':
+      this.fileInput.nativeElement.accept = 'image/*';
+      this.fileInput.nativeElement.click();
+      break;
+
+    case 'video':
+      this.fileInput.nativeElement.accept = 'video/*';
+      this.fileInput.nativeElement.click();
+      break;
+
+    case 'text':
+      // open teksteditor popup
+      this.openTextEditor();
+      break;
+  }
+}
+
+handleFileSelected(event: Event) {
+  const input = event.target as HTMLInputElement;
+  const file = input.files?.[0];
+  if (!file) return;
+
+  console.log('Uploaded file:', file);
+
+  // hier kun je het bestand opslaan in je builder state
+}
+
+openTextEditor() {
+  console.log("Open text editor…");
+
+  // TODO: hier open je jouw eigen popup / modal / textarea component
+}
 }

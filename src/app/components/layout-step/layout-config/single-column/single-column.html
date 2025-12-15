@@ -29,7 +29,20 @@
                flex items-center justify-center gap-4
                rounded-3xl"
         (click)="$event.stopPropagation()"
-      >      </div>
+      >     
+
+    @for (btn of overlayButtons; track btn.label) {
+      <ng-container>
+        <button
+          class="px-4 py-2 rounded-xl bg-white text-black font-medium shadow-lg
+                 flex items-center gap-2 hover:bg-white/90 transition w-40 justify-center cursor-pointer"
+          (click)="handleUpload(btn.type, $event)"
+        >
+          {{ btn.label }}
+        </button>
+      </ng-container>
+    }
+    </div>
     }
 
     <!-- Huidige optie -->
