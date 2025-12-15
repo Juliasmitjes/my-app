@@ -77,15 +77,29 @@
         "
         [ngClass]="locked
           ? 'bg-muted/40 cursor-default opacity-80 hover:shadow-none hover:scale-100'
-          : 'bg-white/70 cursor-pointer hover:shadow-xl hover:scale-[1.02]'
-        "
+          : 'bg-white/70 cursor-pointer hover:shadow-xl hover:scale-[1.02]'"
         (click)="!locked && nextCell(i)"
         tabindex="0"
         (keydown.enter)="!locked && nextCell(i)"
         (keydown.space)="!locked && nextCell(i)"
       >
 
-
+        <!-- ✅ OVERLAY PER CEL (correcte plek) -->
+        @if (locked) {
+          <div
+            class="absolute inset-0 z-20 bg-black/30 backdrop-blur-sm
+                   flex items-center justify-center rounded-3xl"
+            (click)="$event.stopPropagation()"
+          >
+            <button
+              class="px-4 py-2 rounded-xl bg-white text-black font-medium shadow-lg
+                     hover:bg-white/90 transition w-40 cursor-pointer"
+              (click)="handleUpload(i, cell.value, $event)"
+            >
+              Upload {{ cell.labelMap[cell.value] }}
+            </button>
+          </div>
+        }
 
         <!-- Icon block -->
         <div class="flex items-center justify-center flex-1 w-full mt-4">
@@ -109,17 +123,19 @@
           </div>
 
           @if(!locked){
-          <p class="text-muted-foreground text-xs lg:hidden mt-2">
-            Tik voor volgende optie
-          </p>
+            <p class="text-muted-foreground text-xs lg:hidden mt-2">
+              Tik voor volgende optie
+            </p>
 
-          <p class="text-muted-foreground text-sm hidden lg:block mt-3">
-            Klik voor volgende optie
-          </p>
-          }          
+            <p class="text-muted-foreground text-sm hidden lg:block mt-3">
+              Klik voor volgende optie
+            </p>
+          }
         </div>
+
       </div>
 
     }
+
   </div>
 </div>

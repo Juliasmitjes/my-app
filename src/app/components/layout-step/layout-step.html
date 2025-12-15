@@ -46,9 +46,16 @@
 
   @if (selectedLayout === 'grid') {
     <app-grid
-      (change)="onConfigChange($event)"
       [locked]="locked"
+      (configChange)="onConfigChange($event)"
     ></app-grid>
+
+    <input
+      type="file"
+      #fileInput
+      class="hidden"
+      (change)="handleFileSelected($event)"
+    />
   }
 </div>
 

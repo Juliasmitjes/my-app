@@ -22,6 +22,7 @@ interface GridCell {
 export class Grid {
   @Input() locked = false;
   @Output() change = new EventEmitter<CellType[]>();
+  @Output() configChange = new EventEmitter<any>();
 
   rows = 2;
   cols = 2;
@@ -88,4 +89,16 @@ export class Grid {
     // placeholder for future selected states; returns false for now
     return false;
   }
+
+  handleUpload(index: number, type: CellType, event: Event) {
+  event.stopPropagation();
+
+  this.configChange.emit({
+    layout: 'grid',
+    config: {
+      cellIndex: index,
+      uploadType: type
+    }
+  });
+}
 }
