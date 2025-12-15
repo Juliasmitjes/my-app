@@ -32,9 +32,16 @@
 
   @if (selectedLayout === 'two-column') {
     <app-two-columns
-      (change)="onConfigChange($event)"
-      [locked]="locked"
+    [locked]="locked"
+    (configChange)="onConfigChange($event)"
     ></app-two-columns>
+
+    <input
+      type="file"
+      #fileInput
+      class="hidden"
+      (change)="handleFileSelected($event)"
+    />
   }
 
   @if (selectedLayout === 'grid') {
