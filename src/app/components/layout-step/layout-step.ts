@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BuilderState, GridLayoutConfig, TwoColumnConfig } from '../../types/builder-state';
+import { BuilderState } from '../../types/builder-state';
 import { OptionCard } from '../ui/option-card/option-card';
 import { SingleColumn } from './layout-config/single-column/single-column';
 import { TwoColumns } from './layout-config/two-columns/two-columns';
@@ -85,7 +85,6 @@ export class LayoutStep implements OnChanges {
     this.update.emit({
       layoutLocked: true,
       layout: this.selectedLayout,
-      layoutConfig: this.selectedConfig
     });
   }
 
@@ -95,7 +94,6 @@ export class LayoutStep implements OnChanges {
     this.update.emit({
       layoutLocked: false,
       layout: this.selectedLayout,
-      layoutConfig: this.selectedConfig
     });
 
     console.log("LayoutStep: layout unlocked");

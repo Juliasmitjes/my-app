@@ -1,29 +1,3 @@
-export interface SingleLayoutConfig {
-  type: 'text' | 'image' | 'video';
-}
-
-export interface TwoColumnConfig {
-  left: 'text' | 'image' | 'video';
-  right: 'text' | 'image' | 'video';
-}
-
-export interface GridCellType {
-  value: 'text' | 'image' | 'video';
-}
-
-export interface GridLayoutConfig {
-  rows: number;
-  cols: number;
-  cells: GridCellType[]; // lengte = rows * cols
-}
-
-export type LayoutConfig =
-  | SingleLayoutConfig
-  | TwoColumnConfig
-  | GridLayoutConfig
-  | null;
-  
-
 export interface BuilderState {
   /** Layout type van de website */
   layout: 'single' | 'two-column' | 'grid' | null;
@@ -70,9 +44,6 @@ export interface BuilderState {
 
   /** Locked state: is de layout bevestigd zodat content geüpload kan worden */
   layoutLocked?: boolean;
-
-  /** Layoutconfiguratie (per layout-type anders) */
-  layoutConfig?: LayoutConfig;
 
   uploads?: any[];
 }
