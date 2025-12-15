@@ -56,7 +56,7 @@ logo: this.builderState?.logo,
 navigation: this.builderState?.navigation,
 headerStyle: this.builderState?.headerStyle,
 pages: this.builderState?.pages?.join(', '),
-
+uploads: this.builderState?.uploads,
 
 price: '€250 bouwkosten + €50 per maand'
 };

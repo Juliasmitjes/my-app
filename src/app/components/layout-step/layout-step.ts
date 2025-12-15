@@ -6,6 +6,7 @@ import { SingleColumn } from './layout-config/single-column/single-column';
 import { TwoColumns } from './layout-config/two-columns/two-columns';
 import { Grid } from './layout-config/grid/grid';
 import { FormsModule } from '@angular/forms'; 
+import { ToastService } from '../ui/toast/toast.service';
 
 export interface LayoutOption {
   id: string;
@@ -21,10 +22,14 @@ export interface LayoutOption {
   templateUrl: './layout-step.html',
   styleUrl: './layout-step.css',
 })
+
+
 export class LayoutStep implements OnChanges {
   @Input() builderState!: BuilderState;
   @Input() selectedLayout: BuilderState['layout'] = null;
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
+  constructor(private toast: ToastService) {}
 
   selectedConfig: any = null;
   showTextEditor = false;
@@ -143,10 +148,12 @@ handleFileSelected(event: Event) {
 
   if (isImage) {
     this.uploads = { ...this.uploads, image: file };
+    this.toast.success('Foto geüpload');
   }
 
   if (isVideo) {
     this.uploads = { ...this.uploads, video: file };
+    this.toast.success('Video geüpload');
   }
 
   this.update.emit({
@@ -171,9 +178,10 @@ saveTextEditor() {
     text: this.textEditorValue
   };
 
+  this.toast.success('Tekst geüpload');
+
   this.update.emit({
     uploads: this.uploads
   });
 }
-
 }
