@@ -5,6 +5,7 @@ import { OptionCard } from '../ui/option-card/option-card';
 import { SingleColumn } from './layout-config/single-column/single-column';
 import { TwoColumns } from './layout-config/two-columns/two-columns';
 import { Grid } from './layout-config/grid/grid';
+import { FormsModule } from '@angular/forms'; 
 
 export interface LayoutOption {
   id: string;
@@ -16,7 +17,7 @@ export interface LayoutOption {
 @Component({
   selector: 'app-layout-step',
   standalone: true,
-  imports: [CommonModule, OptionCard, SingleColumn, TwoColumns, Grid],
+  imports: [CommonModule, OptionCard, SingleColumn, TwoColumns, Grid, FormsModule ],
   templateUrl: './layout-step.html',
   styleUrl: './layout-step.css',
 })
@@ -26,6 +27,8 @@ export class LayoutStep implements OnChanges {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   selectedConfig: any = null;
+  showTextEditor = false;
+  textEditorValue = '';
 
   @Output() update = new EventEmitter<Partial<BuilderState>>();
   @Output() selectLayout = new EventEmitter<BuilderState['layout']>();
@@ -74,9 +77,13 @@ export class LayoutStep implements OnChanges {
   }
 
  onConfigChange(event: any) {
+  console.log("LayoutStep: onConfigChange received", event);
+
   this.selectedConfig = event;
 
   if (event.config?.uploadType) {
+    console.log("Calling startUploadFlow with:", event.config.uploadType);
+
     this.startUploadFlow(event.config.uploadType);
   }
 }
@@ -124,6 +131,8 @@ startUploadFlow(type: 'image' | 'text' | 'video') {
 
     case 'text':
       // open teksteditor popup
+      console.log("Opening text editor...");
+
       this.openTextEditor();
       break;
   }
@@ -140,8 +149,27 @@ handleFileSelected(event: Event) {
 }
 
 openTextEditor() {
-  console.log("Open text editor…");
+  console.log("openTextEditor() called");
 
-  // TODO: hier open je jouw eigen popup / modal / textarea component
+  this.textEditorValue = '';
+  this.showTextEditor = true;
+}
+
+cancelTextEditor() {
+  this.showTextEditor = false;
+}
+
+saveTextEditor() {
+  this.showTextEditor = false;
+
+  console.log("Saved text:", this.textEditorValue);
+
+  // Sla op in builder state
+  this.update.emit({
+    uploads: {
+      ...this.uploads,
+      text: this.textEditorValue
+    }
+  });
 }
 }
