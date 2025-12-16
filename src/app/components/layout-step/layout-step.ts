@@ -88,9 +88,29 @@ export class LayoutStep implements OnChanges {
  onConfigChange(event: any) {
   this.selectedConfig = event;
 
+  // annuleren
+  if (event.config?.clearUploadKeys) {
+    const newUploads = { ...this.uploads };
+
+    event.config.clearUploadKeys.forEach((key: string) => {
+      delete newUploads[key];
+    });
+
+    this.uploads = newUploads;
+
+    this.update.emit({ uploads: this.uploads });
+    return; 
+  }
+
+  // goede
   if (event.config?.uploadType && event.config?.uploadKey) {
-  this.startUploadFlow(event.config.uploadType, event.config.uploadKey);
-}}
+    this.startUploadFlow(
+      event.config.uploadType,
+      event.config.uploadKey
+    );
+  }
+}
+
 
 
   confirmLayout() {

@@ -162,23 +162,16 @@ toggleSave(event: Event) {
 
 
 clearCurrentUploads() {
-  const newUploads = { ...this.uploads };
+  const keysToClear = this.overlayButtons.map(
+    btn => `${this.currentOption.type}_${btn.type}`
+  );
 
-  this.overlayButtons.forEach(btn => {
-    const key = `${this.currentOption.type}_${btn.type}`;
-    delete newUploads[key];
-  });
-
-  this.uploads = newUploads;
-
-  // Parent informeren
   this.configChange.emit({
     layout: this.selectedLayout,
     config: {
       variantIndex: this.currentIndex,
-      uploads: this.uploads
+      clearUploadKeys: keysToClear
     }
   });
 }
-
 }
