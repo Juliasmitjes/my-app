@@ -53,4 +53,6 @@ export interface BuilderState {
 
   /** Uploads */
   uploads?: BuilderUploads;
+
+  contentSaved?: boolean;
 }

@@ -39,6 +39,7 @@ export class LayoutStep implements OnChanges {
   @Output() selectLayout = new EventEmitter<BuilderState['layout']>();
 
   locked = false;
+  contentSaved = false;
 
   uploads: any = {};
   currentUploadKey: string | null = null;
@@ -207,4 +208,26 @@ saveTextEditor() {
     uploads: this.uploads
   });
 }
+
+isUploadComplete(): boolean {
+  if (!this.selectedConfig?.layout) return false;
+
+  const layoutType = this.selectedConfig.layout;
+
+  const requiredMap: Record<string, string[]> = {
+    'image-text': ['image', 'text'],
+    'text-image': ['text', 'image'],
+    'text-video': ['text', 'video'],
+    'video-text': ['video', 'text'],
+    'text-only': ['text']
+  };
+
+  const required = requiredMap[layoutType] ?? [];
+
+  return required.every(type => {
+    const key = `${layoutType}_${type}`;
+    return !!this.uploads[key];
+  });
+}
+
 }
