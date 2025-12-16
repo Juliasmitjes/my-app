@@ -1,0 +1,44 @@
+<div class="flex flex-col items-center gap-4">
+
+  <!-- Bestandsnaam -->
+  @if (hasUpload) {
+    <p class="text-sm text-white max-w-[160px] truncate text-center"
+       title="{{ fileName }}">
+      {{ fileName }}
+    </p>
+
+    @if (!isSaved) {
+      <button
+        class="px-4 py-2 rounded-xl bg-white text-black shadow cursor-pointer"
+        (click)="onUploadClick($event)"
+      >
+        Wijzig {{ label.toLowerCase() }}
+      </button>
+    }
+  }
+
+  @else {
+    <button
+      class="px-4 py-2 rounded-xl bg-white text-black shadow cursor-pointer"
+      (click)="onUploadClick($event)"
+    >
+      Upload {{ label }}
+    </button>
+  }
+
+  <!-- OPSLAAN -->
+  <button
+    type="button"
+    (click)="onSaveClick($event)"
+    class="px-8 py-4 rounded-2xl font-semibold transition-all shadow-lg cursor-pointer hover:shadow-xl"
+    [class.bg-accent]="isComplete"
+    [class.text-accent-foreground]="isComplete"
+    [class.hover:scale-[1.02]]="isComplete"
+    [class.bg-white/40]="!isComplete"
+    [class.text-white/60]="!isComplete"
+    [class.backdrop-blur-sm]="!isComplete"
+  >
+    {{ isSaved ? 'Annuleren' : 'Opslaan' }}
+  </button>
+
+</div>
