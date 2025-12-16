@@ -149,25 +149,26 @@ handleFileSelected(event: Event) {
   const file = input.files?.[0];
   if (!file || !this.currentUploadKey) return;
 
-  const isImage = file.type.startsWith('image');
-  const isVideo = file.type.startsWith('video');
+  const isText =
+    file.type.startsWith('text') ||
+    /\.(txt|md|rtf|html|json|csv|docx|pdf)$/i.test(file.name);
 
-  // Opslaan onder de juiste sleutel
   this.uploads = {
     ...this.uploads,
-    [this.currentUploadKey]: file
+    [this.currentUploadKey]: isText
+      ? {
+          kind: 'file',
+          name: file.name,
+          file
+        }
+      : file
   };
 
-  // Toast op basis van type
-  if (isImage) this.toast.success('Foto geüpload');
-  if (isVideo) this.toast.success('Video geüpload');
+  if (isText) this.toast.success('Tekstbestand geüpload');
+  if (file.type.startsWith('image')) this.toast.success('Foto geüpload');
+  if (file.type.startsWith('video')) this.toast.success('Video geüpload');
 
-  // Parent updaten
-  this.update.emit({
-    uploads: this.uploads
-  });
-
-  // Reset input zodat je opnieuw kunt uploaden
+  this.update.emit({ uploads: this.uploads });
   input.value = '';
 }
 
@@ -184,21 +185,30 @@ cancelTextEditor() {
 saveTextEditor() {
   if (!this.currentUploadKey) return;
 
+  const hasTypedText = this.textEditorValue.trim().length > 0;
+
+  // Als de gebruiker typt → altijd inline tekst
+  if (hasTypedText) {
+    this.uploads = {
+      ...this.uploads,
+      [this.currentUploadKey]: {
+        kind: 'inline',
+        name: 'Tekst toegevoegd',
+        value: this.textEditorValue
+      }
+    };
+
+    this.toast.success('Tekst opgeslagen');
+  }
+
   this.showTextEditor = false;
-
-  this.uploads = {
-    ...this.uploads,
-    [this.currentUploadKey]: {
-      name: 'Tekst toegevoegd',
-      value: this.textEditorValue
-    }
-  };
-
-  this.toast.success('Tekst opgeslagen');
 
   this.update.emit({
     uploads: this.uploads
   });
 }
+
+
+
 
 }
