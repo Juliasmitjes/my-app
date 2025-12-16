@@ -3,12 +3,8 @@
 </h3>
 
 <!-- Input panel -->
-<div
-  class="flex flex-col items-center gap-4 mb-8
-         bg-white/70 dark:bg-muted/40 backdrop-blur-xl
-         border border-border/40 rounded-3xl p-4 sm:p-6
-         shadow-sm hover:shadow-md transition-all"
->
+<div class="flex flex-col items-center gap-4 mb-8 bg-white/70 dark:bg-muted/40 backdrop-blur-xl border border-border/40 rounded-3xl p-4 sm:p-6 shadow-sm">
+
   <h4 class="hidden md:block mb-2 text-center font-medium text-muted-foreground">
     Pas je grid aan
   </h4>
@@ -22,12 +18,7 @@
         type="number"
         min="1"
         max="6"
-        class="w-20 sm:w-24 px-3 py-2 rounded-xl
-               border border-border/60 bg-white/90
-               hover:border-accent/60 hover:bg-white
-               focus:outline-none focus:ring-2 focus:ring-accent/40
-               text-center dark:bg-muted/30 dark:border-muted/40
-               transition-all"
+        class="w-20 sm:w-24 px-3 py-2 rounded-xl border border-border/60 bg-white/90 text-center"
         [(ngModel)]="rows"
         (change)="!locked && updateGrid()"
         [disabled]="locked"
@@ -41,12 +32,7 @@
         type="number"
         min="1"
         max="6"
-        class="w-20 sm:w-24 px-3 py-2 rounded-xl
-               border border-border/60 bg-white/90
-               hover:border-accent/60 hover:bg-white
-               focus:outline-none focus:ring-2 focus:ring-accent/40
-               text-center dark:bg-muted/30 dark:border-muted/40
-               transition-all"
+        class="w-20 sm:w-24 px-3 py-2 rounded-xl border border-border/60 bg-white/90 text-center"
         [(ngModel)]="cols"
         (change)="!locked && updateGrid()"
         [disabled]="locked"
@@ -56,9 +42,8 @@
   </div>
 </div>
 
-<!-- SCROLL CONTAINER (alleen mobiel) -->
+<!-- Grid -->
 <div class="overflow-x-auto lg:overflow-visible">
-
   <div
     class="grid gap-4 sm:gap-6 min-w-max sm:min-w-0"
     [style.gridTemplateColumns]="'repeat(' + cols + ', minmax(0, 1fr))'"
@@ -66,116 +51,66 @@
 
     @for (cell of grid; let i = $index; track i) {
 
-      <!-- CELL WRAPPER -->
       <div
-        class="
-          relative
-          p-4 sm:p-6 rounded-3xl border border-border/40
-          backdrop-blur-xl 
-          transition-all duration-300
-          min-h-[180px] flex flex-col items-center justify-between
-        "
+        class="relative p-4 sm:p-6 rounded-3xl border border-border/40 backdrop-blur-xl transition-all duration-300 min-h-[180px] flex flex-col items-center justify-between"
         [ngClass]="locked
-          ? 'bg-muted/40 cursor-default opacity-80 hover:shadow-none hover:scale-100'
+          ? 'bg-muted/40 cursor-default opacity-80'
           : 'bg-white/70 cursor-pointer hover:shadow-xl hover:scale-[1.02]'"
         (click)="!locked && nextCell(i)"
-        tabindex="0"
-        (keydown.enter)="!locked && nextCell(i)"
-        (keydown.space)="!locked && nextCell(i)"
       >
 
-        <!-- overlay per cel -->
         @if (locked) {
           <div
-            class="absolute inset-0 z-20 bg-black/30 backdrop-blur-sm
-                  flex items-center justify-center rounded-3xl"
+            class="absolute inset-0 z-20 bg-black/30 backdrop-blur-sm flex items-center justify-center rounded-3xl"
             (click)="$event.stopPropagation()"
           >
+            <div class="flex flex-col items-center gap-6">
 
-            <div class="flex flex-col items-center gap-4">
+              <!-- UploadUnit -->
+              <app-upload-unit
+                [locked]="locked"
+                [label]="cell.labelMap[cell.value]"
+                [uploadKey]="getUploadKey(i)"
+                [uploads]="uploads"
+                [isSaved]="isSaved[i]"
+                [isComplete]="isUploadComplete(i)"
+                (requestUpload)="onRequestUpload(i, $event, cell.value)"
+                (requestClear)="onRequestClear(i, $event)"
+              ></app-upload-unit>
 
-              @if (uploads[`grid_${i}_${cell.value}`]) {
-
-                <!-- Bestandsnaam -->
-                <p class="text-sm text-white max-w-[160px] truncate text-center"
-                  title="{{ uploads[`grid_${i}_${cell.value}`].name }}">
-                  {{ uploads[`grid_${i}_${cell.value}`].name }}
-                </p>
-
-                <!-- Wijzig-knop -->
-                <button
-                  class="px-4 py-2 rounded-xl bg-white text-black shadow cursor-pointer"
-                  (click)="handleUpload(i, cell.value, $event)"
-                >
-                  Wijzig {{ cell.labelMap[cell.value].toLowerCase() }}
-                </button>
-
-              } @else {
-
-                <!-- Upload-knop -->
-                <button
-                  class="px-4 py-2 rounded-xl bg-white text-black shadow cursor-pointer"
-                  (click)="handleUpload(i, cell.value, $event)"
-                >
-                  Upload {{ cell.labelMap[cell.value] }}
-                </button>
-
-              }
-
-              <!-- OPSLAAN -->
-                <div class="flex flex-col items-center gap-2 mt-4">
-
-                  <button
-                    type="button"
-                    (click)="toggleSave(i, $event)"
-                    class="px-8 py-4 rounded-2xl font-semibold transition-all shadow-lg cursor-pointer hover:shadow-xl"
-                    [class.bg-accent]="isUploadComplete(i)"
-                    [class.text-accent-foreground]="isUploadComplete(i)"
-                    [class.hover:scale-[1.02]]="isUploadComplete(i)"
-                    [class.bg-white/40]="!isUploadComplete(i)"
-                    [class.text-white/60]="!isUploadComplete(i)"
-                    [class.backdrop-blur-sm]="!isUploadComplete(i)"
-                  >
-                    {{ isSaved[i] ? 'Annuleren' : 'Opslaan' }}
-                  </button>
-
-                </div>
+              <!-- Opslaan-knop per cel -->
+              <button
+                type="button"
+                (click)="onSaveClick(i, $event)"
+                class="px-8 py-4 rounded-2xl font-semibold transition-all shadow-lg cursor-pointer hover:shadow-xl"
+                [class.bg-accent]="isUploadComplete(i)"
+                [class.text-accent-foreground]="isUploadComplete(i)"
+                [class.hover:scale-[1.02]]="isUploadComplete(i)"
+                [class.bg-white/40]="!isUploadComplete(i)"
+                [class.text-white/60]="!isUploadComplete(i)"
+                [class.backdrop-blur-sm]="!isUploadComplete(i)"
+              >
+                {{ isSaved[i] ? 'Annuleren' : 'Opslaan' }}
+              </button>
 
             </div>
-
           </div>
-          }
+        }
 
-        <!-- Icon block -->
+        <!-- Icon -->
         <div class="flex items-center justify-center flex-1 w-full mt-4">
-          <div
-            class="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center
-                   rounded-2xl p-3 ring-2 ring-accent shadow transition-all"
-            [ngClass]="locked ? 'opacity-50' : 'opacity-100'"
-          >
+          <div class="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center rounded-2xl p-3 ring-2 ring-accent shadow">
             @switch (cell.value) {
-              @case ('text')  { <lucide-icon name="text-align-justify" class="w-12 h-12 sm:w-14 sm:h-14"></lucide-icon> }
-              @case ('image') { <lucide-icon name="image" class="w-12 h-12 sm:w-14 sm:h-14"></lucide-icon> }
-              @case ('video') { <lucide-icon name="video" class="w-12 h-12 sm:w-14 sm:h-14"></lucide-icon> }
+              @case ('text') { <lucide-icon name="text-align-justify" class="w-12 h-12"></lucide-icon> }
+              @case ('image') { <lucide-icon name="image" class="w-12 h-12"></lucide-icon> }
+              @case ('video') { <lucide-icon name="video" class="w-12 h-12"></lucide-icon> }
             }
           </div>
         </div>
 
-        <!-- Labels -->
+        <!-- Label -->
         <div class="w-full text-center mt-3 mb-2">
-          <div class="text-sm font-semibold text-foreground">
-            {{ cell.labelMap[cell.value] }}
-          </div>
-
-          @if(!locked){
-            <p class="text-muted-foreground text-xs lg:hidden mt-2">
-              Tik voor volgende optie
-            </p>
-
-            <p class="text-muted-foreground text-sm hidden lg:block mt-3">
-              Klik voor volgende optie
-            </p>
-          }
+          <div class="text-sm font-semibold">{{ cell.labelMap[cell.value] }}</div>
         </div>
 
       </div>
@@ -184,3 +119,7 @@
 
   </div>
 </div>
+
+<ng-template>
+  <app-upload-unit></app-upload-unit>
+</ng-template>

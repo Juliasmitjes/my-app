@@ -1,227 +1,148 @@
 <div id="two-layout-top" class="space-y-12 w-full max-w-5xl mx-auto px-4 sm:px-6">
 
-  <!-- Titel -->
   <div class="text-center space-y-1 sm:space-y-2">
     <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Kies jouw indeling</h2>
   </div>
 
-  <!-- Twee kaarten naast elkaar -->
   <div class="grid grid-cols-2 gap-4 sm:gap-6">
 
     <!-- KOL 1 -->
-          <div
-        class="relative 
-              p-6 sm:p-10 rounded-3xl border border-border/40
-              backdrop-blur-xl
-              transition-all duration-300"
-        (click)="!locked && nextCol1()"
-        [ngClass]="locked
-          ? 'cursor-default opacity-80 hover:shadow-none hover:scale-100 bg-muted/40'
-          : 'cursor-pointer hover:shadow-xl hover:scale-[1.02]'"
-        tabindex="0"
-        (keydown.enter)="!locked && nextCol1()"
-        (keydown.space)="!locked && nextCol1()"
-      >
-
-     @if (locked) {
-      <div class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[40px] flex items-center justify-center rounded-3xl"
-          (click)="$event.stopPropagation()">
-
-        <div class="flex flex-col items-center gap-8">
-
-          <!-- Upload / wijzig knoppen -->
-          <div class="flex items-start justify-center gap-4">
-            @for (btn of col1OverlayButtons; track btn.label) {
-              <div class="flex flex-col items-center gap-1 min-w-[160px]">
-
-                @if (uploads[`col1_${btn.type}`]) {
-                  <p class="text-sm text-white max-w-[160px] truncate text-center"
-                    title="{{ uploads[`col1_${btn.type}`].name }}">
-                    {{ uploads[`col1_${btn.type}`].name }}
-                  </p>
-
-                  @if (!isSavedCol1) {
-                    <button class="px-4 py-2 rounded-xl bg-white text-black shadow cursor-pointer"
-                            (click)="handleUpload(1, btn.type, $event)">
-                      Wijzig {{ btn.label.replace('Upload ', '').toLowerCase() }}
-                    </button>
-                  }
-                } @else {
-                  <button class="px-4 py-2 rounded-xl bg-white text-black shadow cursor-pointer"
-                          (click)="handleUpload(1, btn.type, $event)">
-                    {{ btn.label }}
-                  </button>
-                }
-
-              </div>
-            }
-          </div>
-
-          <!-- OPSLAAN -->
-          <div class="flex flex-col items-center gap-2">
-            <button type="button"
-                    (click)="toggleSave(1, $event)"
-                    class="px-8 py-4 rounded-2xl font-semibold transition-all shadow-lg cursor-pointer hover:shadow-xl"
-                    [class.bg-accent]="isUploadComplete(1)"
-                    [class.text-accent-foreground]="isUploadComplete(1)"
-                    [class.hover:scale-[1.02]]="isUploadComplete(1)"
-                    [class.bg-white/40]="!isUploadComplete(1)"
-                    [class.text-white/60]="!isUploadComplete(1)"
-                    [class.backdrop-blur-sm]="!isUploadComplete(1)">
-              {{ isSavedCol1 ? 'Annuleren' : 'Opslaan' }}
-            </button>
-          </div>
-
-        </div>
-      </div>
-      }
-
-      <!-- Huidige optie -->
-      <div class="flex justify-center mb-4 sm:mb-6">
-        <div
-          class="flex flex-col items-center justify-center gap-4 sm:gap-6
-                 rounded-2xl p-4 sm:p-6
-                 ring-2 ring-accent shadow-lg transition-all"
-        >
-          @switch (col1Current.type) {
-            @case ('text')  { <lucide-icon name="text-align-justify" class="w-16 h-16 opacity-80"></lucide-icon> }
-            @case ('image') { <lucide-icon name="image" class="w-16 h-16 opacity-80"></lucide-icon> }
-            @case ('video') { <lucide-icon name="video" class="w-16 h-16 opacity-80"></lucide-icon> }
-          }
-        </div>
-      </div>
-
-      <!-- Titelblok -->
-      <div class="text-center relative">
-
-        <h3 class="text-lg sm:text-xl font-semibold">
-          {{ col1Current.label }}
-        </h3>
-
-        @if(!locked){
-        <!-- mobiel -->
-        <p class="text-muted-foreground mt-4 text-xs text-center block sm:hidden">
-          Tik voor volgende optie
-        </p>
-        }
-
-
-        @if(!locked){
-        <!-- desktop -->
-        <p class="text-muted-foreground mt-5 text-sm hidden sm:block">
-          Klik voor volgende optie
-        </p>
-        }        
-      </div>
-    </div>
-
-
-
-    <!-- KOL 2 -->
-        <div
-        class="relative 
-              p-6 sm:p-10 rounded-3xl border border-border/40
-              backdrop-blur-xl
-              transition-all duration-300"
-        (click)="!locked && nextCol2()"
-        [ngClass]="locked
-          ? 'bg-muted/40 cursor-default opacity-80 hover:shadow-none hover:scale-100'
-          : 'bg-white/70 cursor-pointer hover:shadow-xl hover:scale-[1.02]'
-        "
-        tabindex="0"
-        (keydown.enter)="!locked && nextCol2()"
-        (keydown.space)="!locked && nextCol2()"
-      >
+    <div
+      class="relative p-6 sm:p-10 rounded-3xl border border-border/40 backdrop-blur-xl transition-all duration-300"
+      (click)="!locked && nextCol1()"
+      [ngClass]="locked
+        ? 'cursor-default opacity-80 bg-muted/40'
+        : 'cursor-pointer hover:shadow-xl hover:scale-[1.02]'"
+      tabindex="0"
+      (keydown.enter)="!locked && nextCol1()"
+      (keydown.space)="!locked && nextCol1()"
+    >
 
       @if (locked) {
-        <div class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[40px] flex items-center justify-center rounded-3xl"
-            (click)="$event.stopPropagation()">
+        <div
+          class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[40px] flex items-center justify-center rounded-3xl"
+          (click)="$event.stopPropagation()"
+        >
+          <div class="flex flex-col items-center gap-6">
 
-          <div class="flex flex-col items-center gap-8">
+            <!-- UploadUnit -->
+            <app-upload-unit
+              [locked]="locked"
+              [label]="col1Current.label"
+              [uploadKey]="getUploadKey(1)"
+              [uploads]="uploads"
+              [isSaved]="isSavedCol1"
+              [isComplete]="isUploadComplete(1)"
+              (requestUpload)="onRequestUpload(1, $event, col1Current.type)"
+              (requestClear)="onRequestClear(1, $event)"
+            ></app-upload-unit>
 
-            <!-- Upload / wijzig knoppen -->
-            <div class="flex items-start justify-center gap-4">
-              @for (btn of col2OverlayButtons; track btn.label) {
-                <div class="flex flex-col items-center gap-1 min-w-[160px]">
-
-                  @if (uploads[`col2_${btn.type}`]) {
-                    <p class="text-sm text-white max-w-[160px] truncate text-center"
-                      title="{{ uploads[`col2_${btn.type}`].name }}">
-                      {{ uploads[`col2_${btn.type}`].name }}
-                    </p>
-
-                    @if (!isSavedCol2) {
-                      <button class="px-4 py-2 rounded-xl bg-white text-black shadow cursor-pointer"
-                              (click)="handleUpload(2, btn.type, $event)">
-                        Wijzig {{ btn.label.replace('Upload ', '').toLowerCase() }}
-                      </button>
-                    }
-                  } @else {
-                    <button class="px-4 py-2 rounded-xl bg-white text-black shadow cursor-pointer"
-                            (click)="handleUpload(2, btn.type, $event)">
-                      {{ btn.label }}
-                    </button>
-                  }
-
-                </div>
-              }
-            </div>
-
-            <!-- OPSLAAN -->
-            <div class="flex flex-col items-center gap-2">
-              <button type="button"
-                      (click)="toggleSave(2, $event)"
-                      class="px-8 py-4 rounded-2xl font-semibold transition-all shadow-lg cursor-pointer hover:shadow-xl"
-                      [class.bg-accent]="isUploadComplete(2)"
-                      [class.text-accent-foreground]="isUploadComplete(2)"
-                      [class.hover:scale-[1.02]]="isUploadComplete(2)"
-                      [class.bg-white/40]="!isUploadComplete(2)"
-                      [class.text-white/60]="!isUploadComplete(2)"
-                      [class.backdrop-blur-sm]="!isUploadComplete(2)">
-                {{ isSavedCol2 ? 'Annuleren' : 'Opslaan' }}
-              </button>
-            </div>
+            <!-- Opslaan-knop kolom 1 -->
+            <button
+              type="button"
+              (click)="onSaveClick(1, $event)"
+              class="px-8 py-4 rounded-2xl font-semibold transition-all shadow-lg cursor-pointer hover:shadow-xl"
+              [class.bg-accent]="isUploadComplete(1)"
+              [class.text-accent-foreground]="isUploadComplete(1)"
+              [class.hover:scale-[1.02]]="isUploadComplete(1)"
+              [class.bg-white/40]="!isUploadComplete(1)"
+              [class.text-white/60]="!isUploadComplete(1)"
+              [class.backdrop-blur-sm]="!isUploadComplete(1)"
+            >
+              {{ isSavedCol1 ? 'Annuleren' : 'Opslaan' }}
+            </button>
 
           </div>
         </div>
-        }
+      }
 
-
-      <!-- Huidige optie -->
+      <!-- Preview -->
       <div class="flex justify-center mb-4 sm:mb-6">
-        <div
-          class="flex flex-col items-center justify-center gap-4 sm:gap-6
-                 rounded-2xl p-4 sm:p-6
-                 ring-2 ring-accent shadow-lg transition-all"
-        >
-          @switch (col2Current.type) {
-            @case ('text')  { <lucide-icon name="text-align-justify" class="w-16 h-16 opacity-80"></lucide-icon> }
+        <div class="flex flex-col items-center justify-center gap-4 sm:gap-6 rounded-2xl p-4 sm:p-6 ring-2 ring-accent shadow-lg">
+          @switch (col1Current.type) {
+            @case ('text') { <lucide-icon name="text-align-justify" class="w-16 h-16 opacity-80"></lucide-icon> }
             @case ('image') { <lucide-icon name="image" class="w-16 h-16 opacity-80"></lucide-icon> }
             @case ('video') { <lucide-icon name="video" class="w-16 h-16 opacity-80"></lucide-icon> }
           }
         </div>
       </div>
 
-      <!-- Titelblok -->
-      <div class="text-center min-h-[3.5rem] sm:min-h-0 relative">
+      <div class="text-center">
+        <h3 class="text-lg sm:text-xl font-semibold">{{ col1Current.label }}</h3>
+      </div>
 
-        <h3 class="text-lg sm:text-xl font-semibold">
-          {{ col2Current.label }}
-        </h3>
+    </div>
 
-        @if(!locked){
-        <!-- mobiel -->
-        <p class="text-muted-foreground mt-4 text-xs text-center block sm:hidden">
-          Tik voor volgende optie
-        </p>
-        <!-- desktop -->
-        <p class="text-muted-foreground mt-5 text-sm hidden sm:block">
-          Klik voor volgende optie
-        </p>
-        }        
+    <!-- KOL 2 -->
+    <div
+      class="relative p-6 sm:p-10 rounded-3xl border border-border/40 backdrop-blur-xl transition-all duration-300"
+      (click)="!locked && nextCol2()"
+      [ngClass]="locked
+        ? 'cursor-default opacity-80 bg-muted/40'
+        : 'cursor-pointer hover:shadow-xl hover:scale-[1.02]'"
+      tabindex="0"
+      (keydown.enter)="!locked && nextCol2()"
+      (keydown.space)="!locked && nextCol2()"
+    >
+
+      @if (locked) {
+        <div
+          class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[40px] flex items-center justify-center rounded-3xl"
+          (click)="$event.stopPropagation()"
+        >
+          <div class="flex flex-col items-center gap-6">
+
+            <!-- UploadUnit -->
+            <app-upload-unit
+              [locked]="locked"
+              [label]="col2Current.label"
+              [uploadKey]="getUploadKey(2)"
+              [uploads]="uploads"
+              [isSaved]="isSavedCol2"
+              [isComplete]="isUploadComplete(2)"
+              (requestUpload)="onRequestUpload(2, $event, col2Current.type)"
+              (requestClear)="onRequestClear(2, $event)"
+            ></app-upload-unit>
+
+            <!-- Opslaan-knop kolom 2 -->
+            <button
+              type="button"
+              (click)="onSaveClick(2, $event)"
+              class="px-8 py-4 rounded-2xl font-semibold transition-all shadow-lg cursor-pointer hover:shadow-xl"
+              [class.bg-accent]="isUploadComplete(2)"
+              [class.text-accent-foreground]="isUploadComplete(2)"
+              [class.hover:scale-[1.02]]="isUploadComplete(2)"
+              [class.bg-white/40]="!isUploadComplete(2)"
+              [class.text-white/60]="!isUploadComplete(2)"
+              [class.backdrop-blur-sm]="!isUploadComplete(2)"
+            >
+              {{ isSavedCol2 ? 'Annuleren' : 'Opslaan' }}
+            </button>
+
+          </div>
+        </div>
+      }
+
+      <!-- Preview -->
+      <div class="flex justify-center mb-4 sm:mb-6">
+        <div class="flex flex-col items-center justify-center gap-4 sm:gap-6 rounded-2xl p-4 sm:p-6 ring-2 ring-accent shadow-lg">
+          @switch (col2Current.type) {
+            @case ('text') { <lucide-icon name="text-align-justify" class="w-16 h-16 opacity-80"></lucide-icon> }
+            @case ('image') { <lucide-icon name="image" class="w-16 h-16 opacity-80"></lucide-icon> }
+            @case ('video') { <lucide-icon name="video" class="w-16 h-16 opacity-80"></lucide-icon> }
+          }
+        </div>
+      </div>
+
+      <div class="text-center">
+        <h3 class="text-lg sm:text-xl font-semibold">{{ col2Current.label }}</h3>
       </div>
 
     </div>
 
   </div>
 </div>
+
+<ng-template>
+  <app-upload-unit></app-upload-unit>
+</ng-template>

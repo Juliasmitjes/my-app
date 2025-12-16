@@ -9,25 +9,14 @@ import { CommonModule } from '@angular/common';
 })
 export class UploadUnit {
   @Input() locked = false;
-
-  // "Foto", "Tekst", "Video"
-  @Input() label = '';
-
-  // Unieke key: "image-text_image", "col1_image", "grid_3_text", etc.
-  @Input() uploadKey = '';
-
-  // Volledige uploads-map uit LayoutStep
+  @Input() label = '';                // "Foto", "Tekst", "Video"
+  @Input() uploadKey = '';            // "image-text_image", "col1_image", "grid_3_text", ...
   @Input() uploads: Record<string, any> = {};
+  @Input() isSaved = false;           // mag blijven als style-hint
+  @Input() isComplete = false;        // idem
 
-  // Opslag-status (per blok/kolom/cel)
-  @Input() isSaved = false;
-
-  // Of alle vereiste uploads voor deze unit compleet zijn
-  @Input() isComplete = false;
-
-  @Output() requestUpload = new EventEmitter<string>(); // uploadKey
-  @Output() requestSave = new EventEmitter<string>();   // uploadKey
-  @Output() requestClear = new EventEmitter<string>();  // uploadKey
+  @Output() requestUpload = new EventEmitter<string>();   // uploadKey
+  @Output() requestClear = new EventEmitter<string>();    // uploadKey
 
   get hasUpload(): boolean {
     return !!this.uploads[this.uploadKey];
@@ -41,11 +30,6 @@ export class UploadUnit {
   onUploadClick(event: Event) {
     event.stopPropagation();
     this.requestUpload.emit(this.uploadKey);
-  }
-
-  onSaveClick(event: Event) {
-    event.stopPropagation();
-    this.requestSave.emit(this.uploadKey);
   }
 
   onClearClick(event: Event) {

@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Output, Input  } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
+import { UploadUnit } from '../upload-unit/upload-unit';
 
 export type CellType = 'text' | 'image' | 'video';
 
@@ -12,27 +13,30 @@ interface GridCell {
 
 @Component({
   selector: 'app-grid',
+  standalone: true,
   templateUrl: './grid.html',
   imports: [
     CommonModule,
     FormsModule,
-    LucideAngularModule
+    LucideAngularModule,
+    UploadUnit
   ]
 })
 export class Grid {
+
   @Input() locked = false;
   @Input() uploads: Record<string, any> = {};
-  @Output() change = new EventEmitter<CellType[]>();
-  @Output() configChange = new EventEmitter<any>();
 
-  isSaved: Record<number, boolean> = {};
+  @Output() configChange = new EventEmitter<any>();
 
   rows = 2;
   cols = 2;
 
   grid: GridCell[] = [];
 
-  // opties array type-safe
+  // per cel opslaan-status
+  isSaved: Record<number, boolean> = {};
+
   options: CellType[] = ['text', 'image', 'video'];
 
   constructor() {
@@ -53,92 +57,81 @@ export class Grid {
   updateGrid() {
     const total = Math.max(1, this.rows) * Math.max(1, this.cols);
 
-    const newGrid: GridCell[] = Array.from({ length: total }, (_, i) => {
+    this.grid = Array.from({ length: total }, (_, i) => {
       const prev = this.grid[i];
-      if (prev) {
-        return {
-          ...this.createDefaultCell(),
-          value: prev.value
-        };
-      }
-      return this.createDefaultCell();
+      return prev
+        ? { ...this.createDefaultCell(), value: prev.value }
+        : this.createDefaultCell();
     });
-
-    this.grid = newGrid;
-    this.emit();
   }
 
-  emit() {
-    this.change.emit(this.grid.map(cell => cell.value));
-  }
-
-  /** Cycle naar de volgende optie voor een cel (click) */
   nextCell(index: number) {
+    if (this.locked) return;
+
     const current = this.grid[index].value;
     const nextIndex = (this.options.indexOf(current) + 1) % this.options.length;
+
     this.grid[index].value = this.options[nextIndex];
-    this.emit();
   }
 
-  /** Helper voor template: wat is de volgende optie (voor preview) */
-  cellNext(index: number): CellType {
-    const current = this.grid[index].value;
-    const nextIndex = (this.options.indexOf(current) + 1) % this.options.length;
-    return this.options[nextIndex];
+  // -----------------------------
+  // Upload helpers
+  // -----------------------------
+  getUploadKey(index: number): string {
+    const cell = this.grid[index];
+    return `grid_${index}_${cell.value}`;
   }
 
-  /** Template helper: ARIA state */
-  cellSelected(index: number) {
-    // placeholder for future selected states; returns false for now
-    return false;
+  isUploadComplete(index: number): boolean {
+    return !!this.uploads[this.getUploadKey(index)];
   }
 
- handleUpload(index: number, type: CellType, event: Event) {
-  event.stopPropagation();
-
-  const uploadKey = `grid_${index}_${type}`;
-
-  this.configChange.emit({
-    layout: 'grid',
-    config: {
-      cellIndex: index,
-      uploadType: type,
-      uploadKey
-    }
-  });
-}
-
-isUploadComplete(index: number): boolean {
-  const cell = this.grid[index];
-  const key = `grid_${index}_${cell.value}`;
-  return !!this.uploads[key];
-}
-
-toggleSave(index: number, event: Event) {
-  event.stopPropagation();
-
-  if (!this.isUploadComplete(index)) {
-    return; // eventueel toast via parent
-  }
-
-  if (this.isSaved[index]) {
-    this.clearUploads(index);
+  onRequestUpload(index: number, uploadKey: string, type: CellType) {
     this.isSaved[index] = false;
-    return;
+
+    this.configChange.emit({
+      layout: 'grid',
+      config: {
+        cellIndex: index,
+        uploadType: type,
+        uploadKey
+      }
+    });
   }
 
-  this.isSaved[index] = true;
-}
+  onRequestClear(index: number, uploadKey: string) {
+    this.clearUploads(index);
+  }
 
-clearUploads(index: number) {
-  const cell = this.grid[index];
-  const key = `grid_${index}_${cell.value}`;
+  // -----------------------------
+  // Opslaan / annuleren
+  // -----------------------------
+  onSaveClick(index: number, event: Event) {
+    event.stopPropagation();
 
-  this.configChange.emit({
-    layout: 'grid',
-    config: {
-      clearUploadKeys: [key]
+    if (!this.isUploadComplete(index)) {
+      return;
     }
-  });
-}
+
+    // annuleren
+    if (this.isSaved[index]) {
+      this.clearUploads(index);
+      this.isSaved[index] = false;
+      return;
+    }
+
+    // opslaan
+    this.isSaved[index] = true;
+  }
+
+  clearUploads(index: number) {
+    const key = this.getUploadKey(index);
+
+    this.configChange.emit({
+      layout: 'grid',
+      config: {
+        clearUploadKeys: [key]
+      }
+    });
+  }
 }

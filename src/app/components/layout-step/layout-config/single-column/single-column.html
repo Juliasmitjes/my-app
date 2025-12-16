@@ -21,90 +21,54 @@
     (keydown.space)="!locked && nextOption()"
   >
 
+    <!-- Overlay (alleen als locked) -->
     @if (locked) {
-        <div
-            class="absolute inset-0 z-20
-                  bg-black/45
-                  backdrop-blur-[40px]
-                  flex items-center justify-center
-                  rounded-3xl"
-            (click)="$event.stopPropagation()"
-          >
+      <div
+        class="absolute inset-0 z-20
+               bg-black/45 backdrop-blur-[40px]
+               flex items-center justify-center
+               rounded-3xl"
+        (click)="$event.stopPropagation()"
+      >
+        <div class="flex flex-col items-center gap-8">
 
-          <!-- CONTENT -->
-          <div class="flex flex-col items-center gap-8">
+          <!-- Upload units -->
+          <div class="flex items-start justify-center gap-4">
+            @for (btn of overlayButtons; track btn.label) {
+              <app-upload-unit
+                [locked]="locked"
+                [label]="btn.label"
+                [uploadKey]="getUploadKey(btn)"
+                [uploads]="uploads"
+                [isSaved]="isSaved"
+                [isComplete]="isUploadComplete()"
+                (requestUpload)="onRequestUpload($event, btn.type)"
+                (requestClear)="onRequestClear($event)"
+              ></app-upload-unit>
+            }
+          </div>
 
-            <!-- Upload / wijzig knoppen -->
-            <div class="flex items-start justify-center gap-4">
-
-              @for (btn of overlayButtons; track btn.label) {
-                <div class="flex flex-col items-center gap-1 min-w-[160px]">
-
-                  @if (uploads[`${currentOption.type}_${btn.type}`]) {
-
-                    <!-- Bestandsnaam -->
-                    <p
-                      class="text-sm text-white max-w-[160px] truncate text-center"
-                      title="{{ uploads[`${currentOption.type}_${btn.type}`].name }}"
-                    >
-                      {{ uploads[`${currentOption.type}_${btn.type}`].name }}
-                    </p>
-
-                    <!-- Wijzig-knop -->
-                    @if (!isSaved) {
-                      <button
-                        class="px-4 py-2 rounded-xl bg-white text-black shadow cursor-pointer"
-                        (click)="handleUpload(btn.type, $event)"
-                      >
-                        Wijzig {{ btn.label.replace('Upload ', '').toLowerCase() }}
-                      </button>
-                    }
-                  } @else {
-
-                    <!-- Upload-knop -->
-                    <button
-                      class="px-4 py-2 rounded-xl bg-white text-black shadow cursor-pointer"
-                      (click)="handleUpload(btn.type, $event)"
-                    >
-                      {{ btn.label }}
-                    </button>
-
-                  }
-
-                </div>
-              }
-
-            </div>
-
-            <!-- OPSLAAN -->
-            <div class="flex flex-col items-center gap-2">
-
-              <button
-                type="button"
-                (click)="toggleSave($event)"
-                class="
-                  px-8 py-4 rounded-2xl font-semibold transition-all
-                  shadow-lg
-                  cursor-pointer
-                  hover:shadow-xl
-                "
-                [class.bg-accent]="isUploadComplete()"
-                [class.text-accent-foreground]="isUploadComplete()"
-                [class.hover:scale-[1.02]]="isUploadComplete()"
-
-                [class.bg-white/40]="!isUploadComplete()"
-                [class.text-white/60]="!isUploadComplete()"
-                [class.backdrop-blur-sm]="!isUploadComplete()"
-              >
-                {{ isSaved ? 'Annuleren' : 'Opslaan' }}
-              </button>
-            </div>
-
+          <!-- Centrale Opslaan-knop (enige save-knop in single-column) -->
+          <div class="flex flex-col items-center gap-2">
+            <button
+              type="button"
+              (click)="onSaveClick($event)"
+              class="px-8 py-4 rounded-2xl font-semibold transition-all
+                     shadow-lg cursor-pointer hover:shadow-xl"
+              [class.bg-accent]="isUploadComplete()"
+              [class.text-accent-foreground]="isUploadComplete()"
+              [class.hover:scale-[1.02]]="isUploadComplete()"
+              [class.bg-white/40]="!isUploadComplete()"
+              [class.text-white/60]="!isUploadComplete()"
+              [class.backdrop-blur-sm]="!isUploadComplete()"
+            >
+              {{ isSaved ? 'Annuleren' : 'Opslaan' }}
+            </button>
           </div>
 
         </div>
-      }
-
+      </div>
+    }
 
     <!-- Huidige optie -->
     <div class="flex justify-center mb-4 sm:mb-6">
@@ -114,41 +78,34 @@
                transition-all duration-300
                ring-2 ring-accent shadow-lg"
       >
-
         @switch (currentOption.type) {
-
           @case ('image-text') {
             <div class="flex flex-col gap-2 sm:gap-4">
               <lucide-icon name="image" class="w-14 h-14 sm:w-20 sm:h-20 opacity-80"></lucide-icon>
               <lucide-icon name="text-align-justify" class="w-14 h-14 sm:w-20 sm:h-20 opacity-80"></lucide-icon>
             </div>
           }
-
           @case ('text-image') {
             <div class="flex flex-col gap-2 sm:gap-4">
               <lucide-icon name="text-align-justify" class="w-14 h-14 sm:w-20 sm:h-20 opacity-80"></lucide-icon>
               <lucide-icon name="image" class="w-14 h-14 sm:w-20 sm:h-20 opacity-80"></lucide-icon>
             </div>
           }
-
           @case ('text-video') {
             <div class="flex flex-col gap-2 sm:gap-4">
               <lucide-icon name="text-align-justify" class="w-14 h-14 sm:w-20 sm:h-20 opacity-80"></lucide-icon>
               <lucide-icon name="video" class="w-14 h-14 sm:w-20 sm:h-20 opacity-80"></lucide-icon>
             </div>
           }
-
           @case ('video-text') {
             <div class="flex flex-col gap-2 sm:gap-4">
               <lucide-icon name="video" class="w-14 h-14 sm:w-20 sm:h-20 opacity-80"></lucide-icon>
               <lucide-icon name="text-align-justify" class="w-14 h-14 sm:w-20 sm:h-20 opacity-80"></lucide-icon>
             </div>
           }
-
           @case ('text-only') {
             <lucide-icon name="text-align-justify" class="w-14 h-14 sm:w-20 sm:h-20 opacity-80"></lucide-icon>
           }
-
         }
       </div>
     </div>
@@ -159,9 +116,10 @@
 
       @if (!locked) {
         <!-- mobiel -->
-        <p class="text-muted-foreground mt-1 text-xs 
-          absolute left-1/2 -translate-x-1/2 w-[80%] text-center bottom-5
-          block sm:hidden">
+        <p
+          class="text-muted-foreground mt-1 text-xs
+                 absolute left-1/2 -translate-x-1/2 w-[80%] text-center bottom-5
+                 block sm:hidden">
           Tik voor volgende optie
         </p>
 
@@ -173,5 +131,9 @@
     </div>
 
   </div>
-
 </div>
+
+<!-- Analyzer fix -->
+<ng-template>
+  <app-upload-unit></app-upload-unit>
+</ng-template>
