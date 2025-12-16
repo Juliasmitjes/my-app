@@ -207,8 +207,4 @@ saveTextEditor() {
     uploads: this.uploads
   });
 }
-
-
-
-
 }
