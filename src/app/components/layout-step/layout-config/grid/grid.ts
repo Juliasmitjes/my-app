@@ -21,6 +21,7 @@ interface GridCell {
 })
 export class Grid {
   @Input() locked = false;
+  @Input() uploads: Record<string, any> = {};
   @Output() change = new EventEmitter<CellType[]>();
   @Output() configChange = new EventEmitter<any>();
 
@@ -90,14 +91,17 @@ export class Grid {
     return false;
   }
 
-  handleUpload(index: number, type: CellType, event: Event) {
+ handleUpload(index: number, type: CellType, event: Event) {
   event.stopPropagation();
+
+  const uploadKey = `grid_${index}_${type}`;
 
   this.configChange.emit({
     layout: 'grid',
     config: {
       cellIndex: index,
-      uploadType: type
+      uploadType: type,
+      uploadKey
     }
   });
 }

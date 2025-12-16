@@ -84,22 +84,48 @@
         (keydown.space)="!locked && nextCell(i)"
       >
 
-        <!-- ✅ OVERLAY PER CEL (correcte plek) -->
+        <!-- overlay per cel -->
         @if (locked) {
           <div
             class="absolute inset-0 z-20 bg-black/30 backdrop-blur-sm
-                   flex items-center justify-center rounded-3xl"
+                  flex items-center justify-center rounded-3xl"
             (click)="$event.stopPropagation()"
           >
-            <button
-              class="px-4 py-2 rounded-xl bg-white text-black font-medium shadow-lg
-                     hover:bg-white/90 transition w-40 cursor-pointer"
-              (click)="handleUpload(i, cell.value, $event)"
-            >
-              Upload {{ cell.labelMap[cell.value] }}
-            </button>
+
+            <div class="flex flex-col items-center gap-4">
+
+              @if (uploads[`grid_${i}_${cell.value}`]) {
+
+                <!-- Bestandsnaam -->
+                <p class="text-sm text-white max-w-[160px] truncate text-center"
+                  title="{{ uploads[`grid_${i}_${cell.value}`].name }}">
+                  {{ uploads[`grid_${i}_${cell.value}`].name }}
+                </p>
+
+                <!-- Wijzig-knop -->
+                <button
+                  class="px-4 py-2 rounded-xl bg-white text-black shadow cursor-pointer"
+                  (click)="handleUpload(i, cell.value, $event)"
+                >
+                  Wijzig {{ cell.labelMap[cell.value].toLowerCase() }}
+                </button>
+
+              } @else {
+
+                <!-- Upload-knop -->
+                <button
+                  class="px-4 py-2 rounded-xl bg-white text-black shadow cursor-pointer"
+                  (click)="handleUpload(i, cell.value, $event)"
+                >
+                  Upload {{ cell.labelMap[cell.value] }}
+                </button>
+
+              }
+
+            </div>
+
           </div>
-        }
+          }
 
         <!-- Icon block -->
         <div class="flex items-center justify-center flex-1 w-full mt-4">

@@ -157,7 +157,14 @@ startUploadFlow(type: 'image' | 'text' | 'video', key: string) {
     this.currentUploadKey = null;
   }
 
-  // Single-column fallback
+  // GRID cel
+  else if (key.startsWith('grid_')) {
+    this.currentUploadKey = key;
+    this.currentUploadKeyCol1 = null;
+    this.currentUploadKeyCol2 = null;
+  }
+
+  // Single-column 
   else {
     this.currentUploadKey = key;
     this.currentUploadKeyCol1 = null;
