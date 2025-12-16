@@ -80,7 +80,7 @@
 
               <button
                 type="button"
-                
+                (click)="toggleSave($event)"
                 class="
                   px-8 py-4 rounded-2xl font-semibold transition-all
                   disabled:opacity-50 disabled:cursor-not-allowed
@@ -89,19 +89,8 @@
                   shadow-lg hover:shadow-xl hover:scale-[1.02] cursor-pointer
                 "
               >
-                Opslaan
+                 {{ isSaved ? 'Annuleren' : 'Opslaan' }}
               </button>
-
-              <!-- @if (isUploadComplete()) {
-                <p class="text-sm text-green-600">
-                  ✔ Alle onderdelen zijn klaar om opgeslagen te worden
-                </p>
-              } @else {
-                <p class="text-sm text-muted-foreground">
-                  Upload alle onderdelen om op te slaan
-                </p>
-              } -->
-
             </div>
 
           </div>

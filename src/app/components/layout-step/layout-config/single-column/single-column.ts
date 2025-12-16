@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
+import { ToastService } from '../../../ui/toast/toast.service';
+import { inject } from '@angular/core';
 
 type UploadType = 'image' | 'text' | 'video';
 
@@ -26,7 +28,9 @@ export class SingleColumn implements OnInit {
   @Input() locked = false;
   @Input() uploads: Record<string, any> = {};
   @Output() configChange = new EventEmitter<{ layout: string | null; config?: any }>();
-  
+  isSaved = false;
+
+  private toast = inject(ToastService); 
 
   currentIndex = 0;
 
@@ -113,6 +117,8 @@ export class SingleColumn implements OnInit {
 handleUpload(type: UploadType, event: Event) {
   event.stopPropagation();
 
+  this.isSaved = false;
+
   const uploadKey = `${this.currentOption.type}_${type}`;
 
   this.configChange.emit({
@@ -125,5 +131,17 @@ handleUpload(type: UploadType, event: Event) {
   });
 }
 
+toggleSave(event: Event) {
+  event.stopPropagation();
+
+  this.isSaved = !this.isSaved;
+
+  if (this.isSaved) {
+    console.log('SingleColumn: saved');
+    this.toast.success('Onderdelen zijn opgeslagen');
+  } else {
+    console.log('SingleColumn: edit again');
+  }
+}
 
 }
