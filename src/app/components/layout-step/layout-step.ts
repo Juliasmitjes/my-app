@@ -52,6 +52,9 @@ export class LayoutStep implements OnChanges {
     { id: 'grid', name: 'Rooster', description: 'Fotos, projecten, overzicht', icon: 'layout-grid' },
   ];
 
+  currentUploadKeyCol1: string | null = null;
+  currentUploadKeyCol2: string | null = null;
+
   ngOnChanges(changes: SimpleChanges) {}
 
   trackById(index: number, item: LayoutOption) {
@@ -112,7 +115,6 @@ export class LayoutStep implements OnChanges {
 }
 
 
-
   confirmLayout() {
     this.locked = true;
 
@@ -140,7 +142,15 @@ export class LayoutStep implements OnChanges {
   }
 
 startUploadFlow(type: 'image' | 'text' | 'video', key: string) {
-  this.currentUploadKey = key;
+  // Bepaal welke kolom het is
+  if (key.startsWith('col1_')) {
+    this.currentUploadKeyCol1 = key;
+    this.currentUploadKeyCol2 = null; // veiligheid
+  } else if (key.startsWith('col2_')) {
+    this.currentUploadKeyCol2 = key;
+    this.currentUploadKeyCol1 = null; // veiligheid
+  }
+
   this.currentUploadType = type;
 
   switch (type) {
@@ -168,22 +178,21 @@ uploadTextFile() {
 handleFileSelected(event: Event) {
   const input = event.target as HTMLInputElement;
   const file = input.files?.[0];
-  if (!file || !this.currentUploadKey) return;
+  const key = this.currentUploadKeyCol1 ?? this.currentUploadKeyCol2;
+  if (!file || !key) return;
+
 
   const isText =
     file.type.startsWith('text') ||
     /\.(txt|md|rtf|html|json|csv|docx|pdf)$/i.test(file.name);
 
   this.uploads = {
-    ...this.uploads,
-    [this.currentUploadKey]: isText
-      ? {
-          kind: 'file',
-          name: file.name,
-          file
-        }
-      : file
-  };
+  ...this.uploads,
+  [key]: isText
+    ? { kind: 'file', name: file.name, file }
+    : file
+};
+
 
   if (isText) this.toast.success('Tekstbestand geüpload');
   if (file.type.startsWith('image')) this.toast.success('Foto geüpload');
@@ -234,7 +243,8 @@ isUploadComplete(): boolean {
 
   const layoutType = this.selectedConfig.layout;
 
-  const requiredMap: Record<string, string[]> = {
+  // Single-column
+  const singleMap: Record<string, string[]> = {
     'image-text': ['image', 'text'],
     'text-image': ['text', 'image'],
     'text-video': ['text', 'video'],
@@ -242,12 +252,19 @@ isUploadComplete(): boolean {
     'text-only': ['text']
   };
 
-  const required = requiredMap[layoutType] ?? [];
+  if (layoutType !== 'two-column') {
+    const required = singleMap[layoutType] ?? [];
+    return required.every(type => {
+      const key = `${layoutType}_${type}`;
+      return !!this.uploads[key];
+    });
+  }
 
-  return required.every(type => {
-    const key = `${layoutType}_${type}`;
-    return !!this.uploads[key];
-  });
+  // Two-column
+  const col1Key = `col1_${this.selectedConfig.config?.col1Type}`;
+  const col2Key = `col2_${this.selectedConfig.config?.col2Type}`;
+
+  return !!this.uploads[col1Key] && !!this.uploads[col2Key];
 }
 
 }

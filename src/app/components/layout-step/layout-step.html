@@ -28,6 +28,7 @@
     @if (selectedLayout === 'two-column') {
       <app-two-columns
         [locked]="locked"
+        [uploads]="uploads"
         (configChange)="onConfigChange($event)"
       ></app-two-columns>
     }

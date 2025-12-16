@@ -71,11 +71,19 @@ export class TwoColumns {
   }
 
   emit() {
-    this.selectLayout.emit({
-      col1: this.col1Current.type,
-      col2: this.col2Current.type
-    });
-  }
+  this.selectLayout.emit({
+    col1: this.col1Current.type,
+    col2: this.col2Current.type
+  });
+
+  this.configChange.emit({
+    layout: 'two-column',
+    config: {
+      col1Type: this.col1Current.type,
+      col2Type: this.col2Current.type
+    }
+  });
+}
 
  handleUpload(col: 1 | 2, type: UploadType, event: Event) {
   event.stopPropagation();
