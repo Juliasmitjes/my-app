@@ -131,17 +131,54 @@ handleUpload(type: UploadType, event: Event) {
   });
 }
 
+isUploadComplete(): boolean {
+  return this.overlayButtons.every(btn => {
+    const key = `${this.currentOption.type}_${btn.type}`;
+    return !!this.uploads[key];
+  });
+}
+
 toggleSave(event: Event) {
   event.stopPropagation();
 
-  this.isSaved = !this.isSaved;
-
-  if (this.isSaved) {
-    console.log('SingleColumn: saved');
-    this.toast.success('Onderdelen zijn opgeslagen');
-  } else {
-    console.log('SingleColumn: edit again');
+  // Nog niet alles gekozen
+  if (!this.isUploadComplete()) {
+    this.toast.info('Selecteer onderdelen');
+    return;
   }
+
+  // Annuleren → uploads verwijderen
+  if (this.isSaved) {
+    this.clearCurrentUploads();
+    this.isSaved = false;
+    this.toast.info('Wijzigingen ongedaan gemaakt');
+    return;
+  }
+
+  // Opslaan
+  this.isSaved = true;
+  this.toast.success('Onderdelen zijn opgeslagen');
+}
+
+
+clearCurrentUploads() {
+  const newUploads = { ...this.uploads };
+
+  this.overlayButtons.forEach(btn => {
+    const key = `${this.currentOption.type}_${btn.type}`;
+    delete newUploads[key];
+  });
+
+  this.uploads = newUploads;
+
+  // Parent informeren
+  this.configChange.emit({
+    layout: this.selectedLayout,
+    config: {
+      variantIndex: this.currentIndex,
+      uploads: this.uploads
+    }
+  });
 }
 
 }
