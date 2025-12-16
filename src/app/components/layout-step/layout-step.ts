@@ -142,13 +142,26 @@ export class LayoutStep implements OnChanges {
   }
 
 startUploadFlow(type: 'image' | 'text' | 'video', key: string) {
-  // Bepaal welke kolom het is
+
+  // Two-column kolom 1
   if (key.startsWith('col1_')) {
     this.currentUploadKeyCol1 = key;
-    this.currentUploadKeyCol2 = null; // veiligheid
-  } else if (key.startsWith('col2_')) {
+    this.currentUploadKeyCol2 = null;
+    this.currentUploadKey = null;
+  }
+
+  // Two-column kolom 2
+  else if (key.startsWith('col2_')) {
     this.currentUploadKeyCol2 = key;
-    this.currentUploadKeyCol1 = null; // veiligheid
+    this.currentUploadKeyCol1 = null;
+    this.currentUploadKey = null;
+  }
+
+  // Single-column fallback
+  else {
+    this.currentUploadKey = key;
+    this.currentUploadKeyCol1 = null;
+    this.currentUploadKeyCol2 = null;
   }
 
   this.currentUploadType = type;
@@ -213,15 +226,19 @@ cancelTextEditor() {
 }
 
 saveTextEditor() {
-  if (!this.currentUploadKey) return;
+  const key =
+    this.currentUploadKey ??
+    this.currentUploadKeyCol1 ??
+    this.currentUploadKeyCol2;
+
+  if (!key) return;
 
   const hasTypedText = this.textEditorValue.trim().length > 0;
 
-  // Als de gebruiker typt → altijd inline tekst
   if (hasTypedText) {
     this.uploads = {
       ...this.uploads,
-      [this.currentUploadKey]: {
+      [key]: {
         kind: 'inline',
         name: 'Tekst toegevoegd',
         value: this.textEditorValue
@@ -237,6 +254,7 @@ saveTextEditor() {
     uploads: this.uploads
   });
 }
+
 
 isUploadComplete(): boolean {
   if (!this.selectedConfig?.layout) return false;

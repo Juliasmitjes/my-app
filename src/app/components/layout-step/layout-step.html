@@ -89,31 +89,33 @@
 @if (showTextEditor) {
   <div class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
     <div class="bg-white/80 backdrop-blur-xl p-6 rounded-3xl shadow-xl w-[90%] max-w-lg space-y-6 border border-border/40">
-
       
 
-      @if (currentUploadKey && uploads[currentUploadKey]) {
+    @let activeKey = currentUploadKey ?? currentUploadKeyCol1 ?? currentUploadKeyCol2;
 
-            <!-- Titel -->
-            <p
-              class="text-sm text-muted-foreground text-start truncate"
-              title="Tekst toegevoegd"
-            >
-              {{ uploads[currentUploadKey].name ?? 'Tekst toegevoegd' }}
-            </p>
+        @if (activeKey && uploads[activeKey]) {
 
-            <!-- Wijzig knop -->
-            <button
-              class="px-5 py-3 rounded-xl bg-white/70 border border-border/40
-                    shadow-sm hover:shadow-md hover:bg-white transition-all
-                    flex items-center gap-2 justify-center font-medium text-foreground
-                    ring-1 ring-accent/20 hover:ring-accent/40 cursor-pointer"
-              (click)="uploadTextFile()"
-            >
-              Wijzig tekstbestand
-            </button>
+          <!-- Titel -->
+          <p
+            class="text-sm text-muted-foreground text-start truncate"
+            title="Tekst toegevoegd"
+          >
+            {{ uploads[activeKey].name ?? 'Tekst toegevoegd' }}
+          </p>
 
-          } @else {
+          <!-- Wijzig knop -->
+          <button
+            class="px-5 py-3 rounded-xl bg-white/70 border border-border/40
+                  shadow-sm hover:shadow-md hover:bg-white transition-all
+                  flex items-center gap-2 justify-center font-medium text-foreground
+                  ring-1 ring-accent/20 hover:ring-accent/40 cursor-pointer"
+            (click)="uploadTextFile()"
+          >
+            Wijzig tekstbestand
+          </button>
+
+        } 
+       @else {
 
             <!-- Upload knop -->
             <button
