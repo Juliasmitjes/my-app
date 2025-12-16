@@ -140,10 +140,9 @@ startUploadFlow(type: 'image' | 'text' | 'video', key: string) {
 }
 
 uploadTextFile() {
-  this.fileInput.nativeElement.accept = '.txt,.md,.rtf,.html,.json,.csv';
+  this.fileInput.nativeElement.accept = '.txt,.md,.rtf,.html,.json,.csv,.docx,.pdf';
   this.fileInput.nativeElement.click();
 }
-
 
 handleFileSelected(event: Event) {
   const input = event.target as HTMLInputElement;
