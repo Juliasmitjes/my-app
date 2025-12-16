@@ -51,13 +51,14 @@
                     </p>
 
                     <!-- Wijzig-knop -->
-                    <button
-                      class="px-4 py-2 rounded-xl bg-white text-black shadow cursor-pointer"
-                      (click)="handleUpload(btn.type, $event)"
-                    >
-                      Wijzig {{ btn.label.replace('Upload ', '').toLowerCase() }}
-                    </button>
-
+                    @if (!isSaved) {
+                      <button
+                        class="px-4 py-2 rounded-xl bg-white text-black shadow cursor-pointer"
+                        (click)="handleUpload(btn.type, $event)"
+                      >
+                        Wijzig {{ btn.label.replace('Upload ', '').toLowerCase() }}
+                      </button>
+                    }
                   } @else {
 
                     <!-- Upload-knop -->
