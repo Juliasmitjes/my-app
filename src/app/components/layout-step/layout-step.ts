@@ -191,7 +191,11 @@ uploadTextFile() {
 handleFileSelected(event: Event) {
   const input = event.target as HTMLInputElement;
   const file = input.files?.[0];
-  const key = this.currentUploadKeyCol1 ?? this.currentUploadKeyCol2;
+  const key =
+    this.currentUploadKey ??
+    this.currentUploadKeyCol1 ??
+    this.currentUploadKeyCol2;
+
   if (!file || !key) return;
 
 
