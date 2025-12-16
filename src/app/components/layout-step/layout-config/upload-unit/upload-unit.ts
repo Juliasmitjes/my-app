@@ -8,25 +8,32 @@ import { CommonModule } from '@angular/common';
   templateUrl: './upload-unit.html'
 })
 export class UploadUnit {
-
   @Input() locked = false;
 
-  @Input() label = '';               // "Foto", "Tekst", "Video"
-  @Input() uploadKey = '';           // "col1_image", "grid_3_text", "image-text_text"
+  // "Foto", "Tekst", "Video"
+  @Input() label = '';
+
+  // Unieke key: "image-text_image", "col1_image", "grid_3_text", etc.
+  @Input() uploadKey = '';
+
+  // Volledige uploads-map uit LayoutStep
   @Input() uploads: Record<string, any> = {};
 
-  @Input() isSaved = false;          // komt uit parent
-  @Input() isComplete = false;       // komt uit parent
+  // Opslag-status (per blok/kolom/cel)
+  @Input() isSaved = false;
 
-  @Output() requestUpload = new EventEmitter<string>();   // uploadKey
-  @Output() requestSave = new EventEmitter<string>();     // uploadKey
-  @Output() requestClear = new EventEmitter<string>();    // uploadKey
+  // Of alle vereiste uploads voor deze unit compleet zijn
+  @Input() isComplete = false;
 
-  get hasUpload() {
+  @Output() requestUpload = new EventEmitter<string>(); // uploadKey
+  @Output() requestSave = new EventEmitter<string>();   // uploadKey
+  @Output() requestClear = new EventEmitter<string>();  // uploadKey
+
+  get hasUpload(): boolean {
     return !!this.uploads[this.uploadKey];
   }
 
-  get fileName() {
+  get fileName(): string | null {
     const item = this.uploads[this.uploadKey];
     return item?.name ?? null;
   }

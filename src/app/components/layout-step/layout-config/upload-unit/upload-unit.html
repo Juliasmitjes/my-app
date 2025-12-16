@@ -1,12 +1,13 @@
 <div class="flex flex-col items-center gap-4">
 
-  <!-- Bestandsnaam -->
   @if (hasUpload) {
+    <!-- Bestandsnaam -->
     <p class="text-sm text-white max-w-[160px] truncate text-center"
-       title="{{ fileName }}">
-      {{ fileName }}
+       [title]="fileName ?? 'Tekst toegevoegd'">
+      {{ fileName ?? 'Tekst toegevoegd' }}
     </p>
 
+    <!-- Wijzig-knop (alleen als nog niet definitief opgeslagen) -->
     @if (!isSaved) {
       <button
         class="px-4 py-2 rounded-xl bg-white text-black shadow cursor-pointer"
@@ -15,9 +16,8 @@
         Wijzig {{ label.toLowerCase() }}
       </button>
     }
-  }
-
-  @else {
+  } @else {
+    <!-- Upload-knop -->
     <button
       class="px-4 py-2 rounded-xl bg-white text-black shadow cursor-pointer"
       (click)="onUploadClick($event)"
@@ -26,7 +26,7 @@
     </button>
   }
 
-  <!-- OPSLAAN -->
+  <!-- OPSLAAN / ANNULEREN -->
   <button
     type="button"
     (click)="onSaveClick($event)"
