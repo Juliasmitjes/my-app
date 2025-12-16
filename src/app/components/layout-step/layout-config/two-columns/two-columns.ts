@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Output, Input  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
+import { ToastService } from '../../../ui/toast/toast.service';
+import { inject } from '@angular/core';
 
+type UploadType = 'text' | 'image' | 'video';
 
 
 @Component({
@@ -16,8 +19,14 @@ import { LucideAngularModule } from 'lucide-angular';
 
 export class TwoColumns {
   @Input() locked = false;
+  @Input() uploads: Record<string, any> = {};
   @Output() selectLayout = new EventEmitter<{ col1: string, col2: string }>();
   @Output() configChange = new EventEmitter<any>();
+
+  isSavedCol1 = false;
+  isSavedCol2 = false;
+
+  private toast = inject(ToastService); 
 
   colOptions = [
   { type: 'text', label: 'Tekst' },
@@ -34,10 +43,22 @@ export class TwoColumns {
   get col1Next() {
     return this.colOptions[(this.col1Index + 1) % this.colOptions.length];
   }
-
   get col2Next() {
     return this.colOptions[(this.col2Index + 1) % this.colOptions.length];
   }
+
+  get col1OverlayButtons() {
+  return [
+    { label: `Upload ${this.col1Current.label}`, type: this.col1Current.type }
+  ];
+}
+
+  get col2OverlayButtons() {
+    return [
+      { label: `Upload ${this.col2Current.label}`, type: this.col2Current.type }
+    ];
+  }
+
 
   nextCol1() {
     this.col1Index = (this.col1Index + 1) % this.colOptions.length;
@@ -56,15 +77,67 @@ export class TwoColumns {
     });
   }
 
- handleUpload(col: 1 | 2, type: 'text' | 'image' | 'video', event: Event) {
+ handleUpload(col: 1 | 2, type: UploadType, event: Event) {
   event.stopPropagation();
+
+  const key = `col${col}_${type}`;
 
   this.configChange.emit({
     layout: 'two-column',
     config: {
       col,
-      uploadType: type
+      uploadType: type,
+      uploadKey: key
+    }
+  });
+
+  if (col === 1) this.isSavedCol1 = false;
+  if (col === 2) this.isSavedCol2 = false;
+}
+
+isUploadComplete(col: 1 | 2): boolean {
+  const current = col === 1 ? this.col1Current : this.col2Current;
+  const key = `col${col}_${current.type}`;
+  return !!this.uploads[key];
+}
+
+toggleSave(col: 1 | 2, event: Event) {
+  event.stopPropagation();
+
+  if (!this.isUploadComplete(col)) {
+    this.toast.info('Selecteer onderdelen');
+    return;
+  }
+
+  if (col === 1) {
+    if (this.isSavedCol1) {
+      this.clearUploads(1);
+      this.isSavedCol1 = false;
+      return;
+    }
+    this.isSavedCol1 = true;
+  }
+
+  if (col === 2) {
+    if (this.isSavedCol2) {
+      this.clearUploads(2);
+      this.isSavedCol2 = false;
+      return;
+    }
+    this.isSavedCol2 = true;
+  }
+}
+
+clearUploads(col: 1 | 2) {
+  const current = col === 1 ? this.col1Current : this.col2Current;
+  const key = `col${col}_${current.type}`;
+
+  this.configChange.emit({
+    layout: 'two-column',
+    config: {
+      clearUploadKeys: [key]
     }
   });
 }
+
 }
