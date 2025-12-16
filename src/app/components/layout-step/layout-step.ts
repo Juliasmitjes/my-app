@@ -182,17 +182,23 @@ cancelTextEditor() {
 }
 
 saveTextEditor() {
+  if (!this.currentUploadKey) return;
+
   this.showTextEditor = false;
 
   this.uploads = {
     ...this.uploads,
-    text: this.textEditorValue
+    [this.currentUploadKey]: {
+      name: 'Tekst toegevoegd',
+      value: this.textEditorValue
+    }
   };
 
-  this.toast.success('Tekst geüpload');
+  this.toast.success('Tekst opgeslagen');
 
   this.update.emit({
     uploads: this.uploads
   });
 }
+
 }

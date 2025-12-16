@@ -90,15 +90,42 @@
 
       
 
-      <button
-        class="px-5 py-3 rounded-xl bg-white/70 border border-border/40
-               shadow-sm hover:shadow-md hover:bg-white transition-all
-               flex items-center gap-2 justify-center font-medium text-foreground
-               ring-1 ring-accent/20 hover:ring-accent/40 cursor-pointer"
-        (click)="uploadTextFile()"
-      >
-        Upload tekstbestand
-      </button>
+      @if (currentUploadKey && uploads[currentUploadKey]) {
+
+            <!-- Titel -->
+            <p
+              class="text-sm text-muted-foreground text-center truncate"
+              title="Tekst toegevoegd"
+            >
+              {{ uploads[currentUploadKey].name ?? 'Tekst toegevoegd' }}
+            </p>
+
+            <!-- Wijzig knop -->
+            <button
+              class="px-5 py-3 rounded-xl bg-white/70 border border-border/40
+                    shadow-sm hover:shadow-md hover:bg-white transition-all
+                    flex items-center gap-2 justify-center font-medium text-foreground
+                    ring-1 ring-accent/20 hover:ring-accent/40 cursor-pointer"
+              (click)="uploadTextFile()"
+            >
+              Wijzig tekstbestand
+            </button>
+
+          } @else {
+
+            <!-- Upload knop -->
+            <button
+              class="px-5 py-3 rounded-xl bg-white/70 border border-border/40
+                    shadow-sm hover:shadow-md hover:bg-white transition-all
+                    flex items-center gap-2 justify-center font-medium text-foreground
+                    ring-1 ring-accent/20 hover:ring-accent/40 cursor-pointer"
+              (click)="uploadTextFile()"
+            >
+              Upload tekstbestand
+            </button>
+
+          }
+
 
       <h3 class="text-lg font-semibold text-center">Of voer jouw tekst in</h3>
 
