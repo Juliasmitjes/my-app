@@ -41,6 +41,9 @@ export class LayoutStep implements OnChanges {
   locked = false;
 
   uploads: any = {};
+  currentUploadKey: string | null = null;
+  currentUploadType: 'image' | 'video' | 'text' | null = null;
+
 
   layouts: LayoutOption[] = [
     { id: 'single', name: 'Eén kolom', description: 'Simpel, inhoud verticaal gecentreerd', icon: 'layers' },
@@ -84,10 +87,11 @@ export class LayoutStep implements OnChanges {
  onConfigChange(event: any) {
   this.selectedConfig = event;
 
-  if (event.config?.uploadType) {
-    this.startUploadFlow(event.config.uploadType);
-  }
-}
+  if (event.config?.uploadType && event.config?.uploadKey) {
+  this.startUploadFlow(event.config.uploadType, event.config.uploadKey);
+}}
+
+
   confirmLayout() {
     this.locked = true;
 
@@ -114,7 +118,10 @@ export class LayoutStep implements OnChanges {
     });
   }
 
-startUploadFlow(type: 'image' | 'text' | 'video') {
+startUploadFlow(type: 'image' | 'text' | 'video', key: string) {
+  this.currentUploadKey = key;
+  this.currentUploadType = type;
+
   switch (type) {
     case 'image':
       this.fileInput.nativeElement.accept = 'image/*';
@@ -141,25 +148,30 @@ uploadTextFile() {
 handleFileSelected(event: Event) {
   const input = event.target as HTMLInputElement;
   const file = input.files?.[0];
-  if (!file) return;
-  // opslaan op builder state: 
+  if (!file || !this.currentUploadKey) return;
+
   const isImage = file.type.startsWith('image');
   const isVideo = file.type.startsWith('video');
 
-  if (isImage) {
-    this.uploads = { ...this.uploads, image: file };
-    this.toast.success('Foto geüpload');
-  }
+  // Opslaan onder de juiste sleutel
+  this.uploads = {
+    ...this.uploads,
+    [this.currentUploadKey]: file
+  };
 
-  if (isVideo) {
-    this.uploads = { ...this.uploads, video: file };
-    this.toast.success('Video geüpload');
-  }
+  // Toast op basis van type
+  if (isImage) this.toast.success('Foto geüpload');
+  if (isVideo) this.toast.success('Video geüpload');
 
+  // Parent updaten
   this.update.emit({
     uploads: this.uploads
   });
+
+  // Reset input zodat je opnieuw kunt uploaden
+  input.value = '';
 }
+
 
 openTextEditor() {
   this.textEditorValue = '';

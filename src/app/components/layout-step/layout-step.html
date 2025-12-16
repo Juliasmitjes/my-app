@@ -20,6 +20,7 @@
     @if (selectedLayout === 'single') {
       <app-single-column
         [locked]="locked"
+        [uploads]="uploads"
         (configChange)="onConfigChange($event)"
       ></app-single-column>
     }

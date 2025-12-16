@@ -20,8 +20,11 @@ interface OverlayButton {
   ],
 })
 
+
+
 export class SingleColumn implements OnInit {
   @Input() locked = false;
+  @Input() uploads: Record<string, any> = {};
   @Output() configChange = new EventEmitter<{ layout: string | null; config?: any }>();
   
 
@@ -69,7 +72,7 @@ export class SingleColumn implements OnInit {
     this.configChange.emit(payload);
   }
 
-
+  
   get overlayButtons(): OverlayButton[] {
   switch (this.currentOption.type) {
 
@@ -107,14 +110,19 @@ export class SingleColumn implements OnInit {
   }
 }
 
-handleUpload(type: 'image' | 'text' | 'video', event: Event) {
+handleUpload(type: UploadType, event: Event) {
   event.stopPropagation();
+
+  const uploadKey = `${this.currentOption.type}_${type}`;
+
   this.configChange.emit({
     layout: this.selectedLayout,
     config: {
       variantIndex: this.currentIndex,
-      uploadType: type
+      uploadType: type,
+      uploadKey
     }
   });
 }
+
 }
