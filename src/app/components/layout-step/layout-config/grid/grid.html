@@ -122,6 +122,25 @@
 
               }
 
+              <!-- OPSLAAN -->
+                <div class="flex flex-col items-center gap-2 mt-4">
+
+                  <button
+                    type="button"
+                    (click)="toggleSave(i, $event)"
+                    class="px-8 py-4 rounded-2xl font-semibold transition-all shadow-lg cursor-pointer hover:shadow-xl"
+                    [class.bg-accent]="isUploadComplete(i)"
+                    [class.text-accent-foreground]="isUploadComplete(i)"
+                    [class.hover:scale-[1.02]]="isUploadComplete(i)"
+                    [class.bg-white/40]="!isUploadComplete(i)"
+                    [class.text-white/60]="!isUploadComplete(i)"
+                    [class.backdrop-blur-sm]="!isUploadComplete(i)"
+                  >
+                    {{ isSaved[i] ? 'Annuleren' : 'Opslaan' }}
+                  </button>
+
+                </div>
+
             </div>
 
           </div>

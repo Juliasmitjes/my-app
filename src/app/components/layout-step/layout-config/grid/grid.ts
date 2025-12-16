@@ -25,6 +25,8 @@ export class Grid {
   @Output() change = new EventEmitter<CellType[]>();
   @Output() configChange = new EventEmitter<any>();
 
+  isSaved: Record<number, boolean> = {};
+
   rows = 2;
   cols = 2;
 
@@ -102,6 +104,40 @@ export class Grid {
       cellIndex: index,
       uploadType: type,
       uploadKey
+    }
+  });
+}
+
+isUploadComplete(index: number): boolean {
+  const cell = this.grid[index];
+  const key = `grid_${index}_${cell.value}`;
+  return !!this.uploads[key];
+}
+
+toggleSave(index: number, event: Event) {
+  event.stopPropagation();
+
+  if (!this.isUploadComplete(index)) {
+    return; // eventueel toast via parent
+  }
+
+  if (this.isSaved[index]) {
+    this.clearUploads(index);
+    this.isSaved[index] = false;
+    return;
+  }
+
+  this.isSaved[index] = true;
+}
+
+clearUploads(index: number) {
+  const cell = this.grid[index];
+  const key = `grid_${index}_${cell.value}`;
+
+  this.configChange.emit({
+    layout: 'grid',
+    config: {
+      clearUploadKeys: [key]
     }
   });
 }
