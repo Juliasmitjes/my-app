@@ -41,7 +41,7 @@
             <button
               type="button"
               (click)="onSaveClick(1, $event)"
-              class="px-8 py-4 rounded-2xl font-semibold transition-all shadow-lg cursor-pointer hover:shadow-xl"
+              class="sm:px-8 sm:py-4 px-4 py-2 rounded-xl sm:rounded-2xl font-semibold transition-all shadow-lg cursor-pointer hover:shadow-xl"
               [class.bg-accent]="isUploadComplete(1)"
               [class.text-accent-foreground]="isUploadComplete(1)"
               [class.hover:scale-[1.02]]="isUploadComplete(1)"
@@ -121,7 +121,7 @@
             <button
               type="button"
               (click)="onSaveClick(2, $event)"
-              class="px-8 py-4 rounded-2xl font-semibold transition-all shadow-lg cursor-pointer hover:shadow-xl"
+              class="sm:px-8 sm:py-4 px-4 py-2 rounded-xl sm:rounded-2xl font-semibold transition-all shadow-lg cursor-pointer hover:shadow-xl"
               [class.bg-accent]="isUploadComplete(2)"
               [class.text-accent-foreground]="isUploadComplete(2)"
               [class.hover:scale-[1.02]]="isUploadComplete(2)"

@@ -14,6 +14,7 @@ export class UploadUnit {
   @Input() uploads: Record<string, any> = {};
   @Input() isSaved = false;           // mag blijven als style-hint
   @Input() isComplete = false;        // idem
+  @Input() compact = false;
 
   @Output() requestUpload = new EventEmitter<string>();   // uploadKey
   @Output() requestClear = new EventEmitter<string>();    // uploadKey

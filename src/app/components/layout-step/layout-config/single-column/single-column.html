@@ -42,6 +42,7 @@
                 [uploads]="uploads"
                 [isSaved]="isSaved"
                 [isComplete]="isUploadComplete()"
+                [compact]="true"
                 (requestUpload)="onRequestUpload($event, btn.type)"
                 (requestClear)="onRequestClear($event)"
               ></app-upload-unit>
