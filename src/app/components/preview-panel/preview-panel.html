@@ -2,10 +2,8 @@
 
 <div class="preview-overlay">
 
-  <!-- Backdrop -->
   <div class="backdrop" (click)="close()"></div>
 
-  <!-- Panel -->
   <aside class="panel pb-20 flex flex-col min-h-[400px]"
          [ngClass]="size"
          role="dialog"
@@ -13,16 +11,14 @@
 
     <!-- Header -->
     <header class="p-4 flex items-center justify-end">
-      <div class="panel-actions">
-        <button
-          class="px-3 py-2 text-sm font-medium rounded-md border border-border hover:bg-accent/20 transition cursor-pointer"
-          (click)="close()">
-          Voorbeeld sluiten
-        </button>
-      </div>
+      <button
+        class="px-3 py-2 text-sm font-medium rounded-md border border-border hover:bg-accent/20 transition cursor-pointer"
+        (click)="close()">
+        Voorbeeld sluiten
+      </button>
     </header>
 
-    <!-- BEGIN: Preview content -->
+    <!-- Preview container -->
     <div class="h-full rounded-lg p-6 flex flex-col preview-component"
          [ngStyle]="{
            'font-family': fontMap[builderState?.fontVariant!],
@@ -36,13 +32,12 @@
                      [style.color]="selectedThemeColors[2]"></lucide-icon>
 
         <h3 class="font-semibold text-sm"
-            [style.color]="selectedThemeColors[2]"
-            [ngStyle]="{ 'font-family': fontMap[builderState?.fontVariant || ''] }">
+            [style.color]="selectedThemeColors[2]">
           {{ title }}
         </h3>
       </div>
 
-      <!-- EMPTY STATE -->
+      <!-- ✅ EMPTY STATE -->
       @if (isEmpty) {
 
       <div class="flex flex-col items-center justify-center flex-1 text-center gap-4 opacity-80">
@@ -53,14 +48,14 @@
 
         <p class="text-sm max-w-xs"
            [style.color]="selectedThemeColors[6]">
-          Kies een indeling, thema en lettertype om jouw live voorbeeld te bekijken.
+          Kies een indeling om een live voorbeeld te bekijken.
         </p>
 
       </div>
 
       } @else {
 
-      <!-- NORMAL PREVIEW -->
+      <!-- ✅ NORMAL PREVIEW -->
       <div class="flex-1 rounded-lg shadow-lg overflow-hidden"
            [style.background]="selectedThemeColors[3]">
 
@@ -143,7 +138,7 @@
 
             <div class="p-6">
 
-              <p class="text-md sm:text-lg leading-relaxed lg:mb-2"
+              <p class="sm:text-md leading-relaxed lg:mb-2"
                  [style.color]="selectedThemeColors[6]">
                 {{ builderState?.fontSample || 'Dit is een voorbeeldtekst' }}
               </p>

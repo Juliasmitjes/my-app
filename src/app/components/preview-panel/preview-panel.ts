@@ -19,38 +19,12 @@ export class PreviewPanel {
   @Input() colorThemes!: { id: string; colors: string[] }[];
   @Input() userSampleText: string = '';
 
-   get selectedThemeColors(): string[] {
-    const theme = this.colorThemes?.find(t => t.id === this.builderState?.colorTheme);
-    return theme ? theme.colors : ['#f3f3f3', '#e5e5e5', '#cccccc'];
-  }
-
   iconName: string = 'monitor';
   title: string = 'Live voorbeeld';
 
   close() {
     this.closed.emit();
   }
-
-  get hasNoUploads(): boolean {
-  const u = this.builderState?.uploads;
-  if (!u) return true;
-
-  const noImage = !u.image;
-  const noVideo = !u.video;
-  const noText = !u.text || u.text.trim() === '';
-
-  return noImage && noVideo && noText;
-}
-
-
-  get isEmpty(): boolean {
-  const noUploads = this.hasNoUploads;
-  const defaultLayout = !this.builderState?.layout || this.builderState.layout === 'single';
-  const defaultPages = !this.builderState?.pages || this.builderState.pages.length <= 1;
-  const noSampleText = !this.builderState?.fontSample || this.builderState.fontSample.trim() === '';
-
-  return noUploads && defaultLayout && defaultPages && noSampleText;
-}
 
   get isSidebar(): boolean {
     return this.builderState?.navigation === 'sidebar';
@@ -76,7 +50,42 @@ export class PreviewPanel {
     return p.charAt(0).toUpperCase() + p.slice(1);
   }
 
+  /** ✅ Volledige fallback-kleurenset zodat layout altijd zichtbaar is */
+  get selectedThemeColors(): string[] {
+    const theme = this.colorThemes?.find(t => t.id === this.builderState?.colorTheme);
 
-public fontMap = fontMap;
+    return theme
+      ? theme.colors
+      : [
+          '#ffffff', // 0 background
+          '#f5f5f5', // 1 header bg
+          '#333333', // 2 text
+          '#fafafa', // 3 content bg
+          '#e0e0e0', // 4 skeleton 1
+          '#d0d0d0', // 5 skeleton 2
+          '#444444', // 6 body text
+          '#eaeaea', // 7 pill bg
+          '#555555', // 8 pill text
+          '#cccccc'  // 9 border
+        ];
+  }
 
+  /** ✅ Check of uploads leeg zijn */
+  get hasNoUploads(): boolean {
+    const u = this.builderState?.uploads;
+    if (!u) return true;
+
+    const noImage = !u.image;
+    const noVideo = !u.video;
+    const noText = !u.text || u.text.trim() === '';
+
+    return noImage && noVideo && noText;
+  }
+
+  /** ✅ Empty state: alleen als layout nog NIET gekozen is */
+  get isEmpty(): boolean {
+    return !this.builderState?.layout;
+  }
+
+  public fontMap = fontMap;
 }
