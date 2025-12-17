@@ -99,7 +99,10 @@
 
         <!-- Icon -->
         <div class="flex items-center justify-center flex-1 w-full mt-4">
-          <div class="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center rounded-2xl p-3 ring-2 ring-accent shadow">
+          <div class="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center rounded-2xl p-3 shadow"
+          [class.ring-2]="!locked"
+          [class.ring-accent]="!locked"
+            >
             @switch (cell.value) {
               @case ('text') { <lucide-icon name="text-align-justify" class="w-12 h-12"></lucide-icon> }
               @case ('image') { <lucide-icon name="image" class="w-12 h-12"></lucide-icon> }

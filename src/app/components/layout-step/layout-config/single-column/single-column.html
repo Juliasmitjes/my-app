@@ -77,8 +77,9 @@
         class="w-28 h-40 sm:w-32 sm:h-48 flex flex-col items-center justify-center
                gap-4 sm:gap-6 rounded-2xl p-4 sm:p-6
                transition-all duration-300
-               ring-2 ring-accent shadow-lg"
-      >
+                shadow-lg"
+                [class.ring-2]="!locked"
+                [class.ring-accent]="!locked" >
         @switch (currentOption.type) {
           @case ('image-text') {
             <div class="flex flex-col gap-2 sm:gap-4">

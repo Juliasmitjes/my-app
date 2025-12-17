@@ -8,7 +8,7 @@
 
     <!-- KOL 1 -->
     <div
-      class="relative pb-20 sm:p-10 rounded-3xl border border-border/40 backdrop-blur-xl transition-all duration-300"
+      class="relative sm:p-10 rounded-3xl border border-border/40 backdrop-blur-xl transition-all duration-300"
       (click)="!locked && nextCol1()"
       [ngClass]="locked
         ? 'cursor-default opacity-80 bg-muted/40'
@@ -58,7 +58,11 @@
 
       <!-- Preview -->
       <div class="flex justify-center mb-4 sm:mb-6">
-        <div class="flex flex-col items-center justify-center gap-4 sm:gap-6 rounded-2xl p-4 sm:p-6 ring-2 ring-accent shadow-lg">
+         <div class="flex flex-col items-center justify-center 
+            gap-2 sm:gap-6 rounded-2xl p-2 sm:p-6 shadow-lg"
+            [class.ring-2]="!locked"
+            [class.ring-accent]="!locked"
+          >
           @switch (col1Current.type) {
             @case ('text') { <lucide-icon name="text-align-justify" class="w-16 h-16 opacity-80"></lucide-icon> }
             @case ('image') { <lucide-icon name="image" class="w-16 h-16 opacity-80"></lucide-icon> }
@@ -138,7 +142,11 @@
 
       <!-- Preview -->
       <div class="flex justify-center mb-4 sm:mb-6">
-        <div class="flex flex-col items-center justify-center gap-4 sm:gap-6 rounded-2xl p-4 sm:p-6 ring-2 ring-accent shadow-lg">
+        <div class="flex flex-col items-center justify-center 
+            gap-2 sm:gap-6 rounded-2xl p-2 sm:p-6 shadow-lg"
+            [class.ring-2]="!locked"
+            [class.ring-accent]="!locked"
+          >
           @switch (col2Current.type) {
             @case ('text') { <lucide-icon name="text-align-justify" class="w-16 h-16 opacity-80"></lucide-icon> }
             @case ('image') { <lucide-icon name="image" class="w-16 h-16 opacity-80"></lucide-icon> }
@@ -152,7 +160,7 @@
         @if (!locked) {
         <!-- mobiel -->
         <p
-          class="text-muted-foreground mt-1 text-xs
+          class="text-muted-foreground  text-xs
                  absolute left-1/2 -translate-x-1/2 w-[80%] text-center bottom-5
                  block sm:hidden">
           Tik voor volgende optie
