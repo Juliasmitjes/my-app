@@ -1,4 +1,4 @@
-<div id="two-layout-top" class="space-y-12 w-full max-w-5xl mx-auto px-4 sm:px-6">
+<div id="two-layout-top" class="space-y-12 w-full max-w-5xl mx-auto sm:px-6">
 
   <div class="text-center space-y-1 sm:space-y-2">
     <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Kies jouw indeling</h2>
@@ -8,7 +8,7 @@
 
     <!-- KOL 1 -->
     <div
-      class="relative sm:p-10 rounded-3xl border border-border/40 backdrop-blur-xl transition-all duration-300"
+      class="relative sm:p-10 rounded-3xl border border-border/40 backdrop-blur-xl transition-all duration-300 pt-4"
       (click)="!locked && nextCol1()"
       [ngClass]="locked
         ? 'cursor-default opacity-80 bg-muted/40'
@@ -92,7 +92,7 @@
 
     <!-- KOL 2 -->
     <div
-      class="relative pb-20 sm:p-10 rounded-3xl border border-border/40 backdrop-blur-xl transition-all duration-300"
+      class="relative pb-20 sm:p-10 rounded-3xl border border-border/40 backdrop-blur-xl transition-all duration-300 pt-4"
       (click)="!locked && nextCol2()"
       [ngClass]="locked
         ? 'cursor-default opacity-80 bg-muted/40'
