@@ -111,6 +111,21 @@
         <!-- Label -->
         <div class="w-full text-center mt-3 mb-2">
           <div class="text-sm font-semibold">{{ cell.labelMap[cell.value] }}</div>
+
+          @if (!locked) {
+        <!-- mobiel -->
+        <p
+          class="text-muted-foreground mt-1 text-xs
+                 absolute left-1/2 -translate-x-1/2 w-[80%] text-center bottom-5
+                 block sm:hidden">
+          Tik voor volgende optie
+        </p>
+
+        <!-- desktop -->
+        <p class="text-muted-foreground mt-5 text-sm hidden sm:block">
+          Klik voor volgende optie
+        </p>
+      }
         </div>
 
       </div>

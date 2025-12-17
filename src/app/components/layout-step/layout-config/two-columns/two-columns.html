@@ -69,8 +69,21 @@
 
       <div class="text-center">
         <h3 class="text-lg sm:text-xl font-semibold">{{ col1Current.label }}</h3>
-      </div>
+        @if (!locked) {
+        <!-- mobiel -->
+        <p
+          class="text-muted-foreground mt-1 text-xs
+                 absolute left-1/2 -translate-x-1/2 w-[80%] text-center bottom-5
+                 block sm:hidden">
+          Tik voor volgende optie
+        </p>
 
+        <!-- desktop -->
+        <p class="text-muted-foreground mt-5 text-sm hidden sm:block">
+          Klik voor volgende optie
+        </p>
+      }        
+      </div>
     </div>
 
     <!-- KOL 2 -->
@@ -136,6 +149,20 @@
 
       <div class="text-center">
         <h3 class="text-lg sm:text-xl font-semibold">{{ col2Current.label }}</h3>
+        @if (!locked) {
+        <!-- mobiel -->
+        <p
+          class="text-muted-foreground mt-1 text-xs
+                 absolute left-1/2 -translate-x-1/2 w-[80%] text-center bottom-5
+                 block sm:hidden">
+          Tik voor volgende optie
+        </p>
+
+        <!-- desktop -->
+        <p class="text-muted-foreground mt-5 text-sm hidden sm:block">
+          Klik voor volgende optie
+        </p>
+      }
       </div>
 
     </div>
