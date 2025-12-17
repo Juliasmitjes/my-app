@@ -33,7 +33,7 @@
         <div class="flex flex-col items-center gap-8">
 
           <!-- Upload units -->
-          <div class="flex items-start justify-center gap-4">
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
             @for (btn of overlayButtons; track btn.label) {
               <app-upload-unit
                 [locked]="locked"
