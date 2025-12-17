@@ -1,139 +1,216 @@
 @if (open) {
-  <div class="preview-overlay">
-    <div class="backdrop" (click)="close()"></div>
 
-    <aside class="panel pb-20 flex flex-col" [ngClass]="size" role="dialog" aria-label="Live preview">
-      <header class="p-4 flex items-center justify-end">
-        <div class="panel-actions">
-          <button
+<div class="preview-overlay">
+
+  <!-- Backdrop -->
+  <div class="backdrop" (click)="close()"></div>
+
+  <!-- Panel -->
+  <aside class="panel pb-20 flex flex-col min-h-[400px]"
+         [ngClass]="size"
+         role="dialog"
+         aria-label="Live preview">
+
+    <!-- Header -->
+    <header class="p-4 flex items-center justify-end">
+      <div class="panel-actions">
+        <button
           class="px-3 py-2 text-sm font-medium rounded-md border border-border hover:bg-accent/20 transition cursor-pointer"
-            (click)="close()"
-          >
-            Voorbeeld sluiten
-          </button>
-        </div>
-      </header>
+          (click)="close()">
+          Voorbeeld sluiten
+        </button>
+      </div>
+    </header>
 
-      <!-- BEGIN: Preview content -->
-      <div class="h-full rounded-lg p-6 flex flex-col preview-component"
-           [ngStyle]="{ 'font-family': fontMap[builderState?.fontVariant!], 'background': selectedThemeColors[0] }">
+    <!-- BEGIN: Preview content -->
+    <div class="h-full rounded-lg p-6 flex flex-col preview-component"
+         [ngStyle]="{
+           'font-family': fontMap[builderState?.fontVariant!],
+           'background': selectedThemeColors[0]
+         }">
 
-        <div class="flex items-center gap-2 mb-4">
-          <lucide-icon [name]="iconName" class="w-5 h-5"
-                       [style.color]="selectedThemeColors[2]"></lucide-icon>
-          <h3 class="font-semibold text-sm"
-              [style.color]="selectedThemeColors[2]"
-              [ngStyle]="{ 'font-family': fontMap[builderState?.fontVariant || ''] }">
-            {{ title }}
-          </h3>
-        </div>
+      <!-- Titel + icoon -->
+      <div class="flex items-center gap-2 mb-4">
+        <lucide-icon [name]="iconName"
+                     class="w-5 h-5"
+                     [style.color]="selectedThemeColors[2]"></lucide-icon>
 
-        <div class="flex-1 rounded-lg shadow-lg overflow-hidden"
-             [style.background]="selectedThemeColors[3]">
-          <div class="h-full flex flex-col">
-
-            <!-- Top header (geen sidebar) -->
-            @if (!isSidebar) {
-              <div class="p-3 border-b"
-                   [style.background]="selectedThemeColors[1]"
-                   [style.borderColor]="selectedThemeColors[9]">
-                <div class="flex items-center justify-between">
-                  <div class="font-semibold text-sm"
-                       [style.color]="selectedThemeColors[2]">{{ logoLabel }}</div>
-                  <div class="flex gap-2">
-                    @for (p of pages; track p) {
-                      <div class="text-xs px-2 py-1 font-semibold rounded border"
-                           [style.background]="selectedThemeColors[7]"
-                           [style.color]="selectedThemeColors[8]"
-                           [style.borderColor]="selectedThemeColors[9]">
-                        {{ pageLabel(p) }}
-                      </div>
-                    }
-                  </div>
-                </div>
-              </div>
-            }
-
-            <!-- Main area -->
-            <div class="flex-1 h-full">
-              <!-- Sidebar layout -->
-              @if (isSidebar) {
-                <div class="h-full flex">
-                  <aside class="w-44 p-4 border-r"
-                         [style.background]="selectedThemeColors[1]"
-                         [style.borderColor]="selectedThemeColors[9]">
-                    <div class="font-semibold mb-4"
-                         [style.color]="selectedThemeColors[2]">{{ logoLabel }}</div>
-                    <nav class="space-y-2">
-                      @for (p of pages; track p) {
-                        <div class="text-sm px-3 py-2 font-semibold rounded border"
-                             [style.background]="selectedThemeColors[7]"
-                             [style.color]="selectedThemeColors[8]"
-                             [style.borderColor]="selectedThemeColors[9]">
-                          {{ pageLabel(p) }}
-                        </div>
-                      }
-                    </nav>
-                  </aside>
-
-                  <div class="flex-1 p-6">
-                    <!-- voorbeeldzin -->
-                    <p class="text-md sm:text-lg leading-relaxed lg:mb-2"
-                       [style.color]="selectedThemeColors[6]">
-                      {{ builderState?.fontSample || 'Dit is een voorbeeldtekst' }}
-                    </p>
-                    <ng-container *ngTemplateOutlet="previewContent"></ng-container>
-                  </div>
-                </div>
-              }
-
-              <!-- Top-header layout -->
-              @if (!isSidebar) {
-                <div class="p-6">
-                  <p class="text-md sm:text-lg leading-relaxed lg:mb-2"
-                     [style.color]="selectedThemeColors[6]">
-                    {{ builderState?.fontSample || 'Dit is een voorbeeldtekst' }}
-                  </p>
-                  <ng-container *ngTemplateOutlet="previewContent"></ng-container>
-                </div>
-              }
-            </div>
-          </div>
-        </div>
-
-        <!-- Footer info -->
-        <div class="mt-4 text-xs space-y-1"
-             [style.color]="selectedThemeColors[6]">
-          <div>Layout: <span class="font-medium">{{ builderState?.layout }}</span></div>
-          <div>Theme: <span class="font-medium">{{ builderState?.colorTheme }}</span></div>
-          <div>Font: <span class="font-medium">{{ builderState?.fontVariant }}</span></div>
-          <div>Navigation: <span class="font-medium">{{ builderState?.navigation }}</span></div>
-          <div>Pages: <span class="font-medium">{{ pages.join(', ') }}</span></div>
-        </div>
+        <h3 class="font-semibold text-sm"
+            [style.color]="selectedThemeColors[2]"
+            [ngStyle]="{ 'font-family': fontMap[builderState?.fontVariant || ''] }">
+          {{ title }}
+        </h3>
       </div>
 
-      <!-- Preview content template -->
-      <ng-template #previewContent>
-        <div class="flex-1 flex flex-col">
-          <div class="h-4 rounded w-3/4 mb-3"
-               [style.background]="selectedThemeColors[4]"></div>
-          <div class="h-4 rounded w-1/2 mb-6"
+      <!-- EMPTY STATE -->
+      @if (isEmpty) {
+
+      <div class="flex flex-col items-center justify-center flex-1 text-center gap-4 opacity-80">
+
+        <lucide-icon name="eye-off"
+                     class="w-10 h-10 opacity-40"
+                     [style.color]="selectedThemeColors[2]"></lucide-icon>
+
+        <p class="text-sm max-w-xs"
+           [style.color]="selectedThemeColors[6]">
+          Kies een indeling, thema en lettertype om jouw live voorbeeld te bekijken.
+        </p>
+
+      </div>
+
+      } @else {
+
+      <!-- NORMAL PREVIEW -->
+      <div class="flex-1 rounded-lg shadow-lg overflow-hidden"
+           [style.background]="selectedThemeColors[3]">
+
+        <div class="h-full flex flex-col">
+
+          <!-- Top header (geen sidebar) -->
+          @if (!isSidebar) {
+          <div class="p-3 border-b"
+               [style.background]="selectedThemeColors[1]"
+               [style.borderColor]="selectedThemeColors[9]">
+
+            <div class="flex items-center justify-between">
+              <div class="font-semibold text-sm"
+                   [style.color]="selectedThemeColors[2]">
+                {{ logoLabel }}
+              </div>
+
+              <div class="flex gap-2">
+                @for (p of pages; track p) {
+                <div class="text-xs px-2 py-1 font-semibold rounded border"
+                     [style.background]="selectedThemeColors[7]"
+                     [style.color]="selectedThemeColors[8]"
+                     [style.borderColor]="selectedThemeColors[9]">
+                  {{ pageLabel(p) }}
+                </div>
+                }
+              </div>
+            </div>
+
+          </div>
+          }
+
+          <!-- Main area -->
+          <div class="flex-1 h-full">
+
+            <!-- Sidebar layout -->
+            @if (isSidebar) {
+
+            <div class="h-full flex">
+
+              <aside class="w-44 p-4 border-r"
+                     [style.background]="selectedThemeColors[1]"
+                     [style.borderColor]="selectedThemeColors[9]">
+
+                <div class="font-semibold mb-4"
+                     [style.color]="selectedThemeColors[2]">
+                  {{ logoLabel }}
+                </div>
+
+                <nav class="space-y-2">
+                  @for (p of pages; track p) {
+                  <div class="text-sm px-3 py-2 font-semibold rounded border"
+                       [style.background]="selectedThemeColors[7]"
+                       [style.color]="selectedThemeColors[8]"
+                       [style.borderColor]="selectedThemeColors[9]">
+                    {{ pageLabel(p) }}
+                  </div>
+                  }
+                </nav>
+
+              </aside>
+
+              <div class="flex-1 p-6">
+
+                <p class="text-md sm:text-lg leading-relaxed lg:mb-2"
+                   [style.color]="selectedThemeColors[6]">
+                  {{ builderState?.fontSample || 'Dit is een voorbeeldtekst' }}
+                </p>
+
+                <ng-container *ngTemplateOutlet="previewContent"></ng-container>
+
+              </div>
+
+            </div>
+
+            }
+
+            <!-- Top-header layout -->
+            @if (!isSidebar) {
+
+            <div class="p-6">
+
+              <p class="text-md sm:text-lg leading-relaxed lg:mb-2"
+                 [style.color]="selectedThemeColors[6]">
+                {{ builderState?.fontSample || 'Dit is een voorbeeldtekst' }}
+              </p>
+
+              <ng-container *ngTemplateOutlet="previewContent"></ng-container>
+
+            </div>
+
+            }
+
+          </div>
+
+        </div>
+
+      </div>
+
+      }
+
+      <!-- Footer info -->
+      <div class="mt-4 text-xs space-y-1"
+           [style.color]="selectedThemeColors[6]">
+
+        <div>Layout: <span class="font-medium">{{ builderState?.layout }}</span></div>
+        <div>Theme: <span class="font-medium">{{ builderState?.colorTheme }}</span></div>
+        <div>Font: <span class="font-medium">{{ builderState?.fontVariant }}</span></div>
+        <div>Navigation: <span class="font-medium">{{ builderState?.navigation }}</span></div>
+        <div>Pages: <span class="font-medium">{{ pages.join(', ') }}</span></div>
+
+      </div>
+
+    </div>
+
+    <!-- Preview content template -->
+    <ng-template #previewContent>
+
+      <div class="flex-1 flex flex-col">
+
+        <div class="h-4 rounded w-3/4 mb-3"
+             [style.background]="selectedThemeColors[4]"></div>
+
+        <div class="h-4 rounded w-1/2 mb-6"
+             [style.background]="selectedThemeColors[5]"></div>
+
+        <div class="mt-6 grid gap-4"
+             [style.gridTemplateColumns]="getGridColumns()">
+
+          <div class="h-24 rounded"
                [style.background]="selectedThemeColors[5]"></div>
 
-          <div class="mt-6 grid gap-4" [style.gridTemplateColumns]="getGridColumns()">
-            <div class="h-24 rounded"
-                 [style.background]="selectedThemeColors[5]"></div>
-            @if (builderState?.layout !== 'single') {
-              <div class="h-24 rounded"
-                   [style.background]="selectedThemeColors[5]"></div>
-            }
-            @if (builderState?.layout === 'grid') {
-              <div class="h-24 rounded"
-                   [style.background]="selectedThemeColors[5]"></div>
-            }
-          </div>
+          @if (builderState?.layout !== 'single') {
+          <div class="h-24 rounded"
+               [style.background]="selectedThemeColors[5]"></div>
+          }
+
+          @if (builderState?.layout === 'grid') {
+          <div class="h-24 rounded"
+               [style.background]="selectedThemeColors[5]"></div>
+          }
+
         </div>
-      </ng-template>
-    </aside>
-  </div>
+
+      </div>
+
+    </ng-template>
+
+  </aside>
+
+</div>
+
 }

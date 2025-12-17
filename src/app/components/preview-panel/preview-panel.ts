@@ -24,13 +24,33 @@ export class PreviewPanel {
     return theme ? theme.colors : ['#f3f3f3', '#e5e5e5', '#cccccc'];
   }
 
-
   iconName: string = 'monitor';
   title: string = 'Live voorbeeld';
 
   close() {
     this.closed.emit();
   }
+
+  get hasNoUploads(): boolean {
+  const u = this.builderState?.uploads;
+  if (!u) return true;
+
+  const noImage = !u.image;
+  const noVideo = !u.video;
+  const noText = !u.text || u.text.trim() === '';
+
+  return noImage && noVideo && noText;
+}
+
+
+  get isEmpty(): boolean {
+  const noUploads = this.hasNoUploads;
+  const defaultLayout = !this.builderState?.layout || this.builderState.layout === 'single';
+  const defaultPages = !this.builderState?.pages || this.builderState.pages.length <= 1;
+  const noSampleText = !this.builderState?.fontSample || this.builderState.fontSample.trim() === '';
+
+  return noUploads && defaultLayout && defaultPages && noSampleText;
+}
 
   get isSidebar(): boolean {
     return this.builderState?.navigation === 'sidebar';
