@@ -139,48 +139,123 @@
 
   <!-- SINGLE COLUMN -->
   @if (builderState.layout === 'single') {
-    <p class="leading-relaxed text-base"
-       [style.color]="selectedThemeColors[6]">
-      {{ builderState.fontSample
-        || 'Dit is een voorbeeldtekst om te laten zien hoe content eruitziet binnen jouw gekozen layout. De tekst past zich automatisch aan op basis van het gekozen lettertype, de kleur en de indeling.' }}
-    </p>
-  }
+  <div class="flex flex-col gap-6">
+
+    @for (block of singleBlocks; track block) {
+      @switch (block) {
+
+        @case ('text') {
+          <p class="leading-relaxed text-base"
+             [style.color]="selectedThemeColors[6]">
+            {{ builderState.fontSample || 'Voorbeeldtekst...' }}
+          </p>
+        }
+
+        @case ('image') {
+          <div class="flex justify-center opacity-70">
+            <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
+          </div>
+        }
+
+        @case ('video') {
+          <div class="flex justify-center opacity-70">
+            <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
+          </div>
+        }
+
+      }
+    }
+
+  </div>
+}
 
   <!-- TWO COLUMNS -->
   @if (builderState.layout === 'two-column') {
-    <div class="grid grid-cols-2 gap-6">
-      <p class="leading-relaxed text-base"
-         [style.color]="selectedThemeColors[6]">
-        {{ builderState.fontSample
-          || 'Dit is een voorbeeldtekst voor de linker kolom. Hier komt bijvoorbeeld een introductie of uitleg.' }}
-      </p>
+  <div class="grid grid-cols-2 gap-6">
 
-      <p class="leading-relaxed text-base"
-         [style.color]="selectedThemeColors[6]">
-        Dit is een tweede tekstkolom. Perfect voor extra context, details of aanvullende informatie.
-      </p>
-    </div>
-  }
+    <!-- COL 1 -->
+    @switch (twoColumns[0]) {
+
+      @case ('text') {
+        <p class="leading-relaxed text-base"
+           [style.color]="selectedThemeColors[6]">
+          {{ builderState.fontSample || 'Voorbeeldtekst...' }}
+        </p>
+      }
+
+      @case ('image') {
+        <div class="flex justify-center opacity-70">
+          <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
+        </div>
+      }
+
+      @case ('video') {
+        <div class="flex justify-center opacity-70">
+          <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
+        </div>
+      }
+
+    }
+
+    <!-- COL 2 -->
+    @switch (twoColumns[1]) {
+
+      @case ('text') {
+        <p class="leading-relaxed text-base"
+           [style.color]="selectedThemeColors[6]">
+          {{ builderState.fontSample || 'Voorbeeldtekst...' }}
+        </p>
+      }
+
+      @case ('image') {
+        <div class="flex justify-center opacity-70">
+          <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
+        </div>
+      }
+
+      @case ('video') {
+        <div class="flex justify-center opacity-70">
+          <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
+        </div>
+      }
+
+    }
+
+  </div>
+}
 
   <!-- GRID (3 COLUMNS) -->
   @if (builderState.layout === 'grid') {
-    <div class="grid grid-cols-3 gap-6">
-      <p class="leading-relaxed text-base"
-         [style.color]="selectedThemeColors[6]">
-        Grid item één. Ideaal voor services of highlights.
-      </p>
+  <div class="grid gap-6"
+       [style.gridTemplateColumns]="getGridColumns()">
 
-      <p class="leading-relaxed text-base"
-         [style.color]="selectedThemeColors[6]">
-        Grid item twee. Elk blok staat netjes naast elkaar.
-      </p>
+    @for (cell of gridCells; track cell) {
+      @switch (cell) {
 
-      <p class="leading-relaxed text-base"
-         [style.color]="selectedThemeColors[6]">
-        Grid item drie. Zo voelt de layout direct logisch aan.
-      </p>
-    </div>
-  }
+        @case ('text') {
+          <p class="leading-relaxed text-base"
+             [style.color]="selectedThemeColors[6]">
+            Voorbeeldtekst...
+          </p>
+        }
+
+        @case ('image') {
+          <div class="flex justify-center opacity-70">
+            <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
+          </div>
+        }
+
+        @case ('video') {
+          <div class="flex justify-center opacity-70">
+            <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
+          </div>
+        }
+
+      }
+    }
+
+  </div>
+}
 
 </div>
 

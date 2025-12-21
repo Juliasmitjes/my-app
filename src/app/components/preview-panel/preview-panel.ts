@@ -97,12 +97,15 @@ get gridCols(): number {
   }
 
   getGridColumns(): string {
-    switch (this.builderState.layout) {
-      case 'grid': return 'repeat(3, 1fr)';
-      case 'two-column': return 'repeat(2, 1fr)';
-      default: return '1fr';
-    }
+  if (this.builderState.layout === 'grid') {
+    const cols = this.gridCols || 1;
+    return `repeat(${cols}, 1fr)`;
   }
+  if (this.builderState.layout === 'two-column') {
+    return 'repeat(2, 1fr)';
+  }
+  return '1fr';
+}
 
   pageLabel(p: string): string {
     return p.charAt(0).toUpperCase() + p.slice(1);

@@ -48,13 +48,15 @@ export class TwoColumns {
 
   emit() {
     this.configChange.emit({
-      layout: 'two-column',
-      config: {
-        col1Type: this.col1Current.type,
-        col2Type: this.col2Current.type
-      }
-    });
+        layout: 'two-column',
+        config: {
+          col1Type: this.col1Current.type,
+          col2Type: this.col2Current.type
+        }
+      });
   }
+
+  
 
   getUploadKey(col: 1 | 2): string {
     const current = col === 1 ? this.col1Current : this.col2Current;

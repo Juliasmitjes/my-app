@@ -92,12 +92,13 @@ export class SingleColumn implements OnInit {
   }
 
   private emitChange() {
-    const payload = {
-      layout: this.selectedLayout,
-      config: { variantIndex: this.currentIndex }
-    };
-    this.configChange.emit(payload);
-  }
+  this.configChange.emit({
+    layout: 'single',
+    config: {
+      variantType: this.currentOption.type
+    }
+  });
+}
 
   // --- upload-unit binding helpers ---
 

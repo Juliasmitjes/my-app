@@ -34,7 +34,7 @@ export class Grid {
 
   grid: GridCell[] = [];
 
-  // per cel opslaan-status
+  // opslaan-status per cel
   isSaved: Record<number, boolean> = {};
 
   options: CellType[] = ['text', 'image', 'video'];
@@ -42,6 +42,10 @@ export class Grid {
   constructor() {
     this.updateGrid();
   }
+
+  /* ---------------------------------------------------
+     Helpers
+  --------------------------------------------------- */
 
   private createDefaultCell(): GridCell {
     return {
@@ -54,6 +58,20 @@ export class Grid {
     };
   }
 
+  private emitConfig() {
+    this.configChange.emit({
+      layout: 'grid',
+      config: {
+        cols: this.cols,
+        cells: this.grid.map(c => c.value)
+      }
+    });
+  }
+
+  /* ---------------------------------------------------
+     Grid opbouwen
+  --------------------------------------------------- */
+
   updateGrid() {
     const total = Math.max(1, this.rows) * Math.max(1, this.cols);
 
@@ -63,6 +81,8 @@ export class Grid {
         ? { ...this.createDefaultCell(), value: prev.value }
         : this.createDefaultCell();
     });
+
+    this.emitConfig();
   }
 
   nextCell(index: number) {
@@ -72,11 +92,14 @@ export class Grid {
     const nextIndex = (this.options.indexOf(current) + 1) % this.options.length;
 
     this.grid[index].value = this.options[nextIndex];
+
+    this.emitConfig();
   }
 
-  // -----------------------------
-  // Upload helpers
-  // -----------------------------
+  /* ---------------------------------------------------
+     Upload helpers
+  --------------------------------------------------- */
+
   getUploadKey(index: number): string {
     const cell = this.grid[index];
     return `grid_${index}_${cell.value}`;
@@ -103,15 +126,14 @@ export class Grid {
     this.clearUploads(index);
   }
 
-  // -----------------------------
-  // Opslaan / annuleren
-  // -----------------------------
+  /* ---------------------------------------------------
+     Opslaan / annuleren
+  --------------------------------------------------- */
+
   onSaveClick(index: number, event: Event) {
     event.stopPropagation();
 
-    if (!this.isUploadComplete(index)) {
-      return;
-    }
+    if (!this.isUploadComplete(index)) return;
 
     // annuleren
     if (this.isSaved[index]) {
@@ -133,5 +155,8 @@ export class Grid {
         clearUploadKeys: [key]
       }
     });
+
+    // na clear opnieuw config uitsturen
+    this.emitConfig();
   }
 }

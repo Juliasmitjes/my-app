@@ -109,24 +109,35 @@ export class LayoutStep implements OnChanges {
   // CONFIG CHANGE VAN LAYOUTS
   // -----------------------------
   onConfigChange(event: any) {
-    this.selectedConfig = event;
+  this.selectedConfig = event;
 
-    // CLEAR
-    if (event.config?.clearUploadKeys) {
-      const newUploads = { ...this.uploads };
-      event.config.clearUploadKeys.forEach((key: string) => {
-        delete newUploads[key];
-      });
-      this.uploads = newUploads;
-      this.update.emit({ uploads: this.uploads });
-      return;
-    }
-
-    // UPLOAD START
-    if (event.config?.uploadType && event.config?.uploadKey) {
-      this.startUploadFlow(event.config.uploadType, event.config.uploadKey);
-    }
+  // 1) LayoutConfig altijd updaten als er een "config" zonder upload-actie is
+  if (event.config && !event.config.uploadType && !event.config.clearUploadKeys) {
+    this.update.emit({
+      layout: event.layout ?? this.selectedLayout,
+      layoutConfig: {
+        ...this.builderState.layoutConfig,
+        ...event.config
+      }
+    });
   }
+
+  // 2) CLEAR uploads
+  if (event.config?.clearUploadKeys) {
+    const newUploads = { ...this.uploads };
+    event.config.clearUploadKeys.forEach((key: string) => {
+      delete newUploads[key];
+    });
+    this.uploads = newUploads;
+    this.update.emit({ uploads: this.uploads });
+    return;
+  }
+
+  // 3) UPLOAD START
+  if (event.config?.uploadType && event.config?.uploadKey) {
+    this.startUploadFlow(event.config.uploadType, event.config.uploadKey);
+  }
+}
 
   // -----------------------------
   // LAYOUT LOCKING
