@@ -58,6 +58,7 @@ class="bg-background/70 backdrop-blur-md sticky top-0 z-50 shadow-md border-b bo
   <app-preview-panel
     [open]="showPreviewPanel()"
     [builderState]="builderState()"
+    [currentStep]="currentStep()"
     [colorThemes]="colorThemes()"
     size="medium"
     (closed)="closePreviewPanel()"

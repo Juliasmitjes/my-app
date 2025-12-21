@@ -1,5 +1,4 @@
 @if (open) {
-
 <div class="preview-overlay">
 
   <div class="backdrop" (click)="close()"></div>
@@ -10,26 +9,26 @@
          aria-label="Live preview">
 
     <!-- Header -->
-    <header class="p-4 flex items-center justify-end">
+    <header class="p-4 flex justify-end">
       <button
-        class="px-3 py-2 text-sm font-medium rounded-md border border-border hover:bg-accent/20 transition cursor-pointer"
+        class="px-3 py-2 text-sm font-medium rounded-md border border-border hover:bg-accent/20"
         (click)="close()">
         Voorbeeld sluiten
       </button>
     </header>
 
     <!-- Preview container -->
-    <div class="h-full rounded-lg p-6 flex flex-col preview-component"
-         [ngStyle]="{
-           'font-family': fontMap[builderState?.fontVariant!],
-           'background': selectedThemeColors[0]
-         }">
+    <div class="flex-1 rounded-lg p-6 flex flex-col preview-component"
+         [style.background]="selectedThemeColors[0]"
+         [style.fontFamily]="canShowFont ? fontMap[builderState.fontVariant!] : null">
 
-      <!-- Titel + icoon -->
+      <!-- Titel -->
       <div class="flex items-center gap-2 mb-4">
-        <lucide-icon [name]="iconName"
-                     class="w-5 h-5"
-                     [style.color]="selectedThemeColors[2]"></lucide-icon>
+        <lucide-icon
+          [name]="iconName"
+          class="w-5 h-5"
+          [style.color]="selectedThemeColors[2]">
+        </lucide-icon>
 
         <h3 class="font-semibold text-sm"
             [style.color]="selectedThemeColors[2]">
@@ -37,65 +36,71 @@
         </h3>
       </div>
 
-      <!-- ✅ EMPTY STATE -->
-      @if (isEmpty) {
+      <!-- EMPTY STATE -->
+      @if (!canShowLayout) {
+        <div class="flex flex-col items-center justify-center flex-1 text-center gap-4 opacity-80">
+          <lucide-icon
+            name="eye-off"
+            class="w-10 h-10 opacity-40"
+            [style.color]="selectedThemeColors[2]">
+          </lucide-icon>
 
-      <div class="flex flex-col items-center justify-center flex-1 text-center gap-4 opacity-80">
+          <p class="text-sm max-w-xs"
+             [style.color]="selectedThemeColors[6]">
+            Kies een indeling om een live voorbeeld te bekijken.
+          </p>
+        </div>
+      }
 
-        <lucide-icon name="eye-off"
-                     class="w-10 h-10 opacity-40"
-                     [style.color]="selectedThemeColors[2]"></lucide-icon>
+      <!-- LAYOUT PREVIEW -->
+      @if (canShowLayout) {
 
-        <p class="text-sm max-w-xs"
-           [style.color]="selectedThemeColors[6]">
-          Kies een indeling om een live voorbeeld te bekijken.
-        </p>
-
-      </div>
-
-      } @else {
-
-      <!-- ✅ NORMAL PREVIEW -->
       <div class="flex-1 rounded-lg shadow-lg overflow-hidden"
            [style.background]="selectedThemeColors[3]">
 
         <div class="h-full flex flex-col">
 
-          <!-- Top header (geen sidebar) -->
-          @if (!isSidebar) {
+          <!-- ✅ TOP HEADER ALTIJD ZICHTBAAR VANAF STAP 1 -->
           <div class="p-3 border-b"
                [style.background]="selectedThemeColors[1]"
                [style.borderColor]="selectedThemeColors[9]">
 
-            <div class="flex items-center justify-between">
-              <div class="font-semibold text-sm"
-                   [style.color]="selectedThemeColors[2]">
+            <div class="flex justify-between items-center">
+              <span class="font-semibold text-sm"
+                    [style.color]="selectedThemeColors[2]">
                 {{ logoLabel }}
-              </div>
+              </span>
 
+              <!-- ✅ MINIMAAL HOME BUTTON VANAF STAP 1 -->
               <div class="flex gap-2">
-                @for (p of pages; track p) {
-                <div class="text-xs px-2 py-1 font-semibold rounded border"
-                     [style.background]="selectedThemeColors[7]"
-                     [style.color]="selectedThemeColors[8]"
-                     [style.borderColor]="selectedThemeColors[9]">
-                  {{ pageLabel(p) }}
-                </div>
+                <span class="text-xs px-2 py-1 rounded border"
+                      [style.background]="selectedThemeColors[7]"
+                      [style.color]="selectedThemeColors[8]"
+                      [style.borderColor]="selectedThemeColors[9]">
+                  Home
+                </span>
+
+                @if (canShowPages) {
+                  @for (p of pages; track p) {
+                    @if (p !== 'home') {
+                      <span class="text-xs px-2 py-1 rounded border"
+                            [style.background]="selectedThemeColors[7]"
+                            [style.color]="selectedThemeColors[8]"
+                            [style.borderColor]="selectedThemeColors[9]">
+                        {{ pageLabel(p) }}
+                      </span>
+                    }
+                  }
                 }
               </div>
             </div>
-
           </div>
-          }
 
-          <!-- Main area -->
-          <div class="flex-1 h-full">
+          <!-- BODY -->
+          <div class="flex-1 flex">
 
-            <!-- Sidebar layout -->
-            @if (isSidebar) {
-
-            <div class="h-full flex">
-
+            <!-- SIDEBAR (pas zichtbaar bij navigatiestap) -->
+            @if (canShowNavigation && isSidebar) {
               <aside class="w-44 p-4 border-r"
                      [style.background]="selectedThemeColors[1]"
                      [style.borderColor]="selectedThemeColors[9]">
@@ -106,106 +111,95 @@
                 </div>
 
                 <nav class="space-y-2">
-                  @for (p of pages; track p) {
-                  <div class="text-sm px-3 py-2 font-semibold rounded border"
+                  <div class="text-sm px-3 py-2 rounded border"
                        [style.background]="selectedThemeColors[7]"
                        [style.color]="selectedThemeColors[8]"
                        [style.borderColor]="selectedThemeColors[9]">
-                    {{ pageLabel(p) }}
+                    Home
                   </div>
+
+                  @if (canShowPages) {
+                    @for (p of pages; track p) {
+                      @if (p !== 'home') {
+                        <div class="text-sm px-3 py-2 rounded border"
+                             [style.background]="selectedThemeColors[7]"
+                             [style.color]="selectedThemeColors[8]"
+                             [style.borderColor]="selectedThemeColors[9]">
+                          {{ pageLabel(p) }}
+                        </div>
+                      }
+                    }
                   }
                 </nav>
-
               </aside>
-
-              <div class="flex-1 p-6">
-
-                <p class="text-md sm:text-lg leading-relaxed lg:mb-2"
-                   [style.color]="selectedThemeColors[6]">
-                  {{ builderState?.fontSample || 'Dit is een voorbeeldtekst' }}
-                </p>
-
-                <ng-container *ngTemplateOutlet="previewContent"></ng-container>
-
-              </div>
-
-            </div>
-
             }
 
-            <!-- Top-header layout -->
-            @if (!isSidebar) {
+            <!-- CONTENT -->
+<div class="flex-1 p-6">
 
-            <div class="p-6">
+  <!-- SINGLE COLUMN -->
+  @if (builderState.layout === 'single') {
+    <p class="leading-relaxed text-base"
+       [style.color]="selectedThemeColors[6]">
+      {{ builderState.fontSample
+        || 'Dit is een voorbeeldtekst om te laten zien hoe content eruitziet binnen jouw gekozen layout. De tekst past zich automatisch aan op basis van het gekozen lettertype, de kleur en de indeling.' }}
+    </p>
+  }
 
-              <p class="sm:text-md leading-relaxed lg:mb-2"
-                 [style.color]="selectedThemeColors[6]">
-                {{ builderState?.fontSample || 'Dit is een voorbeeldtekst' }}
-              </p>
+  <!-- TWO COLUMNS -->
+  @if (builderState.layout === 'two-column') {
+    <div class="grid grid-cols-2 gap-6">
+      <p class="leading-relaxed text-base"
+         [style.color]="selectedThemeColors[6]">
+        {{ builderState.fontSample
+          || 'Dit is een voorbeeldtekst voor de linker kolom. Hier komt bijvoorbeeld een introductie of uitleg.' }}
+      </p>
 
-              <ng-container *ngTemplateOutlet="previewContent"></ng-container>
-
-            </div>
-
-            }
-
-          </div>
-
-        </div>
-
-      </div>
-
-      }
-
-      <!-- Footer info -->
-      <div class="mt-4 text-xs space-y-1"
-           [style.color]="selectedThemeColors[6]">
-
-        <div>Layout: <span class="font-medium">{{ builderState?.layout }}</span></div>
-        <div>Theme: <span class="font-medium">{{ builderState?.colorTheme }}</span></div>
-        <div>Font: <span class="font-medium">{{ builderState?.fontVariant }}</span></div>
-        <div>Navigation: <span class="font-medium">{{ builderState?.navigation }}</span></div>
-        <div>Pages: <span class="font-medium">{{ pages.join(', ') }}</span></div>
-
-      </div>
-
+      <p class="leading-relaxed text-base"
+         [style.color]="selectedThemeColors[6]">
+        Dit is een tweede tekstkolom. Perfect voor extra context, details of aanvullende informatie.
+      </p>
     </div>
+  }
 
-    <!-- Preview content template -->
-    <ng-template #previewContent>
+  <!-- GRID (3 COLUMNS) -->
+  @if (builderState.layout === 'grid') {
+    <div class="grid grid-cols-3 gap-6">
+      <p class="leading-relaxed text-base"
+         [style.color]="selectedThemeColors[6]">
+        Grid item één. Ideaal voor services of highlights.
+      </p>
 
-      <div class="flex-1 flex flex-col">
+      <p class="leading-relaxed text-base"
+         [style.color]="selectedThemeColors[6]">
+        Grid item twee. Elk blok staat netjes naast elkaar.
+      </p>
 
-        <div class="h-4 rounded w-3/4 mb-3"
-             [style.background]="selectedThemeColors[4]"></div>
-
-        <div class="h-4 rounded w-1/2 mb-6"
-             [style.background]="selectedThemeColors[5]"></div>
-
-        <div class="mt-6 grid gap-4"
-             [style.gridTemplateColumns]="getGridColumns()">
-
-          <div class="h-24 rounded"
-               [style.background]="selectedThemeColors[5]"></div>
-
-          @if (builderState?.layout !== 'single') {
-          <div class="h-24 rounded"
-               [style.background]="selectedThemeColors[5]"></div>
-          }
-
-          @if (builderState?.layout === 'grid') {
-          <div class="h-24 rounded"
-               [style.background]="selectedThemeColors[5]"></div>
-          }
-
-        </div>
-
-      </div>
-
-    </ng-template>
-
-  </aside>
+      <p class="leading-relaxed text-base"
+         [style.color]="selectedThemeColors[6]">
+        Grid item drie. Zo voelt de layout direct logisch aan.
+      </p>
+    </div>
+  }
 
 </div>
 
+          </div>
+        </div>
+      </div>
+      }
+
+      <!-- FOOTER INFO -->
+      <div class="mt-4 text-xs space-y-1"
+           [style.color]="selectedThemeColors[6]">
+        <div>Layout: {{ builderState.layout || '—' }}</div>
+        <div>Theme: {{ builderState.colorTheme || '—' }}</div>
+        <div>Font: {{ builderState.fontVariant || '—' }}</div>
+        <div>Navigation: {{ builderState.navigation || '—' }}</div>
+        <div>Pages: {{ canShowPages ? pages.join(', ') : '—' }}</div>
+      </div>
+
+    </div>
+  </aside>
+</div>
 }

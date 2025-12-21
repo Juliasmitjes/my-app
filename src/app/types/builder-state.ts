@@ -6,10 +6,24 @@ export interface BuilderUploads {
 
 export interface BuilderState {
   /** Layout type van de website */
-  layout: 'single' | 'two-column' | 'grid' | null;
+  layout?: 'single' | 'two-column' | 'grid' | null;
+
+   layoutConfig?: {
+    // single
+    variantType?: string;
+
+    // two-column
+    col1Type?: 'text' | 'image' | 'video';
+    col2Type?: 'text' | 'image' | 'video';
+
+    // grid
+    rows?: number;
+    cols?: number;
+    cells?: Array<'text' | 'image' | 'video'>;
+  };
 
   /** Kleurenthema van de website */
-  colorTheme:
+  colorTheme?:
     | 'warm'
     | 'light'
     | 'dark'
@@ -21,10 +35,10 @@ export interface BuilderState {
     | null;
 
   /** Hoofdtypografie-categorie, bv. “modern-sans” of “display” */
-  fontStyle: 'modern-sans' | 'classic-serif' | 'display' | null;
+  fontStyle?: 'modern-sans' | 'classic-serif' | 'display' | null;
 
   /** Specifieke fontvariant binnen de gekozen stijl */
-  fontVariant:
+  fontVariant?:
     | 'inter'
     | 'roboto'
     | 'merriweather'
@@ -34,19 +48,19 @@ export interface BuilderState {
     | null;
 
   /** Tekst die de gebruiker invoert voor font-preview */
-  fontSample: string | null;
+  fontSample?: string | null;
 
   /** Logo-bestandspad of -URL */
-  logo: string | null;
+  logo?: string | null;
 
   /** Navigatiepositie */
-  navigation: 'top' | 'sidebar' | null;
+  navigation?: 'top' | 'sidebar' | null;
 
   /** Header-gedrag */
-  headerStyle: 'fixed' | 'scrolling' | null;
+  headerStyle?: 'fixed' | 'scrolling' | null;
 
   /** Pagina’s binnen de sitebuilder */
-  pages: string[];
+  pages?: string[];
 
   /** Locked state: is de layout bevestigd zodat content geüpload kan worden */
   layoutLocked?: boolean;

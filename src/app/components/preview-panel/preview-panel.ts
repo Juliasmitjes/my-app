@@ -12,80 +12,112 @@ import { fontMap } from '../../shared/fonts';
   styleUrls: ['./preview-panel.css']
 })
 export class PreviewPanel {
+
   @Input() open = false;
-  @Input() builderState?: BuilderState;
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
-  @Output() closed = new EventEmitter<void>();
+  @Input({ required: true }) builderState!: BuilderState;
+  @Input({ required: true }) currentStep!: number;
   @Input() colorThemes!: { id: string; colors: string[] }[];
-  @Input() userSampleText: string = '';
 
-  iconName: string = 'monitor';
-  title: string = 'Live voorbeeld';
+  @Output() closed = new EventEmitter<void>();
 
-  close() {
+  iconName = 'monitor';
+  title = 'Live voorbeeld';
+  fontMap = fontMap;
+
+  close(): void {
     this.closed.emit();
   }
 
+  /* ───── STAP VISIBILITY ───── */
+
+  get canShowLayout(): boolean {
+    return this.currentStep >= 0 && !!this.builderState.layout;
+  }
+
+  get singleBlocks(): Array<'text' | 'image' | 'video'> {
+  switch (this.builderState.layoutConfig?.variantType) {
+    case 'image-text': return ['image', 'text'];
+    case 'text-image': return ['text', 'image'];
+    case 'text-video': return ['text', 'video'];
+    case 'video-text': return ['video', 'text'];
+    case 'text-only': return ['text'];
+    default: return ['text'];
+  }
+}
+
+get twoColumns() {
+  return [
+    this.builderState.layoutConfig?.col1Type ?? 'text',
+    this.builderState.layoutConfig?.col2Type ?? 'text'
+  ];
+}
+
+get gridCells(): Array<'text' | 'image' | 'video'> {
+  return this.builderState.layoutConfig?.cells ?? [];
+}
+
+get gridCols(): number {
+  return this.builderState.layoutConfig?.cols ?? 1;
+}
+
+
+  get canShowColors(): boolean {
+    return this.currentStep >= 1 && !!this.builderState.colorTheme;
+  }
+
+  get canShowFont(): boolean {
+    return this.currentStep >= 2 && !!this.builderState.fontVariant;
+  }
+
+  get canShowNavigation(): boolean {
+    return this.currentStep >= 3 && !!this.builderState.navigation;
+  }
+
+  get canShowPages(): boolean {
+    return this.currentStep >= 4 && (this.builderState.pages?.length ?? 0) > 0;
+  }
+
+  /* ───── STATE HELPERS ───── */
+
+  get isEmpty(): boolean {
+    return !this.builderState.layout;
+  }
+
   get isSidebar(): boolean {
-    return this.builderState?.navigation === 'sidebar';
+    return this.builderState.navigation === 'sidebar';
   }
 
   get pages(): string[] {
-    return this.builderState?.pages ?? ['home'];
+    return this.builderState.pages ?? ['home'];
   }
 
   get logoLabel(): string {
-    return this.builderState?.logo || 'Your Site';
+    return this.builderState.logo || 'Your Site';
   }
 
   getGridColumns(): string {
-    switch (this.builderState?.layout) {
+    switch (this.builderState.layout) {
       case 'grid': return 'repeat(3, 1fr)';
       case 'two-column': return 'repeat(2, 1fr)';
       default: return '1fr';
     }
   }
 
-  pageLabel(p: string) {
+  pageLabel(p: string): string {
     return p.charAt(0).toUpperCase() + p.slice(1);
   }
 
-  /** ✅ Volledige fallback-kleurenset zodat layout altijd zichtbaar is */
-  get selectedThemeColors(): string[] {
-    const theme = this.colorThemes?.find(t => t.id === this.builderState?.colorTheme);
+  /* ───── COLORS ───── */
 
+  get selectedThemeColors(): string[] {
+    const theme = this.colorThemes?.find(t => t.id === this.builderState.colorTheme);
     return theme
       ? theme.colors
       : [
-          '#ffffff', // 0 background
-          '#f5f5f5', // 1 header bg
-          '#333333', // 2 text
-          '#fafafa', // 3 content bg
-          '#e0e0e0', // 4 skeleton 1
-          '#d0d0d0', // 5 skeleton 2
-          '#444444', // 6 body text
-          '#eaeaea', // 7 pill bg
-          '#555555', // 8 pill text
-          '#cccccc'  // 9 border
+          '#ffffff', '#f5f5f5', '#333333', '#fafafa',
+          '#e0e0e0', '#d0d0d0', '#444444',
+          '#eaeaea', '#555555', '#cccccc'
         ];
   }
-
-  /** ✅ Check of uploads leeg zijn */
-  get hasNoUploads(): boolean {
-    const u = this.builderState?.uploads;
-    if (!u) return true;
-
-    const noImage = !u.image;
-    const noVideo = !u.video;
-    const noText = !u.text || u.text.trim() === '';
-
-    return noImage && noVideo && noText;
-  }
-
-  /** ✅ Empty state: alleen als layout nog NIET gekozen is */
-  get isEmpty(): boolean {
-    return !this.builderState?.layout;
-  }
-
-  public fontMap = fontMap;
 }
