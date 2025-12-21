@@ -39,9 +39,10 @@ export class Grid {
 
   options: CellType[] = ['text', 'image', 'video'];
 
-  constructor() {
-    this.updateGrid();
+  ngOnInit() {
+  this.updateGrid();
   }
+
 
   /* ---------------------------------------------------
      Helpers
