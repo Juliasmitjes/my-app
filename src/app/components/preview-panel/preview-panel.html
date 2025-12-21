@@ -1,6 +1,6 @@
 @if (open) {
-<div class="preview-overlay">
 
+<div class="preview-overlay">
   <div class="backdrop" (click)="close()"></div>
 
   <aside class="panel pb-20 flex flex-col min-h-[400px]"
@@ -8,7 +8,7 @@
          role="dialog"
          aria-label="Live preview">
 
-    <!-- Header -->
+    <!-- HEADER -->
     <header class="p-4 flex justify-end">
       <button
         class="px-3 py-2 text-sm font-medium rounded-md border border-border hover:bg-accent/20"
@@ -17,262 +17,199 @@
       </button>
     </header>
 
-    <!-- Preview container -->
-    <div class="flex-1 rounded-lg p-6 flex flex-col preview-component"
-         [style.background]="selectedThemeColors[0]"
-         [style.fontFamily]="canShowFont ? fontMap[builderState.fontVariant!] : null">
+    <!-- OUTER WRAPPER (keeps rounded corners + clipping) -->
+    <div class="flex-1 rounded-lg shadow-lg overflow-hidden"
+         [style.background]="selectedThemeColors[3]">
 
-      <!-- Titel -->
-      <div class="flex items-center gap-2 mb-4">
-        <lucide-icon
-          [name]="iconName"
-          class="w-5 h-5"
-          [style.color]="selectedThemeColors[2]">
-        </lucide-icon>
+      <!-- INNER WRAPPER (scrolls) -->
+      <div class="h-full flex flex-col">
 
-        <h3 class="font-semibold text-sm"
-            [style.color]="selectedThemeColors[2]">
-          {{ title }}
-        </h3>
-      </div>
+        <!-- TOP BAR -->
+        <div class="p-3 border-b"
+             [style.background]="selectedThemeColors[1]"
+             [style.borderColor]="selectedThemeColors[9]">
 
-      <!-- EMPTY STATE -->
-      @if (!canShowLayout) {
-        <div class="flex flex-col items-center justify-center flex-1 text-center gap-4 opacity-80">
-          <lucide-icon
-            name="eye-off"
-            class="w-10 h-10 opacity-40"
-            [style.color]="selectedThemeColors[2]">
-          </lucide-icon>
+          <div class="flex justify-between items-center">
+            <span class="font-semibold text-sm"
+                  [style.color]="selectedThemeColors[2]">
+              {{ logoLabel }}
+            </span>
 
-          <p class="text-sm max-w-xs"
-             [style.color]="selectedThemeColors[6]">
-            Kies een indeling om een live voorbeeld te bekijken.
-          </p>
-        </div>
-      }
-
-      <!-- LAYOUT PREVIEW -->
-      @if (canShowLayout) {
-
-      <div class="flex-1 rounded-lg shadow-lg overflow-hidden"
-           [style.background]="selectedThemeColors[3]">
-
-        <div class="h-full flex flex-col">
-
-          <!-- TOP HEADER ALTIJD ZICHTBAAR VANAF STAP 1 -->
-          <div class="p-3 border-b"
-               [style.background]="selectedThemeColors[1]"
-               [style.borderColor]="selectedThemeColors[9]">
-
-            <div class="flex justify-between items-center">
-              <span class="font-semibold text-sm"
-                    [style.color]="selectedThemeColors[2]">
-                {{ logoLabel }}
+            <div class="flex gap-2">
+              <span class="text-xs px-2 py-1 rounded border"
+                    [style.background]="selectedThemeColors[7]"
+                    [style.color]="selectedThemeColors[8]"
+                    [style.borderColor]="selectedThemeColors[9]">
+                Home
               </span>
 
-              <!-- MINIMAAL HOME BUTTON VANAF STAP 1 -->
-              <div class="flex gap-2">
-                <span class="text-xs px-2 py-1 rounded border"
-                      [style.background]="selectedThemeColors[7]"
-                      [style.color]="selectedThemeColors[8]"
-                      [style.borderColor]="selectedThemeColors[9]">
-                  Home
-                </span>
-
-                @if (canShowPages) {
-                  @for (p of pages; track p) {
-                    @if (p !== 'home') {
-                      <span class="text-xs px-2 py-1 rounded border"
-                            [style.background]="selectedThemeColors[7]"
-                            [style.color]="selectedThemeColors[8]"
-                            [style.borderColor]="selectedThemeColors[9]">
-                        {{ pageLabel(p) }}
-                      </span>
-                    }
+              @if (canShowPages) {
+                @for (p of pages; track p) {
+                  @if (p !== 'home') {
+                    <span class="text-xs px-2 py-1 rounded border"
+                          [style.background]="selectedThemeColors[7]"
+                          [style.color]="selectedThemeColors[8]"
+                          [style.borderColor]="selectedThemeColors[9]">
+                      {{ pageLabel(p) }}
+                    </span>
                   }
                 }
-              </div>
-            </div>
-          </div>
-
-          <!-- BODY -->
-          <div class="flex-1 flex">
-
-            <!-- SIDEBAR (pas zichtbaar bij navigatiestap) -->
-            @if (canShowNavigation && isSidebar) {
-              <aside class="w-44 p-4 border-r"
-                     [style.background]="selectedThemeColors[1]"
-                     [style.borderColor]="selectedThemeColors[9]">
-
-                <div class="font-semibold mb-4"
-                     [style.color]="selectedThemeColors[2]">
-                  {{ logoLabel }}
-                </div>
-
-                <nav class="space-y-2">
-                  <div class="text-sm px-3 py-2 rounded border"
-                       [style.background]="selectedThemeColors[7]"
-                       [style.color]="selectedThemeColors[8]"
-                       [style.borderColor]="selectedThemeColors[9]">
-                    Home
-                  </div>
-
-                  @if (canShowPages) {
-                    @for (p of pages; track p) {
-                      @if (p !== 'home') {
-                        <div class="text-sm px-3 py-2 rounded border"
-                             [style.background]="selectedThemeColors[7]"
-                             [style.color]="selectedThemeColors[8]"
-                             [style.borderColor]="selectedThemeColors[9]">
-                          {{ pageLabel(p) }}
-                        </div>
-                      }
-                    }
-                  }
-                </nav>
-              </aside>
-            }
-
-            <!-- CONTENT -->
-            <div class="flex-1 p-6">
-
-              <!-- SINGLE COLUMN -->
-              @if (builderState.layout === 'single') {
-              <div class="flex flex-col gap-6">
-
-                @for (block of singleBlocks; track block) {
-                  @switch (block) {
-
-                    @case ('text') {
-                      <p class="leading-relaxed text-base"
-                        [style.color]="selectedThemeColors[6]">
-                        {{ builderState.fontSample || 'Welkom in jouw nieuwe ontwerp. Zie hier hoe jouw content tot leven komt.  Wees creatief! Speel met kleuren, stijlen en teksten. Bouw een uniek project dat past bij jou.' }}
-                      </p>
-                    }
-
-                    @case ('image') {
-                      <div class="flex justify-center opacity-70">
-                        <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
-                      </div>
-                    }
-
-                    @case ('video') {
-                      <div class="flex justify-center opacity-70">
-                        <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
-                      </div>
-                    }
-
-                  }
-                }
-
-              </div>
-            }
-
-              <!-- TWO COLUMNS -->
-              @if (builderState.layout === 'two-column') {
-              <div class="grid grid-cols-2 gap-6">
-
-                <!-- COL 1 -->
-                @switch (twoColumns[0]) {
-
-                  @case ('text') {
-                    <p class="leading-relaxed text-base"
-                      [style.color]="selectedThemeColors[6]">
-                      {{ builderState.fontSample || 'Welkom in jouw nieuwe ontwerp. Zie hier hoe jouw content tot leven komt.  Wees creatief! Speel met kleuren, stijlen en teksten. Bouw een uniek project dat past bij jou.' }}
-                    </p>
-                  }
-
-                  @case ('image') {
-                    <div class="flex justify-center opacity-70">
-                      <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
-                    </div>
-                  }
-
-                  @case ('video') {
-                    <div class="flex justify-center opacity-70">
-                      <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
-                    </div>
-                  }
-
-                }
-
-                <!-- COL 2 -->
-                @switch (twoColumns[1]) {
-
-                  @case ('text') {
-                    <p class="leading-relaxed text-base"
-                      [style.color]="selectedThemeColors[6]">
-                      {{ builderState.fontSample || 'Welkom in jouw nieuwe ontwerp. Zie hier hoe jouw content tot leven komt.  Wees creatief! Speel met kleuren, stijlen en teksten. Bouw een uniek project dat past bij jou.' }}
-                    </p>
-                  }
-
-                  @case ('image') {
-                    <div class="flex justify-center opacity-70">
-                      <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
-                    </div>
-                  }
-
-                  @case ('video') {
-                    <div class="flex justify-center opacity-70">
-                      <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
-                    </div>
-                  }
-
-                }
-
-              </div>
-            }
-
-              <!-- GRID (3 COLUMNS) -->
-              @if (builderState.layout === 'grid') {
-              <div class="grid gap-6"
-                  [style.gridTemplateColumns]="getGridColumns()">
-
-                @for (cell of gridCells; track cell) {
-                  @switch (cell) {
-
-                    @case ('text') {
-                      <p class="leading-relaxed text-base"
-                        [style.color]="selectedThemeColors[6]">
-                        Welkom in jouw nieuwe ontwerp! Zie hier hoe jouw content tot leven komt. 
-                      </p>
-                    }
-
-                    @case ('image') {
-                      <div class="flex justify-center opacity-70">
-                        <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
-                      </div>
-                    }
-
-                    @case ('video') {
-                      <div class="flex justify-center opacity-70">
-                        <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
-                      </div>
-                    }
-
-                  }
-                }
-
-              </div>
-            }
+              }
             </div>
           </div>
         </div>
-      </div>
-      }
 
-      <!-- FOOTER INFO -->
-      <div class="mt-4 text-xs space-y-1"
-           [style.color]="selectedThemeColors[6]">
-        <div>Layout: {{ builderState.layout || '—' }}</div>
-        <div>Theme: {{ builderState.colorTheme || '—' }}</div>
-        <div>Font: {{ builderState.fontVariant || '—' }}</div>
-        <div>Navigation: {{ builderState.navigation || '—' }}</div>
-        <div>Pages: {{ canShowPages ? pages.join(', ') : '—' }}</div>
-      </div>
+        <!-- BODY (scrolls) -->
+        <div class="flex-1 min-h-0 overflow-y-auto p-6 pb-10 pr-4">
 
+          <!-- EMPTY STATE -->
+          @if (!canShowLayout) {
+            <div class="flex flex-col items-center justify-center flex-1 text-center gap-4 opacity-80">
+              <lucide-icon
+                name="eye-off"
+                class="w-10 h-10 opacity-40"
+                [style.color]="selectedThemeColors[2]">
+              </lucide-icon>
+
+              <p class="text-sm max-w-xs"
+                 [style.color]="selectedThemeColors[6]">
+                Kies een indeling om een live voorbeeld te bekijken.
+              </p>
+            </div>
+          }
+
+          <!-- SINGLE COLUMN -->
+          @if (builderState.layout === 'single') {
+            <div class="flex flex-col gap-6">
+
+              @for (block of singleBlocks; track block) {
+                @switch (block) {
+
+                  @case ('text') {
+                    <p class="leading-relaxed text-base"
+                       [style.color]="selectedThemeColors[6]">
+                      {{ builderState.fontSample ||
+                        'Welkom in jouw nieuwe ontwerp. Zie hier hoe jouw content tot leven komt. Wees creatief! Speel met kleuren, stijlen en teksten. Bouw een uniek project dat past bij jou.' }}
+                    </p>
+                  }
+
+                  @case ('image') {
+                    <div class="flex justify-center opacity-70">
+                      <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
+                    </div>
+                  }
+
+                  @case ('video') {
+                    <div class="flex justify-center opacity-70">
+                      <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
+                    </div>
+                  }
+
+                }
+              }
+
+            </div>
+          }
+
+          <!-- TWO COLUMNS -->
+          @if (builderState.layout === 'two-column') {
+            <div class="grid grid-cols-2 gap-6">
+
+              <!-- COL 1 -->
+              @switch (twoColumns[0]) {
+                @case ('text') {
+                  <p class="leading-relaxed text-base"
+                     [style.color]="selectedThemeColors[6]">
+                    {{ builderState.fontSample ||
+                      'Welkom in jouw nieuwe ontwerp. Zie hier hoe jouw content tot leven komt. Wees creatief! Speel met kleuren, stijlen en teksten. Bouw een uniek project dat past bij jou.' }}
+                  </p>
+                }
+                @case ('image') {
+                  <div class="flex justify-center opacity-70">
+                    <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
+                  </div>
+                }
+                @case ('video') {
+                  <div class="flex justify-center opacity-70">
+                    <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
+                  </div>
+                }
+              }
+
+              <!-- COL 2 -->
+              @switch (twoColumns[1]) {
+                @case ('text') {
+                  <p class="leading-relaxed text-base"
+                     [style.color]="selectedThemeColors[6]">
+                    {{ builderState.fontSample ||
+                      'Welkom in jouw nieuwe ontwerp. Zie hier hoe jouw content tot leven komt. Wees creatief! Speel met kleuren, stijlen en teksten. Bouw een uniek project dat past bij jou.' }}
+                  </p>
+                }
+                @case ('image') {
+                  <div class="flex justify-center opacity-70">
+                    <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
+                  </div>
+                }
+                @case ('video') {
+                  <div class="flex justify-center opacity-70">
+                    <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
+                  </div>
+                }
+              }
+
+            </div>
+          }
+
+          <!-- GRID -->
+          @if (builderState.layout === 'grid') {
+
+            <div class="grid gap-6"
+                 [style.gridTemplateColumns]="getGridColumns()">
+
+              @for (cell of gridCells; track cell) {
+                @switch (cell) {
+
+                  @case ('text') {
+                    <p class="leading-relaxed"
+                       [ngClass]="gridFontSize"
+                       [style.color]="selectedThemeColors[6]">
+                      {{ gridText }}
+                    </p>
+                  }
+
+                  @case ('image') {
+                    <div class="flex justify-center opacity-70">
+                      <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
+                    </div>
+                  }
+
+                  @case ('video') {
+                    <div class="flex justify-center opacity-70">
+                      <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
+                    </div>
+                  }
+
+                }
+              }
+
+            </div>
+          }
+
+        </div>
+      </div>
     </div>
+
+    <!-- FOOTER INFO -->
+    <div class="mt-4 text-xs space-y-1"
+         [style.color]="selectedThemeColors[6]">
+      <div>Layout: {{ builderState.layout || '—' }}</div>
+      <div>Theme: {{ builderState.colorTheme || '—' }}</div>
+      <div>Font: {{ builderState.fontVariant || '—' }}</div>
+      <div>Navigation: {{ builderState.navigation || '—' }}</div>
+      <div>Pages: {{ canShowPages ? pages.join(', ') : '—' }}</div>
+    </div>
+
   </aside>
 </div>
+
 }

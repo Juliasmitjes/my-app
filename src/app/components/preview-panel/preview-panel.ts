@@ -61,6 +61,19 @@ get gridCols(): number {
   return this.builderState.layoutConfig?.cols ?? 1;
 }
 
+get gridText(): string {
+  if (this.gridCols >= 4) {
+    return 'Welkom in jouw nieuwe ontwerp!';
+  }
+  return this.builderState.fontSample || 'Welkom in jouw nieuwe ontwerp. Zie hier hoe jouw content tot leven komt.';
+}
+
+get gridFontSize(): string {
+  if (this.gridCols >= 6) return 'text-xs';   
+  if (this.gridCols >= 3) return 'text-sm';   
+  return 'text-base';                         
+}
+
 
   get canShowColors(): boolean {
     return this.currentStep >= 1 && !!this.builderState.colorTheme;
