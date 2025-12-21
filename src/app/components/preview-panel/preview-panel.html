@@ -135,130 +135,128 @@
             }
 
             <!-- CONTENT -->
-<div class="flex-1 p-6">
+            <div class="flex-1 p-6">
 
-  <!-- SINGLE COLUMN -->
-  @if (builderState.layout === 'single') {
-  <div class="flex flex-col gap-6">
+              <!-- SINGLE COLUMN -->
+              @if (builderState.layout === 'single') {
+              <div class="flex flex-col gap-6">
 
-    @for (block of singleBlocks; track block) {
-      @switch (block) {
+                @for (block of singleBlocks; track block) {
+                  @switch (block) {
 
-        @case ('text') {
-          <p class="leading-relaxed text-base"
-             [style.color]="selectedThemeColors[6]">
-            {{ builderState.fontSample || 'Welkom in jouw nieuwe ontwerp. Zie hier hoe jouw content tot leven komt.  Wees creatief! Speel met kleuren, stijlen en teksten. Bouw een uniek project dat past bij jou.' }}
-          </p>
-        }
+                    @case ('text') {
+                      <p class="leading-relaxed text-base"
+                        [style.color]="selectedThemeColors[6]">
+                        {{ builderState.fontSample || 'Welkom in jouw nieuwe ontwerp. Zie hier hoe jouw content tot leven komt.  Wees creatief! Speel met kleuren, stijlen en teksten. Bouw een uniek project dat past bij jou.' }}
+                      </p>
+                    }
 
-        @case ('image') {
-          <div class="flex justify-center opacity-70">
-            <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
-          </div>
-        }
+                    @case ('image') {
+                      <div class="flex justify-center opacity-70">
+                        <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
+                      </div>
+                    }
 
-        @case ('video') {
-          <div class="flex justify-center opacity-70">
-            <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
-          </div>
-        }
+                    @case ('video') {
+                      <div class="flex justify-center opacity-70">
+                        <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
+                      </div>
+                    }
 
-      }
-    }
+                  }
+                }
 
-  </div>
-}
+              </div>
+            }
 
-  <!-- TWO COLUMNS -->
-  @if (builderState.layout === 'two-column') {
-  <div class="grid grid-cols-2 gap-6">
+              <!-- TWO COLUMNS -->
+              @if (builderState.layout === 'two-column') {
+              <div class="grid grid-cols-2 gap-6">
 
-    <!-- COL 1 -->
-    @switch (twoColumns[0]) {
+                <!-- COL 1 -->
+                @switch (twoColumns[0]) {
 
-      @case ('text') {
-        <p class="leading-relaxed text-base"
-           [style.color]="selectedThemeColors[6]">
-          {{ builderState.fontSample || 'Welkom in jouw nieuwe ontwerp. Zie hier hoe jouw content tot leven komt.  Wees creatief! Speel met kleuren, stijlen en teksten. Bouw een uniek project dat past bij jou.' }}
-        </p>
-      }
+                  @case ('text') {
+                    <p class="leading-relaxed text-base"
+                      [style.color]="selectedThemeColors[6]">
+                      {{ builderState.fontSample || 'Welkom in jouw nieuwe ontwerp. Zie hier hoe jouw content tot leven komt.  Wees creatief! Speel met kleuren, stijlen en teksten. Bouw een uniek project dat past bij jou.' }}
+                    </p>
+                  }
 
-      @case ('image') {
-        <div class="flex justify-center opacity-70">
-          <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
-        </div>
-      }
+                  @case ('image') {
+                    <div class="flex justify-center opacity-70">
+                      <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
+                    </div>
+                  }
 
-      @case ('video') {
-        <div class="flex justify-center opacity-70">
-          <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
-        </div>
-      }
+                  @case ('video') {
+                    <div class="flex justify-center opacity-70">
+                      <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
+                    </div>
+                  }
 
-    }
+                }
 
-    <!-- COL 2 -->
-    @switch (twoColumns[1]) {
+                <!-- COL 2 -->
+                @switch (twoColumns[1]) {
 
-      @case ('text') {
-        <p class="leading-relaxed text-base"
-           [style.color]="selectedThemeColors[6]">
-          {{ builderState.fontSample || 'Welkom in jouw nieuwe ontwerp. Zie hier hoe jouw content tot leven komt.  Wees creatief! Speel met kleuren, stijlen en teksten. Bouw een uniek project dat past bij jou.' }}
-        </p>
-      }
+                  @case ('text') {
+                    <p class="leading-relaxed text-base"
+                      [style.color]="selectedThemeColors[6]">
+                      {{ builderState.fontSample || 'Welkom in jouw nieuwe ontwerp. Zie hier hoe jouw content tot leven komt.  Wees creatief! Speel met kleuren, stijlen en teksten. Bouw een uniek project dat past bij jou.' }}
+                    </p>
+                  }
 
-      @case ('image') {
-        <div class="flex justify-center opacity-70">
-          <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
-        </div>
-      }
+                  @case ('image') {
+                    <div class="flex justify-center opacity-70">
+                      <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
+                    </div>
+                  }
 
-      @case ('video') {
-        <div class="flex justify-center opacity-70">
-          <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
-        </div>
-      }
+                  @case ('video') {
+                    <div class="flex justify-center opacity-70">
+                      <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
+                    </div>
+                  }
 
-    }
+                }
 
-  </div>
-}
+              </div>
+            }
 
-  <!-- GRID (3 COLUMNS) -->
-  @if (builderState.layout === 'grid') {
-  <div class="grid gap-6"
-       [style.gridTemplateColumns]="getGridColumns()">
+              <!-- GRID (3 COLUMNS) -->
+              @if (builderState.layout === 'grid') {
+              <div class="grid gap-6"
+                  [style.gridTemplateColumns]="getGridColumns()">
 
-    @for (cell of gridCells; track cell) {
-      @switch (cell) {
+                @for (cell of gridCells; track cell) {
+                  @switch (cell) {
 
-        @case ('text') {
-          <p class="leading-relaxed text-base"
-             [style.color]="selectedThemeColors[6]">
-            Welkom in jouw nieuwe ontwerp. Zie hier hoe jouw content tot leven komt. 
-          </p>
-        }
+                    @case ('text') {
+                      <p class="leading-relaxed text-base"
+                        [style.color]="selectedThemeColors[6]">
+                        Welkom in jouw nieuwe ontwerp. Zie hier hoe jouw content tot leven komt. 
+                      </p>
+                    }
 
-        @case ('image') {
-          <div class="flex justify-center opacity-70">
-            <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
-          </div>
-        }
+                    @case ('image') {
+                      <div class="flex justify-center opacity-70">
+                        <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
+                      </div>
+                    }
 
-        @case ('video') {
-          <div class="flex justify-center opacity-70">
-            <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
-          </div>
-        }
+                    @case ('video') {
+                      <div class="flex justify-center opacity-70">
+                        <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
+                      </div>
+                    }
 
-      }
-    }
+                  }
+                }
 
-  </div>
-}
-
-</div>
-
+              </div>
+            }
+            </div>
           </div>
         </div>
       </div>
