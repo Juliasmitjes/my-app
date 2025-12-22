@@ -61,12 +61,19 @@ get gridCols(): number {
   return this.builderState.layoutConfig?.cols ?? 1;
 }
 
-get gridText(): string {
-  if (this.gridCols >= 4) {
-    return 'Welkom in jouw nieuwe ontwerp!';
-  }
-  return this.builderState.fontSample || 'Welkom in jouw nieuwe ontwerp. Zie hier hoe jouw content tot leven komt.';
+getGridText(i: number): string {
+  const variants = [
+    'Laat je verhaal tot leven komen.',
+    'Een moderne basis voor jouw content.',
+    'Flexibel, schaalbaar en stijlvol.',
+    'Perfect voor visuals en storytelling.',
+    'Rustige opmaak met sterke typografie.',
+    'Jouw ontwerp, jouw ritme.'
+  ];
+
+  return variants[i % variants.length];
 }
+
 
 get gridFontSize(): string {
   if (this.gridCols >= 6) return 'text-xs';   
@@ -163,5 +170,7 @@ get selectedThemeColors(): string[] {
         'hsl(220 13% 91%)'
       ];
 }
+
+
 
 }

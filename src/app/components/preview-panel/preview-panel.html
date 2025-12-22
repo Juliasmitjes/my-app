@@ -184,15 +184,38 @@
             <div class="grid gap-6"
                  [style.gridTemplateColumns]="getGridColumns()">
 
-              @for (cell of gridCells; track cell) {
+              @for (cell of gridCells; let i = $index; track cell) {
                 @switch (cell) {
 
                   @case ('text') {
-                    <p class="leading-relaxed" [ngClass]="gridFontSize" [style.color]="selectedThemeColors[6]"
-                       [ngClass]="gridFontSize" class="opacity-90"
-                       [style.color]="selectedThemeColors[6]">
-                      {{ gridText }}
+                   <div class="flex flex-col opacity-90">
+
+                  <div class="rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-300
+                              hover:shadow-xl hover:scale-[1.015]"
+                      [style.background]="selectedThemeColors[7]">
+
+                    <p class="leading-relaxed" 
+                      [ngClass]="gridFontSize" 
+                      [style.color]="selectedThemeColors[6]">
+
+                      <span class="font-semibold block mb-1">
+                        Frisse ideeën
+                      </span>
+
+                      <span class="text-[0.8em] opacity-70 block mb-2"
+                            [style.color]="selectedThemeColors[5]">
+                        Ontworpen voor moderne layouts
+                      </span>
+
+                      <span>
+                        Laat je content spreken met een flexibele grid die perfect schaalt op elk scherm.
+                      </span>
+
                     </p>
+
+                  </div>
+
+                </div>
                   }
 
                   @case ('image') {
