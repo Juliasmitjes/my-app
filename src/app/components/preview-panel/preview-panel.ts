@@ -11,6 +11,8 @@ import { fontMap } from '../../shared/fonts';
   templateUrl: './preview-panel.html',
   styleUrls: ['./preview-panel.css']
 })
+
+
 export class PreviewPanel implements OnChanges {
 
   @Input() open = false;
@@ -18,7 +20,6 @@ export class PreviewPanel implements OnChanges {
   @Input({ required: true }) builderState!: BuilderState;
   @Input({ required: true }) currentStep!: number;
   @Input() colorThemes!: { id: string; colors: string[] }[];
-
   @Output() closed = new EventEmitter<void>();
 
   iconName = 'monitor';
@@ -32,10 +33,24 @@ export class PreviewPanel implements OnChanges {
 
   private _selectedThemeColors: string[] | null = null;
 
+  private blobUrlCache = new Map<string, string>();
+
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['builderState'] || changes['colorThemes']) {
       this._selectedThemeColors = null;
     }
+
+    if (changes['builderState']) {
+      this.resetBlobUrls();
+    }
+  }
+
+   private resetBlobUrls(): void {
+    for (const url of this.blobUrlCache.values()) {
+      URL.revokeObjectURL(url);
+    }
+    this.blobUrlCache.clear();
   }
 
   /* ────────────────────────────────────────────────
@@ -218,29 +233,34 @@ export class PreviewPanel implements OnChanges {
    */
 
     getUploadFor(key: string | null): string | null {
-      if (!key) return null;
+    if (!key) return null;
 
-      const uploads = this.builderState.uploads;
-      if (!uploads) return null;
+    const uploads = this.builderState.uploads;
+    if (!uploads) return null;
 
-      const file = uploads[key];
-      if (!file) return null;
+    const file = uploads[key];
+    if (!file) return null;
 
-      // Inline text → hier NIET voor gebruiken
-      if (file?.kind === 'inline') {
-        return null;
-      }
-
-      // File → blob URL
-      if (file instanceof File) {
-        return URL.createObjectURL(file);
-      }
-
-      // Base64 / URL
-      if (typeof file === 'string') {
-        return file;
-      }
-
+    // Inline text → hier NIET voor gebruiken
+    if (file?.kind === 'inline') {
       return null;
     }
+
+    // File → gebruik cache
+    if (file instanceof File) {
+      const existing = this.blobUrlCache.get(key);
+      if (existing) return existing;
+
+      const url = URL.createObjectURL(file);
+      this.blobUrlCache.set(key, url);
+      return url;
+    }
+
+    // Base64 / URL string
+    if (typeof file === 'string') {
+      return file;
+    }
+
+    return null;
+  }
 }
