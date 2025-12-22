@@ -160,14 +160,14 @@
                   </div>
                 }
                 @case ('image') {
-                 <div class="flex justify-center opacity-90">
+                 <div class="flex justify-center items-center opacity-90">
                   <img src="assets/images/exampleImage.png"
                       alt="Voorbeeldafbeelding"
                       class="w-40 h-40 rounded-md shadow-sm" />
                 </div>
                 }
                 @case ('video') {
-                 <div class="flex justify-center opacity-90">
+                 <div class="flex justify-center items-center opacity-90">
                     <img src="assets/images/exampleVideo.png"
                         alt="Voorbeeld video"
                         class="w-40 h-40 rounded-md shadow-sm" />
@@ -201,14 +201,14 @@
                   </div>
                 }
                @case ('image') {
-                <div class="flex justify-center opacity-90">
+                <div class="flex justify-center items-center opacity-90">
                   <img src="assets/images/exampleImage.png"
                       alt="Voorbeeldafbeelding"
                       class="w-40 h-40 rounded-md shadow-sm" />
                 </div>
               }
                 @case ('video') {
-                  <div class="flex justify-center opacity-90">
+                  <div class="flex justify-center items-center opacity-90">
                     <img src="assets/images/exampleVideo.png"
                         alt="Voorbeeld video"
                         class="w-40 h-40 rounded-md shadow-sm" />
@@ -263,6 +263,7 @@
                   }
 
                   @case ('image') {
+                     <div class="flex justify-center items-center opacity-90">
                     <img
                       src="assets/images/exampleImage.png"
                       alt="Voorbeeldafbeelding"
@@ -273,10 +274,11 @@
                         'w-20 h-20': gridCols >= 4
                       }"
                     />
+                    </div>
                   }
 
                   @case ('video') {
-                   <div class="flex justify-center opacity-90">
+                   <div class="flex justify-center items-center opacity-90">
                       <img src="assets/images/exampleVideo.png"
                           alt="Voorbeeld video"
                           class="rounded-md shadow-sm object-contain"
