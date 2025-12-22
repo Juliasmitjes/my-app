@@ -18,6 +18,7 @@ import { Grid } from './layout-config/grid/grid';
 import { NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from '../ui/toast/toast.service';
+import { ImageCropper } from './layout-config/image-cropper/image-cropper';
 
 @Component({
   selector: 'app-layout-step',
@@ -28,7 +29,8 @@ import { ToastService } from '../ui/toast/toast.service';
     SingleColumn,
     TwoColumns,
     Grid,
-    FormsModule
+    FormsModule,
+    ImageCropper
   ],
   templateUrl: './layout-step.html',
   styleUrl: './layout-step.css'
@@ -67,6 +69,10 @@ export class LayoutStep implements OnChanges {
   currentUploadType: 'image' | 'video' | 'text' | null = null;
 
   selectedConfig: any = null;
+
+  showCropper = false;
+  cropperFile: File | null = null;
+  cropperKey: string | null = null;
 
   layouts = [
     { id: 'single', name: 'Eén kolom', description: 'Simpel, inhoud verticaal gecentreerd', icon: 'layers' },
@@ -223,39 +229,46 @@ export class LayoutStep implements OnChanges {
   }
 
   handleFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
+  const input = event.target as HTMLInputElement;
+  const file = input.files?.[0];
 
-    const key =
-      this.currentUploadKey ??
-      this.currentUploadKeyCol1 ??
-      this.currentUploadKeyCol2;
+  const key =
+    this.currentUploadKey ??
+    this.currentUploadKeyCol1 ??
+    this.currentUploadKeyCol2;
 
-    if (!file || !key) return;
+  if (!file || !key) {
+    input.value = '';
+    return;
+  }
 
-    const isText =
-      file.type.startsWith('text') ||
-      /\.(txt|md|rtf|html|json|csv|docx|pdf)$/i.test(file.name);
+  if (file.type.startsWith('image')) {
+    this.cropperFile = file;
+    this.cropperKey = key;
+    this.showCropper = true;
 
+    input.value = '';
+    return;
+  }
+
+
+  if (file.type.startsWith('video')) {
     this.uploads = {
       ...this.uploads,
-      [key]: isText
-        ? { kind: 'file', name: file.name, file }
-        : file
+      [key]: file
     };
 
-    if (isText) this.toast.success('Tekstbestand geüpload');
-    if (file.type.startsWith('image')) this.toast.success('Foto geüpload');
-    if (file.type.startsWith('video')) this.toast.success('Video geüpload');
-
+    this.toast.success('Video geüpload');
     this.update.emit({ uploads: this.uploads });
 
     input.value = '';
+    return;
   }
 
-  // -----------------------------
-  // TEKSTEDITOR
-  // -----------------------------
+  this.toast.error('Dit bestandstype wordt niet ondersteund');
+  input.value = '';
+}
+
   openTextEditor(key: string) {
   this.currentUploadKey = key;
 
@@ -326,5 +339,25 @@ get canSaveText(): boolean {
     this.editorSubtitle.trim().length > 0 &&
     this.editorBody.trim().length > 0
   );
+}
+
+
+onImageCropped(blob: Blob) {
+  if (!this.cropperKey) return;
+
+  const file = new File([blob], 'cropped.jpg', { type: 'image/jpeg' });
+
+  this.uploads = {
+    ...this.uploads,
+    [this.cropperKey]: file
+  };
+
+  this.update.emit({ uploads: this.uploads });
+
+  this.showCropper = false;
+  this.cropperFile = null;
+  this.cropperKey = null;
+
+  this.toast.success('Foto bijgewerkt');
 }
 }

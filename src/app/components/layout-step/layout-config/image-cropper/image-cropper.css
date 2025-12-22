@@ -1,0 +1,21 @@
+@import "cropperjs/dist/cropper.css";
+
+:host {
+  display: block;
+}
+
+/* ⭐ Maak de cropbox-rand wit */
+.cropper-crop-box,
+.cropper-view-box {
+  border: 2px solid white !important;
+}
+
+/* ⭐ Maak de guides (rasterlijnen) wit */
+.cropper-dashed {
+  border-color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* ⭐ Maak de center-lines wit */
+.cropper-center {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
