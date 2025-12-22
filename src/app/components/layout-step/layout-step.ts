@@ -11,12 +11,11 @@ import {
 
 import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
-
 import { OptionCard } from '../ui/option-card/option-card';
 import { SingleColumn } from './layout-config/single-column/single-column';
 import { TwoColumns } from './layout-config/two-columns/two-columns';
 import { Grid } from './layout-config/grid/grid';
-
+import { NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from '../ui/toast/toast.service';
 
@@ -34,6 +33,7 @@ import { ToastService } from '../ui/toast/toast.service';
   templateUrl: './layout-step.html',
   styleUrl: './layout-step.css'
 })
+
 export class LayoutStep implements OnChanges {
 
   @Input() builderState!: BuilderState;
@@ -41,7 +41,10 @@ export class LayoutStep implements OnChanges {
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private toast: ToastService) {}
+  constructor(
+  private toast: ToastService,
+  private ngZone: NgZone
+) {}
 
   @Output() update = new EventEmitter<Partial<BuilderState>>();
   @Output() selectLayout = new EventEmitter<BuilderState['layout']>();
@@ -284,6 +287,16 @@ export class LayoutStep implements OnChanges {
   }
 
 saveTextEditor() {
+  const isEmpty =
+    !this.editorTitle.trim() &&
+    !this.editorSubtitle.trim() &&
+    !this.editorBody.trim();
+
+  if (isEmpty) {
+    this.toast.error('Voer verplichte velden in');
+    return;
+  }
+
   const key =
     this.currentUploadKey ??
     this.currentUploadKeyCol1 ??
@@ -291,16 +304,27 @@ saveTextEditor() {
 
   if (!key) return;
 
-  this.uploads[key] = {
-    kind: 'inline',
-    value: {
-      title: this.editorTitle,
-      subtitle: this.editorSubtitle,
-      body: this.editorBody
+  this.uploads = {
+    ...this.uploads,
+    [key]: {
+      kind: 'inline',
+      value: {
+        title: this.editorTitle,
+        subtitle: this.editorSubtitle,
+        body: this.editorBody
+      }
     }
   };
 
   this.update.emit({ uploads: this.uploads });
   this.showTextEditor = false;
+}
+
+get canSaveText(): boolean {
+  return (
+    this.editorTitle.trim().length > 0 &&
+    this.editorSubtitle.trim().length > 0 &&
+    this.editorBody.trim().length > 0
+  );
 }
 }
