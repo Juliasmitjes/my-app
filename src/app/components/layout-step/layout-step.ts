@@ -52,6 +52,9 @@ export class LayoutStep implements OnChanges {
   // teksteditor
   showTextEditor = false;
   textEditorValue = '';
+  editorTitle = '';
+  editorSubtitle = '';
+  editorBody = '';
 
   // upload keys
   currentUploadKey: string | null = null;
@@ -255,10 +258,23 @@ export class LayoutStep implements OnChanges {
 
   const existing = this.uploads[key];
 
-  this.textEditorValue =
-    existing && existing.kind === 'inline'
-      ? existing.value
-      : '';
+  // Reset standaard
+  this.editorTitle = '';
+  this.editorSubtitle = '';
+  this.editorBody = '';
+
+  if (existing && existing.kind === 'inline') {
+    const value = existing.value;
+
+    if (value && typeof value === 'object') {
+      this.editorTitle = value.title ?? '';
+      this.editorSubtitle = value.subtitle ?? '';
+      this.editorBody = value.body ?? '';
+    }
+    else if (typeof value === 'string') {
+      this.editorBody = value;
+    }
+  }
 
   this.showTextEditor = true;
 }
@@ -268,16 +284,23 @@ export class LayoutStep implements OnChanges {
   }
 
 saveTextEditor() {
-  const key = this.currentUploadKey ?? this.currentUploadKeyCol1 ?? this.currentUploadKeyCol2;
+  const key =
+    this.currentUploadKey ??
+    this.currentUploadKeyCol1 ??
+    this.currentUploadKeyCol2;
+
   if (!key) return;
 
   this.uploads[key] = {
     kind: 'inline',
-    value: this.textEditorValue
+    value: {
+      title: this.editorTitle,
+      subtitle: this.editorSubtitle,
+      body: this.editorBody
+    }
   };
 
   this.update.emit({ uploads: this.uploads });
-
   this.showTextEditor = false;
 }
 }
