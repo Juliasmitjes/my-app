@@ -4,10 +4,10 @@
   display: block;
 }
 
-/* ⭐ Witte rand + overlay */
 :host ::ng-deep .cropper-crop-box {
   border: 3px solid white !important;
   box-shadow: 0 0 0 9999px rgba(220, 220, 220, 0.6) !important;
+  transition: all 0.3s ease-in-out;
 }
 
 /* ⭐ Binnenste vierkant transparant */

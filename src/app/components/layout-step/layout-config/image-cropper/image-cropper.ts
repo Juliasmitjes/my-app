@@ -16,27 +16,29 @@ export class ImageCropper implements AfterViewInit {
   @ViewChild('imageElement') imageElement!: ElementRef<HTMLImageElement>;
   cropper!: Cropper;
 
-  ngAfterViewInit() {
-    const img = this.imageElement.nativeElement;
-    img.onload = () => {
-      this.cropper = new Cropper(img, {
-        aspectRatio: 1,
-        viewMode: 2,
-        dragMode: 'move',
-        autoCropArea: 1,
-        background: false,
-        responsive: true,
-        zoomable: true,
-        movable: true,
-        cropBoxResizable: false,
-        cropBoxMovable: false,
-        guides: false,
-        center: true,
-        highlight: false
-      });
-    };
-    img.src = URL.createObjectURL(this.file);
-  }
+ngAfterViewInit() {
+  const img = this.imageElement.nativeElement;
+  img.src = URL.createObjectURL(this.file);
+
+  setTimeout(() => {
+    this.cropper = new Cropper(img, {
+  aspectRatio: 1,
+  viewMode: 1,
+  dragMode: 'crop',
+  autoCropArea: 0.6,
+  background: false,
+  responsive: true,
+  zoomable: true,
+  movable: false,
+  cropBoxResizable: false,
+  cropBoxMovable: true,
+  guides: true,
+  center: true,
+  highlight: true
+});
+
+  }, 0);
+}
 
   saveCrop() {
     this.cropper.getCroppedCanvas().toBlob((blob: Blob | null) => {
