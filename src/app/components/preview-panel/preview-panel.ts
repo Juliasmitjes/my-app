@@ -126,14 +126,16 @@ get gridFontSize(): string {
 
   /* ───── COLORS ───── */
 
-  get selectedThemeColors(): string[] {
-    const theme = this.colorThemes?.find(t => t.id === this.builderState.colorTheme);
-    return theme
-      ? theme.colors
-      : [
-          '#ffffff', '#f5f5f5', '#333333', '#fafafa',
-          '#e0e0e0', '#d0d0d0', '#444444',
-          '#eaeaea', '#555555', '#cccccc'
-        ];
-  }
+  get selectedThemeColors(): (string | undefined)[] {
+  const theme = this.colorThemes?.find(t => t.id === this.builderState.colorTheme);
+
+  return theme
+    ? theme.colors
+    : [
+        '#ffffff', '#f5f5f5', '#333333', '#fafafa',
+        '#e0e0e0', '#d0d0d0', '#444444',
+        '#eaeaea', '#555555', '#cccccc'
+      ];
+}
+
 }
