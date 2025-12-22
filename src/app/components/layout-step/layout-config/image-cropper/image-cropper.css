@@ -4,24 +4,22 @@
   display: block;
 }
 
-/* Witte rand + overlay */
+/* ⭐ Witte rand + overlay */
 :host ::ng-deep .cropper-crop-box {
   border: 3px solid white !important;
-  box-shadow: 0 0 0 9999px rgba(200, 200, 200, 0.6) !important;
+  box-shadow: 0 0 0 9999px rgba(220, 220, 220, 0.6) !important;
 }
 
-/* Verberg standaard lijnen */
-:host ::ng-deep .cropper-dashed {
-  border: none !important;
-}
-
-/* Verberg handles */
-:host ::ng-deep .cropper-point {
-  opacity: 0 !important;
-}
-
-/* Zorg dat cropbox vierkant blijft */
+/* ⭐ Binnenste vierkant transparant */
 :host ::ng-deep .cropper-view-box {
   background-color: transparent !important;
   outline: none !important;
+}
+
+/* ⭐ Verberg standaard lijnen en handles */
+:host ::ng-deep .cropper-dashed {
+  border: none !important;
+}
+:host ::ng-deep .cropper-point {
+  opacity: 0 !important;
 }
