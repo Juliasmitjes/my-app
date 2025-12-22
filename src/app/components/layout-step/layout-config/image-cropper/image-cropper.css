@@ -4,18 +4,24 @@
   display: block;
 }
 
-/* ⭐ Maak de cropbox-rand wit */
-.cropper-crop-box,
-.cropper-view-box {
-  border: 2px solid white !important;
+/* Witte rand + overlay */
+:host ::ng-deep .cropper-crop-box {
+  border: 3px solid white !important;
+  box-shadow: 0 0 0 9999px rgba(200, 200, 200, 0.6) !important;
 }
 
-/* ⭐ Maak de guides (rasterlijnen) wit */
-.cropper-dashed {
-  border-color: rgba(255, 255, 255, 0.7) !important;
+/* Verberg standaard lijnen */
+:host ::ng-deep .cropper-dashed {
+  border: none !important;
 }
 
-/* ⭐ Maak de center-lines wit */
-.cropper-center {
-  background-color: rgba(255, 255, 255, 0.9) !important;
+/* Verberg handles */
+:host ::ng-deep .cropper-point {
+  opacity: 0 !important;
+}
+
+/* Zorg dat cropbox vierkant blijft */
+:host ::ng-deep .cropper-view-box {
+  background-color: transparent !important;
+  outline: none !important;
 }

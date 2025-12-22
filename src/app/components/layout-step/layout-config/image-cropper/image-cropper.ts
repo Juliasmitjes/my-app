@@ -9,42 +9,37 @@ import Cropper from 'cropperjs';
 })
 export class ImageCropper implements AfterViewInit {
 
-  @Input() file!: File;                 // originele foto
-  @Input() aspectRatio: number = 1;     // bijv. 1 voor square, 16/9 voor landscape
+  @Input() file!: File;
   @Output() cancel = new EventEmitter<void>();
   @Output() cropped = new EventEmitter<Blob>();
 
   @ViewChild('imageElement') imageElement!: ElementRef<HTMLImageElement>;
-
   cropper!: Cropper;
 
   ngAfterViewInit() {
-  const img = this.imageElement.nativeElement;
-  img.src = URL.createObjectURL(this.file);
-
-  this.cropper = new Cropper(img, {
-  aspectRatio: this.aspectRatio || 1,
-  viewMode: 2,
-  dragMode: 'move',
-  autoCropArea: 1,
-  background: false,
-  responsive: true,
-  zoomable: true,
-  movable: true,
-  scalable: false,
-  rotatable: false,
-
-  // ⭐ voeg deze toe:
-  guides: true,
-  center: true,
-  highlight: true,
-  cropBoxMovable: true,
-  cropBoxResizable: false, // vierkant blijft vierkant
-});
-}
+    const img = this.imageElement.nativeElement;
+    img.onload = () => {
+      this.cropper = new Cropper(img, {
+        aspectRatio: 1,
+        viewMode: 2,
+        dragMode: 'move',
+        autoCropArea: 1,
+        background: false,
+        responsive: true,
+        zoomable: true,
+        movable: true,
+        cropBoxResizable: false,
+        cropBoxMovable: false,
+        guides: false,
+        center: true,
+        highlight: false
+      });
+    };
+    img.src = URL.createObjectURL(this.file);
+  }
 
   saveCrop() {
-    this.cropper.getCroppedCanvas().toBlob(blob => {
+    this.cropper.getCroppedCanvas().toBlob((blob: Blob | null) => {
       if (blob) this.cropped.emit(blob);
     });
   }

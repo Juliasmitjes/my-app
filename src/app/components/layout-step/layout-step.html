@@ -159,7 +159,6 @@
 @if (showCropper) {
   <app-image-cropper
     [file]="cropperFile!"
-    [aspectRatio]="1"
     (cancel)="showCropper = false"
     (cropped)="onImageCropped($event)"
   ></app-image-cropper>
