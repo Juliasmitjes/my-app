@@ -65,7 +65,6 @@ getGridText(i: number): string {
   const variants = [
     'Laat je verhaal tot leven komen.',
     'Een moderne basis voor jouw content.',
-    'Flexibel, schaalbaar en stijlvol.',
     'Perfect voor visuals en storytelling.',
     'Rustige opmaak met sterke typografie.',
     'Jouw ontwerp, jouw ritme.'
