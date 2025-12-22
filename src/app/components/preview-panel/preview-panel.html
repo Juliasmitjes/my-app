@@ -86,16 +86,21 @@
                 @switch (block) {
 
                   @case ('text') {
-                    <p class="leading-relaxed text-base"
-                       [style.color]="selectedThemeColors[6]">
-                      {{ builderState.fontSample ||
-                        'Welkom in jouw nieuwe ontwerp. Zie hier hoe jouw content tot leven komt. Wees creatief! Speel met kleuren, stijlen en teksten. Bouw een uniek project dat past bij jou.' }}
+                    <p class="leading-relaxed text-base" [style.color]="selectedThemeColors[6]">
+                      <span class="font-semibold text-lg block mb-2">Ontdek jouw nieuwe digitale stijl</span>
+                      <span class="opacity-90">
+                        Bouw een ontwerp dat vertrouwen uitstraalt. Heldere kleuren, moderne typografie en een
+                        lay-out die jouw verhaal versterkt. Dit voorbeeld laat zien hoe jouw content straks
+                        tot leven komt. 
+                      </span>
                     </p>
                   }
 
                   @case ('image') {
-                    <div class="flex justify-center opacity-70">
-                      <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
+                    <div class="flex justify-start opacity-90">
+                      <img src="assets/images/exampleImage.png"
+                          alt="Voorbeeldafbeelding"
+                          class="w-32 h-auto rounded-md shadow-sm" />
                     </div>
                   }
 
@@ -118,16 +123,20 @@
               <!-- COL 1 -->
               @switch (twoColumns[0]) {
                 @case ('text') {
-                  <p class="leading-relaxed text-base"
-                     [style.color]="selectedThemeColors[6]">
-                    {{ builderState.fontSample ||
-                      'Welkom in jouw nieuwe ontwerp. Zie hier hoe jouw content tot leven komt. Wees creatief! Speel met kleuren, stijlen en teksten. Bouw een uniek project dat past bij jou.' }}
-                  </p>
+                  <p class="leading-relaxed text-base" [style.color]="selectedThemeColors[6]">
+                  <span class="font-semibold block mb-1">Jouw merk, jouw ritme</span>
+                  <span class="opacity-90">
+                    Combineer visuals en tekst om een krachtige eerste indruk te maken. Deze lay-out
+                    geeft ruimte aan storytelling én sterke beelden. Perfect voor moderne websites.
+                  </span>
+                </p>
                 }
                 @case ('image') {
-                  <div class="flex justify-center opacity-70">
-                    <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
-                  </div>
+                 <div class="flex justify-center opacity-90">
+                  <img src="assets/images/exampleImage.png"
+                      alt="Voorbeeldafbeelding"
+                      class="w-32 h-auto rounded-md shadow-sm" />
+                </div>
                 }
                 @case ('video') {
                   <div class="flex justify-center opacity-70">
@@ -139,17 +148,21 @@
               <!-- COL 2 -->
               @switch (twoColumns[1]) {
                 @case ('text') {
-                  <p class="leading-relaxed text-base"
-                     [style.color]="selectedThemeColors[6]">
-                    {{ builderState.fontSample ||
-                      'Welkom in jouw nieuwe ontwerp. Zie hier hoe jouw content tot leven komt. Wees creatief! Speel met kleuren, stijlen en teksten. Bouw een uniek project dat past bij jou.' }}
-                  </p>
+                  <p class="leading-relaxed text-base" [style.color]="selectedThemeColors[6]">
+                  <span class="font-semibold block mb-1">Jouw merk, jouw ritme</span>
+                  <span class="opacity-90">
+                    Combineer visuals en tekst om een krachtige eerste indruk te maken. Deze lay-out
+                    geeft ruimte aan storytelling én sterke beelden. Perfect voor moderne websites.
+                  </span>
+                </p>
                 }
-                @case ('image') {
-                  <div class="flex justify-center opacity-70">
-                    <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
-                  </div>
-                }
+               @case ('image') {
+                <div class="flex justify-center opacity-90">
+                  <img src="assets/images/exampleImage.png"
+                      alt="Voorbeeldafbeelding"
+                      class="w-32 h-auto rounded-md shadow-sm" />
+                </div>
+              }
                 @case ('video') {
                   <div class="flex justify-center opacity-70">
                     <lucide-icon name="video" class="w-16 h-16"></lucide-icon>
@@ -170,16 +183,18 @@
                 @switch (cell) {
 
                   @case ('text') {
-                    <p class="leading-relaxed"
-                       [ngClass]="gridFontSize"
+                    <p class="leading-relaxed" [ngClass]="gridFontSize" [style.color]="selectedThemeColors[6]"
+                       [ngClass]="gridFontSize" class="opacity-90"
                        [style.color]="selectedThemeColors[6]">
                       {{ gridText }}
                     </p>
                   }
 
                   @case ('image') {
-                    <div class="flex justify-center opacity-70">
-                      <lucide-icon name="image" class="w-16 h-16"></lucide-icon>
+                    <div class="flex justify-center opacity-90">
+                      <img src="assets/images/exampleImage.png"
+                          alt="Voorbeeldafbeelding"
+                          class="w-32 h-auto rounded-md shadow-sm" />
                     </div>
                   }
 
@@ -201,13 +216,13 @@
 
     <!-- FOOTER INFO -->
       <div class="mt-4 ml-2 text-xs space-y-1"
-        [style.color]="selectedThemeColors[6]">
-          <div>Layout: {{ builderState.layout || '—' }}</div>
-          <div>Theme: {{ builderState.colorTheme || '—' }}</div>
-          <div>Font: {{ builderState.fontVariant || '—' }}</div>
-          <div>Navigation: {{ builderState.navigation || '—' }}</div>
-          <div>Pages: {{ canShowPages ? pages.join(', ') : '—' }}</div>
-        </div>
+          [style.color]="builderState.colorTheme ? selectedThemeColors[6] : '#ffffff'">
+        <div>Layout: {{ builderState.layout || '—' }}</div>
+        <div>Theme: {{ builderState.colorTheme || '—' }}</div>
+        <div>Font: {{ builderState.fontVariant || '—' }}</div>
+        <div>Navigation: {{ builderState.navigation || '—' }}</div>
+        <div>Pages: {{ canShowPages ? pages.join(', ') : '—' }}</div>
+      </div>
   </aside>
 </div>
 

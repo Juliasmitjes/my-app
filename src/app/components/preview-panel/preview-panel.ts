@@ -126,15 +126,41 @@ get gridFontSize(): string {
 
   /* ───── COLORS ───── */
 
-  get selectedThemeColors(): (string | undefined)[] {
+get selectedThemeColors(): string[] {
   const theme = this.colorThemes?.find(t => t.id === this.builderState.colorTheme);
 
   return theme
     ? theme.colors
     : [
-        '#ffffff', '#f5f5f5', '#333333', '#fafafa',
-        '#e0e0e0', '#d0d0d0', '#ffffff',
-        '#eaeaea', '#555555', '#cccccc'
+        // 0 — Page background (white)
+        'hsl(0 0% 100%)',
+
+        // 1 — Topbar background (secondary)
+        'hsl(210 40% 96%)',
+
+        // 2 — Topbar text (primary)
+        'hsl(220 70% 15%)',
+
+        // 3 — Outer wrapper background (muted)
+        'hsl(210 40% 96%)',
+
+        // 4 — Subtle background (border/input)
+        'hsl(220 13% 91%)',
+
+        // 5 — Soft neutral (muted foreground)
+        'hsl(220 13% 46%)',
+
+        // 6 — Body text (foreground)
+        'hsl(220 26% 14%)',
+
+        // 7 — Pill background (accent lightened)
+        'hsl(195 100% 50% / 0.12)',
+
+        // 8 — Pill text (accent-foreground)
+        'hsl(220 70% 15%)',
+
+        // 9 — Borders (border)
+        'hsl(220 13% 91%)'
       ];
 }
 
