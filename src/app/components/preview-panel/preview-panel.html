@@ -86,14 +86,27 @@
                 @switch (block) {
 
                   @case ('text') {
-                    <p class="leading-relaxed text-base" [style.color]="selectedThemeColors[6]">
-                      <span class="font-semibold text-lg block mb-2">Ontdek jouw nieuwe digitale stijl</span>
-                      <span class="opacity-90">
-                        Bouw een ontwerp dat vertrouwen uitstraalt. Heldere kleuren, moderne typografie en een
-                        lay-out die jouw verhaal versterkt. Dit voorbeeld laat zien hoe jouw content straks
-                        tot leven komt. 
-                      </span>
-                    </p>
+                     <div class="flex flex-col opacity-90">
+                    <div class="rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-300
+                                hover:shadow-xl hover:scale-[1.015]
+                                h-40 sm:h-44 overflow-hidden"
+                        [style.background]="selectedThemeColors[7]">
+                      <p class="leading-relaxed"
+                        [ngClass]="gridFontSize"
+                        [style.color]="selectedThemeColors[6]">
+                          <span class="font-semibold block mb-1">
+                            Frisse ideeën
+                          </span>
+                          <span class="text-[0.8em] opacity-70 block mb-2"
+                                [style.color]="selectedThemeColors[5]">
+                            Ontworpen voor moderne layouts
+                          </span>
+                        <span>
+                          Bouw een ontwerp dat vertrouwen uitstraalt. Kies een lay-out die jouw verhaal versterkt. Dit voorbeeld laat zien hoe jouw content straks tot leven komt.
+                        </span>
+                      </p>
+                    </div>
+                  </div>
                   }
 
                   @case ('image') {
@@ -124,13 +137,27 @@
               <!-- COL 1 -->
               @switch (twoColumns[0]) {
                 @case ('text') {
-                  <p class="leading-relaxed text-base" [style.color]="selectedThemeColors[6]">
-                  <span class="font-semibold block mb-1">Jouw merk, jouw ritme</span>
-                  <span class="opacity-90">
-                    Combineer visuals en tekst om een krachtige eerste indruk te maken. Deze lay-out
-                    geeft ruimte aan storytelling én sterke beelden. Perfect voor moderne websites.
-                  </span>
-                </p>
+                  <div class="flex flex-col opacity-90">
+                    <div class="rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-300
+                                hover:shadow-xl hover:scale-[1.015]
+                                h-40 sm:h-44 overflow-hidden"
+                        [style.background]="selectedThemeColors[7]">
+                      <p class="leading-relaxed"
+                        [ngClass]="gridFontSize"
+                        [style.color]="selectedThemeColors[6]">
+                          <span class="font-semibold block mb-1">
+                            Frisse ideeën
+                          </span>
+                          <span class="text-[0.8em] opacity-70 block mb-2"
+                                [style.color]="selectedThemeColors[5]">
+                            Ontworpen voor moderne layouts
+                          </span>
+                        <span>
+                          Zie hoe jouw content tot leven komt.
+                        </span>
+                      </p>
+                    </div>
+                  </div>
                 }
                 @case ('image') {
                  <div class="flex justify-center opacity-90">
@@ -151,13 +178,27 @@
               <!-- COL 2 -->
               @switch (twoColumns[1]) {
                 @case ('text') {
-                  <p class="leading-relaxed text-base" [style.color]="selectedThemeColors[6]">
-                  <span class="font-semibold block mb-1">Jouw merk, jouw ritme</span>
-                  <span class="opacity-90">
-                    Combineer visuals en tekst om een krachtige eerste indruk te maken. Deze lay-out
-                    geeft ruimte aan storytelling én sterke beelden. Perfect voor moderne websites.
-                  </span>
-                </p>
+                  <div class="flex flex-col opacity-90">
+                  <div class="rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-300
+                                hover:shadow-xl hover:scale-[1.015]
+                                h-40 sm:h-44 overflow-hidden"
+                        [style.background]="selectedThemeColors[7]">
+                      <p class="leading-relaxed"
+                        [ngClass]="gridFontSize"
+                        [style.color]="selectedThemeColors[6]">
+                          <span class="font-semibold block mb-1">
+                            Frisse ideeën
+                          </span>
+                          <span class="text-[0.8em] opacity-70 block mb-2"
+                                [style.color]="selectedThemeColors[5]">
+                            Ontworpen voor moderne layouts
+                          </span>
+                        <span>
+                          Zie hoe jouw content tot leven komt.
+                        </span>
+                      </p>
+                    </div>
+                  </div>
                 }
                @case ('image') {
                 <div class="flex justify-center opacity-90">
