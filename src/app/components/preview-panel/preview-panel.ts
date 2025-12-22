@@ -172,13 +172,16 @@ get selectedThemeColors(): string[] {
 
 getUploadFor(key: string): string | null {
   const uploads = this.builderState.uploads;
+  
   if (!uploads) return null;
 
   const file = uploads[key];
   if (!file) return null;
 
   // Inline text → geen afbeelding
-  if (file.kind === 'inline') return null;
+  if (file?.kind === 'inline') {
+  return file.value; // dit is de tekst
+}
 
   // File → maak een blob URL
   if (file instanceof File) {

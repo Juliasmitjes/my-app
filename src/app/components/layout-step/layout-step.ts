@@ -205,7 +205,7 @@ export class LayoutStep implements OnChanges {
         break;
 
       case 'text':
-        this.openTextEditor();
+        this.openTextEditor(key);
         break;
     }
   }
@@ -250,42 +250,34 @@ export class LayoutStep implements OnChanges {
   // -----------------------------
   // TEKSTEDITOR
   // -----------------------------
-  openTextEditor() {
-    this.textEditorValue = '';
-    this.showTextEditor = true;
-  }
+  openTextEditor(key: string) {
+  this.currentUploadKey = key;
+
+  const existing = this.uploads[key];
+
+  this.textEditorValue =
+    existing && existing.kind === 'inline'
+      ? existing.value
+      : '';
+
+  this.showTextEditor = true;
+}
 
   cancelTextEditor() {
     this.showTextEditor = false;
   }
 
-  saveTextEditor() {
-    const key =
-      this.currentUploadKey ??
-      this.currentUploadKeyCol1 ??
-      this.currentUploadKeyCol2;
+saveTextEditor() {
+  const key = this.currentUploadKey ?? this.currentUploadKeyCol1 ?? this.currentUploadKeyCol2;
+  if (!key) return;
 
-    if (!key) return;
+  this.uploads[key] = {
+    kind: 'inline',
+    value: this.textEditorValue
+  };
 
-    const hasTypedText = this.textEditorValue.trim().length > 0;
+  this.update.emit({ uploads: this.uploads });
 
-    if (hasTypedText) {
-      this.uploads = {
-        ...this.uploads,
-        [key]: {
-          kind: 'inline',
-          name: 'Tekst toegevoegd',
-          value: this.textEditorValue
-        }
-      };
-
-      this.toast.success('Tekst opgeslagen');
-    }
-
-    this.showTextEditor = false;
-
-    this.update.emit({
-      uploads: this.uploads
-    });
-  }
+  this.showTextEditor = false;
+}
 }
