@@ -114,21 +114,21 @@
                   }
 
                   @case ('image') {
-                    <div class="flex justify-start opacity-90">
+                    <div class="w-40 h-40 rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center">
                       <img
                         [src]="getUploadFor(getSingleUploadKey('image')) || 'assets/images/exampleImage.png'"
                         alt="Voorbeeldafbeelding"
-                        class="w-40 h-40 rounded-md shadow-sm"
+                        class="w-full h-full object-cover"
                       />
                     </div>
                   }
 
                   @case ('video') {
-                   <div class="flex justify-start opacity-90">
+                   <div class="w-40 h-40 rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center">
                       <img
                         [src]="getUploadFor(getSingleUploadKey('video')) || 'assets/images/exampleVideo.png'"
                         alt="Voorbeeld video"
-                        class="w-40 h-40 rounded-md shadow-sm"
+                        class="w-full h-full object-cover"
                       />
                     </div>
                   }
@@ -175,18 +175,18 @@
                   </div>
                 }
                 @case ('image') {
-                 <div class="flex justify-center items-center opacity-90">
-                  <img
-                      [src]="getUploadFor('col1_image') || 'assets/images/exampleImage.png'"
-                      alt="Voorbeeldafbeelding"
-                      class="w-40 h-40 rounded-md shadow-sm" />
+                <div class="w-40 h-40 rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center">
+                <img
+                  [src]="getUploadFor('col1_image') || 'assets/images/exampleImage.png'"
+                  alt="Voorbeeldafbeelding"
+                  class="w-full h-full object-cover" />
                 </div>
                 }
                 @case ('video') {
-                 <div class="flex justify-center items-center opacity-90">
-                    <img [src]="getUploadFor('col1_video') || 'assets/images/exampleVideo.png'"
-                        alt="Voorbeeld video"
-                        class="w-40 h-40 rounded-md shadow-sm" />
+                 <div class="w-40 h-40 rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center">
+                  <img [src]="getUploadFor('col1_video') || 'assets/images/exampleVideo.png'"
+                    alt="Voorbeeld video"
+                    class="w-full h-full object-cover" />
                   </div>
                 }
               }
@@ -223,18 +223,18 @@
                   </div>
                 }
                @case ('image') {
-                <div class="flex justify-center items-center opacity-90">
-                  <img [src]="getUploadFor('col2_image') || 'assets/images/exampleImage.png'"
-                      alt="Voorbeeldafbeelding"
-                      class="w-40 h-40 rounded-md shadow-sm" />
+                <div class="w-40 h-40 rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center">
+                <img [src]="getUploadFor('col2_image') || 'assets/images/exampleImage.png'"
+                  alt="Voorbeeldafbeelding"
+                  class="w-full h-full object-cover" />
                 </div>
               }
                 @case ('video') {
-                  <div class="flex justify-center items-center opacity-90">
-                    <img [src]="getUploadFor('col2_video') || 'assets/images/exampleVideo.png'"
-                        alt="Voorbeeld video"
-                        class="w-40 h-40 rounded-md shadow-sm" />
-                  </div>
+                <div class="w-40 h-40 rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center">
+                <img [src]="getUploadFor('col2_video') || 'assets/images/exampleVideo.png'"
+                  alt="Voorbeeld video"
+                  class="w-full h-full object-cover" />
+                </div>
                 }
               }
 
@@ -281,39 +281,59 @@
                   </div>
                 }
 
-                  @case ('image') {
-                     <div class="flex justify-center items-center opacity-90">
-                    <img
-                      [src]="getUploadFor('grid_' + i + '_image') || 'assets/images/exampleImage.png'"
-                      alt="Voorbeeldafbeelding"
-                      class="rounded-md shadow-sm object-contain"
+                @case ('image') {
+                  <div class="flex justify-center items-center">
+                    <div
+                      class="rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center"
                       [ngClass]="{
                         'w-40 h-40': gridCols <= 2,
                         'w-28 h-28': gridCols === 3,
                         'w-20 h-20': gridCols >= 4
                       }"
-                    />
+                    >
+                      <img
+                        [src]="getUploadFor('grid_' + i + '_image') || 'assets/images/exampleImage.png'"
+                        alt="Voorbeeldafbeelding"
+                        class="w-full h-full object-cover"
+                      />
                     </div>
-                  }
+                  </div>
+                }
 
                   @case ('video') {
-                   <div class="flex justify-center items-center opacity-90">
-                      <img [src]="getUploadFor('grid_' + i + '_video') || 'assets/images/exampleVideo.png'"
-                          alt="Voorbeeld video"
-                          class="rounded-md shadow-sm object-contain"
-                      [ngClass]="{
-                        'w-40 h-40': gridCols <= 2,
-                        'w-28 h-28': gridCols === 3,
-                        'w-20 h-20': gridCols >= 4
-                      }"/>
-                    </div>
-                  }
-
-                }
+                <div class="flex justify-center items-center opacity-90">
+                  <div
+                    class="rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center"
+                    [ngClass]="{
+                      'w-40 h-40': gridCols <= 2,
+                      'w-28 h-28': gridCols === 3,
+                      'w-20 h-20': gridCols >= 4
+                    }"
+                  >
+                    @if(getUploadFor('grid_' + i + '_video')){
+                      <video
+                      [src]="getUploadFor('grid_' + i + '_video')"
+                      class="w-full h-full object-cover"
+                      muted
+                      autoplay
+                      loop
+                    ></video>
+                    } 
+                    @if(!getUploadFor('grid_' + i + '_video')){
+                      <img
+                      src="assets/images/exampleVideo.png"
+                      alt="Voorbeeld video"
+                      class="w-full h-full object-cover"
+                    />
+                    }
+                  </div>
+                </div>
               }
-
-            </div>
+            }
           }
+
+        </div>
+        }
 
         </div>
       </div>
