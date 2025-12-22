@@ -133,7 +133,7 @@ get gridFontSize(): string {
     ? theme.colors
     : [
         '#ffffff', '#f5f5f5', '#333333', '#fafafa',
-        '#e0e0e0', '#d0d0d0', '#444444',
+        '#e0e0e0', '#d0d0d0', '#ffffff',
         '#eaeaea', '#555555', '#cccccc'
       ];
 }
