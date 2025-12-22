@@ -109,7 +109,7 @@
 
                   @case ('image') {
                     <div class="flex justify-start opacity-90">
-                      <img src="assets/images/exampleImage.png"
+                      <img [src]="getUploadFor('single_image') || 'assets/images/exampleImage.png'"
                           alt="Voorbeeldafbeelding"
                           class="w-40 h-40 rounded-md shadow-sm" />
                     </div>
@@ -117,7 +117,7 @@
 
                   @case ('video') {
                    <div class="flex justify-start opacity-90">
-                      <img src="assets/images/exampleVideo.png"
+                      <img [src]="getUploadFor('single_video') || 'assets/images/exampleVideo.png'"
                           alt="Voorbeeld video"
                           class="w-40 h-40 rounded-md shadow-sm" />
                     </div>
@@ -160,14 +160,15 @@
                 }
                 @case ('image') {
                  <div class="flex justify-center items-center opacity-90">
-                  <img src="assets/images/exampleImage.png"
+                  <img
+                      [src]="getUploadFor('col1_image') || 'assets/images/exampleImage.png'"
                       alt="Voorbeeldafbeelding"
                       class="w-40 h-40 rounded-md shadow-sm" />
                 </div>
                 }
                 @case ('video') {
                  <div class="flex justify-center items-center opacity-90">
-                    <img src="assets/images/exampleVideo.png"
+                    <img [src]="getUploadFor('col1_video') || 'assets/images/exampleVideo.png'"
                         alt="Voorbeeld video"
                         class="w-40 h-40 rounded-md shadow-sm" />
                   </div>
@@ -201,14 +202,14 @@
                 }
                @case ('image') {
                 <div class="flex justify-center items-center opacity-90">
-                  <img src="assets/images/exampleImage.png"
+                  <img [src]="getUploadFor('col2_image') || 'assets/images/exampleImage.png'"
                       alt="Voorbeeldafbeelding"
                       class="w-40 h-40 rounded-md shadow-sm" />
                 </div>
               }
                 @case ('video') {
                   <div class="flex justify-center items-center opacity-90">
-                    <img src="assets/images/exampleVideo.png"
+                    <img [src]="getUploadFor('col2_video') || 'assets/images/exampleVideo.png'"
                         alt="Voorbeeld video"
                         class="w-40 h-40 rounded-md shadow-sm" />
                   </div>
@@ -264,7 +265,7 @@
                   @case ('image') {
                      <div class="flex justify-center items-center opacity-90">
                     <img
-                      src="assets/images/exampleImage.png"
+                      [src]="getUploadFor('grid_' + i + '_image') || 'assets/images/exampleImage.png'"
                       alt="Voorbeeldafbeelding"
                       class="rounded-md shadow-sm object-contain"
                       [ngClass]="{
@@ -278,7 +279,7 @@
 
                   @case ('video') {
                    <div class="flex justify-center items-center opacity-90">
-                      <img src="assets/images/exampleVideo.png"
+                      <img [src]="getUploadFor('grid_' + i + '_video') || 'assets/images/exampleVideo.png'"
                           alt="Voorbeeld video"
                           class="rounded-md shadow-sm object-contain"
                       [ngClass]="{

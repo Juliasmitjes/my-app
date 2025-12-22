@@ -92,35 +92,7 @@
   <div class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
     <div class="bg-white/80 backdrop-blur-xl p-6 rounded-3xl shadow-xl w-[90%] max-w-lg space-y-6 border border-border/40">
 
-      @let activeKey = currentUploadKey ?? currentUploadKeyCol1 ?? currentUploadKeyCol2;
-
-      @if (activeKey && uploads[activeKey]) {
-        <p class="text-sm text-muted-foreground text-start truncate">
-          {{ uploads[activeKey].name ?? 'Tekst toegevoegd' }}
-        </p>
-
-        <button
-          class="px-5 py-3 rounded-xl bg-white/70 border border-border/40
-                 shadow-sm hover:shadow-md hover:bg-white transition-all
-                 flex items-center gap-2 justify-center font-medium text-foreground
-                 ring-1 ring-accent/20 hover:ring-accent/40 cursor-pointer"
-          (click)="uploadTextFile()"
-        >
-          Wijzig tekstbestand
-        </button>
-      } @else {
-        <button
-          class="px-5 py-3 rounded-xl bg-white/70 border border-border/40
-                 shadow-sm hover:shadow-md hover:bg-white transition-all
-                 flex items-center gap-2 justify-center font-medium text-foreground
-                 ring-1 ring-accent/20 hover:ring-accent/40 cursor-pointer"
-          (click)="uploadTextFile()"
-        >
-          Upload tekstbestand
-        </button>
-      }
-
-      <h3 class="text-lg font-semibold text-center">Of voer jouw tekst in</h3>
+      <h3 class="text-lg font-semibold text-center">Voer jouw tekst in</h3>
 
       <textarea
         [(ngModel)]="textEditorValue"

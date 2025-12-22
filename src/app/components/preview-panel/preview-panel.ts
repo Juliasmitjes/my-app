@@ -170,6 +170,27 @@ get selectedThemeColors(): string[] {
       ];
 }
 
+getUploadFor(key: string): string | null {
+  const uploads = this.builderState.uploads;
+  if (!uploads) return null;
 
+  const file = uploads[key];
+  if (!file) return null;
+
+  // Inline text → geen afbeelding
+  if (file.kind === 'inline') return null;
+
+  // File → maak een blob URL
+  if (file instanceof File) {
+    return URL.createObjectURL(file);
+  }
+
+  // Als het een string is (bijv. base64 of URL)
+  if (typeof file === 'string') {
+    return file;
+  }
+
+  return null;
+}
 
 }

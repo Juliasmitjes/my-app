@@ -66,7 +66,7 @@ export interface BuilderState {
   layoutLocked?: boolean;
 
   /** Uploads */
-  uploads?: BuilderUploads;
+  uploads?: Record<string, any>;
 
   contentSaved?: boolean;
 }
