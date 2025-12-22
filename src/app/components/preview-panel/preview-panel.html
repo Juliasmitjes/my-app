@@ -263,18 +263,28 @@
                   }
 
                   @case ('image') {
-                    <div class="flex justify-center opacity-90">
-                      <img src="assets/images/exampleImage.png"
-                          alt="Voorbeeldafbeelding"
-                          class="w-32 h-auto rounded-md shadow-sm" />
-                    </div>
+                    <img
+                      src="assets/images/exampleImage.png"
+                      alt="Voorbeeldafbeelding"
+                      class="rounded-md shadow-sm object-contain"
+                      [ngClass]="{
+                        'w-40 h-40': gridCols <= 2,
+                        'w-28 h-28': gridCols === 3,
+                        'w-20 h-20': gridCols >= 4
+                      }"
+                    />
                   }
 
                   @case ('video') {
                    <div class="flex justify-center opacity-90">
                       <img src="assets/images/exampleVideo.png"
                           alt="Voorbeeld video"
-                          class="w-32 h-auto rounded-md shadow-sm" />
+                          class="rounded-md shadow-sm object-contain"
+                      [ngClass]="{
+                        'w-40 h-40': gridCols <= 2,
+                        'w-28 h-28': gridCols === 3,
+                        'w-20 h-20': gridCols >= 4
+                      }"/>
                     </div>
                   }
 
