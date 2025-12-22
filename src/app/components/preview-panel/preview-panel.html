@@ -11,7 +11,7 @@
     <!-- HEADER -->
     <header class="p-4 flex justify-end">
       <button
-        class="px-3 py-2 text-sm font-medium rounded-md border border-border hover:bg-accent/20"
+        class="px-3 py-2 text-sm font-medium rounded-md border cursor-pointer border-border hover:bg-accent/20"
         (click)="close()">
         Voorbeeld sluiten
       </button>
@@ -200,8 +200,8 @@
     </div>
 
     <!-- FOOTER INFO -->
-      <div class="mt-4 text-md text-white space-y-1"
-        [style.color]="selectedThemeColors[6] || '#ffffff'">
+      <div class="mt-4 text-xs space-y-1"
+        [style.color]="selectedThemeColors[6] ?? '#ffffff'">
           <div>Layout: {{ builderState.layout || '—' }}</div>
           <div>Theme: {{ builderState.colorTheme || '—' }}</div>
           <div>Font: {{ builderState.fontVariant || '—' }}</div>
