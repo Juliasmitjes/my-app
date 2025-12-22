@@ -85,41 +85,51 @@
 
                   @case ('text') {
                     <div class="flex flex-col opacity-90">
-                    <div class="rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-300
-                                hover:shadow-xl hover:scale-[1.015]
-                                h-40 sm:h-44 overflow-hidden"
-                        [style.background]="selectedThemeColors[7]">
-                      <p class="leading-relaxed"
-                        [ngClass]="gridFontSize"
-                        [style.color]="selectedThemeColors[6]">
+                      <div class="rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-300
+                                  hover:shadow-xl hover:scale-[1.015]
+                                  h-40 sm:h-44 overflow-hidden"
+                          [style.background]="selectedThemeColors[7]">
+
+                        @let text = getTextBlock(getSingleUploadKey('text'));
+
+                        <p class="leading-relaxed"
+                          [ngClass]="gridFontSize"
+                          [style.color]="selectedThemeColors[6]">
+
                           <span class="font-semibold block mb-1">
-                            Frisse ideeën
+                            {{ text?.title || 'Frisse ideeën' }}
                           </span>
+
                           <span class="text-[0.8em] opacity-70 block mb-2"
                                 [style.color]="selectedThemeColors[5]">
-                            Ontworpen voor moderne layouts
+                            {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
                           </span>
-                        <span>
-                          Bouw een ontwerp dat vertrouwen uitstraalt. Kies een lay-out die jouw verhaal versterkt. Dit voorbeeld laat zien hoe jouw content straks tot leven komt.
-                        </span>
-                      </p>
+
+                          <span>
+                            {{ text?.body || 'Bouw een ontwerp dat vertrouwen uitstraalt. Kies een lay-out die jouw verhaal versterkt. Dit voorbeeld laat zien hoe jouw content straks tot leven komt.' }}
+                          </span>
+                        </p>
+                      </div>
                     </div>
-                  </div>
                   }
 
                   @case ('image') {
                     <div class="flex justify-start opacity-90">
-                      <img [src]="getUploadFor('single_image') || 'assets/images/exampleImage.png'"
-                          alt="Voorbeeldafbeelding"
-                          class="w-40 h-40 rounded-md shadow-sm" />
+                      <img
+                        [src]="getUploadFor(getSingleUploadKey('image')) || 'assets/images/exampleImage.png'"
+                        alt="Voorbeeldafbeelding"
+                        class="w-40 h-40 rounded-md shadow-sm"
+                      />
                     </div>
                   }
 
                   @case ('video') {
                    <div class="flex justify-start opacity-90">
-                      <img [src]="getUploadFor('single_video') || 'assets/images/exampleVideo.png'"
-                          alt="Voorbeeld video"
-                          class="w-40 h-40 rounded-md shadow-sm" />
+                      <img
+                        [src]="getUploadFor(getSingleUploadKey('video')) || 'assets/images/exampleVideo.png'"
+                        alt="Voorbeeld video"
+                        class="w-40 h-40 rounded-md shadow-sm"
+                      />
                     </div>
                   }
                 }
@@ -141,18 +151,24 @@
                                 hover:shadow-xl hover:scale-[1.015]
                                 h-40 sm:h-44 overflow-hidden"
                         [style.background]="selectedThemeColors[7]">
+
+                      @let text = getTextBlock('col1_text');
+
                       <p class="leading-relaxed"
                         [ngClass]="gridFontSize"
                         [style.color]="selectedThemeColors[6]">
-                          <span class="font-semibold block mb-1">
-                            Frisse ideeën
-                          </span>
-                          <span class="text-[0.8em] opacity-70 block mb-2"
-                                [style.color]="selectedThemeColors[5]">
-                            Ontworpen voor moderne layouts
-                          </span>
+
+                        <span class="font-semibold block mb-1">
+                          {{ text?.title || 'Frisse ideeën' }}
+                        </span>
+
+                        <span class="text-[0.8em] opacity-70 block mb-2"
+                              [style.color]="selectedThemeColors[5]">
+                          {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
+                        </span>
+
                         <span>
-                          Zie hoe jouw content tot leven komt.
+                          {{ text?.body || 'Zie hoe jouw content tot leven komt.' }}
                         </span>
                       </p>
                     </div>
@@ -179,22 +195,28 @@
               @switch (twoColumns[1]) {
                 @case ('text') {
                   <div class="flex flex-col opacity-90">
-                  <div class="rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-300
+                    <div class="rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-300
                                 hover:shadow-xl hover:scale-[1.015]
                                 h-40 sm:h-44 overflow-hidden"
                         [style.background]="selectedThemeColors[7]">
+
+                      @let text = getTextBlock('col2_text');
+
                       <p class="leading-relaxed"
                         [ngClass]="gridFontSize"
                         [style.color]="selectedThemeColors[6]">
-                          <span class="font-semibold block mb-1">
-                            Frisse ideeën
-                          </span>
-                          <span class="text-[0.8em] opacity-70 block mb-2"
-                                [style.color]="selectedThemeColors[5]">
-                            Ontworpen voor moderne layouts
-                          </span>
+
+                        <span class="font-semibold block mb-1">
+                          {{ text?.title || 'Frisse ideeën' }}
+                        </span>
+
+                        <span class="text-[0.8em] opacity-70 block mb-2"
+                              [style.color]="selectedThemeColors[5]">
+                          {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
+                        </span>
+
                         <span>
-                          Flexibel, schaalbaar en stijlvol.
+                          {{ text?.body || 'Flexibel, schaalbaar en stijlvol.' }}
                         </span>
                       </p>
                     </div>
@@ -227,14 +249,14 @@
 
               @for (cell of gridCells; let i = $index; track cell) {
                 @switch (cell) {
-
                   @case ('text') {
-                   <div class="flex flex-col opacity-90">
-
+                  <div class="flex flex-col opacity-90">
                     <div class="rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-300
                                 hover:shadow-xl hover:scale-[1.015]
                                 h-40 sm:h-44 overflow-hidden"
                         [style.background]="selectedThemeColors[7]">
+
+                      @let text = getTextBlock('grid_' + i + '_text');
 
                       <p class="leading-relaxed"
                         [ngClass]="gridFontSize"
@@ -242,25 +264,22 @@
 
                         @if (gridCols < 4) {
                           <span class="font-semibold block mb-1">
-                            Frisse ideeën
+                            {{ text?.title || 'Frisse ideeën' }}
                           </span>
 
                           <span class="text-[0.8em] opacity-70 block mb-2"
                                 [style.color]="selectedThemeColors[5]">
-                            Ontworpen voor moderne layouts
+                            {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
                           </span>
                         }
 
                         <span>
-                          {{ getGridText(i) }}
+                          {{ text?.body || getGridText(i) }}
                         </span>
-
                       </p>
-
                     </div>
-
                   </div>
-                  }
+                }
 
                   @case ('image') {
                      <div class="flex justify-center items-center opacity-90">

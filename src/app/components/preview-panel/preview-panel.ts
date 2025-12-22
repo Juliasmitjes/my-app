@@ -156,6 +156,35 @@ export class PreviewPanel implements OnChanges {
   }
 
   /* ────────────────────────────────────────────────
+  * TEXT BLOCK HELPERS
+  * ────────────────────────────────────────────────
+  */
+
+  // Single-column: keys zoals "image-text_text", "text-image_text", etc.
+  getSingleUploadKey(kind: 'text' | 'image' | 'video'): string | null {
+    const variant = this.builderState.layoutConfig?.variantType;
+    if (!variant) return null;
+    return `${variant}_${kind}`;
+  }
+
+  // Inline text object ophalen: { title, subtitle, body }
+  getTextBlock(key: string | null): { title: string; subtitle: string; body: string } | null {
+    if (!key) return null;
+    const uploads = this.builderState.uploads;
+    if (!uploads) return null;
+
+    const entry = uploads[key];
+    if (!entry || entry.kind !== 'inline' || !entry.value) return null;
+
+    const value = entry.value;
+    return {
+      title: value.title ?? '',
+      subtitle: value.subtitle ?? '',
+      body: value.body ?? ''
+    };
+  }
+
+  /* ────────────────────────────────────────────────
    * COLORS (HYDRATION SAFE)
    * ────────────────────────────────────────────────
    */
@@ -188,28 +217,30 @@ export class PreviewPanel implements OnChanges {
    * ────────────────────────────────────────────────
    */
 
-  getUploadFor(key: string): string | null {
-    const uploads = this.builderState.uploads;
-    if (!uploads) return null;
+    getUploadFor(key: string | null): string | null {
+      if (!key) return null;
 
-    const file = uploads[key];
-    if (!file) return null;
+      const uploads = this.builderState.uploads;
+      if (!uploads) return null;
 
-    // Inline text
-    if (file?.kind === 'inline') {
-      return file.value;
+      const file = uploads[key];
+      if (!file) return null;
+
+      // Inline text → hier NIET voor gebruiken
+      if (file?.kind === 'inline') {
+        return null;
+      }
+
+      // File → blob URL
+      if (file instanceof File) {
+        return URL.createObjectURL(file);
+      }
+
+      // Base64 / URL
+      if (typeof file === 'string') {
+        return file;
+      }
+
+      return null;
     }
-
-    // File → blob URL
-    if (file instanceof File) {
-      return URL.createObjectURL(file);
-    }
-
-    // Base64 / URL
-    if (typeof file === 'string') {
-      return file;
-    }
-
-    return null;
-  }
 }
