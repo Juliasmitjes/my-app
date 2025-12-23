@@ -96,14 +96,18 @@
                           [ngClass]="gridFontSize"
                           [style.color]="selectedThemeColors[6]">
 
-                          <span class="font-semibold block mb-1">
-                            {{ text?.title || 'Frisse ideeën' }}
-                          </span>
+                          @if (!text || text.title) {
+                            <span class="font-semibold block mb-1">
+                              {{ text?.title || 'Frisse ideeën' }}
+                            </span>
+                          }
 
-                          <span class="text-[0.8em] opacity-70 block mb-2"
-                                [style.color]="selectedThemeColors[5]">
-                            {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
-                          </span>
+                          @if (!text || text.subtitle) {
+                            <span class="text-[0.8em] opacity-70 block mb-2"
+                                  [style.color]="selectedThemeColors[5]">
+                              {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
+                            </span>
+                          }
 
                           <span>
                             {{ text?.body || 'Bouw een ontwerp dat vertrouwen uitstraalt. Kies een lay-out die jouw verhaal versterkt. Dit voorbeeld laat zien hoe jouw content straks tot leven komt.' }}
@@ -158,14 +162,18 @@
                         [ngClass]="gridFontSize"
                         [style.color]="selectedThemeColors[6]">
 
-                        <span class="font-semibold block mb-1">
-                          {{ text?.title || 'Frisse ideeën' }}
-                        </span>
+                        @if (!text || text.title) {
+                          <span class="font-semibold block mb-1">
+                            {{ text?.title || 'Frisse ideeën' }}
+                          </span>
+                        }
 
-                        <span class="text-[0.8em] opacity-70 block mb-2"
-                              [style.color]="selectedThemeColors[5]">
-                          {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
-                        </span>
+                        @if (!text || text.subtitle) {
+                          <span class="text-[0.8em] opacity-70 block mb-2"
+                                [style.color]="selectedThemeColors[5]">
+                            {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
+                          </span>
+                        }
 
                         <span>
                           {{ text?.body || 'Zie hoe jouw content tot leven komt.' }}
@@ -206,14 +214,18 @@
                         [ngClass]="gridFontSize"
                         [style.color]="selectedThemeColors[6]">
 
-                        <span class="font-semibold block mb-1">
-                          {{ text?.title || 'Frisse ideeën' }}
-                        </span>
+                        @if (!text || text.title) {
+                          <span class="font-semibold block mb-1">
+                            {{ text?.title || 'Frisse ideeën' }}
+                          </span>
+                        }
 
-                        <span class="text-[0.8em] opacity-70 block mb-2"
-                              [style.color]="selectedThemeColors[5]">
-                          {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
-                        </span>
+                        @if (!text || text.subtitle) {
+                          <span class="text-[0.8em] opacity-70 block mb-2"
+                                [style.color]="selectedThemeColors[5]">
+                            {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
+                          </span>
+                        }
 
                         <span>
                           {{ text?.body || 'Flexibel, schaalbaar en stijlvol.' }}
@@ -263,14 +275,18 @@
                         [style.color]="selectedThemeColors[6]">
 
                         @if (gridCols < 4) {
-                          <span class="font-semibold block mb-1">
-                            {{ text?.title || 'Frisse ideeën' }}
-                          </span>
+                          @if (!text || text.title) {
+                            <span class="font-semibold block mb-1">
+                              {{ text?.title || 'Frisse ideeën' }}
+                            </span>
+                          }
 
-                          <span class="text-[0.8em] opacity-70 block mb-2"
-                                [style.color]="selectedThemeColors[5]">
-                            {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
-                          </span>
+                          @if (!text || text.subtitle) {
+                            <span class="text-[0.8em] opacity-70 block mb-2"
+                                  [style.color]="selectedThemeColors[5]">
+                              {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
+                            </span>
+                          }
                         }
 
                         <span>

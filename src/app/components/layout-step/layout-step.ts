@@ -300,13 +300,10 @@ export class LayoutStep implements OnChanges {
   }
 
 saveTextEditor() {
-  const isEmpty =
-    !this.editorTitle.trim() &&
-    !this.editorSubtitle.trim() &&
-    !this.editorBody.trim();
+  const isEmpty = !this.editorBody.trim();
 
   if (isEmpty) {
-    this.toast.error('Voer verplichte velden in');
+    this.toast.error('Vul de uitgebreide tekst in');
     return;
   }
 
@@ -334,11 +331,7 @@ saveTextEditor() {
 }
 
 get canSaveText(): boolean {
-  return (
-    this.editorTitle.trim().length > 0 &&
-    this.editorSubtitle.trim().length > 0 &&
-    this.editorBody.trim().length > 0
-  );
+  return this.editorBody.trim().length > 0;
 }
 
 
