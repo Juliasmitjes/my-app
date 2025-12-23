@@ -169,9 +169,10 @@ export class Services {
   readonly canProceed = computed<boolean>(() => {
     const step = this.currentStep();
     const state = this.builderState();
+    const hasUploads = !!state.uploads && Object.keys(state.uploads).length > 0;
 
     switch (step) {
-      case 0: return !!state.layout;
+      case 0: return !!state.layout && state.layoutLocked === true && hasUploads && !!state.contentSaved;
       case 1: return !!state.colorTheme;
       case 2: return !!state.fontVariant;
       case 3: return !!state.navigation;

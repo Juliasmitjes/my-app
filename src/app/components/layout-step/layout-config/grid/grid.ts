@@ -119,7 +119,8 @@ export class Grid {
         cellIndex: index,
         uploadType: type,
         uploadKey
-      }
+      },
+      contentSaved: false
     });
   }
 
@@ -138,13 +139,21 @@ export class Grid {
 
     // annuleren
     if (this.isSaved[index]) {
-      this.clearUploads(index);
       this.isSaved[index] = false;
+      this.configChange.emit({
+        layout: 'grid',
+        contentSaved: false
+      });
       return;
     }
 
     // opslaan
     this.isSaved[index] = true;
+    const allSaved = this.grid.every((_, i) => this.isSaved[i]);
+    this.configChange.emit({
+      layout: 'grid',
+      contentSaved: allSaved
+    });
   }
 
   clearUploads(index: number) {
@@ -154,7 +163,8 @@ export class Grid {
       layout: 'grid',
       config: {
         clearUploadKeys: [key]
-      }
+      },
+      contentSaved: false
     });
 
     // na clear opnieuw config uitsturen

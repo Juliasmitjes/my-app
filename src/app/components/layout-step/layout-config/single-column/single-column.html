@@ -56,14 +56,18 @@
               (click)="onSaveClick($event)"
               class="px-8 py-4 rounded-2xl font-semibold transition-all
                      shadow-lg cursor-pointer hover:shadow-xl"
-              [class.bg-accent]="isUploadComplete()"
-              [class.text-accent-foreground]="isUploadComplete()"
-              [class.hover:scale-[1.02]]="isUploadComplete()"
+              [class.bg-accent]="isUploadComplete() && !isSaved"
+              [class.text-accent-foreground]="isUploadComplete() && !isSaved"
+              [class.hover:scale-[1.02]]="isUploadComplete() && !isSaved"
+              [class.bg-white/30]="isSaved"
+              [class.text-white]="isSaved"
+              [class.border]="isSaved"
+              [class.border-white/40]="isSaved"
               [class.bg-white/40]="!isUploadComplete()"
               [class.text-white/60]="!isUploadComplete()"
               [class.backdrop-blur-sm]="!isUploadComplete()"
             >
-              {{ isSaved ? 'Annuleren' : 'Opslaan' }}
+              {{ isSaved ? 'Wijzigen' : 'Opslaan' }}
             </button>
           </div>
 

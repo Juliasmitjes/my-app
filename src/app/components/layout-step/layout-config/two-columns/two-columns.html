@@ -48,14 +48,18 @@
               type="button"
               (click)="onSaveClick(1, $event)"
               class="sm:px-8 sm:py-4 px-4 py-2 rounded-xl sm:rounded-2xl font-semibold transition-all shadow-lg cursor-pointer hover:shadow-xl"
-              [class.bg-accent]="isUploadComplete(1)"
-              [class.text-accent-foreground]="isUploadComplete(1)"
-              [class.hover:scale-[1.02]]="isUploadComplete(1)"
+              [class.bg-accent]="isUploadComplete(1) && !isSavedCol1"
+              [class.text-accent-foreground]="isUploadComplete(1) && !isSavedCol1"
+              [class.hover:scale-[1.02]]="isUploadComplete(1) && !isSavedCol1"
+              [class.bg-white/30]="isSavedCol1"
+              [class.text-white]="isSavedCol1"
+              [class.border]="isSavedCol1"
+              [class.border-white/40]="isSavedCol1"
               [class.bg-white/40]="!isUploadComplete(1)"
               [class.text-white/60]="!isUploadComplete(1)"
               [class.backdrop-blur-sm]="!isUploadComplete(1)"
             >
-              {{ isSavedCol1 ? 'Annuleren' : 'Opslaan' }}
+              {{ isSavedCol1 ? 'Wijzigen' : 'Opslaan' }}
             </button>
 
           </div>
@@ -132,14 +136,18 @@
               type="button"
               (click)="onSaveClick(2, $event)"
               class="sm:px-8 sm:py-4 px-4 py-2 rounded-xl sm:rounded-2xl font-semibold transition-all shadow-lg cursor-pointer hover:shadow-xl"
-              [class.bg-accent]="isUploadComplete(2)"
-              [class.text-accent-foreground]="isUploadComplete(2)"
-              [class.hover:scale-[1.02]]="isUploadComplete(2)"
+              [class.bg-accent]="isUploadComplete(2) && !isSavedCol2"
+              [class.text-accent-foreground]="isUploadComplete(2) && !isSavedCol2"
+              [class.hover:scale-[1.02]]="isUploadComplete(2) && !isSavedCol2"
+              [class.bg-white/30]="isSavedCol2"
+              [class.text-white]="isSavedCol2"
+              [class.border]="isSavedCol2"
+              [class.border-white/40]="isSavedCol2"
               [class.bg-white/40]="!isUploadComplete(2)"
               [class.text-white/60]="!isUploadComplete(2)"
               [class.backdrop-blur-sm]="!isUploadComplete(2)"
             >
-              {{ isSavedCol2 ? 'Annuleren' : 'Opslaan' }}
+              {{ isSavedCol2 ? 'Wijzigen' : 'Opslaan' }}
             </button>
 
           </div>

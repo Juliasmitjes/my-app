@@ -5,3 +5,10 @@
 .animate-pulse {
   animation: pulse 6s ease-in-out infinite;
 }
+:host ::ng-deep .next-step-btn:disabled,
+:host ::ng-deep .next-step-btn:disabled:hover {
+  background-color: hsl(var(--muted));
+  color: hsl(var(--muted-foreground));
+  box-shadow: none;
+  transform: none;
+}

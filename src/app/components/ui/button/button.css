@@ -1,0 +1,7 @@
+button.next-step-btn:disabled,
+button.next-step-btn:disabled:hover {
+  background-color: hsl(var(--muted));
+  color: hsl(var(--muted-foreground));
+  box-shadow: none;
+  transform: none;
+}

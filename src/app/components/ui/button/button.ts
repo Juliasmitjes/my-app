@@ -46,5 +46,5 @@ export class Button {
     icon: 'h-10 w-10'
   };
 
-  return cn(base, variants[this.variant], sizes[this.size], this.class);
+  return cn(base, variants[this.variant], sizes[this.size], this.class, this.buttonClass);
 }}

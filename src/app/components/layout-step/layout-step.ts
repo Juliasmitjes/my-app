@@ -99,6 +99,7 @@ export class LayoutStep implements OnChanges {
 
     this.selectLayout.emit(value);
     this.update.emit({ layout: value });
+    this.update.emit({ contentSaved: false });
 
     this.selectedLayout = value;
 
@@ -134,6 +135,10 @@ export class LayoutStep implements OnChanges {
     });
   }
 
+  if (typeof event.contentSaved === 'boolean') {
+    this.update.emit({ contentSaved: event.contentSaved });
+  }
+
   // 2) CLEAR uploads
   if (event.config?.clearUploadKeys) {
     const newUploads = { ...this.uploads };
@@ -142,6 +147,7 @@ export class LayoutStep implements OnChanges {
     });
     this.uploads = newUploads;
     this.update.emit({ uploads: this.uploads });
+    this.update.emit({ contentSaved: false });
     return;
   }
 
@@ -158,7 +164,8 @@ export class LayoutStep implements OnChanges {
     this.locked = true;
     this.update.emit({
       layoutLocked: true,
-      layout: this.selectedLayout
+      layout: this.selectedLayout,
+      contentSaved: false
     });
   }
 
@@ -166,7 +173,8 @@ export class LayoutStep implements OnChanges {
     this.locked = false;
     this.update.emit({
       layoutLocked: false,
-      layout: this.selectedLayout
+      layout: this.selectedLayout,
+      contentSaved: false
     });
   }
 

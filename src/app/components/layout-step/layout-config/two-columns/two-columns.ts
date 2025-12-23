@@ -77,7 +77,8 @@ export class TwoColumns {
         col,
         uploadType: type,
         uploadKey
-      }
+      },
+      contentSaved: false
     });
   }
 
@@ -95,20 +96,34 @@ export class TwoColumns {
 
     if (col === 1) {
       if (this.isSavedCol1) {
-        this.clearUploads(1);
         this.isSavedCol1 = false;
+        this.configChange.emit({
+          layout: 'two-column',
+          contentSaved: false
+        });
         return;
       }
       this.isSavedCol1 = true;
+      this.configChange.emit({
+        layout: 'two-column',
+        contentSaved: this.isSavedCol1 && this.isSavedCol2
+      });
     }
 
     if (col === 2) {
       if (this.isSavedCol2) {
-        this.clearUploads(2);
         this.isSavedCol2 = false;
+        this.configChange.emit({
+          layout: 'two-column',
+          contentSaved: false
+        });
         return;
       }
       this.isSavedCol2 = true;
+      this.configChange.emit({
+        layout: 'two-column',
+        contentSaved: this.isSavedCol1 && this.isSavedCol2
+      });
     }
   }
 
@@ -119,7 +134,8 @@ export class TwoColumns {
       layout: 'two-column',
       config: {
         clearUploadKeys: [key]
-      }
+      },
+      contentSaved: false
     });
   }
 }

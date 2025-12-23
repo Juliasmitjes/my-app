@@ -26,7 +26,7 @@ export class SingleColumn implements OnInit {
   @Input() locked = false;
   @Input() uploads: Record<string, any> = {};
 
-  @Output() configChange = new EventEmitter<{ layout: string | null; config?: any }>();
+  @Output() configChange = new EventEmitter<{ layout: string | null; config?: any; contentSaved?: boolean }>();
 
   isSaved = false;
 
@@ -121,7 +121,8 @@ export class SingleColumn implements OnInit {
         variantIndex: this.currentIndex,
         uploadType: type,
         uploadKey
-      }
+      },
+      contentSaved: false
     });
   }
 
@@ -134,13 +135,20 @@ export class SingleColumn implements OnInit {
   }
 
   if (this.isSaved) {
-    this.clearCurrentUploads();
     this.isSaved = false;
-    this.toast.info('Wijzigingen ongedaan gemaakt');
+    this.configChange.emit({
+      layout: this.selectedLayout,
+      contentSaved: false
+    });
+    this.toast.info('Je kunt nu weer wijzigen');
     return;
   }
 
   this.isSaved = true;
+  this.configChange.emit({
+    layout: this.selectedLayout,
+    contentSaved: true
+  });
   this.toast.success('Onderdelen zijn opgeslagen');
 }
 
@@ -156,7 +164,8 @@ export class SingleColumn implements OnInit {
       config: {
         variantIndex: this.currentIndex,
         clearUploadKeys: keysToClear
-      }
+      },
+      contentSaved: false
     });
   }
 }
