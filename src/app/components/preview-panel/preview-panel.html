@@ -12,7 +12,7 @@
     <!-- HEADER -->
     <header class="p-4 flex justify-end">
       <button
-        class="px-3 py-2 text-sm font-medium rounded-md border cursor-pointer border-border hover:bg-accent/20"
+        class="px-3 py-2 text-sm font-medium text-white rounded-md border cursor-pointer border-border hover:bg-accent/20"
         (click)="close()">
         Voorbeeld sluiten
       </button>
@@ -118,7 +118,7 @@
                   }
 
                   @case ('image') {
-                    <div class="w-40 h-40 rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center">
+                    <div class="w-40 h-40 rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center self-center mx-auto">
                       <img
                         [src]="getUploadFor(getSingleUploadKey('image')) || 'assets/images/exampleImage.png'"
                         alt="Voorbeeldafbeelding"
@@ -128,7 +128,7 @@
                   }
 
                   @case ('video') {
-                   <div class="w-40 h-40 rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center">
+                   <div class="w-40 h-40 rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center self-center mx-auto">
                       <img
                         [src]="getUploadFor(getSingleUploadKey('video')) || 'assets/images/exampleVideo.png'"
                         alt="Voorbeeld video"
@@ -145,7 +145,7 @@
           <!-- TWO COLUMNS -->
           @if (builderState.layout === 'two-column') {
 
-            <div class="grid grid-cols-2 gap-6">
+            <div class="grid grid-cols-2 gap-6 items-center">
 
               <!-- COL 1 -->
               @switch (twoColumns[0]) {
@@ -183,7 +183,7 @@
                   </div>
                 }
                 @case ('image') {
-                <div class="w-40 h-40 rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center">
+                <div class="w-40 h-40 mx-auto rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center self-center">
                 <img
                   [src]="getUploadFor('col1_image') || 'assets/images/exampleImage.png'"
                   alt="Voorbeeldafbeelding"
@@ -191,10 +191,10 @@
                 </div>
                 }
                 @case ('video') {
-                 <div class="w-40 h-40 rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center">
+                 <div class="w-40 h-40 mx-auto rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center self-center">
                   <img [src]="getUploadFor('col1_video') || 'assets/images/exampleVideo.png'"
                     alt="Voorbeeld video"
-                    class="w-full h-full object-cover" />
+                    class="w-full h-full object-cover object-center" />
                   </div>
                 }
               }
@@ -235,14 +235,14 @@
                   </div>
                 }
                @case ('image') {
-                <div class="w-40 h-40 rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center">
+                <div class="w-40 h-40 mx-auto rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center self-center">
                 <img [src]="getUploadFor('col2_image') || 'assets/images/exampleImage.png'"
                   alt="Voorbeeldafbeelding"
                   class="w-full h-full object-cover" />
                 </div>
               }
                 @case ('video') {
-                <div class="w-40 h-40 rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center">
+                <div class="w-40 h-40 mx-auto rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center self-center">
                 <img [src]="getUploadFor('col2_video') || 'assets/images/exampleVideo.png'"
                   alt="Voorbeeld video"
                   class="w-full h-full object-cover" />
@@ -298,7 +298,7 @@
                 }
 
                 @case ('image') {
-                  <div class="flex justify-center items-center">
+                  <div class="flex justify-center items-center self-center">
                     <div
                       class="rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center"
                       [ngClass]="{
@@ -317,7 +317,7 @@
                 }
 
                   @case ('video') {
-                <div class="flex justify-center items-center opacity-90">
+                <div class="flex justify-center items-center opacity-90 self-center">
                   <div
                     class="rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center"
                     [ngClass]="{
