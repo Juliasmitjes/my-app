@@ -5,3 +5,11 @@ button.next-step-btn:disabled:hover {
   box-shadow: none;
   transform: none;
 }
+
+button.prev-step-btn:disabled,
+button.prev-step-btn:disabled:hover {
+  background-color: hsl(var(--muted));
+  color: hsl(var(--muted-foreground));
+  box-shadow: none;
+  transform: none;
+}
