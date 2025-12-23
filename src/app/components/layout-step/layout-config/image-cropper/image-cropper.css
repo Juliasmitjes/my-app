@@ -1,5 +1,3 @@
-@import "cropperjs/dist/cropper.css";
-
 :host {
   display: block;
 }
@@ -10,16 +8,21 @@
   transition: all 0.3s ease-in-out;
 }
 
-/* ⭐ Binnenste vierkant transparant */
+/* Inner square stays transparent */
 :host ::ng-deep .cropper-view-box {
   background-color: transparent !important;
-  outline: none !important;
+  outline: 2px solid white !important;
+  outline-offset: -2px;
 }
 
-/* ⭐ Verberg standaard lijnen en handles */
 :host ::ng-deep .cropper-dashed {
   border: none !important;
 }
-:host ::ng-deep .cropper-point {
-  opacity: 0 !important;
+
+:host ::ng-deep .cropper-modal {
+  background-color: rgba(220, 220, 220, 0.6) !important;
+}
+
+:host ::ng-deep .cropper-container {
+  touch-action: none;
 }
