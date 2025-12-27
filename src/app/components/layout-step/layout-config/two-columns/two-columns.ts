@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { BuilderState } from '../../../../types/builder-state';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { ToastService } from '../../../ui/toast/toast.service';
@@ -12,10 +13,12 @@ type UploadType = 'text' | 'image' | 'video';
   templateUrl: './two-columns.html',
   imports: [CommonModule, LucideAngularModule, UploadUnit]
 })
-export class TwoColumns {
+export class TwoColumns implements OnChanges {
 
   @Input() locked = false;
   @Input() uploads: Record<string, any> = {};
+  @Input() layoutConfig?: BuilderState['layoutConfig'];
+  @Input() contentSaved = false;
 
   @Output() configChange = new EventEmitter<any>();
 
@@ -35,6 +38,30 @@ export class TwoColumns {
 
   get col1Current() { return this.colOptions[this.col1Index]; }
   get col2Current() { return this.colOptions[this.col2Index]; }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['layoutConfig'] || changes['contentSaved']) {
+      this.syncFromInputs();
+    }
+  }
+
+  private syncFromInputs() {
+    const col1Type = this.layoutConfig?.col1Type;
+    const col2Type = this.layoutConfig?.col2Type;
+
+    if (col1Type) {
+      const index = this.colOptions.findIndex(option => option.type === col1Type);
+      if (index >= 0) this.col1Index = index;
+    }
+
+    if (col2Type) {
+      const index = this.colOptions.findIndex(option => option.type === col2Type);
+      if (index >= 0) this.col2Index = index;
+    }
+
+    this.isSavedCol1 = !!this.contentSaved;
+    this.isSavedCol2 = !!this.contentSaved;
+  }
 
   nextCol1() {
     this.col1Index = (this.col1Index + 1) % this.colOptions.length;

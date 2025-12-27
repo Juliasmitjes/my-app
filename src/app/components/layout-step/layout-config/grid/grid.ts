@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { BuilderState } from '../../../../types/builder-state';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
@@ -22,10 +23,12 @@ interface GridCell {
     UploadUnit
   ]
 })
-export class Grid {
+export class Grid implements OnChanges {
 
   @Input() locked = false;
   @Input() uploads: Record<string, any> = {};
+  @Input() layoutConfig?: BuilderState['layoutConfig'];
+  @Input() contentSaved = false;
 
   @Output() configChange = new EventEmitter<any>();
 
@@ -41,6 +44,12 @@ export class Grid {
 
   ngOnInit() {
   this.updateGrid();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['layoutConfig'] || changes['contentSaved']) {
+      this.syncFromInputs();
+    }
   }
 
 
@@ -122,6 +131,28 @@ export class Grid {
       },
       contentSaved: false
     });
+  }
+
+  private syncFromInputs() {
+    const cols = this.layoutConfig?.cols;
+    const cells = this.layoutConfig?.cells;
+
+    if (cols && cells && cells.length) {
+      this.cols = cols;
+      this.rows = Math.max(1, Math.ceil(cells.length / cols));
+      this.grid = cells.map(value => ({
+        ...this.createDefaultCell(),
+        value
+      }));
+    }
+
+    if (this.contentSaved) {
+      this.grid.forEach((_, index) => {
+        this.isSaved[index] = true;
+      });
+    } else {
+      this.isSaved = {};
+    }
   }
 
   onRequestClear(index: number, uploadKey: string) {

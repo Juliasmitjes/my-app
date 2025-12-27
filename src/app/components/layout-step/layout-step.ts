@@ -80,7 +80,15 @@ export class LayoutStep implements OnChanges {
     { id: 'grid', name: 'Rooster', description: 'Fotos, projecten, overzicht', icon: 'layout-grid' }
   ];
 
-  ngOnChanges(changes: SimpleChanges) {}
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['builderState']) {
+      this.uploads = this.builderState?.uploads ?? {};
+      this.locked = !!this.builderState?.layoutLocked;
+      if (this.builderState?.layout) {
+        this.selectedLayout = this.builderState.layout;
+      }
+    }
+  }
 
   trackById(index: number, item: any) {
     return item.id;

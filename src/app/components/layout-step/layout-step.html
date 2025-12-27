@@ -21,6 +21,8 @@
       <app-single-column
         [locked]="locked"
         [uploads]="uploads"
+        [layoutConfig]="builderState.layoutConfig"
+        [contentSaved]="builderState.contentSaved ?? false"
         (configChange)="onConfigChange($event)"
       ></app-single-column>
     }
@@ -29,6 +31,8 @@
       <app-two-columns
         [locked]="locked"
         [uploads]="uploads"
+        [layoutConfig]="builderState.layoutConfig"
+        [contentSaved]="builderState.contentSaved ?? false"
         (configChange)="onConfigChange($event)"
       ></app-two-columns>
     }
@@ -37,6 +41,8 @@
       <app-grid
         [locked]="locked"
         [uploads]="uploads"
+        [layoutConfig]="builderState.layoutConfig"
+        [contentSaved]="builderState.contentSaved ?? false"
         (configChange)="onConfigChange($event)"
       ></app-grid>
     }
@@ -72,7 +78,7 @@
                font-semibold shadow hover:shadow-md hover:scale-[1.02]
                transition-all cursor-pointer border border-border/40"
       >
-        Indeling ontgrendelen
+        Wijzigen
       </button>
     </div>
   }

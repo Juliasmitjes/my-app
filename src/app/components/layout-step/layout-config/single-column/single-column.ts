@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { BuilderState } from '../../../../types/builder-state';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { ToastService } from '../../../ui/toast/toast.service';
@@ -22,9 +23,11 @@ interface OverlayButton {
     UploadUnit
   ]
 })
-export class SingleColumn implements OnInit {
+export class SingleColumn implements OnInit, OnChanges {
   @Input() locked = false;
   @Input() uploads: Record<string, any> = {};
+  @Input() layoutConfig?: BuilderState['layoutConfig'];
+  @Input() contentSaved = false;
 
   @Output() configChange = new EventEmitter<{ layout: string | null; config?: any; contentSaved?: boolean }>();
 
@@ -45,12 +48,30 @@ export class SingleColumn implements OnInit {
   selectedLayout: string | null = null;
 
   ngOnInit() {
-    this.selectedLayout = this.currentOption.type;
+    this.syncFromInputs();
     this.emitChange();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['layoutConfig'] || changes['contentSaved']) {
+      this.syncFromInputs();
+    }
   }
 
   get currentOption() {
     return this.layoutOptions[this.currentIndex];
+  }
+
+  private syncFromInputs() {
+    const variantType = this.layoutConfig?.variantType;
+    if (variantType) {
+      const index = this.layoutOptions.findIndex(option => option.type === variantType);
+      if (index >= 0) {
+        this.currentIndex = index;
+      }
+    }
+    this.selectedLayout = this.currentOption.type;
+    this.isSaved = !!this.contentSaved;
   }
 
   get overlayButtons(): OverlayButton[] {
