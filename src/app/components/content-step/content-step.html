@@ -9,11 +9,7 @@
 
   <!-- Kaart -->
   <div
-    class="w-full max-w-3xl mx-auto bg-white/60 dark:bg-muted/30 backdrop-blur-sm rounded-3xl p-8 shadow-sm flex flex-col items-center"
-    [ngClass]="{
-      'border border-border/50': !(additionalPagesCount > 3 && isMobile),
-      'border border-red-500': (additionalPagesCount > 3 && isMobile)
-    }"
+    class="w-full max-w-3xl mx-auto bg-white/60 dark:bg-muted/30 backdrop-blur-sm rounded-3xl p-8 shadow-sm flex flex-col items-center border border-border/50"
   >
     <!-- Titel kaart -->
     <div class="text-center mb-6">
@@ -33,7 +29,7 @@
             type="checkbox"
             class="mt-1 accent-accent h-4 w-4"
             [checked]="pages.includes(item.id)"
-            [disabled]="item.required || (!pages.includes(item.id) && pages.length >= 4)"
+            [disabled]="item.required"
             (change)="onSelectPage(item.id, item.required)"
           />
 
@@ -62,14 +58,10 @@
       <!-- Teller -->
       <div class="text-center mt-6">
         <p class="text-sm text-muted-foreground">
-          <span
-            class="font-medium text-foreground"
-            [class.text-accent]="additionalPagesCount < 3"
-            [class.text-red-500]="additionalPagesCount >= 3"
-          >
+          <span class="font-medium text-foreground">
             {{ additionalPagesCount }}
           </span>
-          / 3 extra pagina’s geselecteerd
+          extra pagina's geselecteerd
         </p>
       </div>
     </div>

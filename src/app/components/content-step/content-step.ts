@@ -59,8 +59,6 @@ onSelectPage(pageId: string, required = false) {
       return;
     }
 
-    if (this.pages.length >= 4) return;
-
     const newPages = [...this.pages, pageId];
     this.update.emit({ pages: newPages });
     this.toggle.emit(pageId);
