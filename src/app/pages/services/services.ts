@@ -201,18 +201,16 @@ export class Services {
   }
 
   togglePage(pageId: string): void {
-  this.builderState.update(prev => {
-    const currentPages = prev.pages ?? ['home'];
+    this.builderState.update(prev => {
+      const currentPages = prev.pages ?? ['home'];
 
-    const pages = currentPages.includes(pageId)
-      ? currentPages.filter(p => p !== pageId)
-      : [...currentPages, pageId];
+      const pages = currentPages.includes(pageId)
+        ? currentPages.filter(p => p !== pageId)
+        : [...currentPages, pageId];
 
-    return pages.length <= 4
-      ? { ...prev, pages }
-      : prev;
-  });
-}
+      return { ...prev, pages };
+    });
+  }
 
   /* ───── VALIDATIE PER STAP ───── */
 

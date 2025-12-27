@@ -34,7 +34,6 @@ export class ContentStep {
 
   get additionalPagesCount(): number {
   const count = Math.max(0, this.pages.length - 1);
-  console.log('ContentStep additionalPagesCount', count, 'pages:', this.pages);
   return count;
 }
 
