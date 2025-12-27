@@ -7,7 +7,6 @@
       [ngClass]="size"
       role="dialog"
       aria-label="Live preview"
-      [style.fontFamily]="bodyFont"
     >
       <!-- HEADER -->
       <header class="p-4 flex justify-end">
@@ -23,6 +22,7 @@
       <div
         class="flex-1 rounded-lg shadow-lg overflow-hidden"
         [style.background]="selectedThemeColors[3]"
+        [style.fontFamily]="bodyFont"
       >
         <!-- INNER WRAPPER (scrolls) -->
         <div class="h-full flex flex-col">
