@@ -70,97 +70,97 @@ export class Services {
       id: 'nordic-minimalism',
       name: 'Nordic Minimalism',
       description: 'Koele grijstinten, ijsblauw en zachte houtaccenten',
-      colors: ['#FFFFFF','#EEF2F5','#2F3740','#F7F9FB','#DCE3E8','#E8DCCB','#20262C','#F2E8DD','#2F3740','#C8D1D8'],
+      colors: ['#FFFFFF','#EEF2F5','#2F3740','#F7F9FB','#DCE3E8','#6E625A','#20262C','#F2E8DD','#2F3740','#C8D1D8'],
     },
     {
       id: 'desert-sunset',
       name: 'Desert Sunset',
       description: 'Terracotta, warm zand, gedempt roze en nachtblauw',
-      colors: ['#FFFDFB','#F1E6DB','#2D3B4C','#FAF2EA','#E3C7B8','#F0D4C8','#25303D','#E07E5D','#FFFDFB','#C8B1A2'],
+      colors: ['#FFFDFB','#F1E6DB','#2D3B4C','#FAF2EA','#E3C7B8','#7A5C4A','#25303D','#F4E1D6','#2D3B4C','#C8B1A2'],
     },
     {
       id: 'neo-futurism',
       name: 'Neo-Futurism',
       description: 'Electric blue, neon mint en zilver op diep zwart',
-      colors: ['#0D1117','#161B22','#DDE7F2','#0F141B','#2A323D','#1B2430','#E7EEF6','#3A7BFF','#0D1117','#2F3A46'],
+      colors: ['#0D1117','#161B22','#DDE7F2','#0F141B','#2A323D','#9FB3C8','#E7EEF6','#1B2430','#E7EEF6','#2F3A46'],
     },
     {
       id: 'soft-pastel-dream',
       name: 'Soft Pastel Dream',
       description: 'Poederroze, lavendel, mint en romige tinten',
-      colors: ['#FFFFFF','#F4EAF3','#4A3F4E','#FBF7FB','#E9F2EC','#F2DCE7','#3D343F','#E1F0E8','#4A3F4E','#D7C8D8'],
+      colors: ['#FFFFFF','#F4EAF3','#4A3F4E','#FBF7FB','#E9F2EC','#7B6B80','#3D343F','#E1F0E8','#4A3F4E','#D7C8D8'],
     },
     {
       id: 'urban-monochrome',
       name: 'Urban Monochrome',
       description: 'Houtskool, beton, wit en een hint staalblauw',
-      colors: ['#FFFFFF','#EEF1F4','#2A2F36','#F7F8FA','#C7D1DB','#E1E6EB','#1F2328','#B8C7D6','#2A2F36','#D2DAE2'],
+      colors: ['#FFFFFF','#EEF1F4','#2A2F36','#F7F8FA','#C7D1DB','#6B7682','#1F2328','#B8C7D6','#2A2F36','#D2DAE2'],
     },
     {
       id: 'botanical-greenery',
       name: 'Botanical Greenery',
       description: 'Mosgroen, salie en aarde met zacht geel',
-      colors: ['#FFFFFF','#EEF3EE','#2D4A3A','#F7FAF6','#C9D5C6','#EEE7D6','#263B30','#8FA88F','#2D4A3A','#D6E0D2'],
+      colors: ['#FFFFFF','#EEF3EE','#2D4A3A','#F7FAF6','#C9D5C6','#6F7A66','#263B30','#DDE7DA','#2D4A3A','#D6E0D2'],
     },
     {
       id: 'luxury-noir',
       name: 'Luxury Noir',
       description: 'Diep zwart met champagnegoud, ivoor en bordeaux',
-      colors: ['#0B0B0D','#171719','#E7D6B1','#101112','#2B2522','#1C1A1A','#F5EFE2','#E7D6B1','#0B0B0D','#3A1F2A'],
+      colors: ['#0B0B0D','#171719','#E7D6B1','#101112','#2B2522','#C8B188','#F5EFE2','#1F1A18','#F5EFE2','#3A1F2A'],
     },
     {
       id: 'coastal-breeze',
       name: 'Coastal Breeze',
       description: 'Zeeblauw, zand, schelpwit en zeeschuimgroen',
-      colors: ['#FFFFFF','#EAF2F7','#23424F','#F6F9FB','#D9E6EF','#EADFCF','#1E343E','#74A7B8','#23424F','#CBD8DF'],
+      colors: ['#FFFFFF','#EAF2F7','#23424F','#F6F9FB','#D9E6EF','#6C7C85','#1E343E','#DDEAF0','#23424F','#CBD8DF'],
     },
     {
       id: 'cyber-glow',
       name: 'Cyber Glow',
       description: 'Magenta en cyan met paars op donkergrijs',
-      colors: ['#111115','#1A1B22','#E9EEF6','#151620','#2A2A36','#242436','#F1F2F8','#FF5CA8','#111115','#34354A'],
+      colors: ['#111115','#1A1B22','#E9EEF6','#151620','#2A2A36','#A6A8C8','#F1F2F8','#2A2A36','#F1F2F8','#34354A'],
     },
     {
       id: 'earthy-clay',
       name: 'Earthy Clay',
       description: 'Roest, oker en olijf met warme bruintinten',
-      colors: ['#FFFFFF','#F2E8DD','#3A2F25','#FAF5EF','#D7C2AE','#E7D1BE','#2F241B','#B36A4A','#3A2F25','#D1B59F'],
+      colors: ['#FFFFFF','#F2E8DD','#3A2F25','#FAF5EF','#D7C2AE','#7A5A46','#2F241B','#EADCD0','#3A2F25','#D1B59F'],
     },
     {
       id: 'retro-pop',
       name: 'Retro Pop',
       description: 'Mosterdgeel, petrol, koraal en creme',
-      colors: ['#FFFFFF','#F4E7C5','#204B5B','#FFF8E9','#E6CF85','#F2D6C9','#1A3B46','#E67E6B','#204B5B','#D9C08B'],
+      colors: ['#FFFFFF','#F4E7C5','#204B5B','#FFF8E9','#E6CF85','#6F5A55','#1A3B46','#F4E6DD','#204B5B','#D9C08B'],
     },
     {
       id: 'high-tech-silver',
       name: 'High-Tech Silver',
       description: 'Staal en grafiet met ijsblauw en helder wit',
-      colors: ['#FFFFFF','#EEF2F6','#2B3138','#F8FAFC','#C7D0DA','#E4E9EF','#1F242B','#BFD7EA','#2B3138','#D5DEE7'],
+      colors: ['#FFFFFF','#EEF2F6','#2B3138','#F8FAFC','#C7D0DA','#6B7785','#1F242B','#DDE8F2','#2B3138','#D5DEE7'],
     },
     {
       id: 'candy-shop',
       name: 'Candy Shop',
       description: 'Bubblegum roze, turquoise en zonnig geel',
-      colors: ['#FFFFFF','#FFE6F2','#3C3C44','#FFF5FA','#FFD1E6','#E8F6F4','#2C3A40','#47C6C7','#3C3C44','#F2C4D8'],
+      colors: ['#FFFFFF','#FFE6F2','#3C3C44','#FFF5FA','#FFD1E6','#6B6F78','#2C3A40','#DFF3F2','#3C3C44','#F2C4D8'],
     },
     {
       id: 'midnight-garden',
       name: 'Midnight Garden',
       description: 'Nachtblauw met smaragd, violet en goud',
-      colors: ['#0C111A','#151C29','#E9DDC7','#0F1522','#24324A','#1E2A3A','#F2EBDD','#3C8E7A','#0C111A','#2B3A52'],
+      colors: ['#0C111A','#151C29','#E9DDC7','#0F1522','#24324A','#9FB0C4','#F2EBDD','#1E2A3A','#F2EBDD','#2B3A52'],
     },
     {
       id: 'scandi-warmth',
       name: 'Scandi Warmth',
       description: 'Beige, warm grijs, zacht bruin en dusty blue',
-      colors: ['#FFFFFF','#EFE7DE','#4A3C33','#FBF7F2','#D6C7B7','#E7DED3','#3A2F28','#9AB3C6','#4A3C33','#CFC2B4'],
+      colors: ['#FFFFFF','#EFE7DE','#4A3C33','#FBF7F2','#D6C7B7','#7A6E66','#3A2F28','#9AB3C6','#4A3C33','#CFC2B4'],
     },
     {
       id: 'solar-energy',
       name: 'Solar Energy',
       description: 'Warm geel en oranje met krachtig donkerblauw',
-      colors: ['#FFFFFF','#FFF2CC','#243B63','#FFFBF2','#FFD77A','#F3C17A','#1B2B4A','#F79A3E','#243B63','#E3C38F'],
+      colors: ['#FFFFFF','#FFF2CC','#243B63','#FFFBF2','#FFD77A','#8A5A2B','#1B2B4A','#F7E1C0','#243B63','#E3C38F'],
     }
   ]);
 
@@ -253,6 +253,7 @@ export class Services {
     }
   }
 }
+
 
 
 
