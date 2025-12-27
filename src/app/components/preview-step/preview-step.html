@@ -48,121 +48,410 @@
   </div>
 
   <!-- Preview panel -->
-  <div class="flex-1 flex flex-col rounded-2xl shadow-xl overflow-hidden preview-panel"
-       [ngStyle]="{ 'font-family': bodyFont }"
-       aria-live="polite"
-       [style.background]="selectedThemeColors[0]">
-
-    <!-- Header -->
-        <div class="header border-b"
+  <div class="flex-1 flex flex-col rounded-2xl shadow-xl overflow-hidden preview-panel" aria-live="polite">
+    <!-- OUTER WRAPPER -->
+    <div
+      class="flex-1 rounded-lg shadow-lg overflow-hidden"
+      [style.background]="selectedThemeColors[3]"
+      [style.fontFamily]="bodyFont"
+    >
+      <!-- INNER WRAPPER -->
+      <div class="h-full flex flex-col">
+        @if (canShowLayout && (!canShowNavigation || builderState.navigation === 'top')) {
+          <!-- TOP BAR -->
+          <div
+            class="p-3 border-b"
             [style.background]="selectedThemeColors[1]"
-            [style.color]="selectedThemeColors[2]">
+            [style.borderColor]="selectedThemeColors[9]"
+          >
+            <div class="flex flex-col gap-2">
+              <span
+                class="font-semibold text-sm"
+                [style.color]="selectedThemeColors[2]"
+                [style.fontFamily]="headingFont"
+              >
+                {{ logoLabel }}
+              </span>
 
-          <!-- Desktop: icoon + titel + logoLabel samen -->
-          <div class="hidden sm:flex items-center justify-between p-4">
-            <div class="flex items-center gap-2">
-              <lucide-icon [name]="iconName" class="w-5 h-5"></lucide-icon>
-              <h3 class="font-semibold text-sm tracking-wide uppercase" [style.fontFamily]="headingFont">{{ title }}</h3>
+              <div class="flex flex-wrap gap-2">
+                @if (canShowPages) {
+                  @for (p of pages; track p) {
+                    @if (p !== 'home') {
+                      <span
+                        class="text-xs px-2 py-1 rounded border"
+                        [style.background]="selectedThemeColors[7]"
+                        [style.color]="selectedThemeColors[8]"
+                        [style.borderColor]="selectedThemeColors[9]"
+                      >
+                        {{ pageLabel(p) }}
+                      </span>
+                    }
+                  }
+                }
+              </div>
             </div>
-            <span class="text-md opacity-90" [style.fontFamily]="headingFont">{{ logoLabel }}</span>
           </div>
+        }
 
-          <!-- Mobiel: logoLabel apart -->
-          <div class="sm:hidden p-3 text-left">
-            <span class="text-md opacity-90" [style.fontFamily]="headingFont">{{ logoLabel }}</span>
-          </div>
-        </div>
+        <!-- BODY -->
+        <div
+          class="flex-1 min-h-0 overflow-y-auto"
+          [ngClass]="isSidebar ? 'm-0' : 'm-6 pb-10 pr-4'"
+        >
+          <!-- EMPTY STATE -->
+          @if (!canShowLayout) {
+            <div class="flex flex-col items-center justify-center flex-1 text-center mt-10 gap-4 opacity-80">
+              <lucide-icon
+                name="eye-off"
+                class="w-10 h-10 opacity-40"
+                [style.color]="selectedThemeColors[2]"
+              ></lucide-icon>
 
-    <!-- Content -->
-    <div class="flex-1 p-4 sm:p-6 content-area">
-      @if (isSidebar) {
-        <div class="flex flex-col sm:flex-row h-full gap-4">
-          <aside class="w-full sm:w-40 p-3 rounded-lg sidebar"
-                 [style.background]="selectedThemeColors[3]">
-            <div class="font-semibold mb-3"
-                 [style.color]="selectedThemeColors[2]"
-                 [style.fontFamily]="headingFont">{{ logoLabel }}</div>
-            <nav class="space-y-2 text-sm">
-              @for (p of pages; track p) {
-                <div class="rounded px-2 py-1 page-pill"
-                     [style.background]="selectedThemeColors[1]"
-                     [style.color]="selectedThemeColors[2]"
-                     [style.fontFamily]="headingFont">
-                  {{ pageLabel(p) }}
-                </div>
+              <p class="text-sm max-w-xs" [style.color]="selectedThemeColors[6]">
+                Kies een indeling om een live voorbeeld te bekijken.
+              </p>
+            </div>
+          }
+
+          @if (canShowLayout) {
+            <div class="flex flex-col sm:flex-row h-full gap-4">
+              @if (isSidebar) {
+                <aside
+                  class="w-full sm:w-40 p-3 border"
+                  [style.background]="selectedThemeColors[1]"
+                  [style.borderColor]="selectedThemeColors[9]"
+                >
+                  <div
+                    class="font-semibold mb-3"
+                    [style.color]="selectedThemeColors[2]"
+                    [style.fontFamily]="headingFont"
+                  >
+                    {{ logoLabel }}
+                  </div>
+
+                  <nav class="space-y-2 text-sm">
+                    @if (canShowPages) {
+                      @for (p of pages; track p) {
+                        <div
+                          class="text-xs px-2 py-1 rounded border"
+                          [style.background]="selectedThemeColors[7]"
+                          [style.color]="selectedThemeColors[8]"
+                          [style.borderColor]="selectedThemeColors[9]"
+                          [style.fontFamily]="headingFont"
+                        >
+                          {{ pageLabel(p) }}
+                        </div>
+                      }
+                    }
+                  </nav>
+                </aside>
               }
-            </nav>
-          </aside>
-          <div class="flex-1">
-            <ng-container *ngTemplateOutlet="previewContent"></ng-container>
-          </div>
-        </div>
-      } @else {
-       <!-- topbar-layout -->
-        <div class="flex flex-wrap justify-start gap-2 mb-4 text-sm px-2 sm:px-0">
-          @for (p of pages; track p) {
-            <div class="rounded px-2 py-1 page-pill border border-2"
-                [style.background]="selectedThemeColors[7]"
-                [style.color]="selectedThemeColors[8]"
-                [style.border-color]="selectedThemeColors[9]"
-                [style.fontFamily]="headingFont">
-              {{ pageLabel(p) }}
+
+              <div class="flex-1 min-w-0" [ngClass]="isSidebar ? 'p-6 pb-10 pr-4' : ''">
+                <!-- SINGLE COLUMN -->
+                @if (builderState.layout === 'single') {
+                  <div class="flex flex-col gap-6">
+                    @for (block of singleBlocks; track block) {
+                      @switch (block) {
+                        @case ('text') {
+                          <div class="flex flex-col opacity-90">
+                            <div
+                              class="rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.015] h-40 sm:h-44 overflow-hidden"
+                              [style.background]="selectedThemeColors[7]"
+                            >
+                              @let text = getTextBlock(getSingleUploadKey('text'));
+
+                              <p
+                                class="leading-relaxed"
+                                [ngClass]="gridFontSize"
+                                [style.color]="selectedThemeColors[6]"
+                              >
+                                @if (!text || text.title) {
+                                  <span class="font-semibold block mb-1" [style.fontFamily]="headingFont">
+                                    {{ text?.title || 'Frisse ideeǮn' }}
+                                  </span>
+                                }
+
+                                @if (!text || text.subtitle) {
+                                  <span
+                                    class="text-[0.8em] opacity-70 block mb-2"
+                                    [style.color]="selectedThemeColors[6]"
+                                  >
+                                    {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
+                                  </span>
+                                }
+
+                                <span>
+                                  {{
+                                    text?.body ||
+                                      'Bouw een ontwerp dat vertrouwen uitstraalt. Kies een lay-out die jouw verhaal versterkt. Dit voorbeeld laat zien hoe jouw content straks tot leven komt.'
+                                  }}
+                                </span>
+                              </p>
+                            </div>
+                          </div>
+                        }
+
+                        @case ('image') {
+                          <div
+                            class="w-40 h-40 rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center self-center mx-auto"
+                          >
+                            <img
+                              [src]="getUploadFor(getSingleUploadKey('image')) || 'assets/images/exampleImage.png'"
+                              alt="Voorbeeldafbeelding"
+                              class="w-full h-full object-cover"
+                            />
+                          </div>
+                        }
+
+                        @case ('video') {
+                          <div
+                            class="w-40 h-40 rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center self-center mx-auto"
+                          >
+                            <img
+                              [src]="getUploadFor(getSingleUploadKey('video')) || 'assets/images/exampleVideo.png'"
+                              alt="Voorbeeld video"
+                              class="w-full h-full object-cover"
+                            />
+                          </div>
+                        }
+                      }
+                    }
+                  </div>
+                }
+
+                <!-- TWO COLUMNS -->
+                @if (builderState.layout === 'two-column') {
+                  <div class="grid grid-cols-2 gap-6 items-center">
+                    <!-- COL 1 -->
+                    @switch (twoColumns[0]) {
+                      @case ('text') {
+                        <div class="flex flex-col opacity-90">
+                          <div
+                            class="rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.015] h-40 sm:h-44 overflow-hidden"
+                            [style.background]="selectedThemeColors[7]"
+                          >
+                            @let text = getTextBlock('col1_text');
+
+                            <p
+                              class="leading-relaxed"
+                              [ngClass]="gridFontSize"
+                              [style.color]="selectedThemeColors[6]"
+                            >
+                              @if (!text || text.title) {
+                                <span class="font-semibold block mb-1" [style.fontFamily]="headingFont">
+                                  {{ text?.title || 'Frisse ideeǮn' }}
+                                </span>
+                              }
+
+                              @if (!text || text.subtitle) {
+                                <span class="text-[0.8em] opacity-70 block mb-2" [style.color]="selectedThemeColors[6]">
+                                  {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
+                                </span>
+                              }
+
+                              <span>{{ text?.body || 'Zie hoe jouw content tot leven komt.' }}</span>
+                            </p>
+                          </div>
+                        </div>
+                      }
+
+                      @case ('image') {
+                        <div
+                          class="w-40 h-40 mx-auto rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center self-center"
+                        >
+                          <img
+                            [src]="getUploadFor('col1_image') || 'assets/images/exampleImage.png'"
+                            alt="Voorbeeldafbeelding"
+                            class="w-full h-full object-cover"
+                          />
+                        </div>
+                      }
+
+                      @case ('video') {
+                        <div
+                          class="w-40 h-40 mx-auto rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center self-center"
+                        >
+                          <img
+                            [src]="getUploadFor('col1_video') || 'assets/images/exampleVideo.png'"
+                            alt="Voorbeeld video"
+                            class="w-full h-full object-cover object-center"
+                          />
+                        </div>
+                      }
+                    }
+
+                    <!-- COL 2 -->
+                    @switch (twoColumns[1]) {
+                      @case ('text') {
+                        <div class="flex flex-col opacity-90">
+                          <div
+                            class="rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.015] h-40 sm:h-44 overflow-hidden"
+                            [style.background]="selectedThemeColors[7]"
+                          >
+                            @let text = getTextBlock('col2_text');
+
+                            <p
+                              class="leading-relaxed"
+                              [ngClass]="gridFontSize"
+                              [style.color]="selectedThemeColors[6]"
+                            >
+                              @if (!text || text.title) {
+                                <span class="font-semibold block mb-1" [style.fontFamily]="headingFont">
+                                  {{ text?.title || 'Frisse ideeǮn' }}
+                                </span>
+                              }
+
+                              @if (!text || text.subtitle) {
+                                <span class="text-[0.8em] opacity-70 block mb-2" [style.color]="selectedThemeColors[6]">
+                                  {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
+                                </span>
+                              }
+
+                              <span>{{ text?.body || 'Flexibel, schaalbaar en stijlvol.' }}</span>
+                            </p>
+                          </div>
+                        </div>
+                      }
+
+                      @case ('image') {
+                        <div
+                          class="w-40 h-40 mx-auto rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center self-center"
+                        >
+                          <img
+                            [src]="getUploadFor('col2_image') || 'assets/images/exampleImage.png'"
+                            alt="Voorbeeldafbeelding"
+                            class="w-full h-full object-cover"
+                          />
+                        </div>
+                      }
+
+                      @case ('video') {
+                        <div
+                          class="w-40 h-40 mx-auto rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center self-center"
+                        >
+                          <img
+                            [src]="getUploadFor('col2_video') || 'assets/images/exampleVideo.png'"
+                            alt="Voorbeeld video"
+                            class="w-full h-full object-cover"
+                          />
+                        </div>
+                      }
+                    }
+                  </div>
+                }
+
+                <!-- GRID -->
+                @if (builderState.layout === 'grid') {
+                  <div class="grid gap-6" [style.gridTemplateColumns]="getGridColumns()">
+                    @for (cell of gridCells; let i = $index; track cell) {
+                      @switch (cell) {
+                        @case ('text') {
+                          <div class="flex flex-col opacity-90">
+                            <div
+                              class="rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.015] h-40 sm:h-44 overflow-hidden"
+                              [style.background]="selectedThemeColors[7]"
+                            >
+                              @let text = getTextBlock('grid_' + i + '_text');
+
+                              <p
+                                class="leading-relaxed"
+                                [ngClass]="gridFontSize"
+                                [style.color]="selectedThemeColors[6]"
+                              >
+                                @if (gridCols < 4) {
+                                  @if (!text || text.title) {
+                                    <span class="font-semibold block mb-1" [style.fontFamily]="headingFont">
+                                      {{ text?.title || 'Frisse ideeǮn' }}
+                                    </span>
+                                  }
+
+                                  @if (!text || text.subtitle) {
+                                    <span class="text-[0.8em] opacity-70 block mb-2" [style.color]="selectedThemeColors[6]">
+                                      {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
+                                    </span>
+                                  }
+                                }
+
+                                <span>{{ text?.body || getGridText(i) }}</span>
+                              </p>
+                            </div>
+                          </div>
+                        }
+
+                        @case ('image') {
+                          <div class="flex justify-center items-center self-center">
+                            <div
+                              class="rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center"
+                              [ngClass]="{
+                                'w-40 h-40': gridCols <= 2,
+                                'w-28 h-28': gridCols === 3,
+                                'w-20 h-20': gridCols >= 4
+                              }"
+                            >
+                              <img
+                                [src]="getUploadFor('grid_' + i + '_image') || 'assets/images/exampleImage.png'"
+                                alt="Voorbeeldafbeelding"
+                                class="w-full h-full object-cover"
+                              />
+                            </div>
+                          </div>
+                        }
+
+                        @case ('video') {
+                          <div class="flex justify-center items-center opacity-90 self-center">
+                            <div
+                              class="rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center"
+                              [ngClass]="{
+                                'w-40 h-40': gridCols <= 2,
+                                'w-28 h-28': gridCols === 3,
+                                'w-20 h-20': gridCols >= 4
+                              }"
+                            >
+                              @if (getUploadFor('grid_' + i + '_video')) {
+                                <video
+                                  [src]="getUploadFor('grid_' + i + '_video')"
+                                  class="w-full h-full object-cover"
+                                  muted
+                                  autoplay
+                                  loop
+                                ></video>
+                              } @else {
+                                <img
+                                  src="assets/images/exampleVideo.png"
+                                  alt="Voorbeeld video"
+                                  class="w-full h-full object-cover"
+                                />
+                              }
+                            </div>
+                          </div>
+                        }
+                      }
+                    }
+                  </div>
+                }
+              </div>
             </div>
           }
         </div>
-
-        <ng-container *ngTemplateOutlet="previewContent"></ng-container>
-      }
+      </div>
     </div>
 
-    <!-- Footer -->
-    <div class="p-3 sm:p-4 text-xs footer text-left">
-      <div class="flex flex-col sm:flex-wrap gap-y-1 sm:gap-x-4 text-muted-foreground"
-      [style.color]="selectedThemeColors[6]">
-        <div><strong>Layout:</strong> {{ builderState.layout }}</div>
-        <div><strong>Theme:</strong> {{ builderState.colorTheme }}</div>
-        <div>
-          <strong>Fonts:</strong>
-          {{ builderState.headingFontVariant || builderState.fontVariant }}
-          /
-          {{ builderState.bodyFontVariant || builderState.fontVariant }}
-        </div>
-        <div><strong>Navigation:</strong> {{ builderState.navigation }}</div>
+    <!-- FOOTER INFO -->
+    <div
+      class="mt-4 ml-2 text-xs font-semibold space-y-1"
+      [style.color]="builderState.colorTheme ? selectedThemeColors[6] : '#ffffff'"
+    >
+      <div>Layout: {{ builderState.layout || '-' }}</div>
+      <div>Theme: {{ builderState.colorTheme || '-' }}</div>
+      <div>
+        Fonts:
+        {{ builderState.headingFontVariant || builderState.fontVariant || '-' }}
+        /
+        {{ builderState.bodyFontVariant || builderState.fontVariant || '-' }}
       </div>
+      <div>Navigation: {{ builderState.navigation || '-' }}</div>
+      <div>Pages: {{ canShowPages ? pages.join(', ') : '-' }}</div>
     </div>
   </div>
 </div>
-
-<!-- Preview content -->
-<ng-template #previewContent>
-  <div class="flex-1 flex flex-col">
-    <div class="h-4 rounded w-3/4 mb-3 bar"
-         [style.background]="selectedThemeColors[3]"></div>
-    <div class="h-4 rounded w-1/2 mb-6 bar"
-         [style.background]="selectedThemeColors[4]"></div>
-
-    <!-- Voorbeeldzin -->
-    <p class="text-base sm:text-lg leading-relaxed mb-6"
-       [ngStyle]="{
-         'font-family': bodyFont,
-         'color': selectedThemeColors[6]
-       }">
-      {{ builderState.fontSample?.trim()?.length ? builderState.fontSample : 'Dit is een voorbeeldtekst' }}
-    </p>
-
-    <!-- Layout blocks -->
-    <div class="mt-6 grid gap-4"
-         [style.gridTemplateColumns]="getGridColumns()">
-      <div class="h-24 rounded block"
-           [style.background]="selectedThemeColors[5]"></div>
-      @if (builderState.layout !== 'single') {
-        <div class="h-24 rounded block"
-             [style.background]="selectedThemeColors[5]"></div>
-      }
-      @if (builderState.layout === 'grid') {
-        <div class="h-24 rounded block"
-             [style.background]="selectedThemeColors[5]"></div>
-      }
-    </div>
-  </div>
-</ng-template>
