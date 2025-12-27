@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { BuilderState } from '../../types/builder-state';
+import { fontMap } from '../../shared/fonts';
 import { SpeechBubble } from '../../components/ui/speech-bubble/speech-bubble';
 import { RequestPopup } from '../request-popup/request-popup';
 
@@ -49,14 +50,21 @@ export class PreviewStep {
     return theme?.colors ?? ['#e5e7eb', '#d1d5db', '#9ca3af']; 
   }
 
-  fontMap: Record<string, string> = {
-  inter: "'Inter', sans-serif",
-  roboto: "'Roboto', sans-serif",
-  merriweather: "'Merriweather', serif",
-  playfair: "'Playfair Display', serif",
-  montserrat: "'Montserrat', sans-serif",
-  oswald: "'Oswald', sans-serif"
-};
+  fontMap = fontMap;
+
+  get headingFont(): string {
+    const id =
+      this.builderState?.headingFontVariant ??
+      this.builderState?.fontVariant ??
+      this.builderState?.bodyFontVariant ??
+      'inter';
+    return this.fontMap[id] ?? this.fontMap['inter'];
+  }
+
+  get bodyFont(): string {
+    const id = this.builderState?.bodyFontVariant ?? this.builderState?.fontVariant ?? 'inter';
+    return this.fontMap[id] ?? this.fontMap['inter'];
+  }
 
 openRequestPopup() {
   console.log('Button clicked!');

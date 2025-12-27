@@ -49,7 +49,7 @@
 
   <!-- Preview panel -->
   <div class="flex-1 flex flex-col rounded-2xl shadow-xl overflow-hidden preview-panel"
-       [ngStyle]="{ 'font-family': fontMap[builderState.fontVariant!] }"
+       [ngStyle]="{ 'font-family': bodyFont }"
        aria-live="polite"
        [style.background]="selectedThemeColors[0]">
 
@@ -62,14 +62,14 @@
           <div class="hidden sm:flex items-center justify-between p-4">
             <div class="flex items-center gap-2">
               <lucide-icon [name]="iconName" class="w-5 h-5"></lucide-icon>
-              <h3 class="font-semibold text-sm tracking-wide uppercase">{{ title }}</h3>
+              <h3 class="font-semibold text-sm tracking-wide uppercase" [style.fontFamily]="headingFont">{{ title }}</h3>
             </div>
-            <span class="text-md opacity-90">{{ logoLabel }}</span>
+            <span class="text-md opacity-90" [style.fontFamily]="headingFont">{{ logoLabel }}</span>
           </div>
 
           <!-- Mobiel: logoLabel apart -->
           <div class="sm:hidden p-3 text-left">
-            <span class="text-md opacity-90">{{ logoLabel }}</span>
+            <span class="text-md opacity-90" [style.fontFamily]="headingFont">{{ logoLabel }}</span>
           </div>
         </div>
 
@@ -80,12 +80,14 @@
           <aside class="w-full sm:w-40 p-3 rounded-lg sidebar"
                  [style.background]="selectedThemeColors[3]">
             <div class="font-semibold mb-3"
-                 [style.color]="selectedThemeColors[2]">{{ logoLabel }}</div>
+                 [style.color]="selectedThemeColors[2]"
+                 [style.fontFamily]="headingFont">{{ logoLabel }}</div>
             <nav class="space-y-2 text-sm">
               @for (p of pages; track p) {
                 <div class="rounded px-2 py-1 page-pill"
                      [style.background]="selectedThemeColors[1]"
-                     [style.color]="selectedThemeColors[2]">
+                     [style.color]="selectedThemeColors[2]"
+                     [style.fontFamily]="headingFont">
                   {{ pageLabel(p) }}
                 </div>
               }
@@ -102,7 +104,8 @@
             <div class="rounded px-2 py-1 page-pill border border-2"
                 [style.background]="selectedThemeColors[7]"
                 [style.color]="selectedThemeColors[8]"
-                [style.border-color]="selectedThemeColors[9]">
+                [style.border-color]="selectedThemeColors[9]"
+                [style.fontFamily]="headingFont">
               {{ pageLabel(p) }}
             </div>
           }
@@ -118,7 +121,12 @@
       [style.color]="selectedThemeColors[6]">
         <div><strong>Layout:</strong> {{ builderState.layout }}</div>
         <div><strong>Theme:</strong> {{ builderState.colorTheme }}</div>
-        <div><strong>Font:</strong> {{ builderState.fontVariant }}</div>
+        <div>
+          <strong>Fonts:</strong>
+          {{ builderState.headingFontVariant || builderState.fontVariant }}
+          /
+          {{ builderState.bodyFontVariant || builderState.fontVariant }}
+        </div>
         <div><strong>Navigation:</strong> {{ builderState.navigation }}</div>
       </div>
     </div>
@@ -136,7 +144,7 @@
     <!-- Voorbeeldzin -->
     <p class="text-base sm:text-lg leading-relaxed mb-6"
        [ngStyle]="{
-         'font-family': fontMap[builderState.fontVariant || ''],
+         'font-family': bodyFont,
          'color': selectedThemeColors[6]
        }">
       {{ builderState.fontSample?.trim()?.length ? builderState.fontSample : 'Dit is een voorbeeldtekst' }}

@@ -40,7 +40,45 @@ export interface BuilderState {
   /** Specifieke fontvariant binnen de gekozen stijl */
   fontVariant?:
     | 'inter'
+    | 'raleway'
+    | 'lora'
+    | 'dm-sans'
+    | 'manrope'
+    | 'poppins'
     | 'roboto'
+    | 'space-grotesk'
+    | 'merriweather'
+    | 'playfair'
+    | 'montserrat'
+    | 'oswald'
+    | null;
+
+  /** Font voor kopjes */
+  headingFontVariant?:
+    | 'inter'
+    | 'raleway'
+    | 'lora'
+    | 'dm-sans'
+    | 'manrope'
+    | 'poppins'
+    | 'roboto'
+    | 'space-grotesk'
+    | 'merriweather'
+    | 'playfair'
+    | 'montserrat'
+    | 'oswald'
+    | null;
+
+  /** Font voor hoofdtekst */
+  bodyFontVariant?:
+    | 'inter'
+    | 'raleway'
+    | 'lora'
+    | 'dm-sans'
+    | 'manrope'
+    | 'poppins'
+    | 'roboto'
+    | 'space-grotesk'
     | 'merriweather'
     | 'playfair'
     | 'montserrat'

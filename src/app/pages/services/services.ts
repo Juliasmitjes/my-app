@@ -55,6 +55,8 @@ export class Services {
     layout: undefined,
     colorTheme: undefined,
     fontVariant: undefined,
+    headingFontVariant: undefined,
+    bodyFontVariant: undefined,
     fontSample: undefined,
     logo: '',
     navigation: undefined,
@@ -222,7 +224,7 @@ export class Services {
     switch (step) {
       case 0: return !!state.layout && state.layoutLocked === true && hasUploads && !!state.contentSaved;
       case 1: return !!state.colorTheme;
-      case 2: return !!state.fontVariant;
+      case 2: return !!(state.bodyFontVariant ?? state.fontVariant) && !!(state.headingFontVariant ?? state.fontVariant);
       case 3: return !!state.navigation;
       case 4: return Array.isArray(state.pages) && state.pages.length > 0;
       default: return false;

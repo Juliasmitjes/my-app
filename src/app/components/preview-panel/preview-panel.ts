@@ -76,7 +76,7 @@ export class PreviewPanel implements OnChanges {
   }
 
   get canShowFont(): boolean {
-    return this.currentStep >= 2 && !!this.builderState.fontVariant;
+    return this.currentStep >= 2 && !!(this.builderState.bodyFontVariant ?? this.builderState.fontVariant) && !!(this.builderState.headingFontVariant ?? this.builderState.fontVariant);
   }
 
   get canShowNavigation(): boolean {
@@ -164,6 +164,20 @@ export class PreviewPanel implements OnChanges {
 
   get logoLabel(): string {
     return this.builderState.logo || 'Your Site';
+  }
+
+  get headingFont(): string {
+    const id =
+      this.builderState.headingFontVariant ??
+      this.builderState.fontVariant ??
+      this.builderState.bodyFontVariant ??
+      'inter';
+    return this.fontMap[id] ?? this.fontMap['inter'];
+  }
+
+  get bodyFont(): string {
+    const id = this.builderState.bodyFontVariant ?? this.builderState.fontVariant ?? 'inter';
+    return this.fontMap[id] ?? this.fontMap['inter'];
   }
 
   pageLabel(p: string): string {

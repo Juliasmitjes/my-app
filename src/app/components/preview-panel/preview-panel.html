@@ -7,7 +7,7 @@
          [ngClass]="size"
          role="dialog"
          aria-label="Live preview"
-         [style.fontFamily]="fontMap[builderState.fontVariant ?? 'inter']">
+         [style.fontFamily]="bodyFont">
 
     <!-- HEADER -->
     <header class="p-4 flex justify-end">
@@ -33,7 +33,8 @@
 
               <div class="flex justify-between items-center">
                 <span class="font-semibold text-sm"
-                      [style.color]="selectedThemeColors[2]">
+                      [style.color]="selectedThemeColors[2]"
+                      [style.fontFamily]="headingFont">
                   {{ logoLabel }}
                 </span>
 
@@ -97,7 +98,8 @@
                           [style.color]="selectedThemeColors[6]">
 
                           @if (!text || text.title) {
-                            <span class="font-semibold block mb-1">
+                            <span class="font-semibold block mb-1"
+                                  [style.fontFamily]="headingFont">
                               {{ text?.title || 'Frisse ideeën' }}
                             </span>
                           }
@@ -163,7 +165,8 @@
                         [style.color]="selectedThemeColors[6]">
 
                         @if (!text || text.title) {
-                          <span class="font-semibold block mb-1">
+                          <span class="font-semibold block mb-1"
+                                  [style.fontFamily]="headingFont">
                             {{ text?.title || 'Frisse ideeën' }}
                           </span>
                         }
@@ -215,7 +218,8 @@
                         [style.color]="selectedThemeColors[6]">
 
                         @if (!text || text.title) {
-                          <span class="font-semibold block mb-1">
+                          <span class="font-semibold block mb-1"
+                                  [style.fontFamily]="headingFont">
                             {{ text?.title || 'Frisse ideeën' }}
                           </span>
                         }
@@ -276,7 +280,8 @@
 
                         @if (gridCols < 4) {
                           @if (!text || text.title) {
-                            <span class="font-semibold block mb-1">
+                            <span class="font-semibold block mb-1"
+                                  [style.fontFamily]="headingFont">
                               {{ text?.title || 'Frisse ideeën' }}
                             </span>
                           }
@@ -360,7 +365,12 @@
           [style.color]="builderState.colorTheme ? selectedThemeColors[6] : '#ffffff'">
         <div>Layout: {{ builderState.layout || '—' }}</div>
         <div>Theme: {{ builderState.colorTheme || '—' }}</div>
-        <div>Font: {{ builderState.fontVariant || '—' }}</div>
+        <div>
+          Fonts:
+          {{ builderState.headingFontVariant || builderState.fontVariant || '-' }}
+          /
+          {{ builderState.bodyFontVariant || builderState.fontVariant || '-' }}
+        </div>
         <div>Navigation: {{ builderState.navigation || '—' }}</div>
         <div>Pages: {{ canShowPages ? pages.join(', ') : '—' }}</div>
       </div>
@@ -368,3 +378,5 @@
 </div>
 
 }
+
+
