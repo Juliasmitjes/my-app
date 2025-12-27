@@ -59,7 +59,7 @@ export class Services {
     bodyFontVariant: undefined,
     fontSample: undefined,
     logo: '',
-    navigation: undefined,
+    navigation: 'top',
     headerStyle: 'fixed',
     pages: ['home'],
     uploads: {}
