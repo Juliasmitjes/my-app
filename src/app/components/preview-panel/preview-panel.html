@@ -33,7 +33,7 @@
               [style.background]="selectedThemeColors[1]"
               [style.borderColor]="selectedThemeColors[9]"
             >
-              <div class="flex justify-between items-center">
+              <div class="flex flex-col gap-2">
                 <span
                   class="font-semibold text-sm"
                   [style.color]="selectedThemeColors[2]"
@@ -42,7 +42,7 @@
                   {{ logoLabel }}
                 </span>
 
-                <div class="flex gap-2">
+                <div class="flex flex-wrap gap-2">
                   @if (canShowPages) {
                     @for (p of pages; track p) {
                       @if (p !== 'home') {
@@ -104,9 +104,10 @@
                       @if (canShowPages) {
                         @for (p of pages; track p) {
                           <div
-                            class="rounded px-2 py-1"
-                            [style.background]="selectedThemeColors[1]"
-                            [style.color]="selectedThemeColors[2]"
+                            class="text-xs px-2 py-1 rounded border"
+                            [style.background]="selectedThemeColors[7]"
+                            [style.color]="selectedThemeColors[8]"
+                            [style.borderColor]="selectedThemeColors[9]"
                             [style.fontFamily]="headingFont"
                           >
                             {{ pageLabel(p) }}

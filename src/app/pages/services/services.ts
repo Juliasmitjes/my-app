@@ -176,7 +176,7 @@ export class Services {
     { id: 'diensten', name: 'Diensten', description: 'Wat je aanbiedt', icon: 'briefcase' },
     { id: 'portfolio', name: 'Portfolio', description: 'Projecten of werk', icon: 'image' },
     { id: 'team', name: 'Team', description: 'Voorstellen', icon: 'users' },
-    { id: 'faq', name: 'FAQ', description: 'Veelgestelde vragen', icon: 'message-circle' },
+    { id: 'faq', name: 'FAQ', description: 'Veelgestelde vragen', icon: 'MessageCircle' },
     { id: 'reviews', name: 'Reviews', description: 'Wat anderen zeggen', icon: 'star' }
   ];
 
