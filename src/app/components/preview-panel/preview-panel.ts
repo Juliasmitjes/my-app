@@ -68,23 +68,26 @@ export class PreviewPanel implements OnChanges {
    */
 
   get canShowLayout(): boolean {
-    return this.currentStep >= 0 && !!this.builderState.layout;
+    return !!this.builderState.layout;
   }
 
   get canShowColors(): boolean {
-    return this.currentStep >= 1 && !!this.builderState.colorTheme;
+    return !!this.builderState.colorTheme;
   }
 
   get canShowFont(): boolean {
-    return this.currentStep >= 2 && !!(this.builderState.bodyFontVariant ?? this.builderState.fontVariant) && !!(this.builderState.headingFontVariant ?? this.builderState.fontVariant);
+    return (
+      !!(this.builderState.bodyFontVariant ?? this.builderState.fontVariant) &&
+      !!(this.builderState.headingFontVariant ?? this.builderState.fontVariant)
+    );
   }
 
   get canShowNavigation(): boolean {
-    return this.currentStep >= 3 && !!this.builderState.navigation;
+    return !!this.builderState.navigation;
   }
 
   get canShowPages(): boolean {
-    return this.currentStep >= 4 && (this.builderState.pages?.length ?? 0) > 0;
+    return (this.builderState.pages?.length ?? 0) > 0;
   }
 
   /* ────────────────────────────────────────────────
