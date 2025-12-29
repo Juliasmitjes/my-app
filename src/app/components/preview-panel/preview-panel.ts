@@ -90,6 +90,10 @@ export class PreviewPanel implements OnChanges {
     return (this.builderState.pages?.length ?? 0) > 0;
   }
 
+  get canShowHomePage(): boolean {
+    return this.currentStep >= 4;
+  }
+
   /* ────────────────────────────────────────────────
    * LAYOUT HELPERS
    * ────────────────────────────────────────────────

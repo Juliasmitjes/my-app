@@ -103,15 +103,17 @@
                     <nav class="space-y-2 text-sm">
                       @if (canShowPages) {
                         @for (p of pages; track p) {
-                          <div
-                            class="text-xs px-2 py-1 rounded border"
-                            [style.background]="selectedThemeColors[7]"
-                            [style.color]="selectedThemeColors[8]"
-                            [style.borderColor]="selectedThemeColors[9]"
-                            [style.fontFamily]="headingFont"
-                          >
-                            {{ pageLabel(p) }}
-                          </div>
+                          @if (p !== 'home' || canShowHomePage) {
+                            <div
+                              class="text-xs px-2 py-1 rounded border"
+                              [style.background]="selectedThemeColors[7]"
+                              [style.color]="selectedThemeColors[8]"
+                              [style.borderColor]="selectedThemeColors[9]"
+                              [style.fontFamily]="headingFont"
+                            >
+                              {{ pageLabel(p) }}
+                            </div>
+                          }
                         }
                       }
                     </nav>
