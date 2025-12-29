@@ -52,7 +52,9 @@
     <!-- OUTER WRAPPER -->
     <div
       class="flex-1 rounded-lg shadow-lg overflow-hidden"
-      [style.background]="builderState.layout === 'single' ? 'color-mix(in srgb, ' + selectedThemeColors[1] + ' 70%, white)' : selectedThemeColors[3]"
+      [style.background]="builderState.layout === 'single' || builderState.layout === 'two-column' || builderState.layout === 'grid'
+        ? 'color-mix(in srgb, ' + selectedThemeColors[1] + ' 70%, white)'
+        : selectedThemeColors[3]"
       [style.fontFamily]="bodyFont"
     >
       <!-- INNER WRAPPER -->
@@ -92,14 +94,16 @@
                 </div>
               </div>
 
-              <button
-                class="px-3 py-2 text-xs font-semibold rounded-md border whitespace-nowrap"
-                [style.background]="selectedThemeColors[2]"
-                [style.color]="selectedThemeColors[0]"
-                [style.borderColor]="selectedThemeColors[2]"
-              >
-                Button
-              </button>
+              @if (currentStep < 4) {
+                <button
+                  class="px-3 py-2 text-xs font-semibold rounded-md border whitespace-nowrap"
+                  [style.background]="selectedThemeColors[2]"
+                  [style.color]="selectedThemeColors[0]"
+                  [style.borderColor]="selectedThemeColors[2]"
+                >
+                  Button
+                </button>
+              }
             </div>
           </div>
         }
@@ -107,7 +111,9 @@
         <!-- BODY -->
         <div
           class="flex-1 min-h-0 overflow-y-auto"
-          [ngClass]="isSidebar ? 'm-0' : (builderState.layout === 'single' ? 'm-0 p-0' : 'm-6 pb-10 pr-4')"
+          [ngClass]="isSidebar ? 'm-0' : (builderState.layout === 'single' || builderState.layout === 'two-column' || builderState.layout === 'grid'
+            ? 'm-0 p-0'
+            : 'm-6 pb-10 pr-4')"
         >
           <!-- EMPTY STATE -->
           @if (!canShowLayout) {
@@ -139,14 +145,16 @@
                   >
                     {{ logoLabel }}
                   </div>
-                  <button
-                    class="mb-3 w-full px-3 py-2 text-xs font-semibold rounded-md border"
-                    [style.background]="selectedThemeColors[2]"
-                    [style.color]="selectedThemeColors[0]"
-                    [style.borderColor]="selectedThemeColors[2]"
-                  >
-                    Button
-                  </button>
+                  @if (currentStep < 4) {
+                    <button
+                      class="mb-3 w-full px-3 py-2 text-xs font-semibold rounded-md border"
+                      [style.background]="selectedThemeColors[2]"
+                      [style.color]="selectedThemeColors[0]"
+                      [style.borderColor]="selectedThemeColors[2]"
+                    >
+                      Button
+                    </button>
+                  }
 
                   <nav class="space-y-2 text-sm">
                     @if (canShowPages) {
@@ -179,7 +187,6 @@
                           <div class="flex flex-col opacity-90 max-w-2xl mx-auto w-full px-6 py-5 sm:px-8 sm:py-6">
                             <div>
                               @let text = getTextBlock(getSingleUploadKey('text'));
-                              <div class="h-1 w-12 rounded-full mb-4" [style.background]="selectedThemeColors[2]"></div>
 
                               <p
                                 class="text-sm sm:text-base leading-relaxed"
@@ -249,46 +256,38 @@
 
                 <!-- TWO COLUMNS -->
                 @if (builderState.layout === 'two-column') {
-                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10 items-start">
+                  <div
+                    class="py-6 sm:py-8 px-6 pb-10 pr-4"
+                    [style.background]="'color-mix(in srgb, ' + selectedThemeColors[1] + ' 70%, white)'"
+                  >
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10 items-start">
                     <!-- COL 1 -->
                     @switch (twoColumns[0]) {
                       @case ('text') {
                         <div class="flex flex-col opacity-90">
-                          <div
-                            class="rounded-2xl p-6 sm:p-7 shadow-md border overflow-hidden"
-                            [style.background]="selectedThemeColors[7]"
-                            [style.borderColor]="selectedThemeColors[9]"
-                          >
-                            @let text = getTextBlock('col1_text');
+                          @let text = getTextBlock('col1_text');
 
-                            <p
-                              class="leading-relaxed"
-                              [ngClass]="gridFontSize"
-                              [style.color]="selectedThemeColors[6]"
-                            >
-                              @if (!text || text.title) {
-                                <span class="font-semibold block mb-1" [style.fontFamily]="headingFont">
-                                  {{ text?.title || 'Frisse ideeǮn' }}
-                                </span>
-                              }
+                          <p class="text-sm sm:text-base leading-relaxed" [style.color]="selectedThemeColors[6]">
+                            @if (!text || text.title) {
+                              <span class="text-xl sm:text-2xl font-semibold tracking-tight block mb-2" [style.fontFamily]="headingFont">
+                                {{ text?.title || 'Frisse ideeǮn' }}
+                              </span>
+                            }
 
-                              @if (!text || text.subtitle) {
-                                <span class="text-[0.8em] opacity-70 block mb-2" [style.color]="selectedThemeColors[6]">
-                                  {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
-                                </span>
-                              }
+                            @if (!text || text.subtitle) {
+                              <span class="text-sm sm:text-base opacity-80 block mb-3" [style.color]="selectedThemeColors[6]">
+                                {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
+                              </span>
+                            }
 
-                              <span>{{ text?.body || 'Zie hoe jouw content tot leven komt.' }}</span>
-                            </p>
-                          </div>
+                            <span>{{ text?.body || 'Zie hoe jouw content tot leven komt.' }}</span>
+                          </p>
                         </div>
                       }
 
                       @case ('image') {
                         <div class="w-full">
-                          <div
-                            class="aspect-[4/3] rounded-2xl shadow-md overflow-hidden bg-black/5 flex items-center justify-center"
-                          >
+                          <div class="aspect-[5/4] overflow-hidden flex items-center justify-center">
                             <img
                               [src]="getUploadFor('col1_image') || 'assets/images/exampleImage.png'"
                               alt="Voorbeeldafbeelding"
@@ -300,9 +299,7 @@
 
                       @case ('video') {
                         <div class="w-full">
-                          <div
-                            class="aspect-[4/3] rounded-2xl shadow-md overflow-hidden bg-black/5 flex items-center justify-center"
-                          >
+                          <div class="aspect-[5/4] overflow-hidden flex items-center justify-center">
                             <img
                               [src]="getUploadFor('col1_video') || 'assets/images/exampleVideo.png'"
                               alt="Voorbeeld video"
@@ -317,41 +314,29 @@
                     @switch (twoColumns[1]) {
                       @case ('text') {
                         <div class="flex flex-col opacity-90">
-                          <div
-                            class="rounded-2xl p-6 sm:p-7 shadow-md border overflow-hidden"
-                            [style.background]="selectedThemeColors[7]"
-                            [style.borderColor]="selectedThemeColors[9]"
-                          >
-                            @let text = getTextBlock('col2_text');
+                          @let text = getTextBlock('col2_text');
 
-                            <p
-                              class="leading-relaxed"
-                              [ngClass]="gridFontSize"
-                              [style.color]="selectedThemeColors[6]"
-                            >
-                              @if (!text || text.title) {
-                                <span class="font-semibold block mb-1" [style.fontFamily]="headingFont">
-                                  {{ text?.title || 'Frisse ideeǮn' }}
-                                </span>
-                              }
+                          <p class="text-sm sm:text-base leading-relaxed" [style.color]="selectedThemeColors[6]">
+                            @if (!text || text.title) {
+                              <span class="text-xl sm:text-2xl font-semibold tracking-tight block mb-2" [style.fontFamily]="headingFont">
+                                {{ text?.title || 'Frisse ideeǮn' }}
+                              </span>
+                            }
 
-                              @if (!text || text.subtitle) {
-                                <span class="text-[0.8em] opacity-70 block mb-2" [style.color]="selectedThemeColors[6]">
-                                  {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
-                                </span>
-                              }
+                            @if (!text || text.subtitle) {
+                              <span class="text-sm sm:text-base opacity-80 block mb-3" [style.color]="selectedThemeColors[6]">
+                                {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
+                              </span>
+                            }
 
-                              <span>{{ text?.body || 'Flexibel, schaalbaar en stijlvol.' }}</span>
-                            </p>
-                          </div>
+                            <span>{{ text?.body || 'Flexibel, schaalbaar en stijlvol.' }}</span>
+                          </p>
                         </div>
                       }
 
                       @case ('image') {
                         <div class="w-full">
-                          <div
-                            class="aspect-[4/3] rounded-2xl shadow-md overflow-hidden bg-black/5 flex items-center justify-center"
-                          >
+                          <div class="aspect-[5/4] overflow-hidden flex items-center justify-center">
                             <img
                               [src]="getUploadFor('col2_image') || 'assets/images/exampleImage.png'"
                               alt="Voorbeeldafbeelding"
@@ -363,9 +348,7 @@
 
                       @case ('video') {
                         <div class="w-full">
-                          <div
-                            class="aspect-[4/3] rounded-2xl shadow-md overflow-hidden bg-black/5 flex items-center justify-center"
-                          >
+                          <div class="aspect-[5/4] overflow-hidden flex items-center justify-center">
                             <img
                               [src]="getUploadFor('col2_video') || 'assets/images/exampleVideo.png'"
                               alt="Voorbeeld video"
@@ -375,52 +358,47 @@
                         </div>
                       }
                     }
+                    </div>
                   </div>
                 }
 
                 <!-- GRID -->
                 @if (builderState.layout === 'grid') {
-                  <div class="grid gap-8" [style.gridTemplateColumns]="getGridColumns()">
+                  <div
+                    class="py-6 sm:py-8 px-6 pb-10 pr-4"
+                    [style.background]="'color-mix(in srgb, ' + selectedThemeColors[1] + ' 70%, white)'"
+                  >
+                    <div class="grid gap-8" [style.gridTemplateColumns]="getGridColumns()">
                     @for (cell of gridCells; let i = $index; track cell) {
                       @switch (cell) {
                         @case ('text') {
                           <div class="flex flex-col opacity-90">
-                            <div
-                              class="rounded-2xl p-5 sm:p-6 shadow-md border overflow-hidden"
-                              [style.background]="selectedThemeColors[7]"
-                              [style.borderColor]="selectedThemeColors[9]"
-                            >
-                              @let text = getTextBlock('grid_' + i + '_text');
+                            @let text = getTextBlock('grid_' + i + '_text');
 
-                              <p
-                                class="leading-relaxed"
-                                [ngClass]="gridFontSize"
-                                [style.color]="selectedThemeColors[6]"
-                              >
-                                @if (gridCols < 4) {
-                                  @if (!text || text.title) {
-                                    <span class="font-semibold block mb-1" [style.fontFamily]="headingFont">
-                                      {{ text?.title || 'Frisse ideeǮn' }}
-                                    </span>
-                                  }
-
-                                  @if (!text || text.subtitle) {
-                                    <span class="text-[0.8em] opacity-70 block mb-2" [style.color]="selectedThemeColors[6]">
-                                      {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
-                                    </span>
-                                  }
+                            <p class="text-sm sm:text-base leading-relaxed" [style.color]="selectedThemeColors[6]">
+                              @if (gridCols < 4) {
+                                @if (!text || text.title) {
+                                  <span class="text-lg sm:text-xl font-semibold tracking-tight block mb-2" [style.fontFamily]="headingFont">
+                                    {{ text?.title || 'Frisse ideeǮn' }}
+                                  </span>
                                 }
 
-                                <span>{{ text?.body || getGridText(i) }}</span>
-                              </p>
-                            </div>
+                                @if (!text || text.subtitle) {
+                                  <span class="text-sm sm:text-base opacity-80 block mb-3" [style.color]="selectedThemeColors[6]">
+                                    {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
+                                  </span>
+                                }
+                              }
+
+                              <span>{{ text?.body || getGridText(i) }}</span>
+                            </p>
                           </div>
                         }
 
                         @case ('image') {
                           <div class="flex justify-center items-center self-center">
                             <div
-                              class="w-full aspect-[4/3] rounded-xl shadow-md overflow-hidden bg-black/5 flex items-center justify-center"
+                              class="w-full aspect-[5/4] overflow-hidden flex items-center justify-center"
                             >
                               <img
                                 [src]="getUploadFor('grid_' + i + '_image') || 'assets/images/exampleImage.png'"
@@ -434,7 +412,7 @@
                         @case ('video') {
                           <div class="flex justify-center items-center opacity-90 self-center">
                             <div
-                              class="w-full aspect-[4/3] rounded-xl shadow-md overflow-hidden bg-black/5 flex items-center justify-center"
+                              class="w-full aspect-[5/4] overflow-hidden flex items-center justify-center"
                             >
                               @if (getUploadFor('grid_' + i + '_video')) {
                                 <video
@@ -456,6 +434,7 @@
                         }
                       }
                     }
+                    </div>
                   </div>
                 }
               </div>

@@ -16,6 +16,7 @@ import { RequestPopup } from '../request-popup/request-popup';
 
 export class PreviewStep implements OnChanges, OnDestroy {
   @Input() builderState!: BuilderState;
+  @Input() currentStep: number = 0;
   @Input() iconName: string = 'monitor-check';
   @Input() title: string = 'Live website preview';
   @Input() colorThemes: { id: string; colors: string[] }[] = [];
