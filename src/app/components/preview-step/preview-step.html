@@ -52,7 +52,7 @@
     <!-- OUTER WRAPPER -->
     <div
       class="flex-1 rounded-lg shadow-lg overflow-hidden"
-      [style.background]="selectedThemeColors[3]"
+      [style.background]="builderState.layout === 'single' ? selectedThemeColors[0] : selectedThemeColors[3]"
       [style.fontFamily]="bodyFont"
     >
       <!-- INNER WRAPPER -->
@@ -96,7 +96,7 @@
         <!-- BODY -->
         <div
           class="flex-1 min-h-0 overflow-y-auto"
-          [ngClass]="isSidebar ? 'm-0' : 'm-6 pb-10 pr-4'"
+          [ngClass]="isSidebar ? 'm-0' : (builderState.layout === 'single' ? 'm-0 p-0' : 'm-6 pb-10 pr-4')"
         >
           <!-- EMPTY STATE -->
           @if (!canShowLayout) {
@@ -150,31 +150,31 @@
               <div class="flex-1 min-w-0" [ngClass]="isSidebar ? 'p-6 pb-10 pr-4' : ''">
                 <!-- SINGLE COLUMN -->
                 @if (builderState.layout === 'single') {
-                  <div class="flex flex-col gap-6">
+                  <div
+                    class="flex flex-col gap-8 sm:gap-10 py-6 sm:py-8"
+                    [style.background]="selectedThemeColors[0]"
+                  >
                     @for (block of singleBlocks; track block) {
                       @switch (block) {
                         @case ('text') {
-                          <div class="flex flex-col opacity-90">
-                            <div
-                              class="rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.015] h-40 sm:h-44 overflow-hidden"
-                              [style.background]="selectedThemeColors[7]"
-                            >
+                          <div class="flex flex-col opacity-90 max-w-2xl mx-auto w-full px-6 py-5 sm:px-8 sm:py-6">
+                            <div>
                               @let text = getTextBlock(getSingleUploadKey('text'));
+                              <div class="h-1 w-12 rounded-full mb-4" [style.background]="selectedThemeColors[2]"></div>
 
                               <p
-                                class="leading-relaxed"
-                                [ngClass]="gridFontSize"
+                                class="text-sm sm:text-base leading-relaxed"
                                 [style.color]="selectedThemeColors[6]"
                               >
                                 @if (!text || text.title) {
-                                  <span class="font-semibold block mb-1" [style.fontFamily]="headingFont">
+                                  <span class="text-2xl sm:text-3xl font-semibold tracking-tight leading-tight block mb-2" [style.fontFamily]="headingFont">
                                     {{ text?.title || 'Frisse ideeǮn' }}
                                   </span>
                                 }
 
                                 @if (!text || text.subtitle) {
                                   <span
-                                    class="text-[0.8em] opacity-70 block mb-2"
+                                    class="text-sm sm:text-base opacity-80 block mb-3"
                                     [style.color]="selectedThemeColors[6]"
                                   >
                                     {{ text?.subtitle || 'Ontworpen voor moderne layouts' }}
@@ -193,26 +193,34 @@
                         }
 
                         @case ('image') {
-                          <div
-                            class="w-40 h-40 rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center self-center mx-auto"
-                          >
-                            <img
-                              [src]="getUploadFor(getSingleUploadKey('image')) || 'assets/images/exampleImage.png'"
-                              alt="Voorbeeldafbeelding"
-                              class="w-full h-full object-cover"
-                            />
+                          <div class="w-full max-w-2xl mx-auto">
+                            <div
+                              class="relative aspect-[5/4] overflow-hidden flex items-center justify-center"
+                            >
+                              <img
+                                [src]="getUploadFor(getSingleUploadKey('image')) || 'assets/images/exampleImage.png'"
+                                alt="Voorbeeldafbeelding"
+                                class="absolute inset-0 w-full h-full object-cover"
+                              />
+
+
+                            </div>
                           </div>
                         }
 
                         @case ('video') {
-                          <div
-                            class="w-40 h-40 rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center self-center mx-auto"
-                          >
-                            <img
-                              [src]="getUploadFor(getSingleUploadKey('video')) || 'assets/images/exampleVideo.png'"
-                              alt="Voorbeeld video"
-                              class="w-full h-full object-cover"
-                            />
+                          <div class="w-full max-w-2xl mx-auto">
+                            <div
+                              class="relative aspect-[5/4] overflow-hidden flex items-center justify-center"
+                            >
+                              <img
+                                [src]="getUploadFor(getSingleUploadKey('video')) || 'assets/images/exampleVideo.png'"
+                                alt="Voorbeeld video"
+                                class="absolute inset-0 w-full h-full object-cover"
+                              />
+
+
+                            </div>
                           </div>
                         }
                       }
@@ -222,14 +230,15 @@
 
                 <!-- TWO COLUMNS -->
                 @if (builderState.layout === 'two-column') {
-                  <div class="grid grid-cols-2 gap-6 items-center">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10 items-start">
                     <!-- COL 1 -->
                     @switch (twoColumns[0]) {
                       @case ('text') {
                         <div class="flex flex-col opacity-90">
                           <div
-                            class="rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.015] h-40 sm:h-44 overflow-hidden"
+                            class="rounded-2xl p-6 sm:p-7 shadow-md border overflow-hidden"
                             [style.background]="selectedThemeColors[7]"
+                            [style.borderColor]="selectedThemeColors[9]"
                           >
                             @let text = getTextBlock('col1_text');
 
@@ -257,26 +266,30 @@
                       }
 
                       @case ('image') {
-                        <div
-                          class="w-40 h-40 mx-auto rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center self-center"
-                        >
-                          <img
-                            [src]="getUploadFor('col1_image') || 'assets/images/exampleImage.png'"
-                            alt="Voorbeeldafbeelding"
-                            class="w-full h-full object-cover"
-                          />
+                        <div class="w-full">
+                          <div
+                            class="aspect-[4/3] rounded-2xl shadow-md overflow-hidden bg-black/5 flex items-center justify-center"
+                          >
+                            <img
+                              [src]="getUploadFor('col1_image') || 'assets/images/exampleImage.png'"
+                              alt="Voorbeeldafbeelding"
+                              class="w-full h-full object-cover"
+                            />
+                          </div>
                         </div>
                       }
 
                       @case ('video') {
-                        <div
-                          class="w-40 h-40 mx-auto rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center self-center"
-                        >
-                          <img
-                            [src]="getUploadFor('col1_video') || 'assets/images/exampleVideo.png'"
-                            alt="Voorbeeld video"
-                            class="w-full h-full object-cover object-center"
-                          />
+                        <div class="w-full">
+                          <div
+                            class="aspect-[4/3] rounded-2xl shadow-md overflow-hidden bg-black/5 flex items-center justify-center"
+                          >
+                            <img
+                              [src]="getUploadFor('col1_video') || 'assets/images/exampleVideo.png'"
+                              alt="Voorbeeld video"
+                              class="w-full h-full object-cover object-center"
+                            />
+                          </div>
                         </div>
                       }
                     }
@@ -286,8 +299,9 @@
                       @case ('text') {
                         <div class="flex flex-col opacity-90">
                           <div
-                            class="rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.015] h-40 sm:h-44 overflow-hidden"
+                            class="rounded-2xl p-6 sm:p-7 shadow-md border overflow-hidden"
                             [style.background]="selectedThemeColors[7]"
+                            [style.borderColor]="selectedThemeColors[9]"
                           >
                             @let text = getTextBlock('col2_text');
 
@@ -315,26 +329,30 @@
                       }
 
                       @case ('image') {
-                        <div
-                          class="w-40 h-40 mx-auto rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center self-center"
-                        >
-                          <img
-                            [src]="getUploadFor('col2_image') || 'assets/images/exampleImage.png'"
-                            alt="Voorbeeldafbeelding"
-                            class="w-full h-full object-cover"
-                          />
+                        <div class="w-full">
+                          <div
+                            class="aspect-[4/3] rounded-2xl shadow-md overflow-hidden bg-black/5 flex items-center justify-center"
+                          >
+                            <img
+                              [src]="getUploadFor('col2_image') || 'assets/images/exampleImage.png'"
+                              alt="Voorbeeldafbeelding"
+                              class="w-full h-full object-cover"
+                            />
+                          </div>
                         </div>
                       }
 
                       @case ('video') {
-                        <div
-                          class="w-40 h-40 mx-auto rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center self-center"
-                        >
-                          <img
-                            [src]="getUploadFor('col2_video') || 'assets/images/exampleVideo.png'"
-                            alt="Voorbeeld video"
-                            class="w-full h-full object-cover"
-                          />
+                        <div class="w-full">
+                          <div
+                            class="aspect-[4/3] rounded-2xl shadow-md overflow-hidden bg-black/5 flex items-center justify-center"
+                          >
+                            <img
+                              [src]="getUploadFor('col2_video') || 'assets/images/exampleVideo.png'"
+                              alt="Voorbeeld video"
+                              class="w-full h-full object-cover"
+                            />
+                          </div>
                         </div>
                       }
                     }
@@ -343,14 +361,15 @@
 
                 <!-- GRID -->
                 @if (builderState.layout === 'grid') {
-                  <div class="grid gap-6" [style.gridTemplateColumns]="getGridColumns()">
+                  <div class="grid gap-8" [style.gridTemplateColumns]="getGridColumns()">
                     @for (cell of gridCells; let i = $index; track cell) {
                       @switch (cell) {
                         @case ('text') {
                           <div class="flex flex-col opacity-90">
                             <div
-                              class="rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.015] h-40 sm:h-44 overflow-hidden"
+                              class="rounded-2xl p-5 sm:p-6 shadow-md border overflow-hidden"
                               [style.background]="selectedThemeColors[7]"
+                              [style.borderColor]="selectedThemeColors[9]"
                             >
                               @let text = getTextBlock('grid_' + i + '_text');
 
@@ -382,12 +401,7 @@
                         @case ('image') {
                           <div class="flex justify-center items-center self-center">
                             <div
-                              class="rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center"
-                              [ngClass]="{
-                                'w-40 h-40': gridCols <= 2,
-                                'w-28 h-28': gridCols === 3,
-                                'w-20 h-20': gridCols >= 4
-                              }"
+                              class="w-full aspect-[4/3] rounded-xl shadow-md overflow-hidden bg-black/5 flex items-center justify-center"
                             >
                               <img
                                 [src]="getUploadFor('grid_' + i + '_image') || 'assets/images/exampleImage.png'"
@@ -401,12 +415,7 @@
                         @case ('video') {
                           <div class="flex justify-center items-center opacity-90 self-center">
                             <div
-                              class="rounded-md shadow-sm overflow-hidden bg-black/5 flex items-center justify-center"
-                              [ngClass]="{
-                                'w-40 h-40': gridCols <= 2,
-                                'w-28 h-28': gridCols === 3,
-                                'w-20 h-20': gridCols >= 4
-                              }"
+                              class="w-full aspect-[4/3] rounded-xl shadow-md overflow-hidden bg-black/5 flex items-center justify-center"
                             >
                               @if (getUploadFor('grid_' + i + '_video')) {
                                 <video
