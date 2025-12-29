@@ -49,14 +49,18 @@
                   @if (canShowPages) {
                     @for (p of pages; track p) {
                       @if (p !== 'home') {
-                        <span
-                          class="text-xs px-2 py-1 rounded border"
+                        <button
+                          type="button"
+                          class="text-xs px-2 py-1 rounded border text-left"
+                          [class.opacity-70]="activePage !== p"
                           [style.background]="selectedThemeColors[7]"
                           [style.color]="selectedThemeColors[8]"
                           [style.borderColor]="selectedThemeColors[9]"
+                          (click)="setActivePage(p)"
+                          [attr.aria-current]="activePage === p ? 'page' : null"
                         >
                           {{ pageLabel(p) }}
-                        </span>
+                        </button>
                       }
                     }
                   }
@@ -131,15 +135,19 @@
                       @if (canShowPages) {
                         @for (p of pages; track p) {
                           @if (p !== 'home' || canShowHomePage) {
-                            <div
-                              class="text-xs px-2 py-1 rounded border"
+                            <button
+                              type="button"
+                              class="text-xs px-2 py-1 rounded border text-left"
+                              [class.opacity-70]="activePage !== p"
                               [style.background]="selectedThemeColors[7]"
                               [style.color]="selectedThemeColors[8]"
                               [style.borderColor]="selectedThemeColors[9]"
                               [style.fontFamily]="headingFont"
+                              (click)="setActivePage(p)"
+                              [attr.aria-current]="activePage === p ? 'page' : null"
                             >
                               {{ pageLabel(p) }}
-                            </div>
+                            </button>
                           }
                         }
                       }
@@ -159,7 +167,7 @@
                         @case ('text') {
                           <div class="flex flex-col opacity-90 max-w-2xl mx-auto w-full px-6 py-5 sm:px-8 sm:py-6">
                             <div>
-                              @let text = getTextBlock(getSingleUploadKey('text'));
+                              @let text = getPageText(activePage) ?? getTextBlock(getSingleUploadKey('text'));
 
                               <p
                                   class="text-sm sm:text-base leading-relaxed"
@@ -196,8 +204,9 @@
                             <div
                               class="relative aspect-[5/4] overflow-hidden flex items-center justify-center"
                             >
+                              @let pageImage = getPageImage(activePage);
                               <img
-                                [src]="getUploadFor(getSingleUploadKey('image')) || 'assets/images/exampleImage.png'"
+                                [src]="pageImage || getUploadFor(getSingleUploadKey('image')) || 'assets/images/exampleImage.png'"
                                 alt="Voorbeeldafbeelding"
                                 class="absolute inset-0 w-full h-full object-cover"
                               />
@@ -212,8 +221,9 @@
                             <div
                               class="relative aspect-[5/4] overflow-hidden flex items-center justify-center"
                             >
+                              @let pageImage = getPageImage(activePage);
                               <img
-                                [src]="getUploadFor(getSingleUploadKey('video')) || 'assets/images/exampleVideo.png'"
+                                [src]="pageImage || getUploadFor(getSingleUploadKey('video')) || 'assets/images/exampleVideo.png'"
                                 alt="Voorbeeld video"
                                 class="absolute inset-0 w-full h-full object-cover"
                               />
@@ -238,7 +248,7 @@
                     @switch (twoColumns[0]) {
                       @case ('text') {
                         <div class="flex flex-col opacity-90">
-                          @let text = getTextBlock('col1_text');
+                          @let text = getPageText(activePage) ?? getTextBlock('col1_text');
 
                           <p class="text-sm sm:text-base leading-relaxed" [style.color]="selectedThemeColors[6]">
                             @if (!text || text.title) {
@@ -261,8 +271,9 @@
                       @case ('image') {
                         <div class="w-full">
                           <div class="aspect-[5/4] overflow-hidden flex items-center justify-center">
+                            @let pageImage = getPageImage(activePage);
                             <img
-                              [src]="getUploadFor('col1_image') || 'assets/images/exampleImage.png'"
+                              [src]="pageImage || getUploadFor('col1_image') || 'assets/images/exampleImage.png'"
                               alt="Voorbeeldafbeelding"
                               class="w-full h-full object-cover"
                             />
@@ -273,8 +284,9 @@
                       @case ('video') {
                         <div class="w-full">
                           <div class="aspect-[5/4] overflow-hidden flex items-center justify-center">
+                            @let pageImage = getPageImage(activePage);
                             <img
-                              [src]="getUploadFor('col1_video') || 'assets/images/exampleVideo.png'"
+                              [src]="pageImage || getUploadFor('col1_video') || 'assets/images/exampleVideo.png'"
                               alt="Voorbeeld video"
                               class="w-full h-full object-cover object-center"
                             />
@@ -287,7 +299,7 @@
                     @switch (twoColumns[1]) {
                       @case ('text') {
                         <div class="flex flex-col opacity-90">
-                          @let text = getTextBlock('col2_text');
+                          @let text = getPageText(activePage) ?? getTextBlock('col2_text');
 
                           <p class="text-sm sm:text-base leading-relaxed" [style.color]="selectedThemeColors[6]">
                             @if (!text || text.title) {
@@ -310,8 +322,9 @@
                       @case ('image') {
                         <div class="w-full">
                           <div class="aspect-[5/4] overflow-hidden flex items-center justify-center">
+                            @let pageImage = getPageImage(activePage);
                             <img
-                              [src]="getUploadFor('col2_image') || 'assets/images/exampleImage.png'"
+                              [src]="pageImage || getUploadFor('col2_image') || 'assets/images/exampleImage.png'"
                               alt="Voorbeeldafbeelding"
                               class="w-full h-full object-cover"
                             />
@@ -322,8 +335,9 @@
                       @case ('video') {
                         <div class="w-full">
                           <div class="aspect-[5/4] overflow-hidden flex items-center justify-center">
+                            @let pageImage = getPageImage(activePage);
                             <img
-                              [src]="getUploadFor('col2_video') || 'assets/images/exampleVideo.png'"
+                              [src]="pageImage || getUploadFor('col2_video') || 'assets/images/exampleVideo.png'"
                               alt="Voorbeeld video"
                               class="w-full h-full object-cover"
                             />
@@ -346,7 +360,7 @@
                       @switch (cell) {
                         @case ('text') {
                           <div class="flex flex-col opacity-90">
-                            @let text = getTextBlock('grid_' + i + '_text');
+                            @let text = getPageText(activePage) ?? getTextBlock('grid_' + i + '_text');
 
                             <p class="text-sm sm:text-base leading-relaxed" [style.color]="selectedThemeColors[6]">
                               @if (gridCols < 4) {
@@ -370,14 +384,15 @@
 
                         @case ('image') {
                           <div class="flex justify-center items-center self-center">
+                            @let pageImage = getPageImage(activePage);
                             <div
                               class="w-full aspect-[5/4] overflow-hidden flex items-center justify-center"
                             >
                               <img
-                                [src]="getUploadFor('grid_' + i + '_image') || 'assets/images/exampleImage.png'"
+                                [src]="pageImage || getUploadFor('grid_' + i + '_image') || 'assets/images/exampleImage.png'"
                                 alt="Voorbeeldafbeelding"
-                                  class="w-full h-full object-cover"
-                                />
+                                class="w-full h-full object-cover"
+                              />
                               </div>
                             </div>
                           }

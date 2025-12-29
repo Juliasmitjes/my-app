@@ -1,0 +1,90 @@
+@if (visible) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center">
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" (click)="close()"></div>
+
+    <div class="relative w-[92vw] max-w-5xl max-h-[90vh] overflow-hidden rounded-2xl shadow-xl bg-white">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-border/50">
+        <div>
+          <div class="text-sm text-muted-foreground">Pagina invullen</div>
+          <div class="text-lg font-semibold">{{ page?.name }}</div>
+        </div>
+        <button class="text-sm px-3 py-1 rounded-md border" (click)="close()">Sluiten</button>
+      </div>
+
+      <div class="grid md:grid-cols-2">
+        <!-- Preview -->
+        <div class="p-6" [style.background]="selectedThemeColors[1]">
+          <div class="rounded-xl overflow-hidden border border-border/40">
+            <div class="px-4 py-3 border-b" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
+              <div class="text-sm font-semibold" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                {{ builderState.logo || 'Your Site' }}
+              </div>
+            </div>
+
+            <div class="p-5 space-y-4" [style.fontFamily]="bodyFont">
+              <div class="aspect-[5/4] overflow-hidden">
+                <img [src]="previewImage" alt="Voorbeeldafbeelding" class="w-full h-full object-cover" />
+              </div>
+
+              <div>
+                <h3 class="text-xl font-semibold mb-1" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                  {{ title || 'Paginatitel' }}
+                </h3>
+                <p class="text-sm opacity-80 mb-2" [style.color]="selectedThemeColors[6]">
+                  {{ subtitle || 'Korte subtitel die de toon zet.' }}
+                </p>
+                <p class="text-sm leading-relaxed" [style.color]="selectedThemeColors[6]">
+                  {{ body || 'Hier komt jouw pagina-inhoud. Houd het kort en krachtig voor het voorbeeld.' }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="p-6 space-y-4">
+          <div>
+            <label class="text-sm font-medium block mb-1">Titel</label>
+            <input
+              [(ngModel)]="title"
+              class="w-full rounded-md border px-3 py-2 text-sm"
+              placeholder="Titel"
+              type="text"
+            />
+          </div>
+
+          <div>
+            <label class="text-sm font-medium block mb-1">Subtitel</label>
+            <input
+              [(ngModel)]="subtitle"
+              class="w-full rounded-md border px-3 py-2 text-sm"
+              placeholder="Subtitel"
+              type="text"
+            />
+          </div>
+
+          <div>
+            <label class="text-sm font-medium block mb-1">Tekst</label>
+            <textarea
+              [(ngModel)]="body"
+              class="w-full rounded-md border px-3 py-2 text-sm min-h-[140px]"
+              placeholder="Schrijf hier je tekst..."
+            ></textarea>
+          </div>
+
+          <div>
+            <label class="text-sm font-medium block mb-1">Visual (optioneel)</label>
+            <input type="file" accept="image/*" (change)="onFileChange($event)" />
+          </div>
+
+          <div class="pt-2 flex gap-3">
+            <button class="px-4 py-2 rounded-md border text-sm" (click)="close()">Annuleren</button>
+            <button class="px-4 py-2 rounded-md text-sm text-white" [style.background]="selectedThemeColors[2]" (click)="onSave()">
+              Opslaan
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

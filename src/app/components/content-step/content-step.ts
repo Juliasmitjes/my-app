@@ -3,6 +3,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
 import { LucideAngularModule } from 'lucide-angular';
+import { PageContentModal } from '../page-content-modal/page-content-modal';
 
 export interface PageDef {
   id: string;
@@ -18,6 +19,7 @@ export interface PageDef {
   imports: [
     CommonModule,
     LucideAngularModule,
+    PageContentModal,
   ],
   templateUrl: './content-step.html',
   styleUrl: './content-step.css'
@@ -25,8 +27,11 @@ export interface PageDef {
 export class ContentStep {
   @Input() builderState?: BuilderState;
   @Input() contents: PageDef[] = [];
+  @Input() colorThemes: { id: string; colors: string[] }[] = [];
   @Output() update = new EventEmitter<Partial<BuilderState>>();
   @Output() toggle = new EventEmitter<string>();
+  activePage: PageDef | null = null;
+  showModal = false;
 
   get pages(): string[] {
     return this.builderState?.pages ?? ['home'];
@@ -45,7 +50,7 @@ ngOnInit() {
   });
 }
 
-onSelectPage(pageId: string, required = false) {
+  onSelectPage(pageId: string, required = false) {
     if (!this.builderState) return;
     if (required) return; // verplicht, kan niet worden uitgevinkt
 
@@ -53,13 +58,61 @@ onSelectPage(pageId: string, required = false) {
 
     if (isSelected) {
       const newPages = this.pages.filter(p => p !== pageId);
-      this.update.emit({ pages: newPages });
+      this.removePageData(pageId);
       this.toggle.emit(pageId);
       return;
     }
 
     const newPages = [...this.pages, pageId];
-    this.update.emit({ pages: newPages });
     this.toggle.emit(pageId);
   }  
+
+  isConfirmed(pageId: string): boolean {
+    return this.builderState?.uploads?.[`page_${pageId}_confirmed`] === true;
+  }
+
+  confirmPage(pageId: string, event?: Event): void {
+    event?.preventDefault();
+    event?.stopPropagation();
+    this.updateUploads({ [`page_${pageId}_confirmed`]: true });
+  }
+
+  openEditor(page: PageDef, event?: Event): void {
+    event?.preventDefault();
+    event?.stopPropagation();
+    this.activePage = page;
+    this.showModal = true;
+  }
+
+  closeEditor(): void {
+    this.showModal = false;
+  }
+
+  savePageContent(payload: { pageId: string; title: string; subtitle: string; body: string; image?: File | string | null }): void {
+    const { pageId, title, subtitle, body, image } = payload;
+    const uploads = { ...(this.builderState?.uploads ?? {}) };
+    uploads[`page_${pageId}_text`] = {
+      kind: 'inline',
+      value: { title, subtitle, body }
+    };
+    if (image) {
+      uploads[`page_${pageId}_image`] = image;
+    }
+    uploads[`page_${pageId}_confirmed`] = true;
+    this.update.emit({ uploads });
+    this.showModal = false;
+  }
+
+  private updateUploads(patch: Record<string, any>): void {
+    const uploads = { ...(this.builderState?.uploads ?? {}), ...patch };
+    this.update.emit({ uploads });
+  }
+
+  private removePageData(pageId: string): void {
+    const uploads = { ...(this.builderState?.uploads ?? {}) };
+    delete uploads[`page_${pageId}_text`];
+    delete uploads[`page_${pageId}_image`];
+    delete uploads[`page_${pageId}_confirmed`];
+    this.update.emit({ uploads });
+  }
 }

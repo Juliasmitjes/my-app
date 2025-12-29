@@ -107,6 +107,8 @@ class="bg-background/70 backdrop-blur-md sticky top-0 z-50 shadow-md border-b bo
           <app-content-step
             [builderState]="builderState()"
             [contents]="availablePages"
+            [colorThemes]="colorThemes()"
+            (update)="updateState($event)"
             (toggle)="togglePage($event)"
           ></app-content-step>
         }

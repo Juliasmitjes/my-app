@@ -21,6 +21,7 @@ export class PreviewStep implements OnChanges, OnDestroy {
   @Input() title: string = 'Live website preview';
   @Input() colorThemes: { id: string; colors: string[] }[] = [];
   @Input() mascotUrl!: string;
+  activePageId: string | null = null;
 
   private _selectedThemeColors: string[] | null = null;
   private blobUrlCache = new Map<string, string>();
@@ -32,6 +33,9 @@ export class PreviewStep implements OnChanges, OnDestroy {
 
     if (changes['builderState']) {
       this.resetBlobUrls();
+      if (!this.pages.includes(this.activePageId ?? '')) {
+        this.activePageId = this.pages[0] ?? 'home';
+      }
     }
   }
 
@@ -72,6 +76,17 @@ export class PreviewStep implements OnChanges, OnDestroy {
 
   pageLabel(p: string): string {
     return p.charAt(0).toUpperCase() + p.slice(1);
+  }
+
+  get activePage(): string {
+    const pages = this.pages;
+    if (!pages.length) return 'home';
+    if (this.activePageId && pages.includes(this.activePageId)) return this.activePageId;
+    return pages[0];
+  }
+
+  setActivePage(pageId: string): void {
+    this.activePageId = pageId;
   }
 
   get selectedThemeColors(): string[] {
@@ -186,6 +201,14 @@ export class PreviewStep implements OnChanges, OnDestroy {
       subtitle: value.subtitle ?? '',
       body: value.body ?? ''
     };
+  }
+
+  getPageText(pageId: string): { title: string; subtitle: string; body: string } | null {
+    return this.getTextBlock(`page_${pageId}_text`);
+  }
+
+  getPageImage(pageId: string): string | null {
+    return this.getUploadFor(`page_${pageId}_image`);
   }
 
   getUploadFor(key: string | null): string | null {

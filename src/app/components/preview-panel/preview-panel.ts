@@ -21,6 +21,7 @@ export class PreviewPanel implements OnChanges {
   @Input({ required: true }) currentStep!: number;
   @Input() colorThemes!: { id: string; colors: string[] }[];
   @Output() closed = new EventEmitter<void>();
+  activePageId: string | null = null;
 
   iconName = 'monitor';
   title = 'Live voorbeeld';
@@ -43,6 +44,9 @@ export class PreviewPanel implements OnChanges {
 
     if (changes['builderState']) {
       this.resetBlobUrls();
+      if (!this.pages.includes(this.activePageId ?? '')) {
+        this.activePageId = this.pages[0] ?? 'home';
+      }
     }
   }
 
@@ -191,6 +195,17 @@ export class PreviewPanel implements OnChanges {
     return p.charAt(0).toUpperCase() + p.slice(1);
   }
 
+  get activePage(): string {
+    const pages = this.pages;
+    if (!pages.length) return 'home';
+    if (this.activePageId && pages.includes(this.activePageId)) return this.activePageId;
+    return pages[0];
+  }
+
+  setActivePage(pageId: string): void {
+    this.activePageId = pageId;
+  }
+
   /* ────────────────────────────────────────────────
   * TEXT BLOCK HELPERS
   * ────────────────────────────────────────────────
@@ -218,6 +233,14 @@ export class PreviewPanel implements OnChanges {
       subtitle: value.subtitle ?? '',
       body: value.body ?? ''
     };
+  }
+
+  getPageText(pageId: string): { title: string; subtitle: string; body: string } | null {
+    return this.getTextBlock(`page_${pageId}_text`);
+  }
+
+  getPageImage(pageId: string): string | null {
+    return this.getUploadFor(`page_${pageId}_image`);
   }
 
   /* ────────────────────────────────────────────────
