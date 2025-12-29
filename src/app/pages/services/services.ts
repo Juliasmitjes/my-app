@@ -78,7 +78,7 @@ export class Services {
       id: 'desert-sunset',
       name: 'Desert Sunset',
       description: 'Terracotta, warm zand, gedempt roze en nachtblauw',
-      colors: ['#FFFDFB','#F1E6DB','#2D3B4C','#FAF2EA','#E3C7B8','#7A5C4A','#25303D','#F4E1D6','#2D3B4C','#C8B1A2'],
+      colors: ['#FFF7F0','#F2DCCB','#3A2E2A','#F9EBDD','#D9A48D','#9A5A3A','#2A1F1B','#F1CBB8','#3A2E2A','#C38D75'],
     },
     {
       id: 'neo-futurism',
@@ -96,7 +96,7 @@ export class Services {
       id: 'urban-monochrome',
       name: 'Urban Monochrome',
       description: 'Houtskool, beton, wit en een hint staalblauw',
-      colors: ['#FFFFFF','#EEF1F4','#2A2F36','#F7F8FA','#C7D1DB','#6B7682','#1F2328','#B8C7D6','#2A2F36','#D2DAE2'],
+      colors: ['#F6F5F2','#E3E0DB','#2C2F33','#F0EFEC','#BEB8B0','#7B7470','#1F2226','#D6D1CB','#2C2F33','#AFA9A2'],
     },
     {
       id: 'botanical-greenery',
@@ -114,7 +114,7 @@ export class Services {
       id: 'coastal-breeze',
       name: 'Coastal Breeze',
       description: 'Zeeblauw, zand, schelpwit en zeeschuimgroen',
-      colors: ['#FFFFFF','#EAF2F7','#23424F','#F6F9FB','#D9E6EF','#6C7C85','#1E343E','#DDEAF0','#23424F','#CBD8DF'],
+      colors: ['#F9FCFB','#E4F2F0','#1E4C5A','#F2F8F7','#BFE3DD','#5F8B8D','#143642','#D7EFEA','#1E4C5A','#A7D2CC'],
     },
     {
       id: 'cyber-glow',
@@ -126,7 +126,7 @@ export class Services {
       id: 'earthy-clay',
       name: 'Earthy Clay',
       description: 'Roest, oker en olijf met warme bruintinten',
-      colors: ['#FFFFFF','#F2E8DD','#3A2F25','#FAF5EF','#D7C2AE','#7A5A46','#2F241B','#EADCD0','#3A2F25','#D1B59F'],
+      colors: ['#FFF9F2','#EFE2CF','#3B2B20','#F7EFE3','#CFAE7B','#8C6A3E','#2E2016','#E4D1B2','#3B2B20','#B98B4D'],
     },
     {
       id: 'retro-pop',
@@ -138,7 +138,7 @@ export class Services {
       id: 'high-tech-silver',
       name: 'High-Tech Silver',
       description: 'Staal en grafiet met ijsblauw en helder wit',
-      colors: ['#FFFFFF','#EEF2F6','#2B3138','#F8FAFC','#C7D0DA','#6B7785','#1F242B','#DDE8F2','#2B3138','#D5DEE7'],
+      colors: ['#F8FAFC','#E4E9F0','#1F2A36','#F1F4F8','#B6C2CF','#60708A','#121821','#D8E3F2','#1F2A36','#9FB1C6'],
     },
     {
       id: 'candy-shop',
@@ -156,7 +156,7 @@ export class Services {
       id: 'scandi-warmth',
       name: 'Scandi Warmth',
       description: 'Beige, warm grijs, zacht bruin en dusty blue',
-      colors: ['#FFFFFF','#EFE7DE','#4A3C33','#FBF7F2','#D6C7B7','#7A6E66','#3A2F28','#9AB3C6','#4A3C33','#CFC2B4'],
+      colors: ['#FBFAF7','#E6E2DA','#3F3A36','#F5F3EE','#C9C2B6','#6F6660','#2D2A27','#9CB0B3','#3F3A36','#B7ADA3'],
     },
     {
       id: 'solar-energy',
