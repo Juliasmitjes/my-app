@@ -21,7 +21,7 @@
       <!-- OUTER WRAPPER (keeps rounded corners + clipping) -->
       <div
         class="flex-1 rounded-lg shadow-lg overflow-hidden"
-        [style.background]="builderState.layout === 'single' ? selectedThemeColors[0] : selectedThemeColors[3]"
+        [style.background]="builderState.layout === 'single' ? 'color-mix(in srgb, ' + selectedThemeColors[1] + ' 70%, white)' : selectedThemeColors[3]"
         [style.fontFamily]="bodyFont"
       >
         <!-- INNER WRAPPER (scrolls) -->
@@ -125,7 +125,7 @@
                   @if (builderState.layout === 'single') {
                   <div
                     class="flex flex-col gap-8 sm:gap-10 py-6 sm:py-8"
-                    [style.background]="selectedThemeColors[0]"
+                    [style.background]="'color-mix(in srgb, ' + selectedThemeColors[1] + ' 70%, white)'"
                   >
                     @for (block of singleBlocks; track block) {
                       @switch (block) {
