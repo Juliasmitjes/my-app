@@ -86,35 +86,40 @@ export class LayoutStep implements OnChanges {
       name: 'Portfolio',
       description: 'Werk, cases of projecten laten zien',
       icon: 'layout-grid',
-      layoutType: 'grid'
+      layoutType: 'grid',
+      hidden: false
     },
     {
       id: 'service',
       name: 'Service',
       description: 'Diensten overzichtelijk presenteren',
       icon: 'columns2',
-      layoutType: 'two-column'
+      layoutType: 'two-column',
+      hidden: false
     },
     {
       id: 'editorial',
       name: 'Editorial',
       description: 'Verhaal en tekst staan centraal',
       icon: 'layers',
-      layoutType: 'single'
+      layoutType: 'single',
+      hidden: false
     },
     {
       id: 'product',
       name: 'Product',
       description: 'Producten of aanbod tonen',
       icon: 'shopping-cart',
-      layoutType: 'grid'
+      layoutType: 'grid',
+      hidden: false
     },
     {
       id: 'local',
       name: 'Local business',
       description: 'Lokale diensten en contact',
       icon: 'map-pin',
-      layoutType: 'single'
+      layoutType: 'single',
+      hidden: true
     }
   ] as const;
 
