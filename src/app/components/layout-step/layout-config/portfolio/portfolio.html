@@ -37,7 +37,7 @@
         @if (isArtistTemplate(template)) {
             <div class="px-4 pt-4 pb-3 space-y-4 bg-muted/60 border border-border/40">
               <div class="flex items-center justify-between text-xs text-muted-foreground">
-                <span class="font-semibold text-foreground">Bedrijfsnaam</span>
+                <span class="font-semibold text-foreground">{{ businessNameDisplay }}</span>
                 <div class="flex items-center gap-4">
                   <span>Button</span>
                   <span>Button</span>
@@ -165,7 +165,7 @@
           </div>
           <div class="px-4 py-3 bg-muted/60 border border-border/40 text-xs text-muted-foreground">
             <div class="flex items-center justify-between">
-              <span>ЖИ 2026 Bedrijfsnaam</span>
+              <span>© 2026 {{ businessNameDisplay }}</span>
               <div class="flex items-center gap-4">
                 <span>Button</span>
                 <span>Button</span>
