@@ -201,12 +201,8 @@
 
                   <button type="button"
                           (click)="onSaveClick(0, $event)"
-                          class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
-                          [class.text-white/90]="isUploadComplete(0) && !isSaved[0]"
-                          [class.border-white/60]="isUploadComplete(0) && !isSaved[0]"
-                          [class.text-white/70]="isSaved[0]"
-                          [class.border-white/30]="isSaved[0]"
-                          [class.text-white/60]="!isUploadComplete(0)">
+                          class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-border/60 bg-muted/40 text-foreground hover:bg-muted/60"
+                          [class.text-muted-foreground]="!isUploadComplete(0)">
                     {{ isSaved[0] ? 'Wijzigen' : 'Opslaan' }}
                   </button>
                 </div>
