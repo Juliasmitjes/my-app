@@ -312,7 +312,10 @@
               </div>
             </div>
 
-            <div class="relative w-full aspect-[16/9] overflow-hidden border-t border-border/30">
+            <div
+              class="relative w-full aspect-[16/9] overflow-hidden border-t border-border/30"
+              #illustratorHero
+            >
               @if (getImagePreview(0)) {
                 <img
                   class="w-full h-full object-cover"
@@ -363,7 +366,7 @@
                       [uploads]="uploads"
                       [isSaved]="isSaved[0]"
                       [isComplete]="isUploadComplete(0)"
-                      (requestUpload)="onRequestUpload(0, $event, 'image')"
+                      (requestUpload)="onRequestUpload(0, $event, 'image', illustratorHero)"
                       (requestClear)="onRequestClear(0, $event)">
                     </app-upload-unit>
 
