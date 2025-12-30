@@ -156,6 +156,56 @@ export class PreviewPanel implements OnChanges {
     return 'text-base';
   }
 
+  get isPortfolioTemplate(): boolean {
+    const group = this.builderState.layoutConfig?.templateGroup;
+    const id = this.builderState.layoutConfig?.templateId ?? '';
+    return group === 'portfolio' || id.startsWith('portfolio-');
+  }
+
+  get portfolioTemplateId(): string | null {
+    return this.builderState.layoutConfig?.templateId ?? null;
+  }
+
+  get portfolioArtistAreas(): string {
+    return '"a a b" "c d d" "e e f" "g h i"';
+  }
+
+  getPortfolioArtistArea(index: number): string {
+    const areas = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
+    return areas[index] ?? '';
+  }
+
+  getPortfolioUploadKey(index: number, type: 'image' | 'text' | 'video'): string | null {
+    const id = this.portfolioTemplateId;
+    if (!id) return null;
+    return `grid_${id}_${index}_${type}`;
+  }
+
+  getPortfolioBusinessName(): string {
+    const id = this.portfolioTemplateId;
+    if (!id) return 'Bedrijfsnaam';
+    const value = this.builderState.uploads?.[`business_name_${id}`];
+    return typeof value === 'string' && value.trim() ? value : 'Bedrijfsnaam';
+  }
+
+  getPortfolioSubtitle(): string {
+    const value = this.builderState.uploads?.['artist_subtitle'];
+    return typeof value === 'string' && value.trim()
+      ? value
+      : 'Hier komt jouw ondertitel. Maak het pakkend!';
+  }
+
+  getPortfolioTextBlock(index: number): { title: string; subtitle: string; body: string } | null {
+    return this.getTextBlock(this.getPortfolioUploadKey(index, 'text'));
+  }
+
+  getPortfolioImage(index: number): string {
+    return (
+      this.getUploadFor(this.getPortfolioUploadKey(index, 'image')) ||
+      'assets/images/exampleImage.png'
+    );
+  }
+
   /* ────────────────────────────────────────────────
    * STATE HELPERS
    * ────────────────────────────────────────────────
