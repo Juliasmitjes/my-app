@@ -190,12 +190,14 @@ export class LayoutStep implements OnChanges {
   if (hasTextConfig) {
     const value = (event.config.businessName ?? '').toString().trim();
     const subtitleValue = (event.config.subtitle ?? '').toString().trim();
+    const templateId = event.config.businessNameTemplateId as string | undefined;
+    const businessKey = templateId ? `business_name_${templateId}` : 'artist_business_name';
     const newUploads = { ...this.uploads };
 
     if (value) {
-      newUploads['artist_business_name'] = value;
+      newUploads[businessKey] = value;
     } else {
-      delete newUploads['artist_business_name'];
+      delete newUploads[businessKey];
     }
 
     if (event.config?.subtitle !== undefined) {

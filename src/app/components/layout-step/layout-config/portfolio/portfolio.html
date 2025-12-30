@@ -37,7 +37,7 @@
         @if (isArtistTemplate(template)) {
             <div class="px-4 pt-4 pb-3 space-y-4 bg-muted/60 border border-border/40">
               <div class="flex items-center justify-between text-xs text-muted-foreground">
-                <span class="font-semibold text-foreground">{{ businessNameDisplay }}</span>
+                <span class="font-semibold text-foreground">{{ getBusinessNameForTemplate(template.id) }}</span>
                 <div class="flex items-center gap-4">
                   <span>Button</span>
                   <span>Button</span>
@@ -59,7 +59,7 @@
                 </div>
               } @else {
                 <div class="text-2xl sm:text-3xl font-semibold tracking-tight">
-                  {{ businessNameDisplay }}
+                  {{ getBusinessNameForTemplate(template.id) }}
                 </div>
                 <div class="text-sm text-muted-foreground mt-3">
                   {{ subtitleDisplay }}
@@ -156,7 +156,7 @@
           </div>
           <div class="px-4 py-3 bg-muted/60 border border-border/40 text-xs text-muted-foreground">
             <div class="flex items-center justify-between">
-              <span>© 2026 {{ businessNameDisplay }}</span>
+              <span>© 2026 {{ getBusinessNameForTemplate(template.id) }}</span>
               <div class="flex items-center gap-4">
                 <span>Button</span>
                 <span>Button</span>
@@ -178,7 +178,7 @@
                            transition-all text-left text-md placeholder:text-muted-foreground/70 font-semibold"
                   />
                 } @else {
-                  <span class="font-semibold text-foreground text-lg">{{ businessNameDisplay }}</span>
+                  <span class="font-semibold text-foreground text-lg">{{ getBusinessNameForTemplate(template.id) }}</span>
                 }
                 <div class="flex items-center gap-4">
                   <span>Button</span>

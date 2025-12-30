@@ -136,7 +136,7 @@ export class Portfolio implements OnChanges, OnDestroy {
   }
 
   get businessNameDisplay(): string {
-    return this.businessNameInput.trim() || 'Bedrijfsnaam';
+    return this.getBusinessNameForTemplate();
   }
 
   get subtitleDisplay(): string {
@@ -231,12 +231,14 @@ export class Portfolio implements OnChanges, OnDestroy {
     this.templates = TEMPLATE_SETS[group];
     this.currentTemplate = this.templates[0];
     this.applyTemplate(this.currentTemplate);
+    this.syncBusinessNameInput(this.currentTemplate.id);
   }
 
   selectTemplate(template: TemplateOption) {
     if (this.locked) return;
     this.currentTemplate = template;
     this.applyTemplate(template);
+    this.syncBusinessNameInput(template.id);
   }
 
   onTemplateAction(template: TemplateOption, event?: Event) {
@@ -246,6 +248,7 @@ export class Portfolio implements OnChanges, OnDestroy {
       if (template.id !== this.currentTemplate.id) {
         this.currentTemplate = template;
         this.applyTemplate(template);
+        this.syncBusinessNameInput(template.id);
         this.configChange.emit({
           layout: 'grid',
           contentSaved: false
@@ -269,7 +272,8 @@ export class Portfolio implements OnChanges, OnDestroy {
         layout: 'grid',
         config: {
           businessName: this.businessNameInput.trim(),
-          subtitle: this.subtitleInput.trim()
+          subtitle: this.subtitleInput.trim(),
+          businessNameTemplateId: this.currentTemplate.id
         }
       });
       this.configChange.emit({
@@ -307,7 +311,7 @@ export class Portfolio implements OnChanges, OnDestroy {
   private syncFromInputs() {
     const cols = this.layoutConfig?.cols;
     const cells = this.layoutConfig?.cells;
-    const businessName = this.uploads?.['artist_business_name'];
+    const businessName = this.currentTemplate ? this.getSavedBusinessName(this.currentTemplate.id) : '';
     const subtitle = this.uploads?.['artist_subtitle'];
 
     if (cols && cells && cells.length) {
@@ -319,7 +323,9 @@ export class Portfolio implements OnChanges, OnDestroy {
     }
 
     if (typeof businessName === 'string') {
-      this.businessNameInput = businessName;
+      if (!this.isEditingBusinessName) {
+        this.businessNameInput = businessName;
+      }
     }
     if (typeof subtitle === 'string') {
       this.subtitleInput = subtitle;
@@ -417,7 +423,8 @@ export class Portfolio implements OnChanges, OnDestroy {
     this.configChange.emit({
       layout: 'grid',
       config: {
-        businessName: value
+        businessName: value,
+        businessNameTemplateId: this.currentTemplate.id
       }
     });
     this.isEditingBusinessName = false;
@@ -435,7 +442,8 @@ export class Portfolio implements OnChanges, OnDestroy {
       layout: 'grid',
       config: {
         businessName: businessValue,
-        subtitle: value
+        subtitle: value,
+        businessNameTemplateId: this.currentTemplate.id
       }
     });
     this.isEditingSubtitle = false;
@@ -485,6 +493,38 @@ export class Portfolio implements OnChanges, OnDestroy {
     }
 
     return null;
+  }
+
+  getBusinessNameForTemplate(templateId?: string): string {
+    const id = templateId ?? this.currentTemplate?.id;
+    if (!id) {
+      return 'Bedrijfsnaam';
+    }
+
+    const saved = this.getSavedBusinessName(id);
+    if (saved) {
+      return saved;
+    }
+
+    if (id === this.currentTemplate?.id) {
+      return this.businessNameInput.trim() || 'Bedrijfsnaam';
+    }
+
+    return 'Bedrijfsnaam';
+  }
+
+  private getBusinessNameKey(templateId: string): string {
+    return `business_name_${templateId}`;
+  }
+
+  private getSavedBusinessName(templateId: string): string {
+    const value = this.uploads?.[this.getBusinessNameKey(templateId)];
+    return typeof value === 'string' ? value : '';
+  }
+
+  private syncBusinessNameInput(templateId: string): void {
+    if (this.isEditingBusinessName) return;
+    this.businessNameInput = this.getSavedBusinessName(templateId);
   }
 
   getTextPreview(index: number): string | null {
