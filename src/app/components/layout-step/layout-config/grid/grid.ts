@@ -234,6 +234,49 @@ export class Grid implements OnChanges, OnDestroy {
     this.applyTemplate(template);
   }
 
+  onTemplateAction(template: TemplateOption, event?: Event) {
+    event?.stopPropagation();
+
+    if (this.locked) {
+      if (template.id !== this.currentTemplate.id) {
+        this.currentTemplate = template;
+        this.applyTemplate(template);
+        this.configChange.emit({
+          layout: 'grid',
+          contentSaved: false
+        });
+        return;
+      }
+      this.isEditingBusinessName = false;
+      this.isEditingSubtitle = false;
+      if (this.contentSaved) {
+        this.configChange.emit({
+          layout: 'grid',
+          contentSaved: false
+        });
+        return;
+      }
+      this.configChange.emit({
+        layout: 'grid',
+        config: {
+          businessName: this.businessNameInput.trim(),
+          subtitle: this.subtitleInput.trim()
+        }
+      });
+      this.configChange.emit({
+        layout: 'grid',
+        contentSaved: true
+      });
+      return;
+    }
+
+    this.selectTemplate(template);
+    this.configChange.emit({
+      layout: 'grid',
+      action: 'lock'
+    });
+  }
+
   private applyTemplate(template: TemplateOption) {
     this.cols = template.cols;
     this.rows = template.rows;
@@ -274,8 +317,9 @@ export class Grid implements OnChanges, OnDestroy {
     }
 
     if (this.locked) {
-      this.isEditingBusinessName = !this.businessNameInput.trim();
-      this.isEditingSubtitle = !this.subtitleInput.trim();
+      const canEdit = !this.contentSaved;
+      this.isEditingBusinessName = !this.businessNameInput.trim() && canEdit;
+      this.isEditingSubtitle = !this.subtitleInput.trim() && canEdit;
     }
 
     if (this.contentSaved) {

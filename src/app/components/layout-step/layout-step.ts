@@ -177,7 +177,13 @@ export class LayoutStep implements OnChanges {
   onConfigChange(event: any) {
   this.selectedConfig = event;
 
-  if (event.config?.businessName !== undefined || event.config?.subtitle !== undefined) {
+  if (event.action === 'lock') {
+    this.confirmLayout();
+    return;
+  }
+
+  const hasTextConfig = event.config?.businessName !== undefined || event.config?.subtitle !== undefined;
+  if (hasTextConfig) {
     const value = (event.config.businessName ?? '').toString().trim();
     const subtitleValue = (event.config.subtitle ?? '').toString().trim();
     const newUploads = { ...this.uploads };
@@ -198,11 +204,10 @@ export class LayoutStep implements OnChanges {
 
     this.uploads = newUploads;
     this.update.emit({ uploads: this.uploads });
-    return;
   }
 
   // 1) LayoutConfig altijd updaten als er een "config" zonder upload-actie is
-  if (event.config && !event.config.uploadType && !event.config.clearUploadKeys) {
+  if (event.config && !event.config.uploadType && !event.config.clearUploadKeys && !hasTextConfig) {
     this.update.emit({
       layout: event.layout ?? this.selectedLayout,
       layoutConfig: {

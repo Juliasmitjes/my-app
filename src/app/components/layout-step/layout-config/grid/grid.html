@@ -9,20 +9,22 @@
       [class.ring-2]="template.id === currentTemplate.id"
       [class.ring-accent]="template.id === currentTemplate.id"
     >
-      <button
-        type="button"
-        class="w-full text-left space-y-2 cursor-pointer"
-        (click)="selectTemplate(template)"
-        [disabled]="locked"
-      >
-        <h4 class="text-base font-semibold">{{ template.label }}</h4>
-        <p class="text-xs text-muted-foreground">{{ template.description }}</p>
-      </button>
+      <div class="flex items-start justify-between gap-3">
+        <div class="space-y-2">
+          <h4 class="text-base font-semibold">{{ template.label }}</h4>
+          <p class="text-xs text-muted-foreground">{{ template.description }}</p>
+        </div>
+        <button
+          type="button"
+          class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-accent text-accent-foreground shadow hover:shadow-md hover:scale-[1.02] transition"
+          (click)="onTemplateAction(template, $event)"
+        >
+          {{ locked && template.id === currentTemplate.id ? (contentSaved ? 'Wijzig inhoud' : 'Opslaan') : 'Kies dit template' }}
+        </button>
+      </div>
 
       <div
-        class="mt-4 w-full text-left rounded-2xl border border-border/50 bg-muted/20 cursor-pointer"
-        role="button"
-        (click)="selectTemplate(template)"
+        class="mt-4 w-full text-left rounded-2xl border border-border/50 bg-muted/20"
       >
         @if (isArtistTemplate(template)) {
             <div class="px-4 pt-4 pb-3 space-y-4 bg-muted/60 border border-border/40">
@@ -59,15 +61,6 @@
                 <div class="text-sm text-muted-foreground mt-3">
                   {{ subtitleDisplay }}
                 </div>
-                @if (locked && template.id === currentTemplate.id) {
-                  <button
-                    type="button"
-                    class="mt-3 text-xs text-muted-foreground underline"
-                    (click)="editBusinessName(); $event.stopPropagation()"
-                  >
-                    Wijzig naam
-                  </button>
-                }
               }
             </div>
             @if (locked && template.id === currentTemplate.id) {
@@ -77,7 +70,7 @@
                     <input
                       type="text"
                       [(ngModel)]="subtitleInput"
-                      placeholder="Onder titel"
+                      placeholder="Ondertitel"
                       class="w-full px-4 py-3 rounded-xl border border-border/60 bg-white text-center text-sm"
                     />
                     <button
@@ -88,16 +81,6 @@
                       Opslaan
                     </button>
                   </div>
-                </div>
-              } @else {
-                <div class="text-center pb-2">
-                  <button
-                    type="button"
-                    class="text-xs text-muted-foreground underline"
-                    (click)="editSubtitle(); $event.stopPropagation()"
-                  >
-                    Wijzig ondertitel
-                  </button>
                 </div>
               }
             }
@@ -116,7 +99,7 @@
                 [style.gridArea]="getArtistArea(i)"
                 #artistCell
               >
-                @if (template.id === currentTemplate.id && locked) {
+                @if (template.id === currentTemplate.id && locked && !contentSaved) {
                   <div
                     class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px]
                            flex items-center justify-center rounded-2xl"
@@ -191,7 +174,7 @@
             @if (template.id === currentTemplate.id) {
               @for (cell of grid; let i = $index; track i) {
                 <div class="relative p-3 rounded-2xl border border-border/60 bg-white shadow-sm" #gridCell>
-                  @if (locked) {
+                  @if (locked && !contentSaved) {
                     <div
                       class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px]
                              flex items-center justify-center rounded-2xl"
