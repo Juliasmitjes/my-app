@@ -74,6 +74,7 @@ export class LayoutStep implements OnChanges {
   showCropper = false;
   cropperFile: File | null = null;
   cropperKey: string | null = null;
+  cropperAspectRatio: number | null = null;
 
   layouts = [
     {
@@ -229,7 +230,11 @@ export class LayoutStep implements OnChanges {
 
   // 3) UPLOAD START
   if (event.config?.uploadType && event.config?.uploadKey) {
-    this.startUploadFlow(event.config.uploadType, event.config.uploadKey);
+    this.startUploadFlow(
+      event.config.uploadType,
+      event.config.uploadKey,
+      event.config.aspectRatio
+    );
   }
 }
 
@@ -257,7 +262,7 @@ export class LayoutStep implements OnChanges {
   // -----------------------------
   // UPLOAD FLOW
   // -----------------------------
-  startUploadFlow(type: 'image' | 'text' | 'video', key: string) {
+  startUploadFlow(type: 'image' | 'text' | 'video', key: string, aspectRatio?: number | null) {
 
     // Two-column col1
     if (key.startsWith('col1_')) {
@@ -288,6 +293,7 @@ export class LayoutStep implements OnChanges {
     }
 
     this.currentUploadType = type;
+    this.cropperAspectRatio = type === 'image' ? (aspectRatio ?? null) : null;
 
     switch (type) {
       case 'image':
@@ -337,6 +343,7 @@ export class LayoutStep implements OnChanges {
 
 
   if (file.type.startsWith('video')) {
+    this.cropperAspectRatio = null;
     this.uploads = {
       ...this.uploads,
       [key]: file
@@ -350,6 +357,7 @@ export class LayoutStep implements OnChanges {
   }
 
   this.toast.error('Dit bestandstype wordt niet ondersteund');
+  this.cropperAspectRatio = null;
   input.value = '';
 }
 
@@ -434,7 +442,15 @@ onImageCropped(blob: Blob) {
   this.showCropper = false;
   this.cropperFile = null;
   this.cropperKey = null;
+  this.cropperAspectRatio = null;
 
   this.toast.success('Foto bijgewerkt');
 }
+
+  onCropperCancel() {
+    this.showCropper = false;
+    this.cropperFile = null;
+    this.cropperKey = null;
+    this.cropperAspectRatio = null;
+  }
 }

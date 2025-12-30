@@ -10,6 +10,7 @@ import Cropper from 'cropperjs';
 export class ImageCropper implements AfterViewInit {
 
   @Input() file!: File;
+  @Input() aspectRatio: number | null = null;
   @Output() cancel = new EventEmitter<void>();
   @Output() cropped = new EventEmitter<Blob>();
 
@@ -20,8 +21,9 @@ export class ImageCropper implements AfterViewInit {
     const img = this.imageElement.nativeElement;
 
     img.onload = () => {
+      const ratio = this.aspectRatio && this.aspectRatio > 0 ? this.aspectRatio : 1;
       this.cropper = new Cropper(img, {
-        aspectRatio: 1,
+        aspectRatio: ratio,
         viewMode: 1,
         dragMode: 'crop',
         autoCropArea: 0.8,
@@ -39,13 +41,21 @@ export class ImageCropper implements AfterViewInit {
         toggleDragModeOnDblclick: false,
         ready: () => {
           const container = this.cropper.getContainerData();
-          const size = Math.min(container.width, container.height) * 0.8;
+          const maxWidth = container.width * 0.8;
+          const maxHeight = container.height * 0.8;
+          let width = maxWidth;
+          let height = width / ratio;
+
+          if (height > maxHeight) {
+            height = maxHeight;
+            width = height * ratio;
+          }
 
           this.cropper.setCropBoxData({
-            width: size,
-            height: size,
-            left: (container.width - size) / 2,
-            top: (container.height - size) / 2
+            width,
+            height,
+            left: (container.width - width) / 2,
+            top: (container.height - height) / 2
           });
         }
       });

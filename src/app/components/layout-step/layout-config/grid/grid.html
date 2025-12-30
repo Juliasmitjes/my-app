@@ -114,6 +114,7 @@
               <div
                 class="relative p-3 rounded-2xl border border-border/60 bg-white shadow-sm"
                 [style.gridArea]="getArtistArea(i)"
+                #artistCell
               >
                 @if (template.id === currentTemplate.id && locked) {
                   <div
@@ -129,7 +130,7 @@
                         [uploads]="uploads"
                         [isSaved]="isSaved[i]"
                         [isComplete]="isUploadComplete(i)"
-                        (requestUpload)="onRequestUpload(i, $event, getArtistValue(i))"
+                        (requestUpload)="onRequestUpload(i, $event, getArtistValue(i), artistCell)"
                         (requestClear)="onRequestClear(i, $event)">
                       </app-upload-unit>
 
@@ -172,6 +173,16 @@
               </div>
             }
           </div>
+          <div class="px-4 py-3 bg-muted/60 border border-border/40 text-xs text-muted-foreground">
+            <div class="flex items-center justify-between">
+              <span>© 2024 Bedrijfsnaam</span>
+              <div class="flex items-center gap-4">
+                <span>Instagram</span>
+                <span>Behance</span>
+                <span>Contact</span>
+              </div>
+            </div>
+          </div>
         } @else {
           <div
             class="grid gap-3 p-4"
@@ -179,7 +190,7 @@
           >
             @if (template.id === currentTemplate.id) {
               @for (cell of grid; let i = $index; track i) {
-                <div class="relative p-3 rounded-2xl border border-border/60 bg-white shadow-sm">
+                <div class="relative p-3 rounded-2xl border border-border/60 bg-white shadow-sm" #gridCell>
                   @if (locked) {
                     <div
                       class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px]
@@ -194,7 +205,7 @@
                           [uploads]="uploads"
                           [isSaved]="isSaved[i]"
                           [isComplete]="isUploadComplete(i)"
-                          (requestUpload)="onRequestUpload(i, $event, cell.value)"
+                          (requestUpload)="onRequestUpload(i, $event, cell.value, gridCell)"
                           (requestClear)="onRequestClear(i, $event)">
                         </app-upload-unit>
 

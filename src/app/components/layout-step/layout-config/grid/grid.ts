@@ -296,8 +296,10 @@ export class Grid implements OnChanges, OnDestroy {
     return !!this.uploads[this.getUploadKey(index)];
   }
 
-  onRequestUpload(index: number, uploadKey: string, type: CellType) {
+  onRequestUpload(index: number, uploadKey: string, type: CellType, cellEl?: HTMLElement | null) {
     this.isSaved[index] = false;
+
+    const aspectRatio = type === 'image' ? this.getCellAspectRatio(cellEl) : null;
 
     this.configChange.emit({
       layout: 'grid',
@@ -305,7 +307,8 @@ export class Grid implements OnChanges, OnDestroy {
         cellIndex: index,
         uploadType: type,
         uploadKey,
-        templateGroup: this.templateGroup
+        templateGroup: this.templateGroup,
+        aspectRatio
       },
       contentSaved: false
     });
@@ -379,6 +382,15 @@ export class Grid implements OnChanges, OnDestroy {
 
   editSubtitle(): void {
     this.isEditingSubtitle = true;
+  }
+
+  private getCellAspectRatio(cellEl?: HTMLElement | null): number | null {
+    if (!cellEl) return null;
+    const rect = cellEl.getBoundingClientRect();
+    if (!rect.height) return null;
+    const ratio = rect.width / rect.height;
+    if (!Number.isFinite(ratio) || ratio <= 0) return null;
+    return ratio;
   }
 
   getImagePreview(index: number): string | null {
