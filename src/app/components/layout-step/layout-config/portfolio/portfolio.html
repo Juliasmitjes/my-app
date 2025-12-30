@@ -95,7 +95,7 @@
           >
             @for (cell of artistPreviewCells; let i = $index; track i) {
               <div
-                class="relative border-2 border-border/80 bg-white/70 shadow-none"
+                class="relative border border-border/60 bg-white shadow-sm"
                 [class.p-0]="template.id === currentTemplate.id && getImagePreview(i)"
                 [class.rounded-none]="template.id === currentTemplate.id && getImagePreview(i)"
                 [class.border-0]="template.id === currentTemplate.id && getImagePreview(i)"
@@ -142,7 +142,7 @@
                     alt=""
                   />
                 } @else {
-                  <div class="flex items-center justify-center p-10 rounded-none">
+                  <div class="flex items-center justify-center p-6 rounded-none bg-muted/20 h-full">
                     @switch (cell) {
                       @case ('text')  { <lucide-icon name="text-align-justify" class="w-8 h-8 opacity-70"></lucide-icon> }
                       @case ('image') { <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon> }
