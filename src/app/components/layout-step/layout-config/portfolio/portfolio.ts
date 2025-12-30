@@ -42,12 +42,12 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
       cells: ['text', 'image', 'image', 'image', 'image']
     },
     {
-      id: 'portfolio-editorial',
-      label: 'Editorial mix',
-      description: 'Afwisseling van tekst en beeld.',
-      cols: 2,
+      id: 'portfolio-illustrator',
+      label: 'Illustrator',
+      description: 'Hero met beeld en tekst.',
+      cols: 1,
       rows: 2,
-      cells: ['image', 'text', 'image', 'text']
+      cells: ['image', 'text']
     }
   ],
   product: [
@@ -184,6 +184,11 @@ export class Portfolio implements OnChanges, OnDestroy {
   isDesignerTemplate(template?: TemplateOption | null): boolean {
     const target = template ?? this.currentTemplate;
     return target?.id === 'portfolio-designer';
+  }
+
+  isIllustratorTemplate(template?: TemplateOption | null): boolean {
+    const target = template ?? this.currentTemplate;
+    return target?.id === 'portfolio-illustrator';
   }
 
   isImageCell(value: CellType): boolean {
