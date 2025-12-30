@@ -1,8 +1,8 @@
-<div class="flex flex-col items-center gap-2 sm:gap-4">
+<div class="flex flex-col items-center gap-1 sm:gap-2">
 
   @if (hasUpload) {
     <!-- Bestandsnaam -->
-    <p class="text-sm text-white max-w-[160px] truncate text-center"
+    <p class="text-xs text-white max-w-[160px] truncate text-center"
        [title]="fileName ?? 'Tekst toegevoegd'">
       {{ fileName ?? 'Tekst toegevoegd' }}
     </p>
@@ -10,7 +10,7 @@
     <!-- Wijzig-knop -->
     @if (!isSaved) {
       <button
-        class="px-4 py-2 rounded-xl bg-white text-black shadow cursor-pointer"
+        class="px-3 py-1.5 rounded-lg bg-white text-black text-xs font-semibold shadow-sm cursor-pointer"
         (click)="onUploadClick($event)"
       >
         Wijzig {{ label.toLowerCase() }}
@@ -20,9 +20,9 @@
     <!-- Upload-knop -->
     <button
         [ngClass]="compact 
-          ? 'px-2 py-2' 
-          : 'px-2 py-4 sm:px-4 sm:py-2'"
-        class="rounded-xl bg-white text-black shadow cursor-pointer whitespace-nowrap "
+          ? 'px-2 py-1.5' 
+          : 'px-2 py-3 sm:px-3 sm:py-1.5'"
+        class="rounded-lg bg-white text-black text-xs font-semibold shadow-sm cursor-pointer whitespace-nowrap "
         (click)="onUploadClick($event)"
       >
         Upload {{ label }}
