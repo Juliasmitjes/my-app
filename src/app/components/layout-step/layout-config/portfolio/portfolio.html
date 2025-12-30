@@ -173,6 +173,98 @@
               </div>
             </div>
           </div>
+        } @else if (isDesignerTemplate(template)) {
+          <div class="border border-border/40 bg-muted/40">
+            <div class="px-4 pt-4 pb-3">
+              <div class="flex items-center justify-between text-xs text-muted-foreground">
+                <span class="font-semibold text-foreground">{{ businessNameDisplay }}</span>
+                <div class="flex items-center gap-4">
+                  <span>Button</span>
+                  <span>Button</span>
+                </div>
+              </div>
+            </div>
+            <div class="px-6 py-8 text-center">
+              @if (template.id === currentTemplate.id && locked && !contentSaved) {
+                <div class="flex flex-col items-center gap-2">
+                  <app-upload-unit
+                    [locked]="locked"
+                    [label]="'Tekst'"
+                    [uploadKey]="getUploadKey(0)"
+                    [uploads]="uploads"
+                    [isSaved]="isSaved[0]"
+                    [isComplete]="isUploadComplete(0)"
+                    (requestUpload)="onRequestUpload(0, $event, 'text')"
+                    (requestClear)="onRequestClear(0, $event)">
+                  </app-upload-unit>
+
+                  <button type="button"
+                          (click)="onSaveClick(0, $event)"
+                          class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
+                          [class.text-white/90]="isUploadComplete(0) && !isSaved[0]"
+                          [class.border-white/60]="isUploadComplete(0) && !isSaved[0]"
+                          [class.text-white/70]="isSaved[0]"
+                          [class.border-white/30]="isSaved[0]"
+                          [class.text-white/60]="!isUploadComplete(0)">
+                    {{ isSaved[0] ? 'Wijzigen' : 'Opslaan' }}
+                  </button>
+                </div>
+              } @else {
+                <div class="text-sm text-muted-foreground">
+                  {{ getTextPreview(0) || 'Hi! Ik ben jouw designer. Hier komt jouw intro.' }}
+                </div>
+              }
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-0">
+            @for (cellIndex of [1, 2, 3, 4]; track cellIndex) {
+              <div class="relative border border-border/60 bg-white shadow-sm min-h-[180px]">
+                @if (template.id === currentTemplate.id && locked && !contentSaved) {
+                  <div
+                    class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px]
+                           flex items-center justify-center rounded-none"
+                    (click)="$event.stopPropagation()"
+                  >
+                    <div class="flex flex-col items-center gap-2">
+                      <app-upload-unit
+                        [locked]="locked"
+                        [label]="'Foto'"
+                        [uploadKey]="getUploadKey(cellIndex)"
+                        [uploads]="uploads"
+                        [isSaved]="isSaved[cellIndex]"
+                        [isComplete]="isUploadComplete(cellIndex)"
+                        (requestUpload)="onRequestUpload(cellIndex, $event, 'image')"
+                        (requestClear)="onRequestClear(cellIndex, $event)">
+                      </app-upload-unit>
+
+                      <button type="button"
+                              (click)="onSaveClick(cellIndex, $event)"
+                              class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
+                              [class.text-white/90]="isUploadComplete(cellIndex) && !isSaved[cellIndex]"
+                              [class.border-white/60]="isUploadComplete(cellIndex) && !isSaved[cellIndex]"
+                              [class.text-white/70]="isSaved[cellIndex]"
+                              [class.border-white/30]="isSaved[cellIndex]"
+                              [class.text-white/60]="!isUploadComplete(cellIndex)">
+                        {{ isSaved[cellIndex] ? 'Wijzigen' : 'Opslaan' }}
+                      </button>
+                    </div>
+                  </div>
+                }
+
+                @if (getImagePreview(cellIndex)) {
+                  <img
+                    class="w-full h-full rounded-none object-cover"
+                    [src]="getImagePreview(cellIndex)"
+                    alt=""
+                  />
+                } @else {
+                  <div class="flex items-center justify-center p-6 rounded-none bg-muted/60 h-full">
+                    <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon>
+                  </div>
+                }
+              </div>
+            }
+          </div>
         } @else {
           <div
             class="grid gap-3 p-4"

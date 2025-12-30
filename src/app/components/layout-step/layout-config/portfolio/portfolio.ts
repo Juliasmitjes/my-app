@@ -34,12 +34,12 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
       cells: ['image', 'image', 'image', 'image', 'image', 'image', 'image', 'image', 'image']
     },
     {
-      id: 'portfolio-case',
-      label: 'Case + intro',
-      description: 'Introtekst naast projectbeelden.',
+      id: 'portfolio-designer',
+      label: 'Designer',
+      description: 'Intro tekst met twee beelden.',
       cols: 2,
-      rows: 2,
-      cells: ['text', 'image', 'image', 'image']
+      rows: 3,
+      cells: ['text', 'image', 'image', 'image', 'image']
     },
     {
       id: 'portfolio-editorial',
@@ -179,6 +179,11 @@ export class Portfolio implements OnChanges, OnDestroy {
 
   getArtistLabel(index: number): string {
     return 'Foto';
+  }
+
+  isDesignerTemplate(template?: TemplateOption | null): boolean {
+    const target = template ?? this.currentTemplate;
+    return target?.id === 'portfolio-designer';
   }
 
   isImageCell(value: CellType): boolean {
@@ -473,6 +478,30 @@ export class Portfolio implements OnChanges, OnDestroy {
 
     if (typeof file === 'string') {
       return file;
+    }
+
+    return null;
+  }
+
+  getTextPreview(index: number): string | null {
+    const cell = this.grid[index];
+    if (!cell || cell.value !== 'text') {
+      return null;
+    }
+
+    const key = this.getUploadKey(index);
+    const value = this.uploads?.[key];
+    if (!value || value?.kind !== 'inline') {
+      return null;
+    }
+
+    const content = value.value;
+    if (content && typeof content === 'object') {
+      return content.body ?? content.subtitle ?? content.title ?? null;
+    }
+
+    if (typeof content === 'string') {
+      return content;
     }
 
     return null;
