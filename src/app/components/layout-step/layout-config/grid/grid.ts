@@ -110,6 +110,7 @@ export class Grid implements OnChanges, OnDestroy {
   isEditingBusinessName = false;
   subtitleInput = '';
   isEditingSubtitle = false;
+  suppressAutoEdit = false;
   private blobUrlCache = new Map<string, string>();
 
   ngOnChanges(changes: SimpleChanges) {
@@ -245,6 +246,7 @@ export class Grid implements OnChanges, OnDestroy {
           layout: 'grid',
           contentSaved: false
         });
+        this.suppressAutoEdit = false;
         return;
       }
       this.isEditingBusinessName = false;
@@ -254,6 +256,9 @@ export class Grid implements OnChanges, OnDestroy {
           layout: 'grid',
           contentSaved: false
         });
+        this.isEditingBusinessName = true;
+        this.isEditingSubtitle = true;
+        this.suppressAutoEdit = false;
         return;
       }
       this.configChange.emit({
@@ -317,7 +322,7 @@ export class Grid implements OnChanges, OnDestroy {
     }
 
     if (this.locked) {
-      const canEdit = !this.contentSaved;
+      const canEdit = !this.contentSaved && !this.suppressAutoEdit;
       this.isEditingBusinessName = !this.businessNameInput.trim() && canEdit;
       this.isEditingSubtitle = !this.subtitleInput.trim() && canEdit;
     }
@@ -407,6 +412,7 @@ export class Grid implements OnChanges, OnDestroy {
       }
     });
     this.isEditingBusinessName = false;
+    this.suppressAutoEdit = true;
   }
 
   editBusinessName(): void {
@@ -415,17 +421,22 @@ export class Grid implements OnChanges, OnDestroy {
 
   saveSubtitle(): void {
     const value = this.subtitleInput.trim();
+    const businessValue = this.businessNameInput.trim();
     this.configChange.emit({
       layout: 'grid',
       config: {
+        businessName: businessValue,
         subtitle: value
       }
     });
     this.isEditingSubtitle = false;
+    this.isEditingBusinessName = false;
+    this.suppressAutoEdit = true;
   }
 
   editSubtitle(): void {
     this.isEditingSubtitle = true;
+    this.isEditingBusinessName = true;
   }
 
   private getCellAspectRatio(cellEl?: HTMLElement | null): number | null {
