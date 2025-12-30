@@ -1,6 +1,7 @@
-﻿import { Component, EventEmitter, Output, Input, OnChanges, SimpleChanges } from '@angular/core';
+﻿import { Component, EventEmitter, Output, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { BuilderState } from '../../../../types/builder-state';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 import { UploadUnit } from '../upload-unit/upload-unit';
 
@@ -83,11 +84,12 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
   templateUrl: './grid.html',
   imports: [
     CommonModule,
+    FormsModule,
     LucideAngularModule,
     UploadUnit
   ]
 })
-export class Grid implements OnChanges {
+export class Grid implements OnChanges, OnDestroy {
   @Input() locked = false;
   @Input() uploads: Record<string, any> = {};
   @Input() layoutConfig?: BuilderState['layoutConfig'];
@@ -104,19 +106,40 @@ export class Grid implements OnChanges {
 
   templates: TemplateOption[] = TEMPLATE_SETS['portfolio'];
   currentTemplate: TemplateOption = TEMPLATE_SETS['portfolio'][0];
+  businessNameInput = '';
+  isEditingBusinessName = false;
+  subtitleInput = '';
+  isEditingSubtitle = false;
+  private blobUrlCache = new Map<string, string>();
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['templateGroup']) {
       this.syncTemplateSet();
     }
 
-    if (changes['layoutConfig'] || changes['contentSaved']) {
+    if (changes['uploads']) {
+      this.resetBlobUrls();
+    }
+
+    if (changes['layoutConfig'] || changes['contentSaved'] || changes['uploads'] || changes['locked']) {
       this.syncFromInputs();
     }
   }
 
+  ngOnDestroy(): void {
+    this.resetBlobUrls();
+  }
+
   get groupTitle(): string {
     return this.templateGroup === 'product' ? 'Product templates' : 'Portfolio templates';
+  }
+
+  get businessNameDisplay(): string {
+    return this.businessNameInput.trim() || 'Bedrijfsnaam';
+  }
+
+  get subtitleDisplay(): string {
+    return this.subtitleInput.trim() || 'Hier komt jouw ondertitel. Maak het pakkend!';
   }
 
   isArtistTemplate(template?: TemplateOption | null): boolean {
@@ -156,6 +179,10 @@ export class Grid implements OnChanges {
   getArtistLabel(index: number): string {
     const cell = this.grid[index];
     return cell?.labelMap[cell.value] ?? 'Foto';
+  }
+
+  isImageCell(value: CellType): boolean {
+    return value === 'image';
   }
 
   getArtistCellClass(index: number): string {
@@ -228,6 +255,8 @@ export class Grid implements OnChanges {
   private syncFromInputs() {
     const cols = this.layoutConfig?.cols;
     const cells = this.layoutConfig?.cells;
+    const businessName = this.uploads?.['artist_business_name'];
+    const subtitle = this.uploads?.['artist_subtitle'];
 
     if (cols && cells && cells.length) {
       this.cols = cols;
@@ -235,6 +264,18 @@ export class Grid implements OnChanges {
       this.grid = cells.map(value => this.createDefaultCell(value));
     } else if (!this.grid.length) {
       this.applyTemplate(this.currentTemplate);
+    }
+
+    if (typeof businessName === 'string') {
+      this.businessNameInput = businessName;
+    }
+    if (typeof subtitle === 'string') {
+      this.subtitleInput = subtitle;
+    }
+
+    if (this.locked) {
+      this.isEditingBusinessName = !this.businessNameInput.trim();
+      this.isEditingSubtitle = !this.subtitleInput.trim();
     }
 
     if (this.contentSaved) {
@@ -308,5 +349,72 @@ export class Grid implements OnChanges {
     });
 
     this.emitConfig();
+  }
+
+  saveBusinessName(): void {
+    const value = this.businessNameInput.trim();
+    this.configChange.emit({
+      layout: 'grid',
+      config: {
+        businessName: value
+      }
+    });
+    this.isEditingBusinessName = false;
+  }
+
+  editBusinessName(): void {
+    this.isEditingBusinessName = true;
+  }
+
+  saveSubtitle(): void {
+    const value = this.subtitleInput.trim();
+    this.configChange.emit({
+      layout: 'grid',
+      config: {
+        subtitle: value
+      }
+    });
+    this.isEditingSubtitle = false;
+  }
+
+  editSubtitle(): void {
+    this.isEditingSubtitle = true;
+  }
+
+  getImagePreview(index: number): string | null {
+    const cell = this.grid[index];
+    if (!cell || cell.value !== 'image') {
+      return null;
+    }
+
+    const key = this.getUploadKey(index);
+    const file = this.uploads?.[key];
+
+    if (!file || file?.kind === 'inline') {
+      return null;
+    }
+
+    if (file instanceof File) {
+      const cached = this.blobUrlCache.get(key);
+      if (cached) {
+        return cached;
+      }
+      const url = URL.createObjectURL(file);
+      this.blobUrlCache.set(key, url);
+      return url;
+    }
+
+    if (typeof file === 'string') {
+      return file;
+    }
+
+    return null;
+  }
+
+  private resetBlobUrls(): void {
+    for (const url of this.blobUrlCache.values()) {
+      URL.revokeObjectURL(url);
+    }
+    this.blobUrlCache.clear();
   }
 }

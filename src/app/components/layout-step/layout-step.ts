@@ -176,6 +176,30 @@ export class LayoutStep implements OnChanges {
   onConfigChange(event: any) {
   this.selectedConfig = event;
 
+  if (event.config?.businessName !== undefined || event.config?.subtitle !== undefined) {
+    const value = (event.config.businessName ?? '').toString().trim();
+    const subtitleValue = (event.config.subtitle ?? '').toString().trim();
+    const newUploads = { ...this.uploads };
+
+    if (value) {
+      newUploads['artist_business_name'] = value;
+    } else {
+      delete newUploads['artist_business_name'];
+    }
+
+    if (event.config?.subtitle !== undefined) {
+      if (subtitleValue) {
+        newUploads['artist_subtitle'] = subtitleValue;
+      } else {
+        delete newUploads['artist_subtitle'];
+      }
+    }
+
+    this.uploads = newUploads;
+    this.update.emit({ uploads: this.uploads });
+    return;
+  }
+
   // 1) LayoutConfig altijd updaten als er een "config" zonder upload-actie is
   if (event.config && !event.config.uploadType && !event.config.clearUploadKeys) {
     this.update.emit({
