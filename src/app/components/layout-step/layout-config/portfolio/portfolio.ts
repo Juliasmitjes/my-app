@@ -234,7 +234,9 @@ export class Portfolio implements OnChanges, OnDestroy {
   private syncTemplateSet() {
     const group = this.templateGroup === 'product' ? 'product' : 'portfolio';
     this.templates = TEMPLATE_SETS[group];
-    this.currentTemplate = this.templates[0];
+    const savedTemplateId = this.layoutConfig?.templateId;
+    const found = savedTemplateId ? this.templates.find(t => t.id === savedTemplateId) : null;
+    this.currentTemplate = found ?? this.templates[0];
     this.applyTemplate(this.currentTemplate);
     this.syncBusinessNameInput(this.currentTemplate.id);
   }
@@ -259,6 +261,7 @@ export class Portfolio implements OnChanges, OnDestroy {
           contentSaved: false
         });
         this.suppressAutoEdit = false;
+        this.emitConfig();
         return;
       }
       this.isEditingBusinessName = false;
@@ -308,12 +311,20 @@ export class Portfolio implements OnChanges, OnDestroy {
       config: {
         cols: this.cols,
         cells: this.grid.map(c => c.value),
-        templateGroup: this.templateGroup
+        templateGroup: this.templateGroup,
+        templateId: this.currentTemplate?.id
       }
     });
   }
 
   private syncFromInputs() {
+    const savedTemplateId = this.layoutConfig?.templateId;
+    if (savedTemplateId) {
+      const match = this.templates.find(t => t.id === savedTemplateId);
+      if (match) {
+        this.currentTemplate = match;
+      }
+    }
     const cols = this.layoutConfig?.cols;
     const cells = this.layoutConfig?.cells;
     const businessName = this.currentTemplate ? this.getSavedBusinessName(this.currentTemplate.id) : '';

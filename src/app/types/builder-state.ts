@@ -24,6 +24,7 @@ export interface BuilderState {
     rows?: number;
     cols?: number;
     cells?: Array<'text' | 'image' | 'video'>;
+    templateId?: string;
   };
 
   /** Kleurenthema van de website */
