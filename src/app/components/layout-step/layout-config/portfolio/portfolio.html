@@ -95,7 +95,7 @@
           >
             @for (cell of artistPreviewCells; let i = $index; track i) {
               <div
-                class="relative border border-border/60 bg-muted/20 shadow-sm"
+                class="relative border-2 border-border/80 bg-muted/20 shadow-none"
                 [class.p-0]="template.id === currentTemplate.id && getImagePreview(i)"
                 [class.rounded-none]="template.id === currentTemplate.id && getImagePreview(i)"
                 [class.border-0]="template.id === currentTemplate.id && getImagePreview(i)"
