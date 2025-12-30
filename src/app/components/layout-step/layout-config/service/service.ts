@@ -1,4 +1,4 @@
-﻿import { Component, EventEmitter, Output, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { BuilderState } from '../../../../types/builder-state';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
@@ -43,17 +43,17 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
 };
 
 @Component({
-  selector: 'app-two-columns',
+  selector: 'app-service',
   standalone: true,
-  templateUrl: './two-columns.html',
+  templateUrl: './service.html',
   imports: [CommonModule, LucideAngularModule, UploadUnit]
 })
-export class TwoColumns implements OnChanges {
+export class Service implements OnChanges {
   @Input() locked = false;
   @Input() uploads: Record<string, any> = {};
   @Input() layoutConfig?: BuilderState['layoutConfig'];
   @Input() contentSaved = false;
-  @Input() templateGroup: TemplateGroup = null;
+  @Input() templateGroup: TemplateGroup = 'service';
 
   @Output() configChange = new EventEmitter<any>();
 

@@ -17,37 +17,54 @@
   <!-- Configuratieblok -->
   <div class="mt-10">
 
-    @if (selectedLayout === 'single') {
-      <app-single-column
-        [templateGroup]="selectedCategory"
+    @if (selectedCategory === 'portfolio') {
+      <app-portfolio
         [locked]="locked"
         [uploads]="uploads"
         [layoutConfig]="builderState.layoutConfig"
         [contentSaved]="builderState.contentSaved ?? false"
         (configChange)="onConfigChange($event)"
-      ></app-single-column>
+      ></app-portfolio>
     }
 
-    @if (selectedLayout === 'two-column') {
-      <app-two-columns
-        [templateGroup]="selectedCategory"
+    @if (selectedCategory === 'product') {
+      <app-product
         [locked]="locked"
         [uploads]="uploads"
         [layoutConfig]="builderState.layoutConfig"
         [contentSaved]="builderState.contentSaved ?? false"
         (configChange)="onConfigChange($event)"
-      ></app-two-columns>
+      ></app-product>
     }
 
-    @if (selectedLayout === 'grid') {
-      <app-grid
-        [templateGroup]="selectedCategory"
+    @if (selectedCategory === 'service') {
+      <app-service
         [locked]="locked"
         [uploads]="uploads"
         [layoutConfig]="builderState.layoutConfig"
         [contentSaved]="builderState.contentSaved ?? false"
         (configChange)="onConfigChange($event)"
-      ></app-grid>
+      ></app-service>
+    }
+
+    @if (selectedCategory === 'editorial') {
+      <app-editorial
+        [locked]="locked"
+        [uploads]="uploads"
+        [layoutConfig]="builderState.layoutConfig"
+        [contentSaved]="builderState.contentSaved ?? false"
+        (configChange)="onConfigChange($event)"
+      ></app-editorial>
+    }
+
+    @if (selectedCategory === 'local') {
+      <app-local-business
+        [locked]="locked"
+        [uploads]="uploads"
+        [layoutConfig]="builderState.layoutConfig"
+        [contentSaved]="builderState.contentSaved ?? false"
+        (configChange)="onConfigChange($event)"
+      ></app-local-business>
     }
 
   </div>

@@ -12,9 +12,11 @@ import {
 import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
 import { OptionCard } from '../ui/option-card/option-card';
-import { SingleColumn } from './layout-config/single-column/single-column';
-import { TwoColumns } from './layout-config/two-columns/two-columns';
-import { Grid } from './layout-config/grid/grid';
+import { Portfolio } from './layout-config/portfolio/portfolio';
+import { Product } from './layout-config/product/product';
+import { Service } from './layout-config/service/service';
+import { Editorial } from './layout-config/editorial/editorial';
+import { LocalBusiness } from './layout-config/local-business/local-business';
 import { NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from '../ui/toast/toast.service';
@@ -26,9 +28,11 @@ import { ImageCropper } from './layout-config/image-cropper/image-cropper';
   imports: [
     CommonModule,
     OptionCard,
-    SingleColumn,
-    TwoColumns,
-    Grid,
+    Portfolio,
+    Product,
+    Service,
+    Editorial,
+    LocalBusiness,
     FormsModule,
     ImageCropper
   ],

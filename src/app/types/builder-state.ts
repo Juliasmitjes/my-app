@@ -14,6 +14,7 @@ export interface BuilderState {
 
     // single
     variantType?: string;
+    selectedTemplate?: string;
 
     // two-column
     col1Type?: 'text' | 'image' | 'video';

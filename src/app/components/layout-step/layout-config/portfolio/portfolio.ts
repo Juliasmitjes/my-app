@@ -1,4 +1,4 @@
-﻿import { Component, EventEmitter, Output, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { BuilderState } from '../../../../types/builder-state';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -79,9 +79,9 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
 };
 
 @Component({
-  selector: 'app-grid',
+  selector: 'app-portfolio',
   standalone: true,
-  templateUrl: './grid.html',
+  templateUrl: './portfolio.html',
   imports: [
     CommonModule,
     FormsModule,
@@ -89,12 +89,12 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
     UploadUnit
   ]
 })
-export class Grid implements OnChanges, OnDestroy {
+export class Portfolio implements OnChanges, OnDestroy {
   @Input() locked = false;
   @Input() uploads: Record<string, any> = {};
   @Input() layoutConfig?: BuilderState['layoutConfig'];
   @Input() contentSaved = false;
-  @Input() templateGroup: TemplateGroup = null;
+  @Input() templateGroup: TemplateGroup = 'portfolio';
 
   @Output() configChange = new EventEmitter<any>();
 

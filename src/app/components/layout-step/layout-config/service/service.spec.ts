@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SingleColumn } from './single-column';
+import { Service } from './service';
 
-describe('SingleColumn', () => {
-  let component: SingleColumn;
-  let fixture: ComponentFixture<SingleColumn>;
+describe('Service', () => {
+  let component: Service;
+  let fixture: ComponentFixture<Service>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SingleColumn]
+      imports: [Service]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SingleColumn);
+    fixture = TestBed.createComponent(Service);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
