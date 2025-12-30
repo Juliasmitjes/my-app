@@ -175,7 +175,7 @@
                     placeholder="Bedrijfsnaam"
                     class="w-full max-w-xs px-4 py-2 rounded-xl border border-border bg-white/80
                            focus:outline-none ring-2 ring-accent/30 focus:ring-accent
-                           transition-all text-left text-md placeholder:text-muted-foreground/70 font-semibold"
+                           transition-all text-left text-lg placeholder:text-muted-foreground/70 font-semibold"
                   />
                 } @else {
                   <span class="font-semibold text-foreground text-lg">{{ getBusinessNameForTemplate(template.id) }}</span>
@@ -220,7 +220,10 @@
           </div>
           <div class="grid grid-cols-2 gap-0">
             @for (cellIndex of [1, 2, 3, 4]; track cellIndex) {
-              <div class="relative border border-border/60 bg-white shadow-sm min-h-[180px]">
+              <div
+                class="relative border border-border/60 bg-white shadow-sm w-full aspect-[4/3] overflow-hidden"
+                #designerCell
+              >
                 @if (template.id === currentTemplate.id && locked && !contentSaved) {
                   <div
                     class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px]
@@ -235,7 +238,7 @@
                         [uploads]="uploads"
                         [isSaved]="isSaved[cellIndex]"
                         [isComplete]="isUploadComplete(cellIndex)"
-                        (requestUpload)="onRequestUpload(cellIndex, $event, 'image')"
+                        (requestUpload)="onRequestUpload(cellIndex, $event, 'image', designerCell)"
                         (requestClear)="onRequestClear(cellIndex, $event)">
                       </app-upload-unit>
 
