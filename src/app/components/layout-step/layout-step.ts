@@ -69,16 +69,49 @@ export class LayoutStep implements OnChanges {
   currentUploadType: 'image' | 'video' | 'text' | null = null;
 
   selectedConfig: any = null;
+  selectedCategory: 'portfolio' | 'service' | 'editorial' | 'product' | 'local' | null = null;
 
   showCropper = false;
   cropperFile: File | null = null;
   cropperKey: string | null = null;
 
   layouts = [
-    { id: 'single', name: 'Eén kolom', description: 'Simpel, inhoud verticaal gecentreerd', icon: 'layers' },
-    { id: 'two-column', name: 'Twee kolommen', description: 'Zijbar met hoofdcontent', icon: 'columns2' },
-    { id: 'grid', name: 'Rooster', description: 'Fotos, projecten, overzicht', icon: 'layout-grid' }
-  ];
+    {
+      id: 'portfolio',
+      name: 'Portfolio',
+      description: 'Werk, cases of projecten laten zien',
+      icon: 'layout-grid',
+      layoutType: 'grid'
+    },
+    {
+      id: 'service',
+      name: 'Service',
+      description: 'Diensten overzichtelijk presenteren',
+      icon: 'columns2',
+      layoutType: 'two-column'
+    },
+    {
+      id: 'editorial',
+      name: 'Editorial',
+      description: 'Verhaal en tekst staan centraal',
+      icon: 'layers',
+      layoutType: 'single'
+    },
+    {
+      id: 'product',
+      name: 'Product',
+      description: 'Producten of aanbod tonen',
+      icon: 'shopping-cart',
+      layoutType: 'grid'
+    },
+    {
+      id: 'local',
+      name: 'Local business',
+      description: 'Lokale diensten en contact',
+      icon: 'map-pin',
+      layoutType: 'single'
+    }
+  ] as const;
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['builderState']) {
@@ -86,6 +119,9 @@ export class LayoutStep implements OnChanges {
       this.locked = !!this.builderState?.layoutLocked;
       if (this.builderState?.layout) {
         this.selectedLayout = this.builderState.layout;
+      }
+      if (this.builderState?.layoutConfig?.templateGroup) {
+        this.selectedCategory = this.builderState.layoutConfig.templateGroup;
       }
     }
   }
@@ -100,25 +136,33 @@ export class LayoutStep implements OnChanges {
   onSelect(id: string) {
     this.locked = false;
 
-    const allowed = ['single', 'two-column', 'grid'] as const;
-    const isAllowed = (allowed as readonly string[]).includes(id);
+    const selected = this.layouts.find(layout => layout.id === id);
+    if (!selected) return;
 
-    const value = isAllowed ? id as BuilderState['layout'] : null;
+    const value = selected.layoutType as BuilderState['layout'];
 
     this.selectLayout.emit(value);
-    this.update.emit({ layout: value });
+    this.update.emit({
+      layout: value,
+      layoutConfig: {
+        ...this.builderState.layoutConfig,
+        templateGroup: selected.id
+      }
+    });
     this.update.emit({ contentSaved: false });
 
     this.selectedLayout = value;
+    this.selectedCategory = selected.id;
 
     // scroll op mobiel
-    const scrollMap: any = {
+    const scrollMap: Record<string, string> = {
       single: 'single-layout-top',
       'two-column': 'two-layout-top',
       grid: 'grid-layout-top'
     };
 
     if (value && window.innerWidth < 640) {
+
       setTimeout(() => {
         const el = document.getElementById(scrollMap[value]);
         el?.scrollIntoView({ behavior: 'smooth', block: 'start' });

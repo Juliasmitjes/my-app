@@ -8,7 +8,10 @@ export interface BuilderState {
   /** Layout type van de website */
   layout?: 'single' | 'two-column' | 'grid' | null;
 
-   layoutConfig?: {
+  layoutConfig?: {
+    // homepage business category
+    templateGroup?: 'portfolio' | 'service' | 'editorial' | 'product' | 'local';
+
     // single
     variantType?: string;
 

@@ -1,194 +1,116 @@
-<div id="two-layout-top" class="space-y-12 w-full max-w-5xl mx-auto sm:px-6">
+﻿<div id="two-layout-top" class="space-y-8 w-full max-w-5xl mx-auto sm:px-6">
 
   <div class="text-center space-y-1 sm:space-y-2">
-    <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Kies jouw indeling</h2>
+    <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Kies een template</h2>
+    <p class="text-muted-foreground text-sm">Perfect voor diensten: overzichtelijk en duidelijk.</p>
   </div>
 
-        <div class="grid grid-cols-2 gap-8 sm:gap-6 mb-2">
-        <div class="text-center text-sm sm:text-base font-semibold opacity-80">
-          Kolom 1
-        </div>
-        <div class="text-center text-sm sm:text-base font-semibold opacity-80">
-          Kolom 2
-        </div>
-
-    <!-- KOL 1 -->
-    <div
-      class="relative sm:p-10 rounded-3xl border border-border/40 backdrop-blur-xl transition-all duration-300 pt-4"
-      (click)="!locked && nextCol1()"
-      [ngClass]="locked
-        ? 'cursor-default opacity-80 bg-muted/40'
-        : 'cursor-pointer hover:shadow-xl hover:scale-[1.02]'"
-      tabindex="0"
-      (keydown.enter)="!locked && nextCol1()"
-      (keydown.space)="!locked && nextCol1()"
-    >
-
-      @if (locked) {
-        <div
-          class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[40px] flex items-center justify-center rounded-2xl sm:rounded-3xl"
-          (click)="$event.stopPropagation()"
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    @for (template of templates; track template.id) {
+      <div
+        class="relative p-4 rounded-2xl border border-border/40 bg-white/70 transition-all"
+        [class.ring-2]="template.id === currentTemplate.id"
+        [class.ring-accent]="template.id === currentTemplate.id"
+      >
+        <button
+          type="button"
+          class="w-full text-left space-y-3"
+          (click)="selectTemplate(template)"
+          [disabled]="locked"
         >
-          <div class="flex flex-col items-center gap-6">
-
-            <!-- UploadUnit -->
-            <app-upload-unit
-              [locked]="locked"
-              [label]="col1Current.label"
-              [uploadKey]="getUploadKey(1)"
-              [uploads]="uploads"
-              [isSaved]="isSavedCol1"
-              [isComplete]="isUploadComplete(1)"
-              (requestUpload)="onRequestUpload(1, $event, col1Current.type)"
-              (requestClear)="onRequestClear(1, $event)"
-            ></app-upload-unit>
-
-            <!-- Opslaan-knop kolom 1 -->
-            <button
-              type="button"
-              (click)="onSaveClick(1, $event)"
-              class="sm:px-8 sm:py-4 px-4 py-2 rounded-xl sm:rounded-2xl font-semibold transition-all shadow-lg cursor-pointer hover:shadow-xl"
-              [class.bg-accent]="isUploadComplete(1) && !isSavedCol1"
-              [class.text-accent-foreground]="isUploadComplete(1) && !isSavedCol1"
-              [class.hover:scale-[1.02]]="isUploadComplete(1) && !isSavedCol1"
-              [class.bg-white/30]="isSavedCol1"
-              [class.text-white]="isSavedCol1"
-              [class.border]="isSavedCol1"
-              [class.border-white/40]="isSavedCol1"
-              [class.bg-white/40]="!isUploadComplete(1)"
-              [class.text-white/60]="!isUploadComplete(1)"
-              [class.backdrop-blur-sm]="!isUploadComplete(1)"
-            >
-              {{ isSavedCol1 ? 'Wijzigen' : 'Opslaan' }}
-            </button>
-
+          <div class="grid grid-cols-2 gap-2">
+            <div class="flex items-center justify-center p-3 rounded-xl bg-muted/40">
+              @switch (template.col1Type) {
+                @case ('text') { <lucide-icon name="text-align-justify" class="w-6 h-6 opacity-70"></lucide-icon> }
+                @case ('image') { <lucide-icon name="image" class="w-6 h-6 opacity-70"></lucide-icon> }
+                @case ('video') { <lucide-icon name="video" class="w-6 h-6 opacity-70"></lucide-icon> }
+              }
+            </div>
+            <div class="flex items-center justify-center p-3 rounded-xl bg-muted/40">
+              @switch (template.col2Type) {
+                @case ('text') { <lucide-icon name="text-align-justify" class="w-6 h-6 opacity-70"></lucide-icon> }
+                @case ('image') { <lucide-icon name="image" class="w-6 h-6 opacity-70"></lucide-icon> }
+                @case ('video') { <lucide-icon name="video" class="w-6 h-6 opacity-70"></lucide-icon> }
+              }
+            </div>
           </div>
-        </div>
-      }
-
-      <!-- Preview -->
-      <div class="flex justify-center mb-4 sm:mb-6">
-         <div class="flex flex-col items-center justify-center 
-            gap-2 sm:gap-6 rounded-2xl p-2 sm:p-6 shadow-lg"
-            [class.ring-2]="!locked"
-            [class.ring-accent]="!locked"
-          >
-          @switch (col1Current.type) {
-            @case ('text') { <lucide-icon name="text-align-justify" class="w-16 h-16 opacity-80"></lucide-icon> }
-            @case ('image') { <lucide-icon name="image" class="w-16 h-16 opacity-80"></lucide-icon> }
-            @case ('video') { <lucide-icon name="video" class="w-16 h-16 opacity-80"></lucide-icon> }
-          }
-        </div>
-      </div>
-
-      <div class="text-center">
-        <h3 class="text-lg sm:text-xl font-semibold">{{ col1Current.label }}</h3>
-        @if (!locked) {
-        <!-- mobiel -->
-        <p
-          class="text-muted-foreground mt-1 text-xs
-                 absolute left-1/2 -translate-x-1/2 w-[80%] text-center bottom-5
-                 block sm:hidden">
-          Tik voor volgende optie
-        </p>
-
-        <!-- desktop -->
-        <p class="text-muted-foreground mt-5 text-sm hidden sm:block">
-          Klik voor volgende optie
-        </p>
-      }        
-      </div>
-    </div>
-
-    <!-- KOL 2 -->
-    <div
-      class="relative pb-20 sm:p-10 rounded-3xl border border-border/40 backdrop-blur-xl transition-all duration-300 pt-4"
-      (click)="!locked && nextCol2()"
-      [ngClass]="locked
-        ? 'cursor-default opacity-80 bg-muted/40'
-        : 'cursor-pointer hover:shadow-xl hover:scale-[1.02]'"
-      tabindex="0"
-      (keydown.enter)="!locked && nextCol2()"
-      (keydown.space)="!locked && nextCol2()"
-    >
-
-      @if (locked) {
-        <div
-          class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[40px] flex items-center justify-center rounded-2xl sm:rounded-3xl"
-          (click)="$event.stopPropagation()"
-        >
-          <div class="flex flex-col items-center gap-6">
-
-            <!-- UploadUnit -->
-            <app-upload-unit
-              [locked]="locked"
-              [label]="col2Current.label"
-              [uploadKey]="getUploadKey(2)"
-              [uploads]="uploads"
-              [isSaved]="isSavedCol2"
-              [isComplete]="isUploadComplete(2)"
-              (requestUpload)="onRequestUpload(2, $event, col2Current.type)"
-              (requestClear)="onRequestClear(2, $event)"
-            ></app-upload-unit>
-
-            <!-- Opslaan-knop kolom 2 -->
-            <button
-              type="button"
-              (click)="onSaveClick(2, $event)"
-              class="sm:px-8 sm:py-4 px-4 py-2 rounded-xl sm:rounded-2xl font-semibold transition-all shadow-lg cursor-pointer hover:shadow-xl"
-              [class.bg-accent]="isUploadComplete(2) && !isSavedCol2"
-              [class.text-accent-foreground]="isUploadComplete(2) && !isSavedCol2"
-              [class.hover:scale-[1.02]]="isUploadComplete(2) && !isSavedCol2"
-              [class.bg-white/30]="isSavedCol2"
-              [class.text-white]="isSavedCol2"
-              [class.border]="isSavedCol2"
-              [class.border-white/40]="isSavedCol2"
-              [class.bg-white/40]="!isUploadComplete(2)"
-              [class.text-white/60]="!isUploadComplete(2)"
-              [class.backdrop-blur-sm]="!isUploadComplete(2)"
-            >
-              {{ isSavedCol2 ? 'Wijzigen' : 'Opslaan' }}
-            </button>
-
+          <div>
+            <h3 class="text-base font-semibold">{{ template.label }}</h3>
+            <p class="text-xs text-muted-foreground">{{ template.description }}</p>
           </div>
-        </div>
-      }
+        </button>
 
-      <!-- Preview -->
-      <div class="flex justify-center mb-4 sm:mb-6">
-        <div class="flex flex-col items-center justify-center 
-            gap-2 sm:gap-6 rounded-2xl p-2 sm:p-6 shadow-lg"
-            [class.ring-2]="!locked"
-            [class.ring-accent]="!locked"
+        @if (locked && template.id === currentTemplate.id) {
+          <div
+            class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px]
+                   flex items-center justify-center rounded-2xl"
+            (click)="$event.stopPropagation()"
           >
-          @switch (col2Current.type) {
-            @case ('text') { <lucide-icon name="text-align-justify" class="w-16 h-16 opacity-80"></lucide-icon> }
-            @case ('image') { <lucide-icon name="image" class="w-16 h-16 opacity-80"></lucide-icon> }
-            @case ('video') { <lucide-icon name="video" class="w-16 h-16 opacity-80"></lucide-icon> }
-          }
-        </div>
+            <div class="flex flex-col items-center gap-6">
+              <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+                <app-upload-unit
+                  [locked]="locked"
+                  [label]="col1Current.label"
+                  [uploadKey]="getUploadKey(1)"
+                  [uploads]="uploads"
+                  [isSaved]="isSavedCol1"
+                  [isComplete]="isUploadComplete(1)"
+                  (requestUpload)="onRequestUpload(1, $event, col1Current.type)"
+                  (requestClear)="onRequestClear(1, $event)"
+                ></app-upload-unit>
+
+                <app-upload-unit
+                  [locked]="locked"
+                  [label]="col2Current.label"
+                  [uploadKey]="getUploadKey(2)"
+                  [uploads]="uploads"
+                  [isSaved]="isSavedCol2"
+                  [isComplete]="isUploadComplete(2)"
+                  (requestUpload)="onRequestUpload(2, $event, col2Current.type)"
+                  (requestClear)="onRequestClear(2, $event)"
+                ></app-upload-unit>
+              </div>
+
+              <div class="flex gap-3">
+                <button
+                  type="button"
+                  (click)="onSaveClick(1, $event)"
+                  class="px-5 py-2 rounded-xl font-semibold transition-all shadow-lg cursor-pointer"
+                  [class.bg-accent]="isUploadComplete(1) && !isSavedCol1"
+                  [class.text-accent-foreground]="isUploadComplete(1) && !isSavedCol1"
+                  [class.bg-white/30]="isSavedCol1"
+                  [class.text-white]="isSavedCol1"
+                  [class.border]="isSavedCol1"
+                  [class.border-white/40]="isSavedCol1"
+                  [class.bg-white/40]="!isUploadComplete(1)"
+                  [class.text-white/60]="!isUploadComplete(1)"
+                  [class.backdrop-blur-sm]="!isUploadComplete(1)"
+                >
+                  {{ isSavedCol1 ? 'Wijzigen' : 'Opslaan' }}
+                </button>
+
+                <button
+                  type="button"
+                  (click)="onSaveClick(2, $event)"
+                  class="px-5 py-2 rounded-xl font-semibold transition-all shadow-lg cursor-pointer"
+                  [class.bg-accent]="isUploadComplete(2) && !isSavedCol2"
+                  [class.text-accent-foreground]="isUploadComplete(2) && !isSavedCol2"
+                  [class.bg-white/30]="isSavedCol2"
+                  [class.text-white]="isSavedCol2"
+                  [class.border]="isSavedCol2"
+                  [class.border-white/40]="isSavedCol2"
+                  [class.bg-white/40]="!isUploadComplete(2)"
+                  [class.text-white/60]="!isUploadComplete(2)"
+                  [class.backdrop-blur-sm]="!isUploadComplete(2)"
+                >
+                  {{ isSavedCol2 ? 'Wijzigen' : 'Opslaan' }}
+                </button>
+              </div>
+            </div>
+          </div>
+        }
       </div>
-
-      <div class="text-center">
-        <h3 class="text-lg sm:text-xl font-semibold">{{ col2Current.label }}</h3>
-        @if (!locked) {
-        <!-- mobiel -->
-        <p
-          class="text-muted-foreground  text-xs
-                 absolute left-1/2 -translate-x-1/2 w-[80%] text-center bottom-5
-                 block sm:hidden">
-          Tik voor volgende optie
-        </p>
-
-        <!-- desktop -->
-        <p class="text-muted-foreground mt-5 text-sm hidden sm:block">
-          Klik voor volgende optie
-        </p>
-      }
-      </div>
-
-    </div>
-
+    }
   </div>
 </div>
 

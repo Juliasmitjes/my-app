@@ -1,144 +1,183 @@
-<h3 id="grid-layout-top"
-    class="text-xl sm:text-2xl font-bold mb-8 tracking-tight text-center">
-  Kies jouw indeling
+<h3 id="grid-layout-top" class="text-xl sm:text-2xl font-bold mb-6 tracking-tight text-center">
+  {{ groupTitle }}
 </h3>
 
-<!-- Input panel -->
-<div class="flex flex-col items-center gap-4 mb-8
-            bg-white/70 dark:bg-muted/40 backdrop-blur-xl
-            border border-border/40 rounded-3xl
-            p-4 sm:p-6 shadow-sm">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  @for (template of templates; track template.id) {
+    <div
+      class="p-4 rounded-2xl border border-border/40 bg-white/70 transition-all"
+      [class.ring-2]="template.id === currentTemplate.id"
+      [class.ring-accent]="template.id === currentTemplate.id"
+    >
+      <button
+        type="button"
+        class="w-full text-left space-y-2"
+        (click)="selectTemplate(template)"
+        [disabled]="locked"
+      >
+        <h4 class="text-base font-semibold">{{ template.label }}</h4>
+        <p class="text-xs text-muted-foreground">{{ template.description }}</p>
+      </button>
 
-  <h4 class="hidden md:block mb-2 text-center font-medium text-muted-foreground">
-    Pas je grid aan
-  </h4>
+      <div
+        class="mt-4 rounded-2xl border border-border/50 bg-muted/20"
+      >
+        @if (isArtistTemplate(template)) {
+          <div class="px-4 pt-6 pb-2 space-y-4">
+            <div class="flex items-center justify-between text-xs text-muted-foreground">
+              <span class="font-semibold text-foreground">Bedrijfsnaam</span>
+              <div class="flex items-center gap-4">
+                <span>Button</span>
+                <span>Button</span>
+                <span>Button</span>
+              </div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl sm:text-3xl mt-8 mb-2 font-semibold tracking-tight">
+                Bedrijfsnaam
+              </div>
+            </div>
+          </div>
+        }
 
-  <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-10">
+        @if (isArtistTemplate(template)) {
+          <div
+            class="grid gap-3 p-4"
+            [style.gridTemplateColumns]="'repeat(' + template.cols + ', minmax(0, 1fr))'"
+            [style.gridAutoRows]="'120px'"
+            [style.gridTemplateAreas]="artistGridAreas"
+          >
+            @for (cell of artistPreviewCells; let i = $index; track i) {
+              <div
+                class="relative p-3 rounded-2xl border border-border/60 bg-white shadow-sm"
+                [style.gridArea]="getArtistArea(i)"
+              >
+                @if (template.id === currentTemplate.id && locked) {
+                  <div
+                    class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px]
+                           flex items-center justify-center rounded-2xl"
+                    (click)="$event.stopPropagation()"
+                  >
+                    <div class="flex flex-col items-center gap-4">
+                      <app-upload-unit
+                        [locked]="locked"
+                        [label]="getArtistLabel(i)"
+                        [uploadKey]="getUploadKey(i)"
+                        [uploads]="uploads"
+                        [isSaved]="isSaved[i]"
+                        [isComplete]="isUploadComplete(i)"
+                        (requestUpload)="onRequestUpload(i, $event, getArtistValue(i))"
+                        (requestClear)="onRequestClear(i, $event)">
+                      </app-upload-unit>
 
-    <!-- Rijen -->
-    <div class="flex flex-col text-center space-y-2">
-      <label class="text-sm font-medium text-muted-foreground">Rijen</label>
-      <input type="number" min="1" max="6"
-             class="w-20 sm:w-24 px-3 py-2 rounded-xl border border-border/60 bg-white/90 text-center"
-             [(ngModel)]="rows"
-             (change)="!locked && updateGrid()"
-             [disabled]="locked" />
-    </div>
+                      <button type="button"
+                              (click)="onSaveClick(i, $event)"
+                              class="px-5 py-2 rounded-xl font-semibold transition-all shadow-lg cursor-pointer"
+                              [class.bg-accent]="isUploadComplete(i) && !isSaved[i]"
+                              [class.text-accent-foreground]="isUploadComplete(i) && !isSaved[i]"
+                              [class.bg-white/30]="isSaved[i]"
+                              [class.text-white]="isSaved[i]"
+                              [class.border]="isSaved[i]"
+                              [class.border-white/40]="isSaved[i]"
+                              [class.bg-white/40]="!isUploadComplete(i)"
+                              [class.text-white/60]="!isUploadComplete(i)"
+                              [class.backdrop-blur-sm]="!isUploadComplete(i)">
+                        {{ isSaved[i] ? 'Wijzigen' : 'Opslaan' }}
+                      </button>
+                    </div>
+                  </div>
+                }
 
-    <!-- Kolommen -->
-    <div class="flex flex-col text-center space-y-2">
-      <label class="text-sm font-medium text-muted-foreground">Kolommen</label>
-      <input type="number" min="1" max="6"
-             class="w-20 sm:w-24 px-3 py-2 rounded-xl border border-border/60 bg-white/90 text-center"
-             [(ngModel)]="cols"
-             (change)="!locked && updateGrid()"
-             [disabled]="locked" />
-    </div>
+                <div class="flex items-center justify-center p-3 rounded-xl bg-muted/60">
+                  @switch (cell) {
+                    @case ('text')  { <lucide-icon name="text-align-justify" class="w-8 h-8 opacity-70"></lucide-icon> }
+                    @case ('image') { <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon> }
+                    @case ('video') { <lucide-icon name="video" class="w-8 h-8 opacity-70"></lucide-icon> }
+                  }
+                </div>
+                <div class="text-center text-xs mt-2 text-muted-foreground">
+                  {{ cell === 'text' ? 'Tekst' : cell === 'image' ? 'Foto' : 'Video' }}
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div
+            class="grid gap-3 p-4"
+            [style.gridTemplateColumns]="'repeat(' + (template.id === currentTemplate.id ? cols : template.cols) + ', minmax(0, 1fr))'"
+          >
+            @if (template.id === currentTemplate.id) {
+              @for (cell of grid; let i = $index; track i) {
+                <div class="relative p-3 rounded-2xl border border-border/60 bg-white shadow-sm">
+                  @if (locked) {
+                    <div
+                      class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px]
+                             flex items-center justify-center rounded-2xl"
+                      (click)="$event.stopPropagation()"
+                    >
+                      <div class="flex flex-col items-center gap-4">
+                        <app-upload-unit
+                          [locked]="locked"
+                          [label]="cell.labelMap[cell.value]"
+                          [uploadKey]="getUploadKey(i)"
+                          [uploads]="uploads"
+                          [isSaved]="isSaved[i]"
+                          [isComplete]="isUploadComplete(i)"
+                          (requestUpload)="onRequestUpload(i, $event, cell.value)"
+                          (requestClear)="onRequestClear(i, $event)">
+                        </app-upload-unit>
 
-  </div>
-</div>
+                        <button type="button"
+                                (click)="onSaveClick(i, $event)"
+                                class="px-5 py-2 rounded-xl font-semibold transition-all shadow-lg cursor-pointer"
+                                [class.bg-accent]="isUploadComplete(i) && !isSaved[i]"
+                                [class.text-accent-foreground]="isUploadComplete(i) && !isSaved[i]"
+                                [class.bg-white/30]="isSaved[i]"
+                                [class.text-white]="isSaved[i]"
+                                [class.border]="isSaved[i]"
+                                [class.border-white/40]="isSaved[i]"
+                                [class.bg-white/40]="!isUploadComplete(i)"
+                                [class.text-white/60]="!isUploadComplete(i)"
+                                [class.backdrop-blur-sm]="!isUploadComplete(i)">
+                          {{ isSaved[i] ? 'Wijzigen' : 'Opslaan' }}
+                        </button>
+                      </div>
+                    </div>
+                  }
 
-<!-- Grid -->
-<div class="overflow-x-auto lg:overflow-visible">
-  <div class="grid gap-4 sm:gap-6 min-w-max sm:min-w-0"
-       [style.gridTemplateColumns]="'repeat(' + cols + ', minmax(0, 1fr))'">
-
-    @for (cell of grid; let i = $index; track i) {
-
-    <div class="relative p-4 sm:p-6 rounded-3xl border border-border/40
-                backdrop-blur-xl transition-all duration-300 min-h-[180px]
-                flex flex-col items-center justify-between"
-         [ngClass]="locked
-           ? 'bg-muted/40 cursor-default opacity-80'
-           : 'bg-white/70 cursor-pointer hover:shadow-xl hover:scale-[1.02]'"
-         (click)="!locked && nextCell(i)">
-
-      <!-- LOCKED OVERLAY  -->
-      @if (locked) {
-      <div class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[40px]
-                  flex items-center justify-center rounded-2xl sm:rounded-3xl"
-           (click)="$event.stopPropagation()">
-
-        <div class="flex flex-col items-center gap-6">
-
-          <!-- UploadUnit -->
-          <app-upload-unit
-            [locked]="locked"
-            [label]="cell.labelMap[cell.value]"
-            [uploadKey]="getUploadKey(i)"
-            [uploads]="uploads"
-            [isSaved]="isSaved[i]"
-            [isComplete]="isUploadComplete(i)"
-            (requestUpload)="onRequestUpload(i, $event, cell.value)"
-            (requestClear)="onRequestClear(i, $event)">
-          </app-upload-unit>
-
-          <!-- Opslaan-knop -->
-          <button type="button"
-                  (click)="onSaveClick(i, $event)"
-                  class="sm:px-8 sm:py-4 px-4 py-2 rounded-xl sm:rounded-2xl
-                         font-semibold transition-all shadow-lg cursor-pointer hover:shadow-xl"
-                  [class.bg-accent]="isUploadComplete(i) && !isSaved[i]"
-                  [class.text-accent-foreground]="isUploadComplete(i) && !isSaved[i]"
-                  [class.hover:scale-[1.02]]="isUploadComplete(i) && !isSaved[i]"
-                  [class.bg-white/30]="isSaved[i]"
-                  [class.text-white]="isSaved[i]"
-                  [class.border]="isSaved[i]"
-                  [class.border-white/40]="isSaved[i]"
-                  [class.bg-white/40]="!isUploadComplete(i)"
-                  [class.text-white/60]="!isUploadComplete(i)"
-                  [class.backdrop-blur-sm]="!isUploadComplete(i)">
-            {{ isSaved[i] ? 'Wijzigen' : 'Opslaan' }}
-          </button>
-
-        </div>
-      </div>
-      }
-
-      <!-- ICON PREVIEW -->
-      <div class="flex justify-center sm:mb-6">
-        <div class="flex flex-col items-center justify-center
-                    gap-2 sm:gap-6 rounded-2xl p-2 sm:p-6 shadow-lg"
-             [class.ring-2]="!locked"
-             [class.ring-accent]="!locked">
-
-          @switch (cell.value) {
-            @case ('text')  { <lucide-icon name="text-align-justify" class="w-16 h-16 opacity-80"></lucide-icon> }
-            @case ('image') { <lucide-icon name="image" class="w-16 h-16 opacity-80"></lucide-icon> }
-            @case ('video') { <lucide-icon name="video" class="w-16 h-16 opacity-80"></lucide-icon> }
-          }
-
-        </div>
-      </div>
-
-      <!-- LABEL -->
-      <div class="w-full text-center mt-3 mb-10 sm:mt-3 sm:mb-2">
-        <div class="text-lg sm:text-xl font-semibold">
-          {{ cell.labelMap[cell.value] }}
-        </div>
-
-        @if (!locked) {
-
-        <!-- mobiel -->
-        <p class="text-muted-foreground mt-1 text-xs
-                  absolute left-1/2 -translate-x-1/2 w-[80%] text-center bottom-5
-                  block sm:hidden">
-          Tik voor volgende optie 
-        </p>
-
-        <!-- desktop -->
-        <p class="text-muted-foreground mt-5 text-sm hidden sm:block">
-          Klik voor volgende optie
-        </p>
-
+                  <div class="flex items-center justify-center p-3 rounded-xl bg-muted/60">
+                    @switch (cell.value) {
+                      @case ('text')  { <lucide-icon name="text-align-justify" class="w-8 h-8 opacity-70"></lucide-icon> }
+                      @case ('image') { <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon> }
+                      @case ('video') { <lucide-icon name="video" class="w-8 h-8 opacity-70"></lucide-icon> }
+                    }
+                  </div>
+                  <div class="text-center text-xs mt-2 text-muted-foreground">
+                    {{ cell.labelMap[cell.value] }}
+                  </div>
+                </div>
+              }
+            } @else {
+              @for (cell of template.cells; let i = $index; track i) {
+                <div class="relative p-3 rounded-2xl border border-border/60 bg-white shadow-sm">
+                  <div class="flex items-center justify-center p-3 rounded-xl bg-muted/60">
+                    @switch (cell) {
+                      @case ('text')  { <lucide-icon name="text-align-justify" class="w-8 h-8 opacity-70"></lucide-icon> }
+                      @case ('image') { <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon> }
+                      @case ('video') { <lucide-icon name="video" class="w-8 h-8 opacity-70"></lucide-icon> }
+                    }
+                  </div>
+                  <div class="text-center text-xs mt-2 text-muted-foreground">
+                    {{ cell === 'text' ? 'Tekst' : cell === 'image' ? 'Foto' : 'Video' }}
+                  </div>
+                </div>
+              }
+            }
+          </div>
         }
       </div>
-
     </div>
-
-    }
-
-  </div>
+  }
 </div>
 
 <ng-template>

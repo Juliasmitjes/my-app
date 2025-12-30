@@ -1,14 +1,14 @@
 <div class="step-container">
 
-  <h2 class="text-2xl font-bold mb-2 text-center">Kies de layout van jouw homepage</h2>
-  <p class="text-muted-foreground mb-6 text-center">Hoe wil je jouw content weergeven?</p>
+  <h2 class="text-2xl font-bold mb-2 text-center">Wat is jouw business?</h2>
+  <p class="text-muted-foreground mb-6 text-center">Kies de categorie die bij jou past.</p>
 
   <!-- Layout opties -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
     @for (layout of layouts; track layout.id) {
       <app-option-card
         [layout]="layout"
-        [selected]="selectedLayout === layout.id"
+        [selected]="selectedCategory === layout.id"
         (select)="onSelect(layout.id)"
       ></app-option-card>
     }
@@ -19,6 +19,7 @@
 
     @if (selectedLayout === 'single') {
       <app-single-column
+        [templateGroup]="selectedCategory"
         [locked]="locked"
         [uploads]="uploads"
         [layoutConfig]="builderState.layoutConfig"
@@ -29,6 +30,7 @@
 
     @if (selectedLayout === 'two-column') {
       <app-two-columns
+        [templateGroup]="selectedCategory"
         [locked]="locked"
         [uploads]="uploads"
         [layoutConfig]="builderState.layoutConfig"
@@ -39,6 +41,7 @@
 
     @if (selectedLayout === 'grid') {
       <app-grid
+        [templateGroup]="selectedCategory"
         [locked]="locked"
         [uploads]="uploads"
         [layoutConfig]="builderState.layoutConfig"
