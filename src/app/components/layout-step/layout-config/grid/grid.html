@@ -11,7 +11,7 @@
     >
       <button
         type="button"
-        class="w-full text-left space-y-2"
+        class="w-full text-left space-y-2 cursor-pointer"
         (click)="selectTemplate(template)"
         [disabled]="locked"
       >
@@ -21,7 +21,7 @@
 
       <button
         type="button"
-        class="mt-4 w-full text-left rounded-2xl border border-border/50 bg-muted/20"
+        class="mt-4 w-full text-left rounded-2xl border border-border/50 bg-muted/20 cursor-pointer"
         (click)="selectTemplate(template)"
         [disabled]="locked"
       >
@@ -35,11 +35,14 @@
                 <span>Button</span>
               </div>
             </div>
-            <div class="text-center">
-              <div class="text-2xl sm:text-3xl mt-9 mb-3 font-semibold tracking-tight">
-                Bedrijfsnaam
+              <div class="text-center">
+                <div class="text-2xl sm:text-3xl mt-9 mb-1 font-semibold tracking-tight">
+                  Bedrijfsnaam
+                </div>
+                <div class="text-sm text-muted-foreground mt-2 mb-3">
+                  Hier komt jouw ondertitel. Maak het pakkend! 
+                </div>
               </div>
-            </div>
           </div>
         }
 
