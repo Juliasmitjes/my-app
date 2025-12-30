@@ -338,7 +338,8 @@ export class Portfolio implements OnChanges, OnDestroy {
 
   getUploadKey(index: number): string {
     const cell = this.grid[index];
-    return `grid_${index}_${cell.value}`;
+    const value = cell?.value ?? 'image';
+    return `grid_${index}_${value}`;
   }
 
   isUploadComplete(index: number): boolean {
