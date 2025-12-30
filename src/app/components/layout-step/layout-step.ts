@@ -85,7 +85,7 @@ export class LayoutStep implements OnChanges {
       id: 'portfolio',
       name: 'Portfolio',
       description: 'Werk, cases of projecten laten zien',
-      icon: 'layout-grid',
+      icon: 'palette',
       layoutType: 'grid',
       hidden: false
     },
@@ -93,7 +93,7 @@ export class LayoutStep implements OnChanges {
       id: 'service',
       name: 'Service',
       description: 'Diensten overzichtelijk presenteren',
-      icon: 'columns2',
+      icon: 'hand-platter',
       layoutType: 'two-column',
       hidden: false
     },
@@ -101,7 +101,7 @@ export class LayoutStep implements OnChanges {
       id: 'editorial',
       name: 'Editorial',
       description: 'Verhaal en tekst staan centraal',
-      icon: 'layers',
+      icon: 'book-open-text',
       layoutType: 'single',
       hidden: false
     },
@@ -112,14 +112,6 @@ export class LayoutStep implements OnChanges {
       icon: 'shopping-cart',
       layoutType: 'grid',
       hidden: false
-    },
-    {
-      id: 'local',
-      name: 'Local business',
-      description: 'Lokale diensten en contact',
-      icon: 'map-pin',
-      layoutType: 'single',
-      hidden: true
     }
   ] as const;
 
