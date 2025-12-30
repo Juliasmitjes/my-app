@@ -174,12 +174,11 @@ export class Portfolio implements OnChanges, OnDestroy {
   }
 
   getArtistValue(index: number): CellType {
-    return this.grid[index]?.value ?? 'image';
+    return 'image';
   }
 
   getArtistLabel(index: number): string {
-    const cell = this.grid[index];
-    return cell?.labelMap[cell.value] ?? 'Foto';
+    return 'Foto';
   }
 
   isImageCell(value: CellType): boolean {
