@@ -327,8 +327,12 @@ export class Portfolio implements OnChanges, OnDestroy {
 
     if (this.locked) {
       const canEdit = !this.contentSaved && !this.suppressAutoEdit;
-      this.isEditingBusinessName = !this.businessNameInput.trim() && canEdit;
-      this.isEditingSubtitle = !this.subtitleInput.trim() && canEdit;
+      if (!this.isEditingBusinessName) {
+        this.isEditingBusinessName = !this.businessNameInput.trim() && canEdit;
+      }
+      if (!this.isEditingSubtitle) {
+        this.isEditingSubtitle = !this.subtitleInput.trim() && canEdit;
+      }
     }
 
     if (this.contentSaved) {
