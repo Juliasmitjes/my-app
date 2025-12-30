@@ -187,7 +187,7 @@
               </div>
             </div>
             <div class="px-6 py-8 text-center">
-              @if (template.id === currentTemplate.id && locked && !contentSaved) {
+              @if (template.id === currentTemplate.id && locked && !isSaved[0]) {
                 <div class="flex flex-col items-center gap-2">
                   <app-upload-unit
                     [locked]="locked"
@@ -212,9 +212,23 @@
                   </button>
                 </div>
               } @else {
-                <div class="text-sm text-muted-foreground">
-                  {{ getTextPreview(0) || 'Hi! Ik ben jouw designer. Hier komt jouw intro.' }}
-                </div>
+                @if (getTextContent(0); as textBlock) {
+                  <div class="space-y-2 text-muted-foreground">
+                    @if (textBlock.title) {
+                      <div class="text-base font-semibold text-foreground">{{ textBlock.title }}</div>
+                    }
+                    @if (textBlock.subtitle) {
+                      <div class="text-sm">{{ textBlock.subtitle }}</div>
+                    }
+                    @if (textBlock.body) {
+                      <div class="text-sm">{{ textBlock.body }}</div>
+                    }
+                  </div>
+                } @else {
+                  <div class="text-sm text-muted-foreground">
+                    Hi! Ik ben jouw designer. Hier komt jouw intro.
+                  </div>
+                }
               }
             </div>
           </div>

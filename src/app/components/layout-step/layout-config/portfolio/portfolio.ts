@@ -551,6 +551,51 @@ export class Portfolio implements OnChanges, OnDestroy {
     return null;
   }
 
+  getTextContent(index: number): { title?: string; subtitle?: string; body?: string } | null {
+    const cell = this.grid[index];
+    if (!cell || cell.value !== 'text') {
+      return null;
+    }
+
+    const key = this.getUploadKey(index);
+    const entry = this.uploads?.[key];
+    if (!entry) {
+      return null;
+    }
+
+    if (entry?.kind === 'inline') {
+      const content = entry.value;
+      if (content && typeof content === 'object') {
+        return {
+          title: content.title ?? '',
+          subtitle: content.subtitle ?? '',
+          body: content.body ?? ''
+        };
+      }
+
+      if (typeof content === 'string') {
+        return { body: content };
+      }
+    }
+
+    if (entry && typeof entry === 'object') {
+      const content = entry as { title?: string; subtitle?: string; body?: string };
+      if (content.title || content.subtitle || content.body) {
+        return {
+          title: content.title ?? '',
+          subtitle: content.subtitle ?? '',
+          body: content.body ?? ''
+        };
+      }
+    }
+
+    if (typeof entry === 'string') {
+      return { body: entry };
+    }
+
+    return null;
+  }
+
   private resetBlobUrls(): void {
     for (const url of this.blobUrlCache.values()) {
       URL.revokeObjectURL(url);
