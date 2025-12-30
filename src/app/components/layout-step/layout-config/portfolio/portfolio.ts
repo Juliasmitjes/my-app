@@ -395,19 +395,23 @@ export class Portfolio implements OnChanges, OnDestroy {
 
     if (this.isSaved[index]) {
       this.isSaved[index] = false;
-      this.configChange.emit({
-        layout: 'grid',
-        contentSaved: false
-      });
+      if (!this.isIllustratorTemplate()) {
+        this.configChange.emit({
+          layout: 'grid',
+          contentSaved: false
+        });
+      }
       return;
     }
 
     this.isSaved[index] = true;
-    const allSaved = this.grid.every((_, i) => this.isSaved[i]);
-    this.configChange.emit({
-      layout: 'grid',
-      contentSaved: allSaved
-    });
+    if (!this.isIllustratorTemplate()) {
+      const allSaved = this.grid.every((_, i) => this.isSaved[i]);
+      this.configChange.emit({
+        layout: 'grid',
+        contentSaved: allSaved
+      });
+    }
   }
 
   clearUploads(index: number) {
