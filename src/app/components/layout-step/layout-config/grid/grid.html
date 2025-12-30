@@ -95,7 +95,11 @@
           >
             @for (cell of artistPreviewCells; let i = $index; track i) {
               <div
-                class="relative p-3 rounded-2xl border border-border/60 bg-white shadow-sm"
+                class="relative border border-border/60 bg-white shadow-sm"
+                [class.p-0]="template.id === currentTemplate.id && getImagePreview(i)"
+                [class.rounded-none]="template.id === currentTemplate.id && getImagePreview(i)"
+                [class.border-0]="template.id === currentTemplate.id && getImagePreview(i)"
+                [class.bg-transparent]="template.id === currentTemplate.id && getImagePreview(i)"
                 [style.gridArea]="getArtistArea(i)"
                 #artistCell
               >
@@ -133,7 +137,7 @@
 
                 @if (template.id === currentTemplate.id && getImagePreview(i)) {
                   <img
-                    class="w-full h-full rounded-xl object-cover"
+                    class="w-full h-full rounded-none object-cover"
                     [src]="getImagePreview(i)"
                     alt=""
                   />
@@ -169,7 +173,14 @@
           >
             @if (template.id === currentTemplate.id) {
               @for (cell of grid; let i = $index; track i) {
-                <div class="relative p-3 rounded-2xl border border-border/60 bg-white shadow-sm" #gridCell>
+                <div
+                  class="relative p-3 rounded-2xl border border-border/60 bg-white shadow-sm"
+                  [class.p-0]="getImagePreview(i)"
+                  [class.rounded-none]="getImagePreview(i)"
+                  [class.border-0]="getImagePreview(i)"
+                  [class.bg-transparent]="getImagePreview(i)"
+                  #gridCell
+                >
                   @if (locked && !contentSaved) {
                     <div
                       class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px]
@@ -204,7 +215,7 @@
 
                   @if (getImagePreview(i)) {
                     <img
-                      class="w-full h-full rounded-xl object-cover"
+                      class="w-full h-full rounded-none object-cover"
                       [src]="getImagePreview(i)"
                       alt=""
                     />
