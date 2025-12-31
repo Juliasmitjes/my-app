@@ -1,6 +1,11 @@
-<h3 id="grid-layout-top" class="text-xl sm:text-2xl font-bold mb-6 tracking-tight text-center">
+<h3 id="grid-layout-top" class="text-xl sm:text-2xl font-bold mb-2 tracking-tight text-center">
   {{ groupTitle }}
 </h3>
+@if (groupTitle === 'Portfolio templates') {
+  <div class="text-sm text-muted-foreground text-center mb-6">
+    Kies, upload, bewaar
+  </div>
+}
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
   @for (template of templates; track template.id) {
@@ -12,11 +17,6 @@
         <div class="flex items-start justify-between gap-3">
           <div class="space-y-2">
             <h4 class="text-base font-semibold">{{ template.label }}</h4>
-            @if (isArtistTemplate(template)) {
-              <div class="text-xs text-muted-foreground">
-                Kies, upload, bewaar
-              </div>
-            }
           </div>
         <button
           type="button"
