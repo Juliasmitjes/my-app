@@ -33,7 +33,7 @@
           (click)="onTemplateAction(template, $event)"
         >
           {{ locked && template.id === currentTemplate.id
-              ? (contentSaved ? (isArtistTemplate(template) ? 'Bewerk' : 'Wijzig inhoud') : (isArtistTemplate(template) ? 'Bewaar' : 'Opslaan'))
+              ? (contentSaved ? (isArtistTemplate(template) ? 'Bewerk' : 'Bewerk') : (isArtistTemplate(template) ? 'Bewaar' : 'Bewaar'))
               : 'Kies dit template' }}
         </button>
       </div>
@@ -176,10 +176,7 @@
                 } @else {
                   <span class="font-semibold text-foreground text-lg">{{ getBusinessNameForTemplate(template.id) }}</span>
                 }
-                <div class="flex items-center gap-4">
-                  <span>Button</span>
-                  <span>Button</span>
-                </div>
+                
               </div>
             </div>
             <div class="px-6 py-8 text-center">
@@ -200,7 +197,7 @@
                           (click)="onSaveClick(0, $event)"
                           class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-border/60 bg-muted/40 text-foreground hover:bg-muted/60"
                           [class.text-muted-foreground]="!isUploadComplete(0)">
-                    {{ isSaved[0] ? 'Wijzigen' : 'Opslaan' }}
+                    {{ isSaved[0] ? 'Bewerk' : 'Bewaar' }}
                   </button>
                 </div>
               } @else {
@@ -256,7 +253,7 @@
                               [class.text-white/70]="isSaved[cellIndex]"
                               [class.border-white/30]="isSaved[cellIndex]"
                               [class.text-white/60]="!isUploadComplete(cellIndex)">
-                        {{ isSaved[cellIndex] ? 'Wijzigen' : 'Opslaan' }}
+                        {{ isSaved[cellIndex] ? 'Bewerk' : 'Bewaar' }}
                       </button>
                     </div>
                   </div>
@@ -279,11 +276,7 @@
           <div class="px-6 py-4 border border-border/40 bg-muted/40 text-xs text-muted-foreground mt-auto">
             <div class="flex items-center justify-between">
               <span>© 2026 {{ getBusinessNameForTemplate(template.id) }}</span>
-              <div class="flex items-center gap-4">
-                <span>Button</span>
-                <span>Button</span>
-                <span>Button</span>
-              </div>
+              
             </div>
           </div>
         } @else if (isIllustratorTemplate(template)) {
@@ -302,10 +295,7 @@
                 } @else {
                   <span class="font-semibold text-foreground text-lg">{{ getBusinessNameForTemplate(template.id) }}</span>
                 }
-                <div class="flex items-center gap-4">
-                  <span>Button</span>
-                  <span>Button</span>
-                </div>
+                
               </div>
             </div>
 
@@ -375,7 +365,7 @@
                             [class.text-white/70]="isSaved[0]"
                             [class.border-white/30]="isSaved[0]"
                             [class.text-white/60]="!isUploadComplete(0)">
-                      {{ isSaved[0] ? 'Wijzigen' : 'Opslaan' }}
+                      {{ isSaved[0] ? 'Bewerk' : 'Bewaar' }}
                     </button>
                   </div>
                 </div>
@@ -400,7 +390,7 @@
                           (click)="onSaveClick(1, $event)"
                           class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-border/60 bg-muted/40 text-foreground hover:bg-muted/60"
                           [class.text-muted-foreground]="!isUploadComplete(1)">
-                    {{ isSaved[1] ? 'Wijzigen' : 'Opslaan' }}
+                    {{ isSaved[1] ? 'Bewerk' : 'Bewaar' }}
                   </button>
                 </div>
               } @else {
@@ -421,11 +411,7 @@
             <div class="px-6 py-4 border-t border-border/40 bg-muted/20 text-xs text-muted-foreground mt-auto">
               <div class="flex items-center justify-between">
                 <span>© 2026 {{ getBusinessNameForTemplate(template.id) }}</span>
-                <div class="flex items-center gap-4">
-                  <span>Button</span>
-                  <span>Button</span>
-                  <span>Button</span>
-                </div>
+                
               </div>
             </div>
           </div>
@@ -470,7 +456,7 @@
                                 [class.text-white/70]="isSaved[i]"
                                 [class.border-white/30]="isSaved[i]"
                                 [class.text-white/60]="!isUploadComplete(i)">
-                          {{ isSaved[i] ? 'Wijzigen' : 'Opslaan' }}
+                          {{ isSaved[i] ? 'Bewerk' : 'Bewaar' }}
                         </button>
                       </div>
                     </div>
@@ -522,3 +508,4 @@
 <ng-template>
   <app-upload-unit></app-upload-unit>
 </ng-template>
+

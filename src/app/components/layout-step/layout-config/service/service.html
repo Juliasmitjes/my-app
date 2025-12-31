@@ -1,6 +1,9 @@
 <h3 id="two-layout-top" class="text-xl sm:text-2xl font-bold mb-6 tracking-tight text-center">
   {{ groupTitle }}
 </h3>
+<div class="text-sm text-muted-foreground text-center mb-6">
+  Kies, upload, bewaar
+</div>
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
   @for (template of templates; track template.id) {
@@ -27,7 +30,7 @@
           [class.border-border/60]="locked && template.id === currentTemplate.id && contentSaved"
           (click)="onTemplateAction(template, $event)"
         >
-          {{ locked && template.id === currentTemplate.id ? (contentSaved ? 'Wijzig inhoud' : 'Opslaan') : 'Kies dit template' }}
+          {{ locked && template.id === currentTemplate.id ? (contentSaved ? 'Bewerk' : 'Bewaar') : 'Kies dit template' }}
         </button>
       </div>
 
@@ -38,11 +41,7 @@
             <div class="px-4 pt-4 pb-3 space-y-4 bg-muted/60 border border-border/40">
               <div class="flex items-center justify-between text-xs text-muted-foreground">
                 <span class="font-semibold text-foreground">{{ getBusinessNameForTemplate(template.id) }}</span>
-                <div class="flex items-center gap-4">
-                  <span>Button</span>
-                  <span>Button</span>
-                  <span>Button</span>
-                </div>
+                
               </div>
             </div>
             <div class="text-center pt-6 pb-2">
@@ -129,7 +128,7 @@
                               [class.text-white/70]="isSaved[i]"
                               [class.border-white/30]="isSaved[i]"
                               [class.text-white/60]="!isUploadComplete(i)">
-                        {{ isSaved[i] ? 'Wijzigen' : 'Opslaan' }}
+                        {{ isSaved[i] ? 'Bewerk' : 'Bewaar' }}
                       </button>
                     </div>
                   </div>
@@ -156,11 +155,7 @@
           <div class="px-4 py-3 bg-muted/60 border border-border/40 text-xs text-muted-foreground mt-auto">
             <div class="flex items-center justify-between">
               <span>© 2026 {{ getBusinessNameForTemplate(template.id) }}</span>
-              <div class="flex items-center gap-4">
-                <span>Button</span>
-                <span>Button</span>
-                <span>Button</span>
-              </div>
+              
             </div>
           </div>
         } @else if (isBeautyTemplate(template)) {
@@ -179,10 +174,7 @@
                 } @else {
                   <span class="font-semibold text-foreground text-lg">{{ getBusinessNameForTemplate(template.id) }}</span>
                 }
-                <div class="flex items-center gap-4">
-                  <span>Button</span>
-                  <span>Button</span>
-                </div>
+                
               </div>
             </div>
             <div class="px-6 py-8 text-center">
@@ -203,7 +195,7 @@
                           (click)="onSaveClick(0, $event)"
                           class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-border/60 bg-muted/40 text-foreground hover:bg-muted/60"
                           [class.text-muted-foreground]="!isUploadComplete(0)">
-                    {{ isSaved[0] ? 'Wijzigen' : 'Opslaan' }}
+                    {{ isSaved[0] ? 'Bewerk' : 'Bewaar' }}
                   </button>
                 </div>
               } @else {
@@ -259,7 +251,7 @@
                               [class.text-white/70]="isSaved[cellIndex]"
                               [class.border-white/30]="isSaved[cellIndex]"
                               [class.text-white/60]="!isUploadComplete(cellIndex)">
-                        {{ isSaved[cellIndex] ? 'Wijzigen' : 'Opslaan' }}
+                        {{ isSaved[cellIndex] ? 'Bewerk' : 'Bewaar' }}
                       </button>
                     </div>
                   </div>
@@ -282,11 +274,7 @@
           <div class="px-6 py-4 border border-border/40 bg-muted/40 text-xs text-muted-foreground mt-auto">
             <div class="flex items-center justify-between">
               <span>© 2026 {{ getBusinessNameForTemplate(template.id) }}</span>
-              <div class="flex items-center gap-4">
-                <span>Button</span>
-                <span>Button</span>
-                <span>Button</span>
-              </div>
+              
             </div>
           </div>
         } @else if (isIndustrialTemplate(template)) {
@@ -305,10 +293,7 @@
                 } @else {
                   <span class="font-semibold text-foreground text-lg">{{ getBusinessNameForTemplate(template.id) }}</span>
                 }
-                <div class="flex items-center gap-4">
-                  <span>Button</span>
-                  <span>Button</span>
-                </div>
+                
               </div>
             </div>
 
@@ -378,7 +363,7 @@
                             [class.text-white/70]="isSaved[0]"
                             [class.border-white/30]="isSaved[0]"
                             [class.text-white/60]="!isUploadComplete(0)">
-                      {{ isSaved[0] ? 'Wijzigen' : 'Opslaan' }}
+                      {{ isSaved[0] ? 'Bewerk' : 'Bewaar' }}
                     </button>
                   </div>
                 </div>
@@ -403,7 +388,7 @@
                           (click)="onSaveClick(1, $event)"
                           class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-border/60 bg-muted/40 text-foreground hover:bg-muted/60"
                           [class.text-muted-foreground]="!isUploadComplete(1)">
-                    {{ isSaved[1] ? 'Wijzigen' : 'Opslaan' }}
+                    {{ isSaved[1] ? 'Bewerk' : 'Bewaar' }}
                   </button>
                 </div>
               } @else {
@@ -424,11 +409,7 @@
             <div class="px-6 py-4 border border-border/40 bg-muted/20 text-xs text-muted-foreground mt-auto">
               <div class="flex items-center justify-between">
                 <span>© 2026 {{ getBusinessNameForTemplate(template.id) }}</span>
-                <div class="flex items-center gap-4">
-                  <span>Button</span>
-                  <span>Button</span>
-                  <span>Button</span>
-                </div>
+                
               </div>
             </div>
           </div>
@@ -473,7 +454,7 @@
                                 [class.text-white/70]="isSaved[i]"
                                 [class.border-white/30]="isSaved[i]"
                                 [class.text-white/60]="!isUploadComplete(i)">
-                          {{ isSaved[i] ? 'Wijzigen' : 'Opslaan' }}
+                          {{ isSaved[i] ? 'Bewerk' : 'Bewaar' }}
                         </button>
                       </div>
                     </div>
@@ -525,3 +506,4 @@
 <ng-template>
   <app-upload-unit></app-upload-unit>
 </ng-template>
+
