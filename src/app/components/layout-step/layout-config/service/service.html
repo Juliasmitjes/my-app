@@ -99,6 +99,9 @@
                 [class.rounded-none]="template.id === currentTemplate.id && getImagePreview(i)"
                 [class.border-0]="template.id === currentTemplate.id && getImagePreview(i)"
                 [class.bg-transparent]="template.id === currentTemplate.id && getImagePreview(i)"
+                [class.!border-0]="getRestaurantValue(i) === 'text'"
+                [class.!shadow-none]="getRestaurantValue(i) === 'text'"
+                [class.!bg-transparent]="getRestaurantValue(i) === 'text'"
                 [style.gridArea]="getRestaurantArea(i)"
                 #restaurantCell
               >
@@ -148,8 +151,10 @@
                       }
                     </div>
                   } @else {
-                    <div class="flex items-center justify-center p-6 rounded-none bg-muted/20 h-full">
-                      <lucide-icon name="text-align-justify" class="w-8 h-8 opacity-70"></lucide-icon>
+                    <div class="flex items-center justify-center p-6 rounded-none h-full">
+                      <div class="text-sm text-muted-foreground text-center">
+                        Hier komt jouw tekst.
+                      </div>
                     </div>
                   }
                 } @else if (template.id === currentTemplate.id && getImagePreview(i)) {
