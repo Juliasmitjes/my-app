@@ -94,7 +94,7 @@ export class LayoutStep implements OnChanges {
       name: 'Service',
       description: 'Diensten overzichtelijk presenteren',
       icon: 'hand-platter',
-      layoutType: 'two-column',
+      layoutType: 'grid',
       hidden: false
     },
     {
@@ -198,10 +198,12 @@ export class LayoutStep implements OnChanges {
     }
 
     if (event.config?.subtitle !== undefined) {
+      const subtitleKey =
+        event.config?.templateGroup === 'service' ? 'service_subtitle' : 'artist_subtitle';
       if (subtitleValue) {
-        newUploads['artist_subtitle'] = subtitleValue;
+        newUploads[subtitleKey] = subtitleValue;
       } else {
-        delete newUploads['artist_subtitle'];
+        delete newUploads[subtitleKey];
       }
     }
 

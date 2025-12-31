@@ -1,43 +1,53 @@
 import { Component, EventEmitter, Output, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { BuilderState } from '../../../../types/builder-state';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
-import { ToastService } from '../../../ui/toast/toast.service';
 import { UploadUnit } from '../upload-unit/upload-unit';
 
-type UploadType = 'text' | 'image' | 'video';
+export type CellType = 'text' | 'image' | 'video';
+
 type TemplateGroup = 'service' | 'portfolio' | 'editorial' | 'product' | 'local' | null;
+
+interface GridCell {
+  value: CellType;
+  labelMap: Record<CellType, string>;
+}
 
 interface TemplateOption {
   id: string;
   label: string;
   description: string;
-  col1Type: UploadType;
-  col2Type: UploadType;
+  cols: number;
+  rows: number;
+  cells: CellType[];
 }
 
 const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
   service: [
     {
-      id: 'service-intro',
+      id: 'service-restaurant',
       label: 'Restaurant',
-      description: 'Elegante verdeling met focus op sfeer.',
-      col1Type: 'text',
-      col2Type: 'image'
+      description: 'Sfeervol beeldgrid met ruimte voor tekst.',
+      cols: 3,
+      rows: 4,
+      cells: ['image', 'image', 'image', 'image', 'image', 'image', 'image', 'image', 'image']
     },
     {
-      id: 'service-proof',
-      label: 'Health & Beauty',
-      description: 'Verzorgd en rustgevend met focus op detail.',
-      col1Type: 'image',
-      col2Type: 'text'
+      id: 'service-beauty',
+      label: 'Beauty',
+      description: 'Intro tekst met twee beelden.',
+      cols: 2,
+      rows: 3,
+      cells: ['text', 'image', 'image', 'image', 'image']
     },
     {
-      id: 'service-video',
+      id: 'service-industrial',
       label: 'Industrial',
-      description: 'Stoer en strak met krachtige visuals.',
-      col1Type: 'video',
-      col2Type: 'text'
+      description: 'Hero met beeld en tekst.',
+      cols: 1,
+      rows: 2,
+      cells: ['image', 'text']
     }
   ]
 };
@@ -46,7 +56,12 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
   selector: 'app-service',
   standalone: true,
   templateUrl: './service.html',
-  imports: [CommonModule, LucideAngularModule, UploadUnit]
+  imports: [
+    CommonModule,
+    FormsModule,
+    LucideAngularModule,
+    UploadUnit
+  ]
 })
 export class Service implements OnChanges, OnDestroy {
   @Input() locked = false;
@@ -57,41 +72,32 @@ export class Service implements OnChanges, OnDestroy {
 
   @Output() configChange = new EventEmitter<any>();
 
-  isSavedCol1 = false;
-  isSavedCol2 = false;
+  rows = 2;
+  cols = 2;
 
-  constructor(private toast: ToastService) {}
+  grid: GridCell[] = [];
+  isSaved: Record<number, boolean> = {};
 
   templates: TemplateOption[] = TEMPLATE_SETS['service'];
   currentTemplate: TemplateOption = TEMPLATE_SETS['service'][0];
+  businessNameInput = '';
+  isEditingBusinessName = false;
+  subtitleInput = '';
+  isEditingSubtitle = false;
+  suppressAutoEdit = false;
   private blobUrlCache = new Map<string, string>();
-
-  labelMap: Record<UploadType, string> = {
-    text: 'Tekst',
-    image: 'Foto',
-    video: 'Video'
-  };
-
-  get col1Current() {
-    return { type: this.currentTemplate.col1Type, label: this.labelMap[this.currentTemplate.col1Type] };
-  }
-
-  get col2Current() {
-    return { type: this.currentTemplate.col2Type, label: this.labelMap[this.currentTemplate.col2Type] };
-  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['templateGroup']) {
       this.syncTemplateSet();
     }
+
     if (changes['uploads']) {
       this.resetBlobUrls();
     }
-    if (changes['layoutConfig'] || changes['contentSaved']) {
+
+    if (changes['layoutConfig'] || changes['contentSaved'] || changes['uploads'] || changes['locked']) {
       this.syncFromInputs();
-      if (!this.layoutConfig?.col1Type || !this.layoutConfig?.col2Type) {
-        this.emit();
-      }
     }
   }
 
@@ -99,35 +105,83 @@ export class Service implements OnChanges, OnDestroy {
     this.resetBlobUrls();
   }
 
-  private syncTemplateSet() {
-    this.templates = TEMPLATE_SETS['service'];
-    if (!this.templates.length) {
-      this.templates = TEMPLATE_SETS['service'];
-    }
-    if (!this.currentTemplate) {
-      this.currentTemplate = this.templates[0];
-    }
+  get groupTitle(): string {
+    return 'Service templates';
   }
 
-  private syncFromInputs() {
-    const col1Type = this.layoutConfig?.col1Type;
-    const col2Type = this.layoutConfig?.col2Type;
+  get subtitleDisplay(): string {
+    return this.subtitleInput.trim() || 'Hier komt jouw ondertitel. Maak het pakkend!';
+  }
 
-    if (col1Type && col2Type) {
-      const match = this.templates.find(template => template.col1Type === col1Type && template.col2Type === col2Type);
-      if (match) {
-        this.currentTemplate = match;
+  isRestaurantTemplate(template?: TemplateOption | null): boolean {
+    const target = template ?? this.currentTemplate;
+    return target?.id === 'service-restaurant';
+  }
+
+  readonly restaurantPreviewCells: CellType[] = [
+    'image',
+    'image',
+    'image',
+    'image',
+    'image',
+    'image',
+    'image',
+    'image',
+    'image'
+  ];
+
+  get restaurantGridAreas(): string {
+    return '"a a b" "c d d" "e e f" "g h i"';
+  }
+
+  getRestaurantArea(index: number): string {
+    const areas = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
+    return areas[index] ?? '';
+  }
+
+  getRestaurantValue(index: number): CellType {
+    return 'image';
+  }
+
+  getRestaurantLabel(index: number): string {
+    return 'Foto';
+  }
+
+  isBeautyTemplate(template?: TemplateOption | null): boolean {
+    const target = template ?? this.currentTemplate;
+    return target?.id === 'service-beauty';
+  }
+
+  isIndustrialTemplate(template?: TemplateOption | null): boolean {
+    const target = template ?? this.currentTemplate;
+    return target?.id === 'service-industrial';
+  }
+
+  private createDefaultCell(value: CellType): GridCell {
+    return {
+      value,
+      labelMap: {
+        text: 'Tekst',
+        image: 'Foto',
+        video: 'Video'
       }
-    }
+    };
+  }
 
-    this.isSavedCol1 = !!this.contentSaved;
-    this.isSavedCol2 = !!this.contentSaved;
+  private syncTemplateSet() {
+    this.templates = TEMPLATE_SETS['service'];
+    const savedTemplateId = this.layoutConfig?.templateId;
+    const found = savedTemplateId ? this.templates.find(t => t.id === savedTemplateId) : null;
+    this.currentTemplate = found ?? this.templates[0];
+    this.applyTemplate(this.currentTemplate);
+    this.syncBusinessNameInput(this.currentTemplate.id);
   }
 
   selectTemplate(template: TemplateOption) {
     if (this.locked) return;
     this.currentTemplate = template;
-    this.emit();
+    this.applyTemplate(template);
+    this.syncBusinessNameInput(template.id);
   }
 
   onTemplateAction(template: TemplateOption, event?: Event) {
@@ -136,181 +190,367 @@ export class Service implements OnChanges, OnDestroy {
     if (this.locked) {
       if (template.id !== this.currentTemplate.id) {
         this.currentTemplate = template;
-        this.emit();
+        this.applyTemplate(template);
+        this.syncBusinessNameInput(template.id);
         this.configChange.emit({
-          layout: 'two-column',
+          layout: 'grid',
           contentSaved: false
         });
+        this.suppressAutoEdit = false;
+        this.emitConfig();
         return;
       }
-
+      this.isEditingBusinessName = false;
+      this.isEditingSubtitle = false;
+      if (this.contentSaved) {
+        this.configChange.emit({
+          layout: 'grid',
+          contentSaved: false
+        });
+        this.isEditingBusinessName = true;
+        this.isEditingSubtitle = true;
+        this.suppressAutoEdit = false;
+        return;
+      }
       this.configChange.emit({
-        layout: 'two-column',
-        contentSaved: !this.contentSaved
+        layout: 'grid',
+        config: {
+          businessName: this.businessNameInput.trim(),
+          subtitle: this.subtitleInput.trim(),
+          businessNameTemplateId: this.currentTemplate.id,
+          templateGroup: this.templateGroup
+        }
+      });
+      this.configChange.emit({
+        layout: 'grid',
+        contentSaved: true
       });
       return;
     }
 
     this.selectTemplate(template);
     this.configChange.emit({
-      layout: 'two-column',
+      layout: 'grid',
       action: 'lock'
     });
   }
 
-  isFirstTemplate(template?: TemplateOption | null): boolean {
-    const target = template ?? this.currentTemplate;
-    return target?.id === 'service-intro';
+  private applyTemplate(template: TemplateOption) {
+    this.cols = template.cols;
+    this.rows = template.rows;
+    this.grid = template.cells.map(value => this.createDefaultCell(value));
+    this.emitConfig();
   }
 
-  emit() {
+  private emitConfig() {
     this.configChange.emit({
-      layout: 'two-column',
+      layout: 'grid',
       config: {
-        col1Type: this.currentTemplate.col1Type,
-        col2Type: this.currentTemplate.col2Type,
-        templateGroup: this.templateGroup
+        cols: this.cols,
+        cells: this.grid.map(c => c.value),
+        templateGroup: this.templateGroup,
+        templateId: this.currentTemplate?.id
       }
     });
   }
 
-  getUploadKey(col: 1 | 2): string {
-    const current = col === 1 ? this.col1Current : this.col2Current;
-    return `col${col}_${current.type}`;
+  private syncFromInputs() {
+    const savedTemplateId = this.layoutConfig?.templateId;
+    if (savedTemplateId) {
+      const match = this.templates.find(t => t.id === savedTemplateId);
+      if (match) {
+        this.currentTemplate = match;
+      }
+    }
+    const cols = this.layoutConfig?.cols;
+    const cells = this.layoutConfig?.cells;
+    const businessName = this.currentTemplate ? this.getSavedBusinessName(this.currentTemplate.id) : '';
+    const subtitle = this.uploads?.['service_subtitle'];
+
+    if (cols && cells && cells.length) {
+      this.cols = cols;
+      this.rows = Math.max(1, Math.ceil(cells.length / cols));
+      this.grid = cells.map(value => this.createDefaultCell(value));
+    } else if (!this.grid.length) {
+      this.applyTemplate(this.currentTemplate);
+    }
+
+    if (typeof businessName === 'string') {
+      if (!this.isEditingBusinessName) {
+        this.businessNameInput = businessName;
+      }
+    }
+    if (typeof subtitle === 'string') {
+      this.subtitleInput = subtitle;
+    }
+
+    if (this.locked) {
+      const canEdit = !this.contentSaved && !this.suppressAutoEdit;
+      if (!this.isEditingBusinessName) {
+        this.isEditingBusinessName = !this.businessNameInput.trim() && canEdit;
+      }
+      if (!this.isEditingSubtitle) {
+        this.isEditingSubtitle = !this.subtitleInput.trim() && canEdit;
+      }
+    }
+
+    if (this.contentSaved) {
+      this.grid.forEach((_, index) => {
+        this.isSaved[index] = true;
+      });
+    } else {
+      this.isSaved = {};
+    }
   }
 
-  getUploadKeyForTemplate(template: TemplateOption, col: 1 | 2): string {
-    const type = col === 1 ? template.col1Type : template.col2Type;
-    return `col${col}_${type}`;
+  getUploadKey(index: number): string {
+    const cell = this.grid[index];
+    const value = cell?.value ?? 'image';
+    const templateId = this.currentTemplate?.id ?? 'default';
+    return `grid_${templateId}_${index}_${value}`;
   }
 
-  isUploadComplete(col: 1 | 2): boolean {
-    return !!this.uploads[this.getUploadKey(col)];
+  isUploadComplete(index: number): boolean {
+    return !!this.uploads[this.getUploadKey(index)];
   }
 
-  onRequestUpload(col: 1 | 2, uploadKey: string, type: UploadType) {
-    if (col === 1) this.isSavedCol1 = false;
-    if (col === 2) this.isSavedCol2 = false;
+  onRequestUpload(index: number, uploadKey: string, type: CellType, cellEl?: HTMLElement | null) {
+    this.isSaved[index] = false;
+
+    const aspectRatio = type === 'image' ? this.getCellAspectRatio(cellEl) : null;
 
     this.configChange.emit({
-      layout: 'two-column',
+      layout: 'grid',
       config: {
-        col,
+        cellIndex: index,
         uploadType: type,
         uploadKey,
-        templateGroup: this.templateGroup
+        templateGroup: this.templateGroup,
+        aspectRatio
       },
       contentSaved: false
     });
   }
 
-  onRequestClear(col: 1 | 2, uploadKey: string) {
-    this.clearUploads(col);
+  onRequestClear(index: number, uploadKey: string) {
+    this.clearUploads(index);
   }
 
-  onSaveClick(col: 1 | 2, event: Event) {
+  onSaveClick(index: number, event: Event) {
     event.stopPropagation();
 
-    if (!this.isUploadComplete(col)) {
-      this.toast.info('Selecteer onderdelen');
+    if (!this.isUploadComplete(index)) return;
+
+    if (this.isSaved[index]) {
+      this.isSaved[index] = false;
+      if (!this.isIndustrialTemplate()) {
+        this.configChange.emit({
+          layout: 'grid',
+          contentSaved: false
+        });
+      }
       return;
     }
 
-    if (col === 1) {
-      if (this.isSavedCol1) {
-        this.isSavedCol1 = false;
-        this.configChange.emit({
-          layout: 'two-column',
-          contentSaved: false
-        });
-        return;
-      }
-      this.isSavedCol1 = true;
+    this.isSaved[index] = true;
+    if (!this.isIndustrialTemplate()) {
+      const allSaved = this.grid.every((_, i) => this.isSaved[i]);
       this.configChange.emit({
-        layout: 'two-column',
-        contentSaved: this.isSavedCol1 && this.isSavedCol2
-      });
-    }
-
-    if (col === 2) {
-      if (this.isSavedCol2) {
-        this.isSavedCol2 = false;
-        this.configChange.emit({
-          layout: 'two-column',
-          contentSaved: false
-        });
-        return;
-      }
-      this.isSavedCol2 = true;
-      this.configChange.emit({
-        layout: 'two-column',
-        contentSaved: this.isSavedCol1 && this.isSavedCol2
+        layout: 'grid',
+        contentSaved: allSaved
       });
     }
   }
 
-  clearUploads(col: 1 | 2) {
-    const key = this.getUploadKey(col);
+  clearUploads(index: number) {
+    const key = this.getUploadKey(index);
 
     this.configChange.emit({
-      layout: 'two-column',
+      layout: 'grid',
       config: {
         clearUploadKeys: [key]
       },
       contentSaved: false
     });
+
+    this.emitConfig();
   }
 
-  getTextContentForKey(key: string): { title?: string; subtitle?: string; body?: string } | null {
+  saveBusinessName(): void {
+    const value = this.businessNameInput.trim();
+    this.configChange.emit({
+      layout: 'grid',
+      config: {
+        businessName: value,
+        businessNameTemplateId: this.currentTemplate.id,
+        templateGroup: this.templateGroup
+      }
+    });
+    this.isEditingBusinessName = false;
+    this.suppressAutoEdit = true;
+  }
+
+  editBusinessName(): void {
+    this.isEditingBusinessName = true;
+  }
+
+  saveSubtitle(): void {
+    const value = this.subtitleInput.trim();
+    const businessValue = this.businessNameInput.trim();
+    this.configChange.emit({
+      layout: 'grid',
+      config: {
+        businessName: businessValue,
+        subtitle: value,
+        businessNameTemplateId: this.currentTemplate.id,
+        templateGroup: this.templateGroup
+      }
+    });
+    this.isEditingSubtitle = false;
+    this.isEditingBusinessName = false;
+    this.suppressAutoEdit = true;
+  }
+
+  editSubtitle(): void {
+    this.isEditingSubtitle = true;
+    this.isEditingBusinessName = true;
+  }
+
+  private getCellAspectRatio(cellEl?: HTMLElement | null): number | null {
+    if (!cellEl) return null;
+    const rect = cellEl.getBoundingClientRect();
+    if (!rect.height) return null;
+    const ratio = rect.width / rect.height;
+    if (!Number.isFinite(ratio) || ratio <= 0) return null;
+    return ratio;
+  }
+
+  getImagePreview(index: number): string | null {
+    const cell = this.grid[index];
+    if (!cell || cell.value !== 'image') {
+      return null;
+    }
+
+    const key = this.getUploadKey(index);
+    const file = this.uploads?.[key];
+
+    if (!file || file?.kind === 'inline') {
+      return null;
+    }
+
+    if (file instanceof File) {
+      const cached = this.blobUrlCache.get(key);
+      if (cached) {
+        return cached;
+      }
+      const url = URL.createObjectURL(file);
+      this.blobUrlCache.set(key, url);
+      return url;
+    }
+
+    if (typeof file === 'string') {
+      return file;
+    }
+
+    return null;
+  }
+
+  getBusinessNameForTemplate(templateId?: string): string {
+    const id = templateId ?? this.currentTemplate?.id;
+    if (!id) {
+      return 'Bedrijfsnaam';
+    }
+
+    const saved = this.getSavedBusinessName(id);
+    if (saved) {
+      return saved;
+    }
+
+    if (id === this.currentTemplate?.id) {
+      return this.businessNameInput.trim() || 'Bedrijfsnaam';
+    }
+
+    return 'Bedrijfsnaam';
+  }
+
+  private getBusinessNameKey(templateId: string): string {
+    return `business_name_${templateId}`;
+  }
+
+  private getSavedBusinessName(templateId: string): string {
+    const value = this.uploads?.[this.getBusinessNameKey(templateId)];
+    return typeof value === 'string' ? value : '';
+  }
+
+  private syncBusinessNameInput(templateId: string): void {
+    if (this.isEditingBusinessName) return;
+    this.businessNameInput = this.getSavedBusinessName(templateId);
+  }
+
+  getTextPreview(index: number): string | null {
+    const cell = this.grid[index];
+    if (!cell || cell.value !== 'text') {
+      return null;
+    }
+
+    const key = this.getUploadKey(index);
+    const value = this.uploads?.[key];
+    if (!value || value?.kind !== 'inline') {
+      return null;
+    }
+
+    const content = value.value;
+    if (content && typeof content === 'object') {
+      return content.body ?? content.subtitle ?? content.title ?? null;
+    }
+
+    if (typeof content === 'string') {
+      return content;
+    }
+
+    return null;
+  }
+
+  getTextContent(index: number): { title?: string; subtitle?: string; body?: string } | null {
+    const cell = this.grid[index];
+    if (!cell || cell.value !== 'text') {
+      return null;
+    }
+
+    const key = this.getUploadKey(index);
     const entry = this.uploads?.[key];
-    if (!entry) return null;
+    if (!entry) {
+      return null;
+    }
 
     if (entry?.kind === 'inline') {
-      const value = entry.value;
-      if (value && typeof value === 'object') {
+      const content = entry.value;
+      if (content && typeof content === 'object') {
         return {
-          title: value.title ?? '',
-          subtitle: value.subtitle ?? '',
-          body: value.body ?? ''
+          title: content.title ?? '',
+          subtitle: content.subtitle ?? '',
+          body: content.body ?? ''
         };
       }
-      if (typeof value === 'string') {
-        return { body: value };
+
+      if (typeof content === 'string') {
+        return { body: content };
       }
     }
 
     if (entry && typeof entry === 'object') {
-      const value = entry as { title?: string; subtitle?: string; body?: string };
-      if (value.title || value.subtitle || value.body) {
+      const content = entry as { title?: string; subtitle?: string; body?: string };
+      if (content.title || content.subtitle || content.body) {
         return {
-          title: value.title ?? '',
-          subtitle: value.subtitle ?? '',
-          body: value.body ?? ''
+          title: content.title ?? '',
+          subtitle: content.subtitle ?? '',
+          body: content.body ?? ''
         };
       }
     }
 
     if (typeof entry === 'string') {
       return { body: entry };
-    }
-
-    return null;
-  }
-
-  getImagePreviewForKey(key: string): string | null {
-    const entry = this.uploads?.[key];
-    if (!entry || entry?.kind === 'inline') return null;
-
-    if (entry instanceof File) {
-      const cached = this.blobUrlCache.get(key);
-      if (cached) return cached;
-      const url = URL.createObjectURL(entry);
-      this.blobUrlCache.set(key, url);
-      return url;
-    }
-
-    if (typeof entry === 'string') {
-      return entry;
     }
 
     return null;
