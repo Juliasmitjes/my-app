@@ -27,7 +27,7 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
   service: [
     {
       id: 'service-restaurant',
-      label: 'Restaurant',
+      label: 'Hospitality',
       description: 'Sfeervol beeldgrid met ruimte voor tekst.',
       cols: 3,
       rows: 4,
@@ -35,7 +35,7 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
     },
     {
       id: 'service-beauty',
-      label: 'Beauty',
+      label: 'Wellness',
       description: 'Intro tekst met twee beelden.',
       cols: 2,
       rows: 3,
@@ -43,7 +43,7 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
     },
     {
       id: 'service-industrial',
-      label: 'Industrial',
+      label: 'Industry',
       description: 'Hero met beeld en tekst.',
       cols: 1,
       rows: 2,
