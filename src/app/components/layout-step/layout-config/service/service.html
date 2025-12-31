@@ -44,16 +44,16 @@
                 
               </div>
             </div>
-            <div class="text-center pt-6 pb-2">
+            <div class="px-6 pt-6 pb-4 text-left">
               @if (locked && template.id === currentTemplate.id && isEditingBusinessName) {
-                <div class="max-w-[260px] 2xl:max-w-md mx-auto space-y-2">
+                <div class="max-w-[260px] 2xl:max-w-md space-y-2">
                   <input
                     type="text"
                     [(ngModel)]="businessNameInput"
                     placeholder="Bedrijfsnaam"
                     class="w-full px-3 py-1.5 rounded-lg border border-border bg-white/80
                            focus:outline-none ring-2 ring-accent/30 focus:ring-accent
-                           transition-all text-center text-xs placeholder:text-muted-foreground/70 font-semibold
+                           transition-all text-left text-xs placeholder:text-muted-foreground/70 font-semibold
                            2xl:px-4 2xl:py-3 2xl:text-md 2xl:rounded-xl"
                   />
                 </div>
@@ -67,16 +67,16 @@
               }
             </div>
             @if (locked && template.id === currentTemplate.id) {
-              <div class="text-center pb-2">
+              <div class="px-6 pb-4 text-left">
                 @if (isEditingSubtitle) {
-                  <div class="max-w-[260px] 2xl:max-w-md mx-auto space-y-2">
+                  <div class="max-w-[260px] 2xl:max-w-md space-y-2">
                     <input
                       type="text"
                       [(ngModel)]="subtitleInput"
                       placeholder="Ondertitel"
                       class="w-full px-3 py-1.5 rounded-lg border border-border bg-white/80
                              focus:outline-none ring-2 ring-accent/30 focus:ring-accent
-                             transition-all text-center text-xs placeholder:text-muted-foreground/70
+                             transition-all text-left text-xs placeholder:text-muted-foreground/70
                              2xl:px-4 2xl:py-3 2xl:text-md 2xl:rounded-xl"
                     />
                   </div>
@@ -88,7 +88,7 @@
         @if (isRestaurantTemplate(template)) {
           <div
             class="grid gap-3 p-4"
-            [style.gridTemplateColumns]="'repeat(' + template.cols + ', minmax(0, 1fr))'"
+            [style.gridTemplateColumns]="'repeat(4, minmax(0, 1fr))'"
             [style.gridAutoRows]="'120px'"
             [style.gridTemplateAreas]="restaurantGridAreas"
           >
@@ -134,7 +134,25 @@
                   </div>
                 }
 
-                @if (template.id === currentTemplate.id && getImagePreview(i)) {
+                @if (getRestaurantValue(i) === 'text') {
+                  @if (getTextContent(i); as textBlock) {
+                    <div class="h-full p-4 text-xs text-muted-foreground flex flex-col justify-center">
+                      @if (textBlock.title) {
+                        <div class="text-sm font-semibold text-foreground mb-2">{{ textBlock.title }}</div>
+                      }
+                      @if (textBlock.subtitle) {
+                        <div class="mb-2">{{ textBlock.subtitle }}</div>
+                      }
+                      @if (textBlock.body) {
+                        <div>{{ textBlock.body }}</div>
+                      }
+                    </div>
+                  } @else {
+                    <div class="flex items-center justify-center p-6 rounded-none bg-muted/20 h-full">
+                      <lucide-icon name="text-align-justify" class="w-8 h-8 opacity-70"></lucide-icon>
+                    </div>
+                  }
+                } @else if (template.id === currentTemplate.id && getImagePreview(i)) {
                   <img
                     class="w-full h-full rounded-none object-cover"
                     [src]="getImagePreview(i)"
@@ -142,11 +160,7 @@
                   />
                 } @else {
                   <div class="flex items-center justify-center p-6 rounded-none bg-muted/20 h-full">
-                    @switch (cell) {
-                      @case ('text')  { <lucide-icon name="text-align-justify" class="w-8 h-8 opacity-70"></lucide-icon> }
-                      @case ('image') { <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon> }
-                      @case ('video') { <lucide-icon name="video" class="w-8 h-8 opacity-70"></lucide-icon> }
-                    }
+                    <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon>
                   </div>
                 }
               </div>

@@ -29,9 +29,9 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
       id: 'service-restaurant',
       label: 'Hospitality',
       description: 'Sfeervol beeldgrid met ruimte voor tekst.',
-      cols: 3,
-      rows: 4,
-      cells: ['image', 'image', 'image', 'image', 'image', 'image', 'image', 'image', 'image']
+      cols: 4,
+      rows: 3,
+      cells: ['image', 'image', 'image', 'image', 'text']
     },
     {
       id: 'service-beauty',
@@ -123,15 +123,11 @@ export class Service implements OnChanges, OnDestroy {
     'image',
     'image',
     'image',
-    'image',
-    'image',
-    'image',
-    'image',
-    'image'
+    'text'
   ];
 
   get restaurantGridAreas(): string {
-    return '"a a b" "c d d" "e e f" "g h i"';
+    return '"a a b b" "c d b b" "e e e e"';
   }
 
   getRestaurantArea(index: number): string {
@@ -140,11 +136,11 @@ export class Service implements OnChanges, OnDestroy {
   }
 
   getRestaurantValue(index: number): CellType {
-    return 'image';
+    return this.restaurantPreviewCells[index] ?? 'image';
   }
 
   getRestaurantLabel(index: number): string {
-    return 'Foto';
+    return this.getRestaurantValue(index) === 'text' ? 'Tekst' : 'Foto';
   }
 
   isBeautyTemplate(template?: TemplateOption | null): boolean {
