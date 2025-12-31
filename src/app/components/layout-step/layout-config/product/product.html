@@ -1,8 +1,527 @@
-<app-portfolio
-  [templateGroup]="'product'"
-  [locked]="locked"
-  [uploads]="uploads"
-  [layoutConfig]="layoutConfig"
-  [contentSaved]="contentSaved"
-  (configChange)="configChange.emit($event)"
-></app-portfolio>
+<h3 id="grid-layout-top" class="text-xl sm:text-2xl font-bold mb-6 tracking-tight text-center">
+  {{ groupTitle }}
+</h3>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  @for (template of templates; track template.id) {
+    <div
+      class="p-4 rounded-2xl border border-border/40 bg-white/70 transition-all"
+      [class.ring-2]="template.id === currentTemplate.id"
+      [class.ring-accent]="template.id === currentTemplate.id"
+    >
+      <div class="flex items-start justify-between gap-3">
+        <div class="space-y-2">
+          <h4 class="text-base font-semibold">{{ template.label }}</h4>
+        </div>
+        <button
+          type="button"
+          class="px-3 py-1.5 rounded-xl text-sm font-semibold transition-colors duration-150 cursor-pointer"
+          [class.bg-accent]="!(locked && template.id === currentTemplate.id && contentSaved)"
+          [class.text-accent-foreground]="!(locked && template.id === currentTemplate.id && contentSaved)"
+          [class.hover:shadow-md]="!(locked && template.id === currentTemplate.id && contentSaved)"
+          [class.hover:scale-[1.02]]="!(locked && template.id === currentTemplate.id && contentSaved)"
+          [class.shadow]="!(locked && template.id === currentTemplate.id && contentSaved)"
+          [class.bg-muted/40]="locked && template.id === currentTemplate.id && contentSaved"
+          [class.text-muted-foreground]="locked && template.id === currentTemplate.id && contentSaved"
+          [class.border]="locked && template.id === currentTemplate.id && contentSaved"
+          [class.border-border/60]="locked && template.id === currentTemplate.id && contentSaved"
+          (click)="onTemplateAction(template, $event)"
+        >
+          {{ locked && template.id === currentTemplate.id ? (contentSaved ? 'Wijzig inhoud' : 'Opslaan') : 'Kies dit template' }}
+        </button>
+      </div>
+
+      <div
+        class="mt-4 w-full text-left rounded-2xl border border-border/50 bg-muted/20 min-h-[840px] flex flex-col"
+      >
+        @if (isShowcaseTemplate(template)) {
+            <div class="px-4 pt-4 pb-3 space-y-4 bg-muted/60 border border-border/40">
+              <div class="flex items-center justify-between text-xs text-muted-foreground">
+                <span class="font-semibold text-foreground">{{ getBusinessNameForTemplate(template.id) }}</span>
+                <div class="flex items-center gap-4">
+                  <span>Button</span>
+                  <span>Button</span>
+                  <span>Button</span>
+                </div>
+              </div>
+            </div>
+            <div class="text-center pt-6 pb-2">
+              @if (locked && template.id === currentTemplate.id && isEditingBusinessName) {
+                <div class="max-w-[260px] 2xl:max-w-md mx-auto space-y-2">
+                  <input
+                    type="text"
+                    [(ngModel)]="businessNameInput"
+                    placeholder="Bedrijfsnaam"
+                    class="w-full px-3 py-1.5 rounded-lg border border-border bg-white/80
+                           focus:outline-none ring-2 ring-accent/30 focus:ring-accent
+                           transition-all text-center text-xs placeholder:text-muted-foreground/70 font-semibold
+                           2xl:px-4 2xl:py-3 2xl:text-md 2xl:rounded-xl"
+                  />
+                </div>
+              } @else {
+                <div class="text-2xl sm:text-3xl 2xl:text-2xl font-semibold tracking-tight">
+                  {{ getBusinessNameForTemplate(template.id) }}
+                </div>
+                <div class="text-sm text-muted-foreground mt-3">
+                  {{ subtitleDisplay }}
+                </div>
+              }
+            </div>
+            @if (locked && template.id === currentTemplate.id) {
+              <div class="text-center pb-2">
+                @if (isEditingSubtitle) {
+                  <div class="max-w-[260px] 2xl:max-w-md mx-auto space-y-2">
+                    <input
+                      type="text"
+                      [(ngModel)]="subtitleInput"
+                      placeholder="Ondertitel"
+                      class="w-full px-3 py-1.5 rounded-lg border border-border bg-white/80
+                             focus:outline-none ring-2 ring-accent/30 focus:ring-accent
+                             transition-all text-center text-xs placeholder:text-muted-foreground/70
+                             2xl:px-4 2xl:py-3 2xl:text-md 2xl:rounded-xl"
+                    />
+                  </div>
+                }
+              </div>
+            }
+        }
+
+        @if (isShowcaseTemplate(template)) {
+          <div
+            class="grid gap-3 p-4"
+            [style.gridTemplateColumns]="'repeat(' + template.cols + ', minmax(0, 1fr))'"
+            [style.gridAutoRows]="'120px'"
+            [style.gridTemplateAreas]="showcaseGridAreas"
+          >
+            @for (cell of showcasePreviewCells; let i = $index; track i) {
+              <div
+                class="relative border border-border/60 bg-white shadow-sm"
+                [class.p-0]="template.id === currentTemplate.id && getImagePreview(i)"
+                [class.rounded-none]="template.id === currentTemplate.id && getImagePreview(i)"
+                [class.border-0]="template.id === currentTemplate.id && getImagePreview(i)"
+                [class.bg-transparent]="template.id === currentTemplate.id && getImagePreview(i)"
+                [style.gridArea]="getShowcaseArea(i)"
+                #showcaseCell
+              >
+                @if (template.id === currentTemplate.id && locked && !contentSaved) {
+                  <div
+                    class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px]
+                           flex items-center justify-center rounded-none"
+                    (click)="$event.stopPropagation()"
+                  >
+                    <div class="flex flex-col items-center gap-2">
+                      <app-upload-unit
+                        [locked]="locked"
+                        [label]="getShowcaseLabel(i)"
+                        [uploadKey]="getUploadKey(i)"
+                        [uploads]="uploads"
+                        [isSaved]="isSaved[i]"
+                        [isComplete]="isUploadComplete(i)"
+                        (requestUpload)="onRequestUpload(i, $event, getShowcaseValue(i), showcaseCell)"
+                        (requestClear)="onRequestClear(i, $event)">
+                      </app-upload-unit>
+
+                      <button type="button"
+                              (click)="onSaveClick(i, $event)"
+                              class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
+                              [class.text-white/90]="isUploadComplete(i) && !isSaved[i]"
+                              [class.border-white/60]="isUploadComplete(i) && !isSaved[i]"
+                              [class.text-white/70]="isSaved[i]"
+                              [class.border-white/30]="isSaved[i]"
+                              [class.text-white/60]="!isUploadComplete(i)">
+                        {{ isSaved[i] ? 'Wijzigen' : 'Opslaan' }}
+                      </button>
+                    </div>
+                  </div>
+                }
+
+                @if (template.id === currentTemplate.id && getImagePreview(i)) {
+                  <img
+                    class="w-full h-full rounded-none object-cover"
+                    [src]="getImagePreview(i)"
+                    alt=""
+                  />
+                } @else {
+                  <div class="flex items-center justify-center p-6 rounded-none bg-muted/20 h-full">
+                    @switch (cell) {
+                      @case ('text')  { <lucide-icon name="text-align-justify" class="w-8 h-8 opacity-70"></lucide-icon> }
+                      @case ('image') { <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon> }
+                      @case ('video') { <lucide-icon name="video" class="w-8 h-8 opacity-70"></lucide-icon> }
+                    }
+                  </div>
+                }
+              </div>
+            }
+          </div>
+          <div class="px-4 py-3 bg-muted/60 border border-border/40 text-xs text-muted-foreground mt-auto">
+            <div class="flex items-center justify-between">
+              <span>ЖИ 2026 {{ getBusinessNameForTemplate(template.id) }}</span>
+              <div class="flex items-center gap-4">
+                <span>Button</span>
+                <span>Button</span>
+                <span>Button</span>
+              </div>
+            </div>
+          </div>
+        } @else if (isLaunchpadTemplate(template)) {
+          <div class="border border-border/40 bg-muted/40">
+            <div class="px-6 pt-6 pb-4">
+              <div class="flex items-center justify-between text-xs text-muted-foreground">
+                @if (locked && template.id === currentTemplate.id && isEditingBusinessName) {
+                  <input
+                    type="text"
+                    [(ngModel)]="businessNameInput"
+                    placeholder="Bedrijfsnaam"
+                    class="w-full max-w-[170px] xl:max-w-[170px] 2xl:max-w-[150px] mr-4 px-4 py-2 rounded-xl border border-border bg-white/80
+                           focus:outline-none ring-2 ring-accent/30 focus:ring-accent
+                           transition-all text-left 2xl:text-lg placeholder:text-muted-foreground/70 font-semibold"
+                  />
+                } @else {
+                  <span class="font-semibold text-foreground text-lg">{{ getBusinessNameForTemplate(template.id) }}</span>
+                }
+                <div class="flex items-center gap-4">
+                  <span>Button</span>
+                  <span>Button</span>
+                </div>
+              </div>
+            </div>
+            <div class="px-6 py-8 text-center">
+              @if (template.id === currentTemplate.id && locked && !isSaved[0]) {
+                <div class="flex flex-col items-center gap-2">
+                  <app-upload-unit
+                    [locked]="locked"
+                    [label]="'Tekst'"
+                    [uploadKey]="getUploadKey(0)"
+                    [uploads]="uploads"
+                    [isSaved]="isSaved[0]"
+                    [isComplete]="isUploadComplete(0)"
+                    (requestUpload)="onRequestUpload(0, $event, 'text')"
+                    (requestClear)="onRequestClear(0, $event)">
+                  </app-upload-unit>
+
+                  <button type="button"
+                          (click)="onSaveClick(0, $event)"
+                          class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-border/60 bg-muted/40 text-foreground hover:bg-muted/60"
+                          [class.text-muted-foreground]="!isUploadComplete(0)">
+                    {{ isSaved[0] ? 'Wijzigen' : 'Opslaan' }}
+                  </button>
+                </div>
+              } @else {
+                @if (getTextContent(0); as textBlock) {
+                  <div class="space-y-2 text-muted-foreground">
+                    @if (textBlock.title) {
+                      <div class="text-base font-semibold text-foreground">{{ textBlock.title }}</div>
+                    }
+                    @if (textBlock.subtitle) {
+                      <div class="text-sm">{{ textBlock.subtitle }}</div>
+                    }
+                    @if (textBlock.body) {
+                      <div class="text-sm">{{ textBlock.body }}</div>
+                    }
+                  </div>
+                } @else {
+                  <div class="text-sm text-muted-foreground">
+                    Hi! Ik ben jouw designer. Hier komt jouw intro.
+                  </div>
+                }
+              }
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-0">
+            @for (cellIndex of [1, 2, 3, 4]; track cellIndex) {
+              <div
+                class="relative border border-border/60 bg-white shadow-sm w-full aspect-[4/3] overflow-hidden"
+                #launchpadCell
+              >
+                @if (template.id === currentTemplate.id && locked && !contentSaved) {
+                  <div
+                    class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px]
+                           flex items-center justify-center rounded-none"
+                    (click)="$event.stopPropagation()"
+                  >
+                    <div class="flex flex-col items-center gap-2">
+                      <app-upload-unit
+                        [locked]="locked"
+                        [label]="'Foto'"
+                        [uploadKey]="getUploadKey(cellIndex)"
+                        [uploads]="uploads"
+                        [isSaved]="isSaved[cellIndex]"
+                        [isComplete]="isUploadComplete(cellIndex)"
+                        (requestUpload)="onRequestUpload(cellIndex, $event, 'image', launchpadCell)"
+                        (requestClear)="onRequestClear(cellIndex, $event)">
+                      </app-upload-unit>
+
+                      <button type="button"
+                              (click)="onSaveClick(cellIndex, $event)"
+                              class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
+                              [class.text-white/90]="isUploadComplete(cellIndex) && !isSaved[cellIndex]"
+                              [class.border-white/60]="isUploadComplete(cellIndex) && !isSaved[cellIndex]"
+                              [class.text-white/70]="isSaved[cellIndex]"
+                              [class.border-white/30]="isSaved[cellIndex]"
+                              [class.text-white/60]="!isUploadComplete(cellIndex)">
+                        {{ isSaved[cellIndex] ? 'Wijzigen' : 'Opslaan' }}
+                      </button>
+                    </div>
+                  </div>
+                }
+
+                @if (getImagePreview(cellIndex)) {
+                  <img
+                    class="w-full h-full rounded-none object-cover"
+                    [src]="getImagePreview(cellIndex)"
+                    alt=""
+                  />
+                } @else {
+                  <div class="flex items-center justify-center p-6 rounded-none bg-muted/20 h-full">
+                    <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+          <div class="px-6 py-4 border border-border/40 bg-muted/40 text-xs text-muted-foreground mt-auto">
+            <div class="flex items-center justify-between">
+              <span>ЖИ 2026 {{ getBusinessNameForTemplate(template.id) }}</span>
+              <div class="flex items-center gap-4">
+                <span>Button</span>
+                <span>Button</span>
+                <span>Button</span>
+              </div>
+            </div>
+          </div>
+        } @else if (isCatalogTemplate(template)) {
+          <div class="border border-border/40 bg-muted/20 flex flex-col h-full min-h-[840px]">
+            <div class="px-6 pt-6 pb-4">
+              <div class="flex items-center justify-between text-xs text-muted-foreground">
+                @if (locked && template.id === currentTemplate.id && isEditingBusinessName) {
+                  <input
+                    type="text"
+                    [(ngModel)]="businessNameInput"
+                    placeholder="Bedrijfsnaam"
+                    class="w-full max-w-[200px] xl:max-w-[200px] 2xl:max-w-[180px] mr-4 px-4 py-2 rounded-xl border border-border bg-white/80
+                           focus:outline-none ring-2 ring-accent/30 focus:ring-accent
+                           transition-all text-left text-sm placeholder:text-muted-foreground/70 font-semibold"
+                  />
+                } @else {
+                  <span class="font-semibold text-foreground text-lg">{{ getBusinessNameForTemplate(template.id) }}</span>
+                }
+                <div class="flex items-center gap-4">
+                  <span>Button</span>
+                  <span>Button</span>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="relative w-full aspect-[16/9] overflow-hidden border-t border-border/30"
+              #catalogHero
+            >
+              @if (getImagePreview(0)) {
+                <img
+                  class="w-full h-full object-cover"
+                  [src]="getImagePreview(0)"
+                  alt=""
+                />
+              } @else {
+                <div class="flex items-center justify-center w-full h-full bg-muted/20">
+                  <lucide-icon name="image" class="w-10 h-10 opacity-60"></lucide-icon>
+                </div>
+              }
+              <div class="absolute inset-0 bg-black/35"></div>
+              <div class="absolute inset-0 p-6 flex flex-col justify-center text-white text-center">
+                @if (getTextContent(1); as textBlock) {
+                  <div class="space-y-2">
+                    @if (textBlock.title) {
+                      <div class="text-2xl sm:text-3xl font-semibold tracking-tight">
+                        {{ textBlock.title }}
+                      </div>
+                    }
+                    @if (textBlock.subtitle) {
+                      <div class="text-sm sm:text-base text-white/90">
+                        {{ textBlock.subtitle }}
+                      </div>
+                    }
+                  </div>
+                } @else {
+                  <div class="text-2xl sm:text-3xl mt-6 font-semibold tracking-tight">
+                    Jouw titel
+                  </div>
+                  <div class="text-sm sm:text-base mt-2 text-white/90">
+                    Hier komt jouw ondertitel. 
+                  </div>
+                }
+              </div>
+
+              @if (template.id === currentTemplate.id && locked && !contentSaved) {
+                <div
+                  class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px]
+                         flex items-center justify-center rounded-none"
+                  (click)="$event.stopPropagation()"
+                >
+                  <div class="flex flex-col items-center gap-2">
+                    <app-upload-unit
+                      [locked]="locked"
+                      [label]="'Foto'"
+                      [uploadKey]="getUploadKey(0)"
+                      [uploads]="uploads"
+                      [isSaved]="isSaved[0]"
+                      [isComplete]="isUploadComplete(0)"
+                      (requestUpload)="onRequestUpload(0, $event, 'image', catalogHero)"
+                      (requestClear)="onRequestClear(0, $event)">
+                    </app-upload-unit>
+
+                    <button type="button"
+                            (click)="onSaveClick(0, $event)"
+                            class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
+                            [class.text-white/90]="isUploadComplete(0) && !isSaved[0]"
+                            [class.border-white/60]="isUploadComplete(0) && !isSaved[0]"
+                            [class.text-white/70]="isSaved[0]"
+                            [class.border-white/30]="isSaved[0]"
+                            [class.text-white/60]="!isUploadComplete(0)">
+                      {{ isSaved[0] ? 'Wijzigen' : 'Opslaan' }}
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+
+            <div class="px-6 py-6 border-t border-border/30 text-center">
+              @if (template.id === currentTemplate.id && locked && !isSaved[1]) {
+                <div class="flex flex-col items-center gap-2">
+                  <app-upload-unit
+                    [locked]="locked"
+                    [label]="'Tekst'"
+                    [uploadKey]="getUploadKey(1)"
+                    [uploads]="uploads"
+                    [isSaved]="isSaved[1]"
+                    [isComplete]="isUploadComplete(1)"
+                    (requestUpload)="onRequestUpload(1, $event, 'text')"
+                    (requestClear)="onRequestClear(1, $event)">
+                  </app-upload-unit>
+
+                  <button type="button"
+                          (click)="onSaveClick(1, $event)"
+                          class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-border/60 bg-muted/40 text-foreground hover:bg-muted/60"
+                          [class.text-muted-foreground]="!isUploadComplete(1)">
+                    {{ isSaved[1] ? 'Wijzigen' : 'Opslaan' }}
+                  </button>
+                </div>
+              } @else {
+                @if (getTextContent(1); as textBlock) {
+                  <div class="space-y-2 text-muted-foreground">
+                    <div class="text-xs sm:text-sm min-h-[2.5rem]">
+                      {{ textBlock.body || '' }}
+                    </div>
+                  </div>
+                } @else {
+                  <div class="text-xs sm:text-sm text-muted-foreground min-h-[2.5rem]">
+                    Hier komt jouw tekst.
+                  </div>
+                }
+              }
+            </div>
+
+            <div class="px-6 py-4 border border-border/40 bg-muted/20 text-xs text-muted-foreground mt-auto">
+              <div class="flex items-center justify-between">
+                <span>ЖИ 2026 {{ getBusinessNameForTemplate(template.id) }}</span>
+                <div class="flex items-center gap-4">
+                  <span>Button</span>
+                  <span>Button</span>
+                  <span>Button</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        } @else {
+          <div
+            class="grid gap-3 p-4"
+            [style.gridTemplateColumns]="'repeat(' + (template.id === currentTemplate.id ? cols : template.cols) + ', minmax(0, 1fr))'"
+          >
+            @if (template.id === currentTemplate.id) {
+              @for (cell of grid; let i = $index; track i) {
+                <div
+                  class="relative p-3 rounded-2xl border border-border/60 bg-white shadow-sm"
+                  [class.p-0]="getImagePreview(i)"
+                  [class.rounded-none]="getImagePreview(i)"
+                  [class.border-0]="getImagePreview(i)"
+                  [class.bg-transparent]="getImagePreview(i)"
+                  #gridCell
+                >
+                  @if (locked && !contentSaved) {
+                    <div
+                      class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px]
+                             flex items-center justify-center rounded-none"
+                      (click)="$event.stopPropagation()"
+                    >
+                      <div class="flex flex-col items-center gap-2">
+                        <app-upload-unit
+                          [locked]="locked"
+                          [label]="cell.labelMap[cell.value]"
+                          [uploadKey]="getUploadKey(i)"
+                          [uploads]="uploads"
+                          [isSaved]="isSaved[i]"
+                          [isComplete]="isUploadComplete(i)"
+                          (requestUpload)="onRequestUpload(i, $event, cell.value, gridCell)"
+                          (requestClear)="onRequestClear(i, $event)">
+                        </app-upload-unit>
+
+                        <button type="button"
+                                (click)="onSaveClick(i, $event)"
+                                class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
+                                [class.text-white/90]="isUploadComplete(i) && !isSaved[i]"
+                                [class.border-white/60]="isUploadComplete(i) && !isSaved[i]"
+                                [class.text-white/70]="isSaved[i]"
+                                [class.border-white/30]="isSaved[i]"
+                                [class.text-white/60]="!isUploadComplete(i)">
+                          {{ isSaved[i] ? 'Wijzigen' : 'Opslaan' }}
+                        </button>
+                      </div>
+                    </div>
+                  }
+
+                  @if (getImagePreview(i)) {
+                    <img
+                      class="w-full h-full rounded-none object-cover"
+                      [src]="getImagePreview(i)"
+                      alt=""
+                    />
+                  } @else {
+                    <div class="flex items-center justify-center p-3 rounded-xl bg-muted/60">
+                      @switch (cell.value) {
+                        @case ('text')  { <lucide-icon name="text-align-justify" class="w-8 h-8 opacity-70"></lucide-icon> }
+                        @case ('image') { <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon> }
+                        @case ('video') { <lucide-icon name="video" class="w-8 h-8 opacity-70"></lucide-icon> }
+                      }
+                    </div>
+                    <div class="text-center text-xs mt-2 text-muted-foreground">
+                      {{ cell.labelMap[cell.value] }}
+                    </div>
+                  }
+                </div>
+              }
+            } @else {
+              @for (cell of template.cells; let i = $index; track i) {
+                <div class="relative p-3 rounded-2xl border border-border/60 bg-white shadow-sm">
+                  <div class="flex items-center justify-center p-3 rounded-xl bg-muted/60">
+                    @switch (cell) {
+                      @case ('text')  { <lucide-icon name="text-align-justify" class="w-8 h-8 opacity-70"></lucide-icon> }
+                      @case ('image') { <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon> }
+                      @case ('video') { <lucide-icon name="video" class="w-8 h-8 opacity-70"></lucide-icon> }
+                    }
+                  </div>
+                  <div class="text-center text-xs mt-2 text-muted-foreground">
+                    {{ cell === 'text' ? 'Tekst' : cell === 'image' ? 'Foto' : 'Video' }}
+                  </div>
+                </div>
+              }
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>
+
+<ng-template>
+  <app-upload-unit></app-upload-unit>
+</ng-template>

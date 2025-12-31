@@ -102,7 +102,7 @@ export class LayoutStep implements OnChanges {
       name: 'Editorial',
       description: 'Verhaal en tekst staan centraal',
       icon: 'book-open-text',
-      layoutType: 'single',
+      layoutType: 'grid',
       hidden: false
     },
     {
@@ -198,8 +198,14 @@ export class LayoutStep implements OnChanges {
     }
 
     if (event.config?.subtitle !== undefined) {
+      const subtitleKeyMap: Record<string, string> = {
+        portfolio: 'artist_subtitle',
+        service: 'service_subtitle',
+        editorial: 'editorial_subtitle',
+        product: 'product_subtitle'
+      };
       const subtitleKey =
-        event.config?.templateGroup === 'service' ? 'service_subtitle' : 'artist_subtitle';
+        subtitleKeyMap[event.config?.templateGroup ?? 'portfolio'] ?? 'artist_subtitle';
       if (subtitleValue) {
         newUploads[subtitleKey] = subtitleValue;
       } else {
