@@ -5,7 +5,6 @@ import { Progress } from '../../components/progress/progress';
 import { LayoutStep } from '../../components/layout-step/layout-step';
 import { ColorStep } from '../../components/color-step/color-step';
 import { FontStep } from '../../components/font-step/font-step';
-import { NavigationStep } from '../../components/navigation-step/navigation-step';
 import { ContentStep, PageDef } from '../../components/content-step/content-step';
 import { PreviewStep } from '../../components/preview-step/preview-step';
 import { PreviewPanel } from '../../components/preview-panel/preview-panel';
@@ -21,7 +20,6 @@ import { BuilderState } from '../../types/builder-state';
     LayoutStep,
     ColorStep,
     FontStep,
-    NavigationStep,
     ContentStep,
     PreviewStep,
     PreviewPanel,
@@ -39,7 +37,6 @@ export class Services {
     'layout',
     'kleuren',
     'lettertype',
-    'navigatie',
     'content',
     'resultaat'
   ] as const;
@@ -223,8 +220,7 @@ export class Services {
       case 0: return !!state.layout && state.layoutLocked === true && hasUploads && !!state.contentSaved;
       case 1: return !!state.colorTheme;
       case 2: return !!(state.bodyFontVariant ?? state.fontVariant) && !!(state.headingFontVariant ?? state.fontVariant);
-      case 3: return !!state.navigation;
-      case 4: return Array.isArray(state.pages) && state.pages.length > 0;
+      case 3: return Array.isArray(state.pages) && state.pages.length > 0;
       default: return false;
     }
   });

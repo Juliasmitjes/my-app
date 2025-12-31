@@ -98,12 +98,6 @@ class="bg-background/70 backdrop-blur-md sticky top-0 z-50 shadow-md border-b bo
           </app-font-step>
         }
         @case (3) {
-          <app-navigation-step
-            [builderState]="builderState()"
-            (update)="updateState($event)">
-          </app-navigation-step>
-        }
-        @case (4) {
           <app-content-step
             [builderState]="builderState()"
             [contents]="availablePages"
@@ -112,7 +106,7 @@ class="bg-background/70 backdrop-blur-md sticky top-0 z-50 shadow-md border-b bo
             (toggle)="togglePage($event)"
           ></app-content-step>
         }
-        @case (5) {
+        @case (4) {
           <app-preview-step
           [builderState]="builderState()"
           [colorThemes]="colorThemes()"
