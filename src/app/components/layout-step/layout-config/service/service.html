@@ -106,35 +106,62 @@
                 #restaurantCell
               >
                 @if (template.id === currentTemplate.id && locked && !contentSaved) {
-                  <div
-                    class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px]
-                           flex items-center justify-center rounded-none"
-                    (click)="$event.stopPropagation()"
-                  >
-                    <div class="flex flex-col items-center gap-2">
-                      <app-upload-unit
-                        [locked]="locked"
-                        [label]="getRestaurantLabel(i)"
-                        [uploadKey]="getUploadKey(i)"
-                        [uploads]="uploads"
-                        [isSaved]="isSaved[i]"
-                        [isComplete]="isUploadComplete(i)"
-                        (requestUpload)="onRequestUpload(i, $event, getRestaurantValue(i), restaurantCell)"
-                        (requestClear)="onRequestClear(i, $event)">
-                      </app-upload-unit>
+                  @if (getRestaurantValue(i) === 'text') {
+                    <div
+                      class="absolute inset-0 z-20 bg-transparent flex items-center justify-center rounded-none"
+                      (click)="$event.stopPropagation()"
+                    >
+                      <div class="flex flex-col items-center gap-2">
+                        <app-upload-unit
+                          [locked]="locked"
+                          [label]="getRestaurantLabel(i)"
+                          [uploadKey]="getUploadKey(i)"
+                          [uploads]="uploads"
+                          [isSaved]="isSaved[i]"
+                          [isComplete]="isUploadComplete(i)"
+                          (requestUpload)="onRequestUpload(i, $event, getRestaurantValue(i), restaurantCell)"
+                          (requestClear)="onRequestClear(i, $event)">
+                        </app-upload-unit>
 
-                      <button type="button"
-                              (click)="onSaveClick(i, $event)"
-                              class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
-                              [class.text-white/90]="isUploadComplete(i) && !isSaved[i]"
-                              [class.border-white/60]="isUploadComplete(i) && !isSaved[i]"
-                              [class.text-white/70]="isSaved[i]"
-                              [class.border-white/30]="isSaved[i]"
-                              [class.text-white/60]="!isUploadComplete(i)">
-                        {{ isSaved[i] ? 'Bewerk' : 'Bewaar' }}
-                      </button>
+                        <button type="button"
+                                (click)="onSaveClick(i, $event)"
+                                class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-border/60 bg-muted/40 text-foreground hover:bg-muted/60"
+                                [class.text-muted-foreground]="!isUploadComplete(i)">
+                          {{ isSaved[i] ? 'Bewerk' : 'Bewaar' }}
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  } @else {
+                    <div
+                      class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px]
+                             flex items-center justify-center rounded-none"
+                      (click)="$event.stopPropagation()"
+                    >
+                      <div class="flex flex-col items-center gap-2">
+                        <app-upload-unit
+                          [locked]="locked"
+                          [label]="getRestaurantLabel(i)"
+                          [uploadKey]="getUploadKey(i)"
+                          [uploads]="uploads"
+                          [isSaved]="isSaved[i]"
+                          [isComplete]="isUploadComplete(i)"
+                          (requestUpload)="onRequestUpload(i, $event, getRestaurantValue(i), restaurantCell)"
+                          (requestClear)="onRequestClear(i, $event)">
+                        </app-upload-unit>
+
+                        <button type="button"
+                                (click)="onSaveClick(i, $event)"
+                                class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
+                                [class.text-white/90]="isUploadComplete(i) && !isSaved[i]"
+                                [class.border-white/60]="isUploadComplete(i) && !isSaved[i]"
+                                [class.text-white/70]="isSaved[i]"
+                                [class.border-white/30]="isSaved[i]"
+                                [class.text-white/60]="!isUploadComplete(i)">
+                          {{ isSaved[i] ? 'Bewerk' : 'Bewaar' }}
+                        </button>
+                      </div>
+                    </div>
+                  }
                 }
 
                 @if (getRestaurantValue(i) === 'text') {
@@ -151,11 +178,13 @@
                       }
                     </div>
                   } @else {
-                    <div class="flex items-center justify-center p-6 rounded-none h-full">
-                      <div class="text-sm text-muted-foreground text-center">
-                        Hier komt jouw tekst.
+                    @if (!(template.id === currentTemplate.id && locked && !contentSaved)) {
+                      <div class="flex items-center justify-center p-6 rounded-none h-full">
+                        <div class="text-sm text-muted-foreground text-center">
+                          Hier komt jouw tekst.
+                        </div>
                       </div>
-                    </div>
+                    }
                   }
                 } @else if (template.id === currentTemplate.id && getImagePreview(i)) {
                   <img
