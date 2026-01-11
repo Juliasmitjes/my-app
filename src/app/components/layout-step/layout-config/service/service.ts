@@ -7,7 +7,7 @@ import { UploadUnit } from '../upload-unit/upload-unit';
 
 export type CellType = 'text' | 'image' | 'video';
 
-type TemplateGroup = 'service' | 'portfolio' | 'editorial' | 'product' | 'local' | null;
+type TemplateGroup = 'service' | 'portfolio' | 'product' | 'local' | null;
 
 interface GridCell {
   value: CellType;
@@ -110,7 +110,7 @@ export class Service implements OnChanges, OnDestroy {
   }
 
   get subtitleDisplay(): string {
-    return this.subtitleInput.trim() || 'Hier komt jouw ondertitel. Maak het pakkend!';
+    return this.subtitleInput.trim() || 'Hier komt jouw ondertitel.';
   }
 
   isRestaurantTemplate(template?: TemplateOption | null): boolean {
@@ -502,13 +502,13 @@ export class Service implements OnChanges, OnDestroy {
   getSubtitleForTemplate(templateId?: string): string {
     const id = templateId ?? this.currentTemplate?.id;
     if (!id) {
-      return 'Hier komt jouw ondertitel. Maak het pakkend!';
+      return 'Hier komt jouw ondertitel.';
     }
     if (id === this.currentTemplate?.id) {
-      return this.subtitleInput.trim() || 'Hier komt jouw ondertitel. Maak het pakkend!';
+      return this.subtitleInput.trim() || 'Hier komt jouw ondertitel.';
     }
     const saved = this.getSavedSubtitle(id);
-    return saved || 'Hier komt jouw ondertitel. Maak het pakkend!';
+    return saved || 'Hier komt jouw ondertitel.';
   }
 
   getTextPreview(index: number): string | null {

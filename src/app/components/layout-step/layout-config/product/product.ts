@@ -7,7 +7,7 @@ import { UploadUnit } from '../upload-unit/upload-unit';
 
 export type CellType = 'text' | 'image' | 'video';
 
-type TemplateGroup = 'product' | 'portfolio' | 'service' | 'editorial' | 'local' | null;
+type TemplateGroup = 'product' | 'portfolio' | 'service' | 'local' | null;
 
 interface GridCell {
   value: CellType;
@@ -131,7 +131,7 @@ export class Product implements OnChanges, OnDestroy {
   ];
 
   get showcaseGridAreas(): string {
-    return '"a a b" "c d d" "e e f" "g h i"';
+    return '"a b c" "d e e" "f e e" "g h i"';
   }
 
   getShowcaseArea(index: number): string {

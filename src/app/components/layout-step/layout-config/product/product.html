@@ -41,7 +41,6 @@
             <div class="px-4 pt-4 pb-3 space-y-4 bg-muted/60 border border-border/40">
               <div class="flex items-center justify-between text-xs text-muted-foreground">
                 <span class="font-semibold text-foreground">{{ getBusinessNameForTemplate(template.id) }}</span>
-                
               </div>
             </div>
             <div class="text-center pt-6 pb-2">
@@ -142,11 +141,7 @@
                   />
                 } @else {
                   <div class="flex items-center justify-center p-6 rounded-none bg-muted/20 h-full">
-                    @switch (cell) {
-                      @case ('text')  { <lucide-icon name="text-align-justify" class="w-8 h-8 opacity-70"></lucide-icon> }
-                      @case ('image') { <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon> }
-                      @case ('video') { <lucide-icon name="video" class="w-8 h-8 opacity-70"></lucide-icon> }
-                    }
+                    <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon>
                   </div>
                 }
               </div>
@@ -154,8 +149,7 @@
           </div>
           <div class="px-4 py-3 bg-muted/60 border border-border/40 text-xs text-muted-foreground mt-auto">
             <div class="flex items-center justify-between">
-              <span>© 2026 {{ getBusinessNameForTemplate(template.id) }}</span>
-              
+              <span>ЖИ 2026 {{ getBusinessNameForTemplate(template.id) }}</span>
             </div>
           </div>
         } @else if (isLaunchpadTemplate(template)) {
@@ -273,7 +267,7 @@
           </div>
           <div class="px-6 py-4 border border-border/40 bg-muted/40 text-xs text-muted-foreground mt-auto">
             <div class="flex items-center justify-between">
-              <span>© 2026 {{ getBusinessNameForTemplate(template.id) }}</span>
+              <span>ЖИ 2026 {{ getBusinessNameForTemplate(template.id) }}</span>
               
             </div>
           </div>
@@ -332,7 +326,7 @@
                     Jouw titel
                   </div>
                   <div class="text-sm sm:text-base mt-2 text-white/90">
-                    Hier komt jouw ondertitel. 
+                    Hier komt jouw ondertitel.
                   </div>
                 }
               </div>
@@ -408,7 +402,7 @@
 
             <div class="px-6 py-4 border border-border/40 bg-muted/20 text-xs text-muted-foreground mt-auto">
               <div class="flex items-center justify-between">
-                <span>© 2026 {{ getBusinessNameForTemplate(template.id) }}</span>
+                <span>ЖI 2026 {{ getBusinessNameForTemplate(template.id) }}</span>
                 
               </div>
             </div>
@@ -506,5 +500,3 @@
 <ng-template>
   <app-upload-unit></app-upload-unit>
 </ng-template>
-
-

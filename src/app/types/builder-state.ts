@@ -10,7 +10,7 @@ export interface BuilderState {
 
   layoutConfig?: {
     // homepage business category
-    templateGroup?: 'portfolio' | 'service' | 'editorial' | 'product' | 'local';
+    templateGroup?: 'portfolio' | 'service' | 'product' | 'local';
 
     // single
     variantType?: string;

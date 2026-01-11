@@ -15,7 +15,6 @@ import { OptionCard } from '../ui/option-card/option-card';
 import { Portfolio } from './layout-config/portfolio/portfolio';
 import { Product } from './layout-config/product/product';
 import { Service } from './layout-config/service/service';
-import { Editorial } from './layout-config/editorial/editorial';
 import { LocalBusiness } from './layout-config/local-business/local-business';
 import { NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -31,7 +30,6 @@ import { ImageCropper } from './layout-config/image-cropper/image-cropper';
     Portfolio,
     Product,
     Service,
-    Editorial,
     LocalBusiness,
     FormsModule,
     ImageCropper
@@ -73,7 +71,7 @@ export class LayoutStep implements OnChanges {
   currentUploadType: 'image' | 'video' | 'text' | null = null;
 
   selectedConfig: any = null;
-  selectedCategory: 'portfolio' | 'service' | 'editorial' | 'product' | 'local' | null = null;
+  selectedCategory: 'portfolio' | 'service' | 'product' | 'local' | null = null;
 
   showCropper = false;
   cropperFile: File | null = null;
@@ -94,14 +92,6 @@ export class LayoutStep implements OnChanges {
       name: 'Service',
       description: 'Diensten overzichtelijk presenteren',
       icon: 'hand-platter',
-      layoutType: 'grid',
-      hidden: false
-    },
-    {
-      id: 'editorial',
-      name: 'Editorial',
-      description: 'Verhaal en tekst staan centraal',
-      icon: 'book-open-text',
       layoutType: 'grid',
       hidden: false
     },
@@ -202,7 +192,6 @@ export class LayoutStep implements OnChanges {
       const subtitleKeyMap: Record<string, string> = {
         portfolio: 'artist_subtitle',
         service: 'service_subtitle',
-        editorial: 'editorial_subtitle',
         product: 'product_subtitle'
       };
       const subtitleKey =

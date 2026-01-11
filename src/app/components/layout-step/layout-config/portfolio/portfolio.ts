@@ -7,7 +7,7 @@ import { UploadUnit } from '../upload-unit/upload-unit';
 
 export type CellType = 'text' | 'image' | 'video';
 
-type TemplateGroup = 'portfolio' | 'product' | 'service' | 'editorial' | 'local' | null;
+type TemplateGroup = 'portfolio' | 'product' | 'service' | 'local' | null;
 
 interface GridCell {
   value: CellType;
@@ -28,7 +28,7 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
     {
       id: 'portfolio-artist',
       label: 'Artist',
-      description: 'Editorial beeldgrid met artistieke uitstraling.',
+      description: 'Beeldgrid met artistieke uitstraling.',
       cols: 3,
       rows: 4,
       cells: ['image', 'image', 'image', 'image', 'image', 'image', 'image', 'image', 'image']
@@ -140,7 +140,7 @@ export class Portfolio implements OnChanges, OnDestroy {
   }
 
   get subtitleDisplay(): string {
-    return this.subtitleInput.trim() || 'Hier komt jouw ondertitel. Maak het pakkend!';
+    return this.subtitleInput.trim() || 'Hier komt jouw ondertitel.';
   }
 
   isArtistTemplate(template?: TemplateOption | null): boolean {

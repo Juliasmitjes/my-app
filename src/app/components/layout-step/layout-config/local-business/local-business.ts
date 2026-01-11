@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { BuilderState } from '../../../../types/builder-state';
-import { Editorial } from '../editorial/editorial';
 
 @Component({
   selector: 'app-local-business',
   standalone: true,
   templateUrl: './local-business.html',
-  imports: [Editorial]
+  imports: []
 })
 export class LocalBusiness {
   @Input() locked = false;
