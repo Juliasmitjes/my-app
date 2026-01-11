@@ -198,6 +198,7 @@ export class LayoutStep implements OnChanges {
     }
 
     if (event.config?.subtitle !== undefined) {
+      const templateGroup = event.config?.templateGroup ?? 'portfolio';
       const subtitleKeyMap: Record<string, string> = {
         portfolio: 'artist_subtitle',
         service: 'service_subtitle',
@@ -205,7 +206,9 @@ export class LayoutStep implements OnChanges {
         product: 'product_subtitle'
       };
       const subtitleKey =
-        subtitleKeyMap[event.config?.templateGroup ?? 'portfolio'] ?? 'artist_subtitle';
+        templateGroup === 'service' && templateId
+          ? `service_subtitle_${templateId}`
+          : subtitleKeyMap[templateGroup] ?? 'artist_subtitle';
       if (subtitleValue) {
         newUploads[subtitleKey] = subtitleValue;
       } else {

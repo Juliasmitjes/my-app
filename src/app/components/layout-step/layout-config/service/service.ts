@@ -171,6 +171,7 @@ export class Service implements OnChanges, OnDestroy {
     this.currentTemplate = found ?? this.templates[0];
     this.applyTemplate(this.currentTemplate);
     this.syncBusinessNameInput(this.currentTemplate.id);
+    this.syncSubtitleInput(this.currentTemplate.id);
   }
 
   selectTemplate(template: TemplateOption) {
@@ -178,6 +179,7 @@ export class Service implements OnChanges, OnDestroy {
     this.currentTemplate = template;
     this.applyTemplate(template);
     this.syncBusinessNameInput(template.id);
+    this.syncSubtitleInput(template.id);
   }
 
   onTemplateAction(template: TemplateOption, event?: Event) {
@@ -188,6 +190,7 @@ export class Service implements OnChanges, OnDestroy {
         this.currentTemplate = template;
         this.applyTemplate(template);
         this.syncBusinessNameInput(template.id);
+        this.syncSubtitleInput(template.id);
         this.configChange.emit({
           layout: 'grid',
           contentSaved: false
@@ -261,7 +264,7 @@ export class Service implements OnChanges, OnDestroy {
     const cols = this.layoutConfig?.cols;
     const cells = this.layoutConfig?.cells;
     const businessName = this.currentTemplate ? this.getSavedBusinessName(this.currentTemplate.id) : '';
-    const subtitle = this.uploads?.['service_subtitle'];
+    const subtitle = this.currentTemplate ? this.getSavedSubtitle(this.currentTemplate.id) : '';
 
     if (cols && cells && cells.length) {
       this.cols = cols;
@@ -481,6 +484,31 @@ export class Service implements OnChanges, OnDestroy {
   private syncBusinessNameInput(templateId: string): void {
     if (this.isEditingBusinessName) return;
     this.businessNameInput = this.getSavedBusinessName(templateId);
+  }
+
+  private getSubtitleKey(templateId: string): string {
+    return `service_subtitle_${templateId}`;
+  }
+
+  private getSavedSubtitle(templateId: string): string {
+    const perTemplate = this.uploads?.[this.getSubtitleKey(templateId)];
+    return typeof perTemplate === 'string' ? perTemplate : '';
+  }
+
+  private syncSubtitleInput(templateId: string): void {
+    this.subtitleInput = this.getSavedSubtitle(templateId);
+  }
+
+  getSubtitleForTemplate(templateId?: string): string {
+    const id = templateId ?? this.currentTemplate?.id;
+    if (!id) {
+      return 'Hier komt jouw ondertitel. Maak het pakkend!';
+    }
+    if (id === this.currentTemplate?.id) {
+      return this.subtitleInput.trim() || 'Hier komt jouw ondertitel. Maak het pakkend!';
+    }
+    const saved = this.getSavedSubtitle(id);
+    return saved || 'Hier komt jouw ondertitel. Maak het pakkend!';
   }
 
   getTextPreview(index: number): string | null {
