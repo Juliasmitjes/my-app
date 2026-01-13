@@ -238,7 +238,7 @@
         ========================== -->
         @else if (isBeautyTemplate(template)) {
           <div class="relative border border-border/40 bg-muted/10 min-h-[840px] overflow-hidden">
-            <div class="relative z-10 flex flex-col h-full">
+            <div class="relative z-10 flex flex-col min-h-[840px] h-full">
               <!-- Header -->
               <div class="px-6 pt-5 pb-4 border-b border-border/30">
                 <div class="flex items-center justify-between">
@@ -281,10 +281,12 @@
               </div>
 
               <!-- Content -->
-              <div class="flex-1 p-4">
-                <div class="grid gap-3 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+              <div class="flex-1 pt-4 px-4 pb-0 min-h-0 flex h-full">
+                <div
+                  class="grid gap-3 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] grid-rows-1 items-stretch h-full flex-1"
+                >
                   <!-- Left column -->
-                  <div class="grid gap-3">
+                  <div class="grid gap-3 pb-4">
                     <!-- Text block -->
                     <div class="relative p-4 min-h-[240px]">
                       @if (template.id === currentTemplate.id && locked && !isSaved[0]) {
@@ -332,60 +334,13 @@
                       }
                     </div>
 
-                    <!-- Accent image -->
-                    <div
-                      class="relative border border-border/50 bg-white shadow-sm overflow-hidden min-h-[240px] w-[72%] justify-self-end"
-                      #wellnessAccent
-                    >
-                      @if (template.id === currentTemplate.id && locked && !contentSaved) {
-                        <div
-                          class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px] flex items-center justify-center rounded-none"
-                          (click)="$event.stopPropagation()"
-                        >
-                          <div class="flex flex-col items-center gap-2">
-                            <app-upload-unit
-                              [locked]="locked"
-                              [label]="'Foto'"
-                              [uploadKey]="getUploadKey(2)"
-                              [uploads]="uploads"
-                              [isSaved]="isSaved[2]"
-                              [isComplete]="isUploadComplete(2)"
-                              (requestUpload)="onRequestUpload(2, $event, 'image', wellnessAccent)"
-                              (requestClear)="onRequestClear(2, $event)"
-                            >
-                            </app-upload-unit>
-
-                            <button
-                              type="button"
-                              (click)="onSaveClick(2, $event)"
-                              class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
-                              [class.text-white/90]="isUploadComplete(2) && !isSaved[2]"
-                              [class.border-white/60]="isUploadComplete(2) && !isSaved[2]"
-                              [class.text-white/70]="isSaved[2]"
-                              [class.border-white/30]="isSaved[2]"
-                              [class.text-white/60]="!isUploadComplete(2)"
-                            >
-                              {{ isSaved[2] ? 'Bewerk' : 'Bewaar' }}
-                            </button>
-                          </div>
-                        </div>
-                      }
-
-                      @if (getImagePreview(2)) {
-                        <img class="w-full h-full object-cover" [src]="getImagePreview(2)" alt="" />
-                      } @else {
-                        <div class="flex items-center justify-center h-full bg-muted/20">
-                          <lucide-icon name="image" class="w-10 h-10 opacity-60"></lucide-icon>
-                        </div>
-                      }
-                    </div>
                   </div>
 
                   <!-- Right column -->
-                  <div class="flex flex-col gap-3">
+                  <div class="flex flex-col gap-3 h-full self-stretch">
                     <!-- Hero -->
                     <div
-                      class="relative border border-border/50 bg-white shadow-sm overflow-hidden w-full aspect-[4/3]"
+                      class="relative border border-border/50 bg-white shadow-sm overflow-hidden w-full h-full"
                       #wellnessHero
                     >
                       @if (template.id === currentTemplate.id && locked && !contentSaved) {
@@ -430,106 +385,6 @@
                         </div>
                       }
                     </div>
-
-                    <!-- Two small images -->
-                    <div class="grid gap-3 sm:grid-cols-2">
-                      <!-- Left -->
-                      <div
-                        class="relative border border-border/50 bg-white shadow-sm overflow-hidden w-full aspect-[4/3]"
-                        #wellnessSmallLeft
-                      >
-                        @if (template.id === currentTemplate.id && locked && !contentSaved) {
-                          <div
-                            class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px] flex items-center justify-center rounded-none"
-                            (click)="$event.stopPropagation()"
-                          >
-                            <div class="flex flex-col items-center gap-2">
-                              <app-upload-unit
-                                [locked]="locked"
-                                [label]="'Foto'"
-                                [uploadKey]="getUploadKey(3)"
-                                [uploads]="uploads"
-                                [isSaved]="isSaved[3]"
-                                [isComplete]="isUploadComplete(3)"
-                                (requestUpload)="onRequestUpload(3, $event, 'image', wellnessSmallLeft)"
-                                (requestClear)="onRequestClear(3, $event)"
-                              >
-                              </app-upload-unit>
-
-                              <button
-                                type="button"
-                                (click)="onSaveClick(3, $event)"
-                                class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
-                                [class.text-white/90]="isUploadComplete(3) && !isSaved[3]"
-                                [class.border-white/60]="isUploadComplete(3) && !isSaved[3]"
-                                [class.text-white/70]="isSaved[3]"
-                                [class.border-white/30]="isSaved[3]"
-                                [class.text-white/60]="!isUploadComplete(3)"
-                              >
-                                {{ isSaved[3] ? 'Bewerk' : 'Bewaar' }}
-                              </button>
-                            </div>
-                          </div>
-                        }
-
-                        @if (getImagePreview(3)) {
-                          <img class="w-full h-full object-cover" [src]="getImagePreview(3)" alt="" />
-                        } @else {
-                          <div class="flex items-center justify-center h-full bg-muted/20">
-                            <lucide-icon name="image" class="w-8 h-8 opacity-60"></lucide-icon>
-                          </div>
-                        }
-                      </div>
-
-                      <!-- Right -->
-                      <div
-                        class="relative border border-border/50 bg-white shadow-sm overflow-hidden w-full aspect-[4/3]"
-                        #wellnessSmallRight
-                      >
-                        @if (template.id === currentTemplate.id && locked && !contentSaved) {
-                          <div
-                            class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px] flex items-center justify-center rounded-none"
-                            (click)="$event.stopPropagation()"
-                          >
-                            <div class="flex flex-col items-center gap-2">
-                              <app-upload-unit
-                                [locked]="locked"
-                                [label]="'Foto'"
-                                [uploadKey]="getUploadKey(4)"
-                                [uploads]="uploads"
-                                [isSaved]="isSaved[4]"
-                                [isComplete]="isUploadComplete(4)"
-                                (requestUpload)="onRequestUpload(4, $event, 'image', wellnessSmallRight)"
-                                (requestClear)="onRequestClear(4, $event)"
-                              >
-                              </app-upload-unit>
-
-                              <button
-                                type="button"
-                                (click)="onSaveClick(4, $event)"
-                                class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
-                                [class.text-white/90]="isUploadComplete(4) && !isSaved[4]"
-                                [class.border-white/60]="isUploadComplete(4) && !isSaved[4]"
-                                [class.text-white/70]="isSaved[4]"
-                                [class.border-white/30]="isSaved[4]"
-                                [class.text-white/60]="!isUploadComplete(4)"
-                              >
-                                {{ isSaved[4] ? 'Bewerk' : 'Bewaar' }}
-                              </button>
-                            </div>
-                          </div>
-                        }
-
-                        @if (getImagePreview(4)) {
-                          <img class="w-full h-full object-cover" [src]="getImagePreview(4)" alt="" />
-                        } @else {
-                          <div class="flex items-center justify-center h-full bg-muted/20">
-                            <lucide-icon name="image" class="w-8 h-8 opacity-60"></lucide-icon>
-                          </div>
-                        }
-                      </div>
-                    </div>
-                    <!-- /grid sm:grid-cols-2 -->
                   </div>
                   <!-- /flex flex-col gap-3 ✅ deze sluit was vaak de missende -->
                 </div>

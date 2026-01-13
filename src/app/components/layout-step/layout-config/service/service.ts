@@ -36,10 +36,10 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
     {
       id: 'service-beauty',
       label: 'Wellness',
-      description: 'Intro tekst met twee beelden.',
+      description: 'Intro tekst met beeld.',
       cols: 2,
-      rows: 3,
-      cells: ['text', 'image', 'image', 'image', 'image']
+      rows: 1,
+      cells: ['text', 'image']
     },
     {
       id: 'service-industrial',
