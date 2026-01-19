@@ -67,8 +67,8 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
       label: 'Wellness',
       description: 'Intro tekst met beeld.',
       cols: 2,
-      rows: 1,
-      cells: ['text', 'image']
+      rows: 2,
+      cells: ['text', 'image', 'image']
     },
     {
       id: 'service-industry',

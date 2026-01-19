@@ -174,8 +174,8 @@
     </div>
   </div>
 } @else if (template.id === 'service-wellness') {
-  <div class="relative border border-border/40 bg-muted/10 min-h-[840px] overflow-hidden">
-    <div class="relative z-10 flex flex-col min-h-[840px] h-full">
+  <div class="relative border border-border/40 bg-muted/10 min-h-[840px] h-[840px] overflow-hidden flex flex-col">
+    <div class="relative z-10 flex flex-col flex-1 min-h-0">
       <div class="px-6 pt-5 pb-4 border-b border-border/30">
         <div class="flex items-center justify-between">
           <div class="text-xs uppercase tracking-[0.24em] text-muted-foreground">
@@ -216,12 +216,12 @@
         </div>
       </div>
 
-      <div class="flex-1 pt-4 px-4 pb-0 min-h-0 flex h-full">
+      <div class="flex-1 pt-4 px-4 pb-4 min-h-0 flex h-full">
         <div
-          class="grid gap-3 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] grid-rows-1 items-stretch h-full flex-1"
+          class="grid gap-3 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] grid-rows-[1fr] items-stretch flex-1 min-h-0 h-full"
         >
-          <div class="grid gap-3 pb-4">
-            <div class="relative p-4 min-h-[240px]">
+          <div class="flex flex-col gap-3 pb-4 min-h-0 h-full">
+            <div class="relative p-4 flex-1 min-h-0">
               @if (template.id === ctx.currentTemplate.id && ctx.locked && !ctx.isSaved[0]) {
                 <div class="flex flex-col items-start gap-2">
                   <app-upload-unit
@@ -268,9 +268,9 @@
             </div>
           </div>
 
-          <div class="flex flex-col gap-3 h-full self-stretch">
+          <div class="flex flex-col gap-3 h-full self-stretch min-h-0">
             <div
-              class="relative border border-border/50 bg-white shadow-sm overflow-hidden w-full h-full"
+              class="relative border border-border/50 bg-white shadow-sm overflow-hidden w-full flex-1 min-h-0"
               #wellnessHero
             >
               @if (template.id === ctx.currentTemplate.id && ctx.locked && !ctx.contentSaved) {
@@ -315,8 +315,61 @@
                 </div>
               }
             </div>
+
+            <div
+              class="relative border border-border/50 bg-white shadow-sm overflow-hidden w-full flex-1 min-h-0"
+              #wellnessDetail
+            >
+              @if (template.id === ctx.currentTemplate.id && ctx.locked && !ctx.contentSaved) {
+                <div
+                  class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px] flex items-center justify-center rounded-none"
+                  (click)="$event.stopPropagation()"
+                >
+                  <div class="flex flex-col items-center gap-2">
+                    <app-upload-unit
+                      [locked]="ctx.locked"
+                      [label]="'Foto'"
+                      [uploadKey]="ctx.getUploadKey(2)"
+                      [uploads]="ctx.uploads"
+                      [isSaved]="ctx.isSaved[2]"
+                      [isComplete]="ctx.isUploadComplete(2)"
+                      (requestUpload)="ctx.onRequestUpload(2, $event, 'image', wellnessDetail)"
+                      (requestClear)="ctx.onRequestClear(2, $event)"
+                    >
+                    </app-upload-unit>
+
+                    <button
+                      type="button"
+                      (click)="ctx.onSaveClick(2, $event)"
+                      class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
+                      [class.text-white/90]="ctx.isUploadComplete(2) && !ctx.isSaved[2]"
+                      [class.border-white/60]="ctx.isUploadComplete(2) && !ctx.isSaved[2]"
+                      [class.text-white/70]="ctx.isSaved[2]"
+                      [class.border-white/30]="ctx.isSaved[2]"
+                      [class.text-white/60]="!ctx.isUploadComplete(2)"
+                    >
+                      {{ ctx.isSaved[2] ? 'Bewerk' : 'Bewaar' }}
+                    </button>
+                  </div>
+                </div>
+              }
+
+              @if (ctx.getImagePreview(2)) {
+                <img class="w-full h-full object-cover" [src]="ctx.getImagePreview(2)" alt="" />
+              } @else {
+                <div class="flex items-center justify-center h-full bg-muted/20">
+                  <lucide-icon name="image" class="w-10 h-10 opacity-60"></lucide-icon>
+                </div>
+              }
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="px-4 py-3 bg-muted/60 border border-border/40 text-xs text-muted-foreground mt-auto">
+      <div class="flex items-center justify-between">
+        <span>&copy; 2026 {{ ctx.getBusinessNameForTemplate(template.id) }}</span>
       </div>
     </div>
   </div>
