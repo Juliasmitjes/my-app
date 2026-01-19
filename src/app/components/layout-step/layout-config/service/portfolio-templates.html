@@ -1,0 +1,355 @@
+@if (template.id === 'portfolio-artist') {
+  <div
+    class="grid gap-3 p-4"
+    [style.gridTemplateColumns]="'repeat(4, minmax(0, 1fr))'"
+    [style.gridAutoRows]="'120px'"
+    [style.gridTemplateAreas]="artistGridAreas"
+  >
+    @for (cell of artistCells; let i = $index; track i) {
+      <div
+        class="relative border border-border/60 bg-white shadow-sm"
+        [class.p-0]="template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)"
+        [class.rounded-none]="template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)"
+        [class.border-0]="template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)"
+        [class.bg-transparent]="template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)"
+        [class.!border-0]="getCellValue(artistCells, i) === 'text'"
+        [class.!shadow-none]="getCellValue(artistCells, i) === 'text'"
+        [class.!bg-transparent]="getCellValue(artistCells, i) === 'text'"
+        [style.gridArea]="getCellArea(artistAreas, i)"
+        #artistCell
+      >
+        @if (template.id === ctx.currentTemplate.id && ctx.locked && !ctx.contentSaved) {
+          @if (getCellValue(artistCells, i) === 'text') {
+            <div
+              class="absolute inset-0 z-20 bg-transparent flex items-center justify-center rounded-none"
+              (click)="$event.stopPropagation()"
+            >
+              <div class="flex flex-col items-center gap-2">
+                <app-upload-unit
+                  [locked]="ctx.locked"
+                  [label]="getCellLabel(artistCells, i)"
+                  [uploadKey]="ctx.getUploadKey(i)"
+                  [uploads]="ctx.uploads"
+                  [isSaved]="ctx.isSaved[i]"
+                  [isComplete]="ctx.isUploadComplete(i)"
+                  (requestUpload)="ctx.onRequestUpload(i, $event, getCellValue(artistCells, i), artistCell)"
+                  (requestClear)="ctx.onRequestClear(i, $event)"
+                >
+                </app-upload-unit>
+
+                <button
+                  type="button"
+                  (click)="ctx.onSaveClick(i, $event)"
+                  class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-border/60 bg-muted/40 text-foreground hover:bg-muted/60"
+                  [class.text-muted-foreground]="!ctx.isUploadComplete(i)"
+                >
+                  {{ ctx.isSaved[i] ? 'Bewerk' : 'Bewaar' }}
+                </button>
+              </div>
+            </div>
+          } @else {
+            <div
+              class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px] flex items-center justify-center rounded-none"
+              (click)="$event.stopPropagation()"
+            >
+              <div class="flex flex-col items-center gap-2">
+                <app-upload-unit
+                  [locked]="ctx.locked"
+                  [label]="getCellLabel(artistCells, i)"
+                  [uploadKey]="ctx.getUploadKey(i)"
+                  [uploads]="ctx.uploads"
+                  [isSaved]="ctx.isSaved[i]"
+                  [isComplete]="ctx.isUploadComplete(i)"
+                  (requestUpload)="ctx.onRequestUpload(i, $event, getCellValue(artistCells, i), artistCell)"
+                  (requestClear)="ctx.onRequestClear(i, $event)"
+                >
+                </app-upload-unit>
+
+                <button
+                  type="button"
+                  (click)="ctx.onSaveClick(i, $event)"
+                  class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
+                  [class.text-white/90]="ctx.isUploadComplete(i) && !ctx.isSaved[i]"
+                  [class.border-white/60]="ctx.isUploadComplete(i) && !ctx.isSaved[i]"
+                  [class.text-white/70]="ctx.isSaved[i]"
+                  [class.border-white/30]="ctx.isSaved[i]"
+                  [class.text-white/60]="!ctx.isUploadComplete(i)"
+                >
+                  {{ ctx.isSaved[i] ? 'Bewerk' : 'Bewaar' }}
+                </button>
+              </div>
+            </div>
+          }
+        }
+
+        @if (getCellValue(artistCells, i) === 'text') {
+          @if (ctx.getTextContent(i); as textBlock) {
+            <div class="h-full p-4 text-xs text-muted-foreground flex flex-col justify-center">
+              @if (textBlock.title) {
+                <div class="text-sm font-semibold text-foreground mb-2">
+                  {{ textBlock.title }}
+                </div>
+              }
+              @if (textBlock.subtitle) {
+                <div class="mb-2">{{ textBlock.subtitle }}</div>
+              }
+              @if (textBlock.body) {
+                <div>{{ textBlock.body }}</div>
+              }
+            </div>
+          } @else {
+            @if (!(template.id === ctx.currentTemplate.id && ctx.locked && !ctx.contentSaved)) {
+              <div class="flex items-center justify-center p-6 rounded-none h-full">
+                <div class="text-sm text-muted-foreground text-center">
+                  Hier komt jouw tekst.
+                </div>
+              </div>
+            }
+          }
+        } @else if (template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)) {
+          <img class="w-full h-full rounded-none object-cover" [src]="ctx.getImagePreview(i)" alt="" />
+        } @else {
+          <div class="flex items-center justify-center p-6 rounded-none bg-muted/20 h-full">
+            <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon>
+          </div>
+        }
+      </div>
+    }
+  </div>
+} @else if (template.id === 'portfolio-designer') {
+  <div
+    class="grid gap-3 p-4"
+    [style.gridTemplateColumns]="'repeat(2, minmax(0, 1fr))'"
+    [style.gridAutoRows]="'160px'"
+    [style.gridTemplateAreas]="designerGridAreas"
+  >
+    @for (cell of designerCells; let i = $index; track i) {
+      <div
+        class="relative border border-border/60 bg-white shadow-sm"
+        [class.p-0]="template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)"
+        [class.rounded-none]="template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)"
+        [class.border-0]="template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)"
+        [class.bg-transparent]="template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)"
+        [class.!border-0]="getCellValue(designerCells, i) === 'text'"
+        [class.!shadow-none]="getCellValue(designerCells, i) === 'text'"
+        [class.!bg-transparent]="getCellValue(designerCells, i) === 'text'"
+        [style.gridArea]="getCellArea(designerAreas, i)"
+        #designerCell
+      >
+        @if (template.id === ctx.currentTemplate.id && ctx.locked && !ctx.contentSaved) {
+          @if (getCellValue(designerCells, i) === 'text') {
+            <div
+              class="absolute inset-0 z-20 bg-transparent flex items-center justify-center rounded-none"
+              (click)="$event.stopPropagation()"
+            >
+              <div class="flex flex-col items-center gap-2">
+                <app-upload-unit
+                  [locked]="ctx.locked"
+                  [label]="getCellLabel(designerCells, i)"
+                  [uploadKey]="ctx.getUploadKey(i)"
+                  [uploads]="ctx.uploads"
+                  [isSaved]="ctx.isSaved[i]"
+                  [isComplete]="ctx.isUploadComplete(i)"
+                  (requestUpload)="ctx.onRequestUpload(i, $event, getCellValue(designerCells, i), designerCell)"
+                  (requestClear)="ctx.onRequestClear(i, $event)"
+                >
+                </app-upload-unit>
+
+                <button
+                  type="button"
+                  (click)="ctx.onSaveClick(i, $event)"
+                  class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-border/60 bg-muted/40 text-foreground hover:bg-muted/60"
+                  [class.text-muted-foreground]="!ctx.isUploadComplete(i)"
+                >
+                  {{ ctx.isSaved[i] ? 'Bewerk' : 'Bewaar' }}
+                </button>
+              </div>
+            </div>
+          } @else {
+            <div
+              class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px] flex items-center justify-center rounded-none"
+              (click)="$event.stopPropagation()"
+            >
+              <div class="flex flex-col items-center gap-2">
+                <app-upload-unit
+                  [locked]="ctx.locked"
+                  [label]="getCellLabel(designerCells, i)"
+                  [uploadKey]="ctx.getUploadKey(i)"
+                  [uploads]="ctx.uploads"
+                  [isSaved]="ctx.isSaved[i]"
+                  [isComplete]="ctx.isUploadComplete(i)"
+                  (requestUpload)="ctx.onRequestUpload(i, $event, getCellValue(designerCells, i), designerCell)"
+                  (requestClear)="ctx.onRequestClear(i, $event)"
+                >
+                </app-upload-unit>
+
+                <button
+                  type="button"
+                  (click)="ctx.onSaveClick(i, $event)"
+                  class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
+                  [class.text-white/90]="ctx.isUploadComplete(i) && !ctx.isSaved[i]"
+                  [class.border-white/60]="ctx.isUploadComplete(i) && !ctx.isSaved[i]"
+                  [class.text-white/70]="ctx.isSaved[i]"
+                  [class.border-white/30]="ctx.isSaved[i]"
+                  [class.text-white/60]="!ctx.isUploadComplete(i)"
+                >
+                  {{ ctx.isSaved[i] ? 'Bewerk' : 'Bewaar' }}
+                </button>
+              </div>
+            </div>
+          }
+        }
+
+        @if (getCellValue(designerCells, i) === 'text') {
+          @if (ctx.getTextContent(i); as textBlock) {
+            <div class="h-full p-4 text-xs text-muted-foreground flex flex-col justify-center">
+              @if (textBlock.title) {
+                <div class="text-sm font-semibold text-foreground mb-2">
+                  {{ textBlock.title }}
+                </div>
+              }
+              @if (textBlock.subtitle) {
+                <div class="mb-2">{{ textBlock.subtitle }}</div>
+              }
+              @if (textBlock.body) {
+                <div>{{ textBlock.body }}</div>
+              }
+            </div>
+          } @else {
+            @if (!(template.id === ctx.currentTemplate.id && ctx.locked && !ctx.contentSaved)) {
+              <div class="flex items-center justify-center p-6 rounded-none h-full">
+                <div class="text-sm text-muted-foreground text-center">
+                  Hier komt jouw tekst.
+                </div>
+              </div>
+            }
+          }
+        } @else if (template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)) {
+          <img class="w-full h-full rounded-none object-cover" [src]="ctx.getImagePreview(i)" alt="" />
+        } @else {
+          <div class="flex items-center justify-center p-6 rounded-none bg-muted/20 h-full">
+            <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon>
+          </div>
+        }
+      </div>
+    }
+  </div>
+} @else if (template.id === 'portfolio-illustrator') {
+  <div
+    class="grid gap-3 p-4"
+    [style.gridTemplateColumns]="'repeat(2, minmax(0, 1fr))'"
+    [style.gridAutoRows]="'140px'"
+    [style.gridTemplateAreas]="illustratorGridAreas"
+  >
+    @for (cell of illustratorCells; let i = $index; track i) {
+      <div
+        class="relative border border-border/60 bg-white shadow-sm"
+        [class.p-0]="template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)"
+        [class.rounded-none]="template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)"
+        [class.border-0]="template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)"
+        [class.bg-transparent]="template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)"
+        [class.!border-0]="getCellValue(illustratorCells, i) === 'text'"
+        [class.!shadow-none]="getCellValue(illustratorCells, i) === 'text'"
+        [class.!bg-transparent]="getCellValue(illustratorCells, i) === 'text'"
+        [style.gridArea]="getCellArea(illustratorAreas, i)"
+        #illustratorCell
+      >
+        @if (template.id === ctx.currentTemplate.id && ctx.locked && !ctx.contentSaved) {
+          @if (getCellValue(illustratorCells, i) === 'text') {
+            <div
+              class="absolute inset-0 z-20 bg-transparent flex items-center justify-center rounded-none"
+              (click)="$event.stopPropagation()"
+            >
+              <div class="flex flex-col items-center gap-2">
+                <app-upload-unit
+                  [locked]="ctx.locked"
+                  [label]="getCellLabel(illustratorCells, i)"
+                  [uploadKey]="ctx.getUploadKey(i)"
+                  [uploads]="ctx.uploads"
+                  [isSaved]="ctx.isSaved[i]"
+                  [isComplete]="ctx.isUploadComplete(i)"
+                  (requestUpload)="ctx.onRequestUpload(i, $event, getCellValue(illustratorCells, i), illustratorCell)"
+                  (requestClear)="ctx.onRequestClear(i, $event)"
+                >
+                </app-upload-unit>
+
+                <button
+                  type="button"
+                  (click)="ctx.onSaveClick(i, $event)"
+                  class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-border/60 bg-muted/40 text-foreground hover:bg-muted/60"
+                  [class.text-muted-foreground]="!ctx.isUploadComplete(i)"
+                >
+                  {{ ctx.isSaved[i] ? 'Bewerk' : 'Bewaar' }}
+                </button>
+              </div>
+            </div>
+          } @else {
+            <div
+              class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px] flex items-center justify-center rounded-none"
+              (click)="$event.stopPropagation()"
+            >
+              <div class="flex flex-col items-center gap-2">
+                <app-upload-unit
+                  [locked]="ctx.locked"
+                  [label]="getCellLabel(illustratorCells, i)"
+                  [uploadKey]="ctx.getUploadKey(i)"
+                  [uploads]="ctx.uploads"
+                  [isSaved]="ctx.isSaved[i]"
+                  [isComplete]="ctx.isUploadComplete(i)"
+                  (requestUpload)="ctx.onRequestUpload(i, $event, getCellValue(illustratorCells, i), illustratorCell)"
+                  (requestClear)="ctx.onRequestClear(i, $event)"
+                >
+                </app-upload-unit>
+
+                <button
+                  type="button"
+                  (click)="ctx.onSaveClick(i, $event)"
+                  class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
+                  [class.text-white/90]="ctx.isUploadComplete(i) && !ctx.isSaved[i]"
+                  [class.border-white/60]="ctx.isUploadComplete(i) && !ctx.isSaved[i]"
+                  [class.text-white/70]="ctx.isSaved[i]"
+                  [class.border-white/30]="ctx.isSaved[i]"
+                  [class.text-white/60]="!ctx.isUploadComplete(i)"
+                >
+                  {{ ctx.isSaved[i] ? 'Bewerk' : 'Bewaar' }}
+                </button>
+              </div>
+            </div>
+          }
+        }
+
+        @if (getCellValue(illustratorCells, i) === 'text') {
+          @if (ctx.getTextContent(i); as textBlock) {
+            <div class="h-full p-4 text-xs text-muted-foreground flex flex-col justify-center">
+              @if (textBlock.title) {
+                <div class="text-sm font-semibold text-foreground mb-2">
+                  {{ textBlock.title }}
+                </div>
+              }
+              @if (textBlock.subtitle) {
+                <div class="mb-2">{{ textBlock.subtitle }}</div>
+              }
+              @if (textBlock.body) {
+                <div>{{ textBlock.body }}</div>
+              }
+            </div>
+          } @else {
+            @if (!(template.id === ctx.currentTemplate.id && ctx.locked && !ctx.contentSaved)) {
+              <div class="flex items-center justify-center p-6 rounded-none h-full">
+                <div class="text-sm text-muted-foreground text-center">
+                  Hier komt jouw tekst.
+                </div>
+              </div>
+            }
+          }
+        } @else if (template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)) {
+          <img class="w-full h-full rounded-none object-cover" [src]="ctx.getImagePreview(i)" alt="" />
+        } @else {
+          <div class="flex items-center justify-center p-6 rounded-none bg-muted/20 h-full">
+            <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

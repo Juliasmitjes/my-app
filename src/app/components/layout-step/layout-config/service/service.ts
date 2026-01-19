@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 import { UploadUnit } from '../upload-unit/upload-unit';
+import { PortfolioTemplates } from './portfolio-templates';
+import { ServiceTemplates } from './service-templates';
+import { ProductTemplates } from './product-templates';
 
 export type CellType = 'text' | 'image' | 'video';
 
@@ -24,9 +27,35 @@ interface TemplateOption {
 }
 
 const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
+  portfolio: [
+    {
+      id: 'portfolio-artist',
+      label: 'Artist',
+      description: 'Expressieve grid met mix van tekst en beeld.',
+      cols: 4,
+      rows: 3,
+      cells: ['image', 'image', 'image', 'image', 'text', 'text']
+    },
+    {
+      id: 'portfolio-designer',
+      label: 'Designer',
+      description: 'Minimalistische presentatie met focus op typografie.',
+      cols: 2,
+      rows: 2,
+      cells: ['text', 'image', 'image']
+    },
+    {
+      id: 'portfolio-illustrator',
+      label: 'Illustrator',
+      description: 'Illustraties in een compacte grid met tekstblok.',
+      cols: 2,
+      rows: 3,
+      cells: ['image', 'image', 'image', 'image', 'text']
+    }
+  ],
   service: [
     {
-      id: 'service-restaurant',
+      id: 'service-hospitality',
       label: 'Hospitality',
       description: 'Sfeervol beeldgrid met ruimte voor tekst.',
       cols: 4,
@@ -34,7 +63,7 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
       cells: ['image', 'image', 'image', 'image', 'text']
     },
     {
-      id: 'service-beauty',
+      id: 'service-wellness',
       label: 'Wellness',
       description: 'Intro tekst met beeld.',
       cols: 2,
@@ -42,12 +71,38 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
       cells: ['text', 'image']
     },
     {
-      id: 'service-industrial',
+      id: 'service-industry',
       label: 'Industry',
       description: 'Hero met beeld en tekst.',
       cols: 1,
       rows: 2,
       cells: ['image', 'text']
+    }
+  ],
+  product: [
+    {
+      id: 'product-showcase',
+      label: 'Showcase',
+      description: 'Grote hero met details eronder.',
+      cols: 2,
+      rows: 3,
+      cells: ['image', 'text', 'image', 'image']
+    },
+    {
+      id: 'product-launchpad',
+      label: 'Launchpad',
+      description: 'Productintro met focus op de hero.',
+      cols: 2,
+      rows: 2,
+      cells: ['image', 'text', 'image']
+    },
+    {
+      id: 'product-catalog',
+      label: 'Catalog',
+      description: 'Meerdere items in een strak raster.',
+      cols: 3,
+      rows: 2,
+      cells: ['image', 'image', 'image', 'image', 'text', 'text']
     }
   ]
 };
@@ -60,10 +115,14 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
     CommonModule,
     FormsModule,
     LucideAngularModule,
-    UploadUnit
+    UploadUnit,
+    PortfolioTemplates,
+    ServiceTemplates,
+    ProductTemplates
   ]
 })
 export class Service implements OnChanges, OnDestroy {
+  readonly self = this;
   @Input() locked = false;
   @Input() uploads: Record<string, any> = {};
   @Input() layoutConfig?: BuilderState['layoutConfig'];
@@ -106,51 +165,23 @@ export class Service implements OnChanges, OnDestroy {
   }
 
   get groupTitle(): string {
-    return 'Service templates';
+    switch (this.templateGroup) {
+      case 'portfolio':
+        return 'Portfolio templates';
+      case 'product':
+        return 'Product templates';
+      default:
+        return 'Service templates';
+    }
   }
 
   get subtitleDisplay(): string {
     return this.subtitleInput.trim() || 'Hier komt jouw ondertitel.';
   }
 
-  isRestaurantTemplate(template?: TemplateOption | null): boolean {
+  isIndustryTemplate(template?: TemplateOption | null): boolean {
     const target = template ?? this.currentTemplate;
-    return target?.id === 'service-restaurant';
-  }
-
-  readonly restaurantPreviewCells: CellType[] = [
-    'image',
-    'image',
-    'image',
-    'image',
-    'text'
-  ];
-
-  get restaurantGridAreas(): string {
-    return '"a a b b" "c d b b" "e e e e"';
-  }
-
-  getRestaurantArea(index: number): string {
-    const areas = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
-    return areas[index] ?? '';
-  }
-
-  getRestaurantValue(index: number): CellType {
-    return this.restaurantPreviewCells[index] ?? 'image';
-  }
-
-  getRestaurantLabel(index: number): string {
-    return this.getRestaurantValue(index) === 'text' ? 'Tekst' : 'Foto';
-  }
-
-  isBeautyTemplate(template?: TemplateOption | null): boolean {
-    const target = template ?? this.currentTemplate;
-    return target?.id === 'service-beauty';
-  }
-
-  isIndustrialTemplate(template?: TemplateOption | null): boolean {
-    const target = template ?? this.currentTemplate;
-    return target?.id === 'service-industrial';
+    return target?.id === 'service-industry';
   }
 
   private createDefaultCell(value: CellType): GridCell {
@@ -165,7 +196,8 @@ export class Service implements OnChanges, OnDestroy {
   }
 
   private syncTemplateSet() {
-    this.templates = TEMPLATE_SETS['service'];
+    const group = this.templateGroup ?? 'service';
+    this.templates = TEMPLATE_SETS[group] ?? TEMPLATE_SETS['service'];
     const savedTemplateId = this.layoutConfig?.templateId;
     const found = savedTemplateId ? this.templates.find(t => t.id === savedTemplateId) : null;
     this.currentTemplate = found ?? this.templates[0];
@@ -342,7 +374,7 @@ export class Service implements OnChanges, OnDestroy {
 
     if (this.isSaved[index]) {
       this.isSaved[index] = false;
-      if (!this.isIndustrialTemplate()) {
+      if (!this.isIndustryTemplate()) {
         this.configChange.emit({
           layout: 'grid',
           contentSaved: false
@@ -352,7 +384,7 @@ export class Service implements OnChanges, OnDestroy {
     }
 
     this.isSaved[index] = true;
-    if (!this.isIndustrialTemplate()) {
+    if (!this.isIndustryTemplate()) {
       const allSaved = this.grid.every((_, i) => this.isSaved[i]);
       this.configChange.emit({
         layout: 'grid',

@@ -1,0 +1,543 @@
+@if (template.id === 'product-showcase') {
+  <div class="flex flex-col min-h-[840px]">
+    <div class="px-6 pt-6 pb-3">
+      @if (ctx.locked && template.id === ctx.currentTemplate.id && ctx.isEditingBusinessName) {
+        <input
+          type="text"
+          [(ngModel)]="ctx.businessNameInput"
+          placeholder="Bedrijfsnaam"
+          class="w-full max-w-[260px] px-4 py-2 rounded-xl border border-border bg-white/80
+                 focus:outline-none ring-2 ring-accent/30 focus:ring-accent
+                 transition-all text-left text-sm placeholder:text-muted-foreground/70 font-semibold"
+        />
+      } @else {
+        <div class="text-lg font-semibold text-foreground">
+          {{ ctx.getBusinessNameForTemplate(template.id) }}
+        </div>
+      }
+
+      @if (ctx.locked && template.id === ctx.currentTemplate.id && ctx.isEditingSubtitle) {
+        <input
+          type="text"
+          [(ngModel)]="ctx.subtitleInput"
+          placeholder="Ondertitel"
+          class="w-full max-w-[260px] mt-2 px-3 py-1.5 rounded-lg border border-border bg-white/80
+                 focus:outline-none ring-2 ring-accent/30 focus:ring-accent
+                 transition-all text-left text-xs placeholder:text-muted-foreground/70"
+        />
+      } @else {
+        <div class="text-xs text-muted-foreground">
+          {{ ctx.getSubtitleForTemplate(template.id) }}
+        </div>
+      }
+    </div>
+
+    <div class="relative border border-border/40 bg-white/60 overflow-hidden mx-4" #showcaseHero>
+      @if (template.id === ctx.currentTemplate.id && ctx.locked && !ctx.contentSaved) {
+        <div
+          class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px] flex items-center justify-center rounded-none"
+          (click)="$event.stopPropagation()"
+        >
+          <div class="flex flex-col items-center gap-2">
+            <app-upload-unit
+              [locked]="ctx.locked"
+              [label]="getCellLabel(showcaseCells, 0)"
+              [uploadKey]="ctx.getUploadKey(0)"
+              [uploads]="ctx.uploads"
+              [isSaved]="ctx.isSaved[0]"
+              [isComplete]="ctx.isUploadComplete(0)"
+              (requestUpload)="ctx.onRequestUpload(0, $event, 'image', showcaseHero)"
+              (requestClear)="ctx.onRequestClear(0, $event)"
+            >
+            </app-upload-unit>
+
+            <button
+              type="button"
+              (click)="ctx.onSaveClick(0, $event)"
+              class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
+              [class.text-white/90]="ctx.isUploadComplete(0) && !ctx.isSaved[0]"
+              [class.border-white/60]="ctx.isUploadComplete(0) && !ctx.isSaved[0]"
+              [class.text-white/70]="ctx.isSaved[0]"
+              [class.border-white/30]="ctx.isSaved[0]"
+              [class.text-white/60]="!ctx.isUploadComplete(0)"
+            >
+              {{ ctx.isSaved[0] ? 'Bewerk' : 'Bewaar' }}
+            </button>
+          </div>
+        </div>
+      }
+
+      @if (ctx.getImagePreview(0)) {
+        <img class="w-full h-[320px] object-cover" [src]="ctx.getImagePreview(0)" alt="" />
+      } @else {
+        <div class="flex items-center justify-center h-[320px] bg-muted/20">
+          <lucide-icon name="image" class="w-10 h-10 opacity-60"></lucide-icon>
+        </div>
+      }
+    </div>
+
+    <div class="grid gap-3 p-4 md:grid-cols-2 flex-1">
+      <div class="relative border border-border/60 bg-white shadow-sm min-h-[200px]" #showcaseText>
+        @if (template.id === ctx.currentTemplate.id && ctx.locked && !ctx.isSaved[1]) {
+          <div class="absolute inset-0 z-20 bg-transparent flex items-center justify-center rounded-none">
+            <div class="flex flex-col items-center gap-2">
+              <app-upload-unit
+                [locked]="ctx.locked"
+                [label]="getCellLabel(showcaseCells, 1)"
+                [uploadKey]="ctx.getUploadKey(1)"
+                [uploads]="ctx.uploads"
+                [isSaved]="ctx.isSaved[1]"
+                [isComplete]="ctx.isUploadComplete(1)"
+                (requestUpload)="ctx.onRequestUpload(1, $event, 'text', showcaseText)"
+                (requestClear)="ctx.onRequestClear(1, $event)"
+              >
+              </app-upload-unit>
+
+              <button
+                type="button"
+                (click)="ctx.onSaveClick(1, $event)"
+                class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-border/60 bg-muted/40 text-foreground hover:bg-muted/60"
+                [class.text-muted-foreground]="!ctx.isUploadComplete(1)"
+              >
+                {{ ctx.isSaved[1] ? 'Bewerk' : 'Bewaar' }}
+              </button>
+            </div>
+          </div>
+        }
+
+        @if (ctx.getTextContent(1); as textBlock) {
+          <div class="h-full p-4 text-sm text-muted-foreground flex flex-col justify-center">
+            @if (textBlock.title) {
+              <div class="text-base font-semibold text-foreground mb-2">
+                {{ textBlock.title }}
+              </div>
+            }
+            @if (textBlock.subtitle) {
+              <div class="mb-2">{{ textBlock.subtitle }}</div>
+            }
+            @if (textBlock.body) {
+              <div>{{ textBlock.body }}</div>
+            }
+          </div>
+        } @else {
+          <div class="flex items-center justify-center p-6 h-full">
+            <div class="text-sm text-muted-foreground text-center">
+              Hier komt jouw tekst.
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="grid gap-3">
+        <div class="relative border border-border/60 bg-white shadow-sm h-[140px]" #showcaseImageOne>
+          @if (template.id === ctx.currentTemplate.id && ctx.locked && !ctx.contentSaved) {
+            <div
+              class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px] flex items-center justify-center rounded-none"
+              (click)="$event.stopPropagation()"
+            >
+              <div class="flex flex-col items-center gap-2">
+                <app-upload-unit
+                  [locked]="ctx.locked"
+                  [label]="getCellLabel(showcaseCells, 2)"
+                  [uploadKey]="ctx.getUploadKey(2)"
+                  [uploads]="ctx.uploads"
+                  [isSaved]="ctx.isSaved[2]"
+                  [isComplete]="ctx.isUploadComplete(2)"
+                  (requestUpload)="ctx.onRequestUpload(2, $event, 'image', showcaseImageOne)"
+                  (requestClear)="ctx.onRequestClear(2, $event)"
+                >
+                </app-upload-unit>
+
+                <button
+                  type="button"
+                  (click)="ctx.onSaveClick(2, $event)"
+                  class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
+                  [class.text-white/90]="ctx.isUploadComplete(2) && !ctx.isSaved[2]"
+                  [class.border-white/60]="ctx.isUploadComplete(2) && !ctx.isSaved[2]"
+                  [class.text-white/70]="ctx.isSaved[2]"
+                  [class.border-white/30]="ctx.isSaved[2]"
+                  [class.text-white/60]="!ctx.isUploadComplete(2)"
+                >
+                  {{ ctx.isSaved[2] ? 'Bewerk' : 'Bewaar' }}
+                </button>
+              </div>
+            </div>
+          }
+
+          @if (template.id === ctx.currentTemplate.id && ctx.getImagePreview(2)) {
+            <img class="w-full h-full object-cover" [src]="ctx.getImagePreview(2)" alt="" />
+          } @else {
+            <div class="flex items-center justify-center h-full bg-muted/20">
+              <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon>
+            </div>
+          }
+        </div>
+
+        <div class="relative border border-border/60 bg-white shadow-sm h-[140px]" #showcaseImageTwo>
+          @if (template.id === ctx.currentTemplate.id && ctx.locked && !ctx.contentSaved) {
+            <div
+              class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px] flex items-center justify-center rounded-none"
+              (click)="$event.stopPropagation()"
+            >
+              <div class="flex flex-col items-center gap-2">
+                <app-upload-unit
+                  [locked]="ctx.locked"
+                  [label]="getCellLabel(showcaseCells, 3)"
+                  [uploadKey]="ctx.getUploadKey(3)"
+                  [uploads]="ctx.uploads"
+                  [isSaved]="ctx.isSaved[3]"
+                  [isComplete]="ctx.isUploadComplete(3)"
+                  (requestUpload)="ctx.onRequestUpload(3, $event, 'image', showcaseImageTwo)"
+                  (requestClear)="ctx.onRequestClear(3, $event)"
+                >
+                </app-upload-unit>
+
+                <button
+                  type="button"
+                  (click)="ctx.onSaveClick(3, $event)"
+                  class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
+                  [class.text-white/90]="ctx.isUploadComplete(3) && !ctx.isSaved[3]"
+                  [class.border-white/60]="ctx.isUploadComplete(3) && !ctx.isSaved[3]"
+                  [class.text-white/70]="ctx.isSaved[3]"
+                  [class.border-white/30]="ctx.isSaved[3]"
+                  [class.text-white/60]="!ctx.isUploadComplete(3)"
+                >
+                  {{ ctx.isSaved[3] ? 'Bewerk' : 'Bewaar' }}
+                </button>
+              </div>
+            </div>
+          }
+
+          @if (template.id === ctx.currentTemplate.id && ctx.getImagePreview(3)) {
+            <img class="w-full h-full object-cover" [src]="ctx.getImagePreview(3)" alt="" />
+          } @else {
+            <div class="flex items-center justify-center h-full bg-muted/20">
+              <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+} @else if (template.id === 'product-launchpad') {
+  <div class="flex flex-col min-h-[840px]">
+    <div class="px-6 pt-6 pb-3">
+      @if (ctx.locked && template.id === ctx.currentTemplate.id && ctx.isEditingBusinessName) {
+        <input
+          type="text"
+          [(ngModel)]="ctx.businessNameInput"
+          placeholder="Bedrijfsnaam"
+          class="w-full max-w-[260px] px-4 py-2 rounded-xl border border-border bg-white/80
+                 focus:outline-none ring-2 ring-accent/30 focus:ring-accent
+                 transition-all text-left text-sm placeholder:text-muted-foreground/70 font-semibold"
+        />
+      } @else {
+        <div class="text-lg font-semibold text-foreground">
+          {{ ctx.getBusinessNameForTemplate(template.id) }}
+        </div>
+      }
+
+      @if (ctx.locked && template.id === ctx.currentTemplate.id && ctx.isEditingSubtitle) {
+        <input
+          type="text"
+          [(ngModel)]="ctx.subtitleInput"
+          placeholder="Ondertitel"
+          class="w-full max-w-[260px] mt-2 px-3 py-1.5 rounded-lg border border-border bg-white/80
+                 focus:outline-none ring-2 ring-accent/30 focus:ring-accent
+                 transition-all text-left text-xs placeholder:text-muted-foreground/70"
+        />
+      } @else {
+        <div class="text-xs text-muted-foreground">
+          {{ ctx.getSubtitleForTemplate(template.id) }}
+        </div>
+      }
+    </div>
+
+    <div class="grid gap-3 p-4 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+      <div class="relative border border-border/60 bg-white shadow-sm h-[320px]" #launchpadHero>
+        @if (template.id === ctx.currentTemplate.id && ctx.locked && !ctx.contentSaved) {
+          <div
+            class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px] flex items-center justify-center rounded-none"
+            (click)="$event.stopPropagation()"
+          >
+            <div class="flex flex-col items-center gap-2">
+              <app-upload-unit
+                [locked]="ctx.locked"
+                [label]="getCellLabel(launchpadCells, 0)"
+                [uploadKey]="ctx.getUploadKey(0)"
+                [uploads]="ctx.uploads"
+                [isSaved]="ctx.isSaved[0]"
+                [isComplete]="ctx.isUploadComplete(0)"
+                (requestUpload)="ctx.onRequestUpload(0, $event, 'image', launchpadHero)"
+                (requestClear)="ctx.onRequestClear(0, $event)"
+              >
+              </app-upload-unit>
+
+              <button
+                type="button"
+                (click)="ctx.onSaveClick(0, $event)"
+                class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
+                [class.text-white/90]="ctx.isUploadComplete(0) && !ctx.isSaved[0]"
+                [class.border-white/60]="ctx.isUploadComplete(0) && !ctx.isSaved[0]"
+                [class.text-white/70]="ctx.isSaved[0]"
+                [class.border-white/30]="ctx.isSaved[0]"
+                [class.text-white/60]="!ctx.isUploadComplete(0)"
+              >
+                {{ ctx.isSaved[0] ? 'Bewerk' : 'Bewaar' }}
+              </button>
+            </div>
+          </div>
+        }
+
+        @if (template.id === ctx.currentTemplate.id && ctx.getImagePreview(0)) {
+          <img class="w-full h-full object-cover" [src]="ctx.getImagePreview(0)" alt="" />
+        } @else {
+          <div class="flex items-center justify-center h-full bg-muted/20">
+            <lucide-icon name="image" class="w-10 h-10 opacity-60"></lucide-icon>
+          </div>
+        }
+      </div>
+
+      <div class="relative border border-border/60 bg-white shadow-sm min-h-[320px]" #launchpadText>
+        @if (template.id === ctx.currentTemplate.id && ctx.locked && !ctx.isSaved[1]) {
+          <div class="absolute inset-0 z-20 bg-transparent flex items-center justify-center rounded-none">
+            <div class="flex flex-col items-center gap-2">
+              <app-upload-unit
+                [locked]="ctx.locked"
+                [label]="getCellLabel(launchpadCells, 1)"
+                [uploadKey]="ctx.getUploadKey(1)"
+                [uploads]="ctx.uploads"
+                [isSaved]="ctx.isSaved[1]"
+                [isComplete]="ctx.isUploadComplete(1)"
+                (requestUpload)="ctx.onRequestUpload(1, $event, 'text', launchpadText)"
+                (requestClear)="ctx.onRequestClear(1, $event)"
+              >
+              </app-upload-unit>
+
+              <button
+                type="button"
+                (click)="ctx.onSaveClick(1, $event)"
+                class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-border/60 bg-muted/40 text-foreground hover:bg-muted/60"
+                [class.text-muted-foreground]="!ctx.isUploadComplete(1)"
+              >
+                {{ ctx.isSaved[1] ? 'Bewerk' : 'Bewaar' }}
+              </button>
+            </div>
+          </div>
+        }
+
+        @if (ctx.getTextContent(1); as textBlock) {
+          <div class="h-full p-4 text-sm text-muted-foreground flex flex-col justify-center">
+            @if (textBlock.title) {
+              <div class="text-base font-semibold text-foreground mb-2">
+                {{ textBlock.title }}
+              </div>
+            }
+            @if (textBlock.subtitle) {
+              <div class="mb-2">{{ textBlock.subtitle }}</div>
+            }
+            @if (textBlock.body) {
+              <div>{{ textBlock.body }}</div>
+            }
+          </div>
+        } @else {
+          <div class="flex items-center justify-center p-6 h-full">
+            <div class="text-sm text-muted-foreground text-center">
+              Hier komt jouw tekst.
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="px-4 pb-4">
+      <div class="relative border border-border/60 bg-white shadow-sm h-[200px]" #launchpadDetail>
+        @if (template.id === ctx.currentTemplate.id && ctx.locked && !ctx.contentSaved) {
+          <div
+            class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px] flex items-center justify-center rounded-none"
+            (click)="$event.stopPropagation()"
+          >
+            <div class="flex flex-col items-center gap-2">
+              <app-upload-unit
+                [locked]="ctx.locked"
+                [label]="getCellLabel(launchpadCells, 2)"
+                [uploadKey]="ctx.getUploadKey(2)"
+                [uploads]="ctx.uploads"
+                [isSaved]="ctx.isSaved[2]"
+                [isComplete]="ctx.isUploadComplete(2)"
+                (requestUpload)="ctx.onRequestUpload(2, $event, 'image', launchpadDetail)"
+                (requestClear)="ctx.onRequestClear(2, $event)"
+              >
+              </app-upload-unit>
+
+              <button
+                type="button"
+                (click)="ctx.onSaveClick(2, $event)"
+                class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
+                [class.text-white/90]="ctx.isUploadComplete(2) && !ctx.isSaved[2]"
+                [class.border-white/60]="ctx.isUploadComplete(2) && !ctx.isSaved[2]"
+                [class.text-white/70]="ctx.isSaved[2]"
+                [class.border-white/30]="ctx.isSaved[2]"
+                [class.text-white/60]="!ctx.isUploadComplete(2)"
+              >
+                {{ ctx.isSaved[2] ? 'Bewerk' : 'Bewaar' }}
+              </button>
+            </div>
+          </div>
+        }
+
+        @if (template.id === ctx.currentTemplate.id && ctx.getImagePreview(2)) {
+          <img class="w-full h-full object-cover" [src]="ctx.getImagePreview(2)" alt="" />
+        } @else {
+          <div class="flex items-center justify-center h-full bg-muted/20">
+            <lucide-icon name="image" class="w-10 h-10 opacity-60"></lucide-icon>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+} @else if (template.id === 'product-catalog') {
+  <div class="flex flex-col min-h-[840px]">
+    <div class="px-6 pt-6 pb-3">
+      @if (ctx.locked && template.id === ctx.currentTemplate.id && ctx.isEditingBusinessName) {
+        <input
+          type="text"
+          [(ngModel)]="ctx.businessNameInput"
+          placeholder="Bedrijfsnaam"
+          class="w-full max-w-[260px] px-4 py-2 rounded-xl border border-border bg-white/80
+                 focus:outline-none ring-2 ring-accent/30 focus:ring-accent
+                 transition-all text-left text-sm placeholder:text-muted-foreground/70 font-semibold"
+        />
+      } @else {
+        <div class="text-lg font-semibold text-foreground">
+          {{ ctx.getBusinessNameForTemplate(template.id) }}
+        </div>
+      }
+
+      @if (ctx.locked && template.id === ctx.currentTemplate.id && ctx.isEditingSubtitle) {
+        <input
+          type="text"
+          [(ngModel)]="ctx.subtitleInput"
+          placeholder="Ondertitel"
+          class="w-full max-w-[260px] mt-2 px-3 py-1.5 rounded-lg border border-border bg-white/80
+                 focus:outline-none ring-2 ring-accent/30 focus:ring-accent
+                 transition-all text-left text-xs placeholder:text-muted-foreground/70"
+        />
+      } @else {
+        <div class="text-xs text-muted-foreground">
+          {{ ctx.getSubtitleForTemplate(template.id) }}
+        </div>
+      }
+    </div>
+
+    <div class="grid gap-3 p-4 md:grid-cols-3 auto-rows-[140px] flex-1">
+      @for (cell of catalogCells; let i = $index; track i) {
+        <div
+          class="relative border border-border/60 bg-white shadow-sm"
+          [class.p-0]="template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)"
+          [class.rounded-none]="template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)"
+          [class.border-0]="template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)"
+          [class.bg-transparent]="template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)"
+          [class.!border-0]="getCellValue(catalogCells, i) === 'text'"
+          [class.!shadow-none]="getCellValue(catalogCells, i) === 'text'"
+          [class.!bg-transparent]="getCellValue(catalogCells, i) === 'text'"
+          #catalogCell
+        >
+          @if (template.id === ctx.currentTemplate.id && ctx.locked && !ctx.contentSaved) {
+            @if (getCellValue(catalogCells, i) === 'text') {
+              <div
+                class="absolute inset-0 z-20 bg-transparent flex items-center justify-center rounded-none"
+                (click)="$event.stopPropagation()"
+              >
+                <div class="flex flex-col items-center gap-2">
+                  <app-upload-unit
+                    [locked]="ctx.locked"
+                    [label]="getCellLabel(catalogCells, i)"
+                    [uploadKey]="ctx.getUploadKey(i)"
+                    [uploads]="ctx.uploads"
+                    [isSaved]="ctx.isSaved[i]"
+                    [isComplete]="ctx.isUploadComplete(i)"
+                    (requestUpload)="ctx.onRequestUpload(i, $event, getCellValue(catalogCells, i), catalogCell)"
+                    (requestClear)="ctx.onRequestClear(i, $event)"
+                  >
+                  </app-upload-unit>
+
+                  <button
+                    type="button"
+                    (click)="ctx.onSaveClick(i, $event)"
+                    class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-border/60 bg-muted/40 text-foreground hover:bg-muted/60"
+                    [class.text-muted-foreground]="!ctx.isUploadComplete(i)"
+                  >
+                    {{ ctx.isSaved[i] ? 'Bewerk' : 'Bewaar' }}
+                  </button>
+                </div>
+              </div>
+            } @else {
+              <div
+                class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px] flex items-center justify-center rounded-none"
+                (click)="$event.stopPropagation()"
+              >
+                <div class="flex flex-col items-center gap-2">
+                  <app-upload-unit
+                    [locked]="ctx.locked"
+                    [label]="getCellLabel(catalogCells, i)"
+                    [uploadKey]="ctx.getUploadKey(i)"
+                    [uploads]="ctx.uploads"
+                    [isSaved]="ctx.isSaved[i]"
+                    [isComplete]="ctx.isUploadComplete(i)"
+                    (requestUpload)="ctx.onRequestUpload(i, $event, getCellValue(catalogCells, i), catalogCell)"
+                    (requestClear)="ctx.onRequestClear(i, $event)"
+                  >
+                  </app-upload-unit>
+
+                  <button
+                    type="button"
+                    (click)="ctx.onSaveClick(i, $event)"
+                    class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
+                    [class.text-white/90]="ctx.isUploadComplete(i) && !ctx.isSaved[i]"
+                    [class.border-white/60]="ctx.isUploadComplete(i) && !ctx.isSaved[i]"
+                    [class.text-white/70]="ctx.isSaved[i]"
+                    [class.border-white/30]="ctx.isSaved[i]"
+                    [class.text-white/60]="!ctx.isUploadComplete(i)"
+                  >
+                    {{ ctx.isSaved[i] ? 'Bewerk' : 'Bewaar' }}
+                  </button>
+                </div>
+              </div>
+            }
+          }
+
+          @if (getCellValue(catalogCells, i) === 'text') {
+            @if (ctx.getTextContent(i); as textBlock) {
+              <div class="h-full p-4 text-xs text-muted-foreground flex flex-col justify-center">
+                @if (textBlock.title) {
+                  <div class="text-sm font-semibold text-foreground mb-2">
+                    {{ textBlock.title }}
+                  </div>
+                }
+                @if (textBlock.subtitle) {
+                  <div class="mb-2">{{ textBlock.subtitle }}</div>
+                }
+                @if (textBlock.body) {
+                  <div>{{ textBlock.body }}</div>
+                }
+              </div>
+            } @else {
+              <div class="flex items-center justify-center p-6 rounded-none h-full">
+                <div class="text-sm text-muted-foreground text-center">
+                  Hier komt jouw tekst.
+                </div>
+              </div>
+            }
+          } @else if (template.id === ctx.currentTemplate.id && ctx.getImagePreview(i)) {
+            <img class="w-full h-full rounded-none object-cover" [src]="ctx.getImagePreview(i)" alt="" />
+          } @else {
+            <div class="flex items-center justify-center p-6 rounded-none bg-muted/20 h-full">
+              <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+}
