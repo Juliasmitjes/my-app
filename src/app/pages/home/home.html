@@ -84,7 +84,13 @@
   </div>
 </section>
 
-<app-services id="services" class="block w-full"></app-services>
+<section id="services" class="block w-full">
+  @defer (on viewport) {
+    <app-services class="block w-full"></app-services>
+  } @placeholder {
+    <div class="min-h-[400px]"></div>
+  }
+</section>
 
 <app-footer id="footer" class="block w-full"></app-footer>
 

@@ -55,14 +55,18 @@ class="bg-background/70 backdrop-blur-md sticky top-0 z-50 shadow-md border-b bo
  class="relative -mt-[55px] bg-gradient-to-br from-secondary via-primary/10 to-accent/20 min-h-full  overflow-hidden pb-16">
 
   <!-- preview panel -->
-  <app-preview-panel
-    [open]="showPreviewPanel()"
-    [builderState]="builderState()"
-    [currentStep]="currentStep()"
-    [colorThemes]="colorThemes()"
-    size="medium"
-    (closed)="closePreviewPanel()"
-  ></app-preview-panel>
+  @defer (when showPreviewPanel()) {
+    <app-preview-panel
+      [open]="showPreviewPanel()"
+      [builderState]="builderState()"
+      [currentStep]="currentStep()"
+      [colorThemes]="colorThemes()"
+      size="medium"
+      (closed)="closePreviewPanel()"
+    ></app-preview-panel>
+  } @placeholder {
+    <!-- empty on purpose -->
+  }
 
   <!-- stappen -->
    <div class="relative px-6 md:px-20">
@@ -85,36 +89,52 @@ class="bg-background/70 backdrop-blur-md sticky top-0 z-50 shadow-md border-b bo
           </app-layout-step>
         }
         @case (1) {
-          <app-color-step
-            [builderState]="builderState()"
-            [themes]="colorThemes()"
-            (update)="updateState($event)">
-          </app-color-step>
+          @defer (when currentStep() === 1) {
+            <app-color-step
+              [builderState]="builderState()"
+              [themes]="colorThemes()"
+              (update)="updateState($event)">
+            </app-color-step>
+          } @placeholder {
+            <div class="min-h-[300px]"></div>
+          }
         }
         @case (2) {
-          <app-font-step
-            [builderState]="builderState()"
-            (update)="updateState($event)">
-          </app-font-step>
+          @defer (when currentStep() === 2) {
+            <app-font-step
+              [builderState]="builderState()"
+              (update)="updateState($event)">
+            </app-font-step>
+          } @placeholder {
+            <div class="min-h-[300px]"></div>
+          }
         }
         @case (3) {
-          <app-content-step
-            [builderState]="builderState()"
-            [contents]="availablePages"
-            [colorThemes]="colorThemes()"
-            (update)="updateState($event)"
-            (toggle)="togglePage($event)"
-          ></app-content-step>
+          @defer (when currentStep() === 3) {
+            <app-content-step
+              [builderState]="builderState()"
+              [contents]="availablePages"
+              [colorThemes]="colorThemes()"
+              (update)="updateState($event)"
+              (toggle)="togglePage($event)"
+            ></app-content-step>
+          } @placeholder {
+            <div class="min-h-[300px]"></div>
+          }
         }
         @case (4) {
-          <app-preview-step
-          [builderState]="builderState()"
-          [colorThemes]="colorThemes()"
-          [currentStep]="currentStep()"
-          iconName="monitor"
-          title="Resultaat"
-          [mascotUrl]="'../../../assets/images/uil5.png'">
-        </app-preview-step>
+          @defer (when currentStep() === 4) {
+            <app-preview-step
+              [builderState]="builderState()"
+              [colorThemes]="colorThemes()"
+              [currentStep]="currentStep()"
+              iconName="monitor"
+              title="Resultaat"
+              [mascotUrl]="'../../../assets/images/uil5.png'">
+            </app-preview-step>
+          } @placeholder {
+            <div class="min-h-[300px]"></div>
+          }
         }
       }
     </div>
