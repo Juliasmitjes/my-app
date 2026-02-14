@@ -1,70 +1,153 @@
 <div class="step-container">
+  @if (mode === 'select') {
+    <div class="template-selector-shell mx-auto max-w-6xl">
+      <h2 class="text-2xl font-bold text-center mb-2">Kies jouw template</h2>
+      <p class="text-center text-sm text-primary-foreground/80 mb-6">
+        Klik op een layout. Uploaden doe je in de volgende stap.
+      </p>
 
-  <h2 class="text-2xl font-bold mb-6 text-center">Wat is jouw business?</h2>
- 
+      <div class="flex flex-wrap items-center justify-center gap-2 mb-6">
+        @for (layout of layouts; track layout.id) {
+          @if (!layout.hidden) {
+            <button
+              type="button"
+              class="template-category-pill"
+              [class.template-category-pill--active]="selectedCategory === layout.id"
+              (click)="onSelect(layout.id)"
+            >
+              {{ layout.name }}
+            </button>
+          }
+        }
+      </div>
 
-  <!-- Layout opties -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-    @for (layout of layouts; track layout.id) {
-      @if (!layout.hidden) {
-        <app-option-card
-          [layout]="layout"
-          [selected]="selectedCategory === layout.id"
-          (select)="onSelect(layout.id)"
-        ></app-option-card>
+      @if (visibleTemplateCards.length) {
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          @for (card of visibleTemplateCards; track card.id) {
+            <button
+              type="button"
+              class="template-card cursor-pointer text-left"
+              [class.template-card--selected]="isTemplateSelected(card)"
+              (click)="chooseTemplate(card)"
+            >
+              <div class="template-card__preview" [attr.data-visual]="card.visual">
+                <div class="template-window">
+                  <div class="template-window__bar"></div>
+                  <div class="template-window__body">
+                    @switch (card.visual) {
+                      @case ('split') {
+                        <div class="preview-split">
+                          <div class="preview-box"></div>
+                          <div class="preview-lines">
+                            <span></span><span></span><span></span>
+                          </div>
+                        </div>
+                      }
+                      @case ('asymmetry') {
+                        <div class="preview-asymmetry">
+                          <div class="preview-box preview-box--lg"></div>
+                          <div class="preview-box"></div>
+                          <div class="preview-box"></div>
+                          <div class="preview-line"></div>
+                        </div>
+                      }
+                      @case ('magazine') {
+                        <div class="preview-magazine">
+                          <div class="preview-col"></div>
+                          <div class="preview-col preview-col--wide"></div>
+                          <div class="preview-col"></div>
+                        </div>
+                      }
+                      @case ('typography') {
+                        <div class="preview-typography">
+                          <div class="preview-headline"></div>
+                          <div class="preview-line"></div>
+                          <div class="preview-line preview-line--short"></div>
+                          <div class="preview-line preview-line--xs"></div>
+                        </div>
+                      }
+                      @case ('clean') {
+                        <div class="preview-clean">
+                          <div class="preview-line"></div>
+                          <div class="preview-line preview-line--short"></div>
+                          <div class="preview-box preview-box--lg"></div>
+                        </div>
+                      }
+                      @default {
+                        <div class="preview-cards">
+                          <div class="preview-card"></div>
+                          <div class="preview-card"></div>
+                          <div class="preview-card"></div>
+                          <div class="preview-card"></div>
+                        </div>
+                      }
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-3">
+                <h3 class="template-card__title">{{ card.title }}</h3>
+                <p class="template-card__subtitle">{{ card.subtitle }}</p>
+              </div>
+            </button>
+          }
+        </div>
       }
-    }
-  </div>
+    </div>
+  } @else {
 
-  <!-- Configuratieblok -->
-  <div class="mt-10">
+    <h2 class="text-2xl font-bold mb-6 text-center">Upload content voor je gekozen template</h2>
 
-    @if (selectedCategory === 'portfolio') {
-      <app-portfolio
-        [locked]="locked"
-        [uploads]="uploads"
-        [layoutConfig]="builderState.layoutConfig"
-        [contentSaved]="builderState.contentSaved ?? false"
-        (configChange)="onConfigChange($event)"
-      ></app-portfolio>
-    }
+    <!-- Configuratieblok -->
+    <div class="mt-10">
+      @if (selectedCategory === 'portfolio') {
+        <app-portfolio
+          [locked]="locked"
+          [uploads]="uploads"
+          [layoutConfig]="builderState.layoutConfig"
+          [contentSaved]="builderState.contentSaved ?? false"
+          (configChange)="onConfigChange($event)"
+        ></app-portfolio>
+      }
 
-    @if (selectedCategory === 'product') {
-      <app-service
-        [templateGroup]="'product'"
-        [locked]="locked"
-        [uploads]="uploads"
-        [layoutConfig]="builderState.layoutConfig"
-        [contentSaved]="builderState.contentSaved ?? false"
-        (configChange)="onConfigChange($event)"
-      ></app-service>
-    }
+      @if (selectedCategory === 'product') {
+        <app-service
+          [templateGroup]="'product'"
+          [locked]="locked"
+          [uploads]="uploads"
+          [layoutConfig]="builderState.layoutConfig"
+          [contentSaved]="builderState.contentSaved ?? false"
+          (configChange)="onConfigChange($event)"
+        ></app-service>
+      }
 
-    @if (selectedCategory === 'service') {
-      <app-service
-        [locked]="locked"
-        [uploads]="uploads"
-        [layoutConfig]="builderState.layoutConfig"
-        [contentSaved]="builderState.contentSaved ?? false"
-        (configChange)="onConfigChange($event)"
-      ></app-service>
-    }
+      @if (selectedCategory === 'service') {
+        <app-service
+          [locked]="locked"
+          [uploads]="uploads"
+          [layoutConfig]="builderState.layoutConfig"
+          [contentSaved]="builderState.contentSaved ?? false"
+          (configChange)="onConfigChange($event)"
+        ></app-service>
+      }
 
-    @if (selectedCategory === 'local') {
-      <app-local-business
-        [locked]="locked"
-        [uploads]="uploads"
-        [layoutConfig]="builderState.layoutConfig"
-        [contentSaved]="builderState.contentSaved ?? false"
-        (configChange)="onConfigChange($event)"
-      ></app-local-business>
-    }
-
-  </div>
+      @if (selectedCategory === 'local') {
+        <app-local-business
+          [locked]="locked"
+          [uploads]="uploads"
+          [layoutConfig]="builderState.layoutConfig"
+          [contentSaved]="builderState.contentSaved ?? false"
+          (configChange)="onConfigChange($event)"
+        ></app-local-business>
+      }
+    </div>
+  }
 
 
 </div>
 
+@if (mode === 'upload') {
 <!-- Verborgen file input -->
 <input
   type="file"
@@ -153,4 +236,5 @@
   ></app-image-cropper>
 } @placeholder {
   <!-- empty on purpose -->
+}
 }

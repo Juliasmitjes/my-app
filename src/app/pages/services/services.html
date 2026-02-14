@@ -82,6 +82,7 @@ class="bg-background/70 backdrop-blur-md sticky top-0 z-50 shadow-md border-b bo
       @switch (currentStep()) {
         @case (0) {
           <app-layout-step
+            [mode]="'select'"
             [builderState]="builderState()"
             [selectedLayout]="builderState().layout"
             (selectLayout)="updateState({ layout: $event })"
@@ -90,6 +91,19 @@ class="bg-background/70 backdrop-blur-md sticky top-0 z-50 shadow-md border-b bo
         }
         @case (1) {
           @defer (when currentStep() === 1) {
+            <app-layout-step
+              [mode]="'upload'"
+              [builderState]="builderState()"
+              [selectedLayout]="builderState().layout"
+              (selectLayout)="updateState({ layout: $event })"
+              (update)="updateState($event)">
+            </app-layout-step>
+          } @placeholder {
+            <div class="min-h-[300px]"></div>
+          }
+        }
+        @case (2) {
+          @defer (when currentStep() === 2) {
             <app-color-step
               [builderState]="builderState()"
               [themes]="colorThemes()"
@@ -99,8 +113,8 @@ class="bg-background/70 backdrop-blur-md sticky top-0 z-50 shadow-md border-b bo
             <div class="min-h-[300px]"></div>
           }
         }
-        @case (2) {
-          @defer (when currentStep() === 2) {
+        @case (3) {
+          @defer (when currentStep() === 3) {
             <app-font-step
               [builderState]="builderState()"
               (update)="updateState($event)">
@@ -109,8 +123,8 @@ class="bg-background/70 backdrop-blur-md sticky top-0 z-50 shadow-md border-b bo
             <div class="min-h-[300px]"></div>
           }
         }
-        @case (3) {
-          @defer (when currentStep() === 3) {
+        @case (4) {
+          @defer (when currentStep() === 4) {
             <app-content-step
               [builderState]="builderState()"
               [contents]="availablePages"
@@ -122,8 +136,8 @@ class="bg-background/70 backdrop-blur-md sticky top-0 z-50 shadow-md border-b bo
             <div class="min-h-[300px]"></div>
           }
         }
-        @case (4) {
-          @defer (when currentStep() === 4) {
+        @case (5) {
+          @defer (when currentStep() === 5) {
             <app-preview-step
               [builderState]="builderState()"
               [colorThemes]="colorThemes()"

@@ -11,7 +11,6 @@ import {
 
 import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
-import { OptionCard } from '../ui/option-card/option-card';
 import { Portfolio } from './layout-config/portfolio/portfolio';
 import { Service } from './layout-config/service/service';
 import { LocalBusiness } from './layout-config/local-business/local-business';
@@ -20,12 +19,36 @@ import { FormsModule } from '@angular/forms';
 import { ToastService } from '../ui/toast/toast.service';
 import { ImageCropper } from './layout-config/image-cropper/image-cropper';
 
+type StepMode = 'select' | 'upload';
+type TemplateCategory = 'portfolio' | 'service' | 'product';
+
+interface TemplateCard {
+  id: string;
+  category: TemplateCategory;
+  title: string;
+  subtitle: string;
+  cols: number;
+  cells: Array<'text' | 'image' | 'video'>;
+  visual: 'cards' | 'split' | 'asymmetry' | 'magazine' | 'typography' | 'clean';
+}
+
+const TEMPLATE_LIBRARY: TemplateCard[] = [
+  { id: 'portfolio-artist', category: 'portfolio', title: 'Cards', subtitle: 'Grid met visuele kaarten', cols: 4, cells: ['image', 'image', 'image', 'image', 'text', 'text'], visual: 'cards' },
+  { id: 'portfolio-designer', category: 'portfolio', title: 'Split Screen', subtitle: 'Links beeld, rechts copy', cols: 2, cells: ['text', 'image', 'image'], visual: 'split' },
+  { id: 'portfolio-illustrator', category: 'portfolio', title: 'Assymetry', subtitle: 'Speelse, asymmetrische compositie', cols: 2, cells: ['image', 'image', 'image', 'image', 'text'], visual: 'asymmetry' },
+  { id: 'service-hospitality', category: 'service', title: 'Magazine Layout', subtitle: 'Redactionele verdeling van content', cols: 4, cells: ['image', 'image', 'image', 'image', 'text'], visual: 'magazine' },
+  { id: 'service-wellness', category: 'service', title: 'Typography', subtitle: 'Tekstfirst met ondersteunend beeld', cols: 2, cells: ['text', 'image', 'image'], visual: 'typography' },
+  { id: 'service-industry', category: 'service', title: 'Clean & Simple', subtitle: 'Hero + compacte uitleg', cols: 1, cells: ['image', 'text'], visual: 'clean' },
+  { id: 'product-showcase', category: 'product', title: 'Cards', subtitle: 'Hero met twee productkaarten', cols: 2, cells: ['image', 'text', 'image', 'image'], visual: 'cards' },
+  { id: 'product-launchpad', category: 'product', title: 'Split Screen', subtitle: 'Productintro in twee kolommen', cols: 2, cells: ['image', 'text', 'image'], visual: 'split' },
+  { id: 'product-catalog', category: 'product', title: 'Clean & Simple', subtitle: 'Licht catalogusgrid met 3 foto\'s', cols: 2, cells: ['image', 'image', 'image', 'text'], visual: 'clean' }
+];
+
 @Component({
   selector: 'app-layout-step',
   standalone: true,
   imports: [
     CommonModule,
-    OptionCard,
     Portfolio,
     Service,
     LocalBusiness,
@@ -40,6 +63,7 @@ export class LayoutStep implements OnChanges {
 
   @Input() builderState!: BuilderState;
   @Input() selectedLayout: BuilderState['layout'] = null;
+  @Input() mode: StepMode = 'upload';
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
@@ -103,6 +127,17 @@ export class LayoutStep implements OnChanges {
     }
   ] as const;
 
+  get visibleTemplateCards(): TemplateCard[] {
+    if (!this.selectedCategory || this.selectedCategory === 'local') {
+      return [];
+    }
+    return TEMPLATE_LIBRARY.filter(card => card.category === this.selectedCategory);
+  }
+
+  get selectedTemplateId(): string | null {
+    return this.builderState?.layoutConfig?.templateId ?? null;
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['builderState']) {
       this.uploads = this.builderState?.uploads ?? {};
@@ -124,6 +159,24 @@ export class LayoutStep implements OnChanges {
   // LAYOUT SELECTIE
   // -----------------------------
   onSelect(id: string) {
+    if (this.mode === 'select') {
+      this.selectedCategory = id as TemplateCategory;
+
+      this.update.emit({
+        layout: 'grid',
+        layoutLocked: false,
+        contentSaved: false,
+        layoutConfig: {
+          ...this.builderState.layoutConfig,
+          templateGroup: this.selectedCategory,
+          templateId: undefined,
+          cols: undefined,
+          cells: undefined
+        }
+      });
+      return;
+    }
+
     this.locked = false;
 
     const selected = this.layouts.find(layout => layout.id === id);
@@ -158,6 +211,29 @@ export class LayoutStep implements OnChanges {
         el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 50);
     }
+  }
+
+  chooseTemplate(card: TemplateCard): void {
+    this.selectedCategory = card.category;
+    this.selectedLayout = 'grid';
+    this.locked = true;
+
+    this.update.emit({
+      layout: 'grid',
+      layoutLocked: true,
+      contentSaved: false,
+      layoutConfig: {
+        ...this.builderState.layoutConfig,
+        templateGroup: card.category,
+        templateId: card.id,
+        cols: card.cols,
+        cells: card.cells
+      }
+    });
+  }
+
+  isTemplateSelected(card: TemplateCard): boolean {
+    return this.selectedTemplateId === card.id;
   }
 
   // -----------------------------

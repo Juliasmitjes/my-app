@@ -34,7 +34,8 @@ export class Services {
   /* ───── STAPPEN ───── */
 
   readonly steps: string[] = [
-    'layout',
+    'template',
+    'upload',
     'kleuren',
     'lettertype',
     'content',
@@ -217,10 +218,11 @@ export class Services {
     const hasUploads = !!state.uploads && Object.keys(state.uploads).length > 0;
 
     switch (step) {
-      case 0: return !!state.layout && state.layoutLocked === true && hasUploads && !!state.contentSaved;
-      case 1: return !!state.colorTheme;
-      case 2: return !!(state.bodyFontVariant ?? state.fontVariant) && !!(state.headingFontVariant ?? state.fontVariant);
-      case 3: return Array.isArray(state.pages) && state.pages.length > 0;
+      case 0: return !!state.layoutConfig?.templateId && !!state.layoutConfig?.templateGroup;
+      case 1: return !!state.layout && state.layoutLocked === true && hasUploads && !!state.contentSaved;
+      case 2: return !!state.colorTheme;
+      case 3: return !!(state.bodyFontVariant ?? state.fontVariant) && !!(state.headingFontVariant ?? state.fontVariant);
+      case 4: return Array.isArray(state.pages) && state.pages.length > 0;
       default: return false;
     }
   });

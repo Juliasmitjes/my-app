@@ -95,7 +95,7 @@ export class PreviewPanel implements OnChanges {
   }
 
   get canShowHomePage(): boolean {
-    return this.currentStep >= 4;
+    return this.currentStep >= 5;
   }
 
   /* ────────────────────────────────────────────────
