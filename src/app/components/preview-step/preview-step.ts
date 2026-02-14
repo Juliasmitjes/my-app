@@ -3,13 +3,12 @@ import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { BuilderState } from '../../types/builder-state';
 import { fontMap } from '../../shared/fonts';
-import { SpeechBubble } from '../../components/ui/speech-bubble/speech-bubble';
 import { RequestPopup } from '../request-popup/request-popup';
 
 @Component({
   selector: 'app-preview-step',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule, SpeechBubble, RequestPopup],
+  imports: [CommonModule, LucideAngularModule, RequestPopup],
   templateUrl: './preview-step.html',
   styleUrl: './preview-step.css'
 })
