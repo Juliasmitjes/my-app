@@ -28,28 +28,20 @@
 
 
 .gradient-hero {
-  background-image: linear-gradient(
-    135deg,
-    hsl(220, 70%, 15%),
-    hsl(220, 70%, 25%)
-  );
+  background: var(--gradient-hero);
 }
 
 .gradient-accent {
-  background-image: linear-gradient(
-    135deg,
-    hsl(195, 100%, 50%),
-    hsl(210, 100%, 60%)
-  );
+  background: var(--gradient-accent);
 }
 
 
 .shadow-elegant {
-  box-shadow: 0 10px 40px -10px hsl(220, 70%, 15% / 0.2);
+  box-shadow: var(--shadow-elegant);
 }
 
 .shadow-card {
-  box-shadow: 0 4px 20px -4px hsl(220, 70%, 15% / 0.1);
+  box-shadow: var(--shadow-card);
 }
 
 .transition-smooth {
@@ -60,38 +52,41 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 220 26% 14%;
+    --foreground: 220 46% 16%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 26% 14%; 
+    --card-foreground: 220 46% 16%; 
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 26% 14%;
+    --popover-foreground: 220 46% 16%;
 
     --button-extra: 200 90% 40%;
 
-    --primary: 220 70% 15%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 223 71% 38%;
+    --primary-foreground: 205 100% 96%;
 
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 220 70% 15%;
+    --secondary: 214 82% 95%;
+    --secondary-foreground: 223 71% 30%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 220 13% 46%;
+    --muted: 214 75% 95%;
+    --muted-foreground: 218 26% 43%;
 
-    --accent: 195 100% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 193 100% 59%;
+    --accent-foreground: 222 75% 21%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 195 100% 50%;
+    --border: 215 64% 86%;
+    --input: 215 64% 86%;
+    --ring: 193 100% 59%;
 
     --radius: 0.5rem;
 
-    --gradient-accent: linear-gradient(135deg, hsl(195 100% 50%), hsl(210 100% 60%));
+    --gradient-hero: linear-gradient(160deg, #1a49c7 0%, #1b3ca5 50%, #162f86 100%);
+    --gradient-accent: linear-gradient(135deg, #2ed5ff 0%, #5ce3ff 100%);
+    --shadow-elegant: 0 14px 42px -12px rgba(11, 36, 110, 0.28);
+    --shadow-card: 0 8px 24px -10px rgba(10, 44, 140, 0.2);
   }}
 
   @theme inline {

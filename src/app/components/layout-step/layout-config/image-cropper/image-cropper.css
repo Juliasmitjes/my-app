@@ -75,7 +75,7 @@
 }
 
 :host ::ng-deep .cropper-line {
-  background-color: #39f;
+  background-color: hsl(var(--accent));
   opacity: 0.4;
 }
 
@@ -112,7 +112,7 @@
 }
 
 :host ::ng-deep .cropper-point {
-  background-color: #39f;
+  background-color: hsl(var(--accent));
   height: 5px;
   width: 5px;
   opacity: 0.75;

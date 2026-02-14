@@ -307,15 +307,15 @@ export class PreviewPanel implements OnChanges {
       ? theme.colors
       : [
           'hsl(0 0% 100%)',
-          'hsl(210 40% 96%)',
-          'hsl(220 70% 15%)',
-          'hsl(210 40% 96%)',
-          'hsl(220 13% 91%)',
-          'hsl(220 13% 46%)',
-          'hsl(220 26% 14%)',
-          'hsl(195 100% 50% / 0.12)',
-          'hsl(220 70% 15%)',
-          'hsl(220 13% 91%)'
+          'hsl(214 82% 95%)',
+          'hsl(223 71% 38%)',
+          'hsl(214 82% 95%)',
+          'hsl(215 64% 86%)',
+          'hsl(218 26% 43%)',
+          'hsl(220 46% 16%)',
+          'hsl(193 100% 59% / 0.12)',
+          'hsl(223 71% 38%)',
+          'hsl(215 64% 86%)'
         ];
 
     return this._selectedThemeColors;

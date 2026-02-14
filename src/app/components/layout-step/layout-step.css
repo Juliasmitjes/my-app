@@ -161,3 +161,51 @@
   flex-direction: column;
   gap: 7px;
 }
+
+.upload-shell {
+  padding-top: 28px;
+}
+
+:host ::ng-deep .upload-shell h3,
+:host ::ng-deep .upload-shell h4 {
+  color: #e3f6ff;
+}
+
+:host ::ng-deep .upload-shell .text-muted-foreground {
+  color: rgba(186, 223, 255, 0.9);
+}
+
+:host ::ng-deep .upload-shell .bg-white\/70 {
+  background: rgba(22, 57, 156, 0.48);
+}
+
+:host ::ng-deep .upload-shell .bg-muted\/20,
+:host ::ng-deep .upload-shell .bg-muted\/40,
+:host ::ng-deep .upload-shell .bg-muted\/60 {
+  background: rgba(17, 52, 147, 0.46);
+}
+
+:host ::ng-deep .upload-shell .border-border\/40,
+:host ::ng-deep .upload-shell .border-border\/50,
+:host ::ng-deep .upload-shell .border-border\/60 {
+  border-color: rgba(78, 155, 255, 0.45);
+}
+
+:host ::ng-deep .upload-shell .ring-accent {
+  --tw-ring-color: rgba(237, 249, 255, 0.8);
+}
+
+:host ::ng-deep .upload-shell .text-foreground {
+  color: #e8f7ff;
+}
+
+:host ::ng-deep .upload-shell button.bg-accent {
+  background: rgba(24, 173, 255, 0.28);
+  color: #e3f6ff;
+  border: 1px solid rgba(92, 210, 255, 0.9);
+}
+
+:host ::ng-deep .upload-shell button.bg-muted\/40 {
+  background: rgba(16, 60, 161, 0.55);
+  color: #9fd8ff;
+}
