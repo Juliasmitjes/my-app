@@ -1,0 +1,98 @@
+.progress-track {
+  position: relative;
+}
+
+.progress-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.progress-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  font-weight: 700;
+  transition: all 0.25s ease;
+  border: 1px solid transparent;
+}
+
+.progress-circle--todo {
+  background: #d7ebfb;
+  color: #5d7fa7;
+  border-color: #bfdbf3;
+}
+
+.progress-circle--active {
+  background: linear-gradient(145deg, #72cdf6 0%, #59b8e8 100%);
+  color: #ffffff;
+  border-color: rgba(109, 203, 246, 0.9);
+  box-shadow: 0 8px 18px rgba(71, 166, 224, 0.34);
+}
+
+.progress-circle--done {
+  background: linear-gradient(145deg, #a4dcf8 0%, #7fcdf2 100%);
+  color: #1f4872;
+  border-color: rgba(119, 199, 239, 0.9);
+}
+
+.progress-circle--trophy {
+  font-size: 0;
+}
+
+.progress-check {
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.progress-label {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: lowercase;
+  letter-spacing: 0.01em;
+  transition: color 0.25s ease;
+}
+
+.progress-label--todo {
+  color: #6b88ad;
+}
+
+.progress-label--active {
+  color: #59b8e8;
+}
+
+.progress-label--done {
+  color: #6185a6;
+}
+
+.progress-line {
+  position: absolute;
+  top: 22px;
+  left: 56%;
+  width: 88%;
+  height: 2px;
+  z-index: -1;
+  transition: background-color 0.25s ease;
+}
+
+.progress-line--todo {
+  background: #c8ddf0;
+}
+
+.progress-line--done {
+  background: linear-gradient(90deg, #9fdaf7, #74c9f2);
+}
+
+.progress-trophy {
+  color: #5d7fa7;
+}
+
+.progress-circle--active .progress-trophy {
+  color: #ffffff;
+}
