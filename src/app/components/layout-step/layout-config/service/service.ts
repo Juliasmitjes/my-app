@@ -519,12 +519,24 @@ export class Service implements OnChanges, OnDestroy {
   }
 
   private getSubtitleKey(templateId: string): string {
-    return `service_subtitle_${templateId}`;
+    return `${this.templateGroup ?? 'service'}_subtitle_${templateId}`;
   }
 
   private getSavedSubtitle(templateId: string): string {
     const perTemplate = this.uploads?.[this.getSubtitleKey(templateId)];
-    return typeof perTemplate === 'string' ? perTemplate : '';
+    if (typeof perTemplate === 'string') {
+      return perTemplate;
+    }
+
+    // Backward compatibility with legacy shared keys
+    const legacyMap: Record<string, string> = {
+      service: 'service_subtitle',
+      product: 'product_subtitle',
+      portfolio: 'artist_subtitle'
+    };
+    const legacyKey = legacyMap[this.templateGroup ?? 'service'];
+    const legacyValue = legacyKey ? this.uploads?.[legacyKey] : undefined;
+    return typeof legacyValue === 'string' ? legacyValue : '';
   }
 
   private syncSubtitleInput(templateId: string): void {

@@ -30,13 +30,14 @@
     }
 
     @if (selectedCategory === 'product') {
-      <app-product
+      <app-service
+        [templateGroup]="'product'"
         [locked]="locked"
         [uploads]="uploads"
         [layoutConfig]="builderState.layoutConfig"
         [contentSaved]="builderState.contentSaved ?? false"
         (configChange)="onConfigChange($event)"
-      ></app-product>
+      ></app-service>
     }
 
     @if (selectedCategory === 'service') {

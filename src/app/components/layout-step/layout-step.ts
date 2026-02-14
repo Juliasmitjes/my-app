@@ -13,7 +13,6 @@ import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
 import { OptionCard } from '../ui/option-card/option-card';
 import { Portfolio } from './layout-config/portfolio/portfolio';
-import { Product } from './layout-config/product/product';
 import { Service } from './layout-config/service/service';
 import { LocalBusiness } from './layout-config/local-business/local-business';
 import { NgZone } from '@angular/core';
@@ -28,7 +27,6 @@ import { ImageCropper } from './layout-config/image-cropper/image-cropper';
     CommonModule,
     OptionCard,
     Portfolio,
-    Product,
     Service,
     LocalBusiness,
     FormsModule,
@@ -189,14 +187,15 @@ export class LayoutStep implements OnChanges {
 
     if (event.config?.subtitle !== undefined) {
       const templateGroup = event.config?.templateGroup ?? 'portfolio';
+      const templateId = event.config?.businessNameTemplateId as string | undefined;
       const subtitleKeyMap: Record<string, string> = {
         portfolio: 'artist_subtitle',
         service: 'service_subtitle',
         product: 'product_subtitle'
       };
       const subtitleKey =
-        templateGroup === 'service' && templateId
-          ? `service_subtitle_${templateId}`
+        (templateGroup === 'service' || templateGroup === 'product') && templateId
+          ? `${templateGroup}_subtitle_${templateId}`
           : subtitleKeyMap[templateGroup] ?? 'artist_subtitle';
       if (subtitleValue) {
         newUploads[subtitleKey] = subtitleValue;
