@@ -2,24 +2,29 @@
 
   <!-- achtergrond met depth en glow -->
   <div
-    class="absolute inset-0 bg-cover bg-center scale-105 animate-[slowZoom_30s_ease-in-out_infinite_alternate]"
+    class="absolute inset-0 bg-cover bg-center scale-105 animate-[slowZoom_30s_ease-in-out_infinite_alternate] hero-image-layer"
     style="background-image: url('assets/images/background.jpg')"
   >
-    <div class="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary/85 to-accent/70 mix-blend-multiply"></div>
+    <div class="absolute inset-0 hero-image-overlay"></div>
   </div>
 
-  <div class="absolute top-0 right-[-5%] h-full w-[30%] bg-accent/12 backdrop-blur-sm transform -skew-x-12 shadow-xl hidden lg:flex flex-col justify-center items-center space-y-10 border-l border-white/15">
-    <div class="transform skew-x-12 text-center space-y-2">
-      <div class="text-5xl font-extrabold text-accent">100%</div>
-      <p class="text-sm 2xl:text-lg text-primary-foreground/90">Maatwerk<br><span class="font-semibold text-primary/60">Elke site uniek</span></p>
-    </div>
-    <div class="transform skew-x-12 text-center space-y-2">
-      <div class="text-5xl font-extrabold text-accent">7</div>
-      <p class="text-sm 2xl:text-lg text-primary-foreground/90">Dagen support<br><span class="font-semibold text-primary/60">Altijd bereikbaar</span></p>
-    </div>
-    <div class="transform skew-x-12 text-center space-y-2">
-      <div class="text-5xl font-extrabold text-accent">5</div>
-      <p class="text-sm 2xl:text-lg text-primary-foreground/90">Minuten<br><span class="font-semibold text-primary/60">Om te bouwen</span></p>
+  <div class="hero-side-panel hidden xl:flex">
+    <div class="hero-side-panel__inner">
+      <div class="hero-metric">
+        <div class="hero-metric__value">100%</div>
+        <p class="hero-metric__label">Maatwerk</p>
+        <p class="hero-metric__sub">Elke site uniek</p>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric__value">7</div>
+        <p class="hero-metric__label">Dagen support</p>
+        <p class="hero-metric__sub">Altijd bereikbaar</p>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric__value">5</div>
+        <p class="hero-metric__label">Minuten</p>
+        <p class="hero-metric__sub">Om te bouwen</p>
+      </div>
     </div>
   </div>
 
@@ -27,8 +32,8 @@
   <div class="relative z-10 container mx-auto px-6 py-24 flex flex-col md:flex-row items-center gap-12">
 
     <!-- tekstblok -->
-    <div class="flex-1 text-center md:text-left space-y-8 max-w-xl">
-      <div class="inline-block px-4 py-2 bg-accent/20 rounded-full text-accent font-semibold">
+    <div class="flex-1 text-center md:text-left space-y-8 max-w-xl hero-copy-card">
+      <div class="inline-block px-4 py-2 bg-accent/20 rounded-full text-accent font-semibold border border-white/20">
         <span class="text-3xl font-extrabold text-primary-foreground tracking-tight"> With<span class="text-accent">Smith</span> </span>
       </div>
 
@@ -39,7 +44,7 @@
         </span>
       </h1>
 
-      <p class="text-lg md:text-xl text-primary-foreground/90 leading-relaxed">
+      <p class="text-lg md:text-xl text-primary-foreground/95 leading-relaxed">
         Snel, simpel én betaalbaar: jouw professionele website.  
         <span class="text-accent font-semibold">Perfect voor starters en kleine ondernemers.</span>
       </p>
