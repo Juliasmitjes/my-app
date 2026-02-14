@@ -1,6 +1,6 @@
 <!-- STICKY HEADER BUITEN DE SECTION -->
 <header id="mainHeader"
-class="bg-background/70 backdrop-blur-md sticky top-0 z-50 shadow-md border-b border-border/30">
+class="services-topbar sticky top-0 z-50 shadow-md">
   <div class="max-w-7xl mx-auto px-6 md:px-20 py-4">
     <div class="flex items-center justify-between">
 
@@ -52,7 +52,7 @@ class="bg-background/70 backdrop-blur-md sticky top-0 z-50 shadow-md border-b bo
 
 <!-- SECTION MET DE CONTENT -->
 <section id="contentSection"
- class="relative -mt-[55px] bg-gradient-to-br from-secondary via-primary/10 to-accent/20 min-h-full  overflow-hidden pb-16">
+ class="services-content-shell relative -mt-[55px] min-h-full overflow-hidden pb-16">
 
   <!-- preview panel -->
   @defer (when showPreviewPanel()) {
@@ -77,7 +77,7 @@ class="bg-background/70 backdrop-blur-md sticky top-0 z-50 shadow-md border-b bo
     ></app-progress>
 
     <!-- content card -->
-    <div class="relative mb-12 bg-card/70 backdrop-blur-md rounded-2xl p-10 min-h-[500px] border border-border/40 transition-all duration-500">
+    <div class="services-content-card relative mb-12 rounded-2xl p-10 min-h-[500px] transition-all duration-500">
 
       @switch (currentStep()) {
         @case (0) {

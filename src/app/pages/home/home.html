@@ -1,4 +1,4 @@
-<section class="relative min-h-[100vh] flex items-center overflow-hidden bg-primary">
+<section class="relative min-h-[100vh] flex items-center overflow-hidden bg-primary home-hero-shell">
 
   <!-- achtergrond met depth en glow -->
   <div
@@ -8,7 +8,7 @@
     <div class="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary/85 to-accent/70 mix-blend-multiply"></div>
   </div>
 
-  <div class="absolute top-0 right-[-5%] h-full w-[30%] bg-accent/15 backdrop-blur-sm transform -skew-x-12 shadow-xl hidden lg:flex flex-col justify-center items-center space-y-10">
+  <div class="absolute top-0 right-[-5%] h-full w-[30%] bg-accent/12 backdrop-blur-sm transform -skew-x-12 shadow-xl hidden lg:flex flex-col justify-center items-center space-y-10 border-l border-white/15">
     <div class="transform skew-x-12 text-center space-y-2">
       <div class="text-5xl font-extrabold text-accent">100%</div>
       <p class="text-sm 2xl:text-lg text-primary-foreground/90">Maatwerk<br><span class="font-semibold text-primary/60">Elke site uniek</span></p>
@@ -62,7 +62,9 @@
 
 <section id="services" class="block w-full">
   @defer (on viewport) {
-    <app-services class="block w-full"></app-services>
+    <div class="services-shell-wrap">
+      <app-services class="block w-full"></app-services>
+    </div>
   } @placeholder {
     <div class="min-h-[400px]"></div>
   }

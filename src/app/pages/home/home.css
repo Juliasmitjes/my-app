@@ -2,6 +2,32 @@
   background: linear-gradient(to right, #2ed5ff, #5ce3ff, #1a49c7);
 }
 
+.home-hero-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(1100px 500px at 20% 20%, rgba(92, 227, 255, 0.18), transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.services-shell-wrap {
+  position: relative;
+  background: linear-gradient(165deg, #1a49c7 0%, #1b3ca5 52%, #162f86 100%);
+  border-top: 1px solid rgba(126, 196, 255, 0.35);
+  border-bottom: 1px solid rgba(126, 196, 255, 0.25);
+}
+
+.services-shell-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(900px 380px at 10% 10%, rgba(120, 220, 255, 0.14), transparent 62%),
+    radial-gradient(800px 350px at 90% 80%, rgba(95, 190, 255, 0.1), transparent 66%);
+  pointer-events: none;
+}
+
 @keyframes slowZoom {
   from { transform: scale(1); }
   to { transform: scale(1.08); }

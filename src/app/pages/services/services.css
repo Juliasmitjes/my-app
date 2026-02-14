@@ -5,6 +5,42 @@
 .animate-pulse {
   animation: pulse 6s ease-in-out infinite;
 }
+
+.services-topbar {
+  background: linear-gradient(180deg, rgba(22, 56, 160, 0.9), rgba(20, 49, 143, 0.88));
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(138, 203, 255, 0.3);
+}
+
+.services-topbar .text-foreground {
+  color: rgba(233, 247, 255, 0.96);
+}
+
+.services-topbar .text-muted-foreground {
+  color: rgba(188, 223, 255, 0.9);
+}
+
+.services-content-shell {
+  background:
+    radial-gradient(980px 420px at 14% 10%, rgba(116, 217, 255, 0.2), transparent 64%),
+    radial-gradient(900px 380px at 86% 78%, rgba(74, 176, 255, 0.14), transparent 68%),
+    linear-gradient(165deg, #1a49c7 0%, #1b3ca5 52%, #162f86 100%);
+}
+
+.services-content-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(198, 234, 255, 0.08), rgba(0, 0, 0, 0));
+}
+
+.services-content-card {
+  background: rgba(19, 57, 156, 0.46);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(126, 196, 255, 0.35);
+  box-shadow: 0 24px 44px rgba(7, 31, 104, 0.22);
+}
 :host ::ng-deep .next-step-btn:disabled,
 :host ::ng-deep .next-step-btn:disabled:hover {
   background-color: hsl(var(--muted));
