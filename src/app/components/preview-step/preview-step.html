@@ -1,37 +1,14 @@
 <div class="h-full rounded-xl p-4 sm:p-8 flex flex-col md:flex-row gap-4 sm:gap-6 preview-root"
      [style.background]="selectedThemeColors[2] + 20">
 
-    <!-- Mobiel -->
-      <div class="sm:hidden mascot-mobile rounded-2xl p-4 mb-2">
-        <div class="mascot-bubble-mobile">Kies jouw stijl!</div>
-        <div class="flex items-center justify-between gap-3 mt-3">
-          <img [src]="mascotUrl" alt="Mascotte" class="w-24 h-24 object-contain mascot-mobile-img" />
-          <button
-            class="px-4 py-2 bg-accent text-accent-foreground rounded-md font-semibold cursor-pointer hover:bg-accent/90 transition-colors"
-            (click)="openRequestPopup()">
-            Aanvraag versturen
-          </button>
-        </div>
-      </div>
-
-      <app-request-popup
-        [visible]="showRequestPopup"
-        [builderState]="builderState"
-        (dismiss)="closeRequestPopup()">
-      </app-request-popup>
+  <app-request-popup
+    [visible]="showRequestPopup"
+    [builderState]="builderState"
+    (dismiss)="closeRequestPopup()">
+  </app-request-popup>
 
   <!-- Preview panel -->
   <div class="relative flex-1 min-w-0">
-    <div class="hidden xl:block mascot-float">
-      <div class="mascot-bubble">Kies jouw stijl!</div>
-      <img [src]="mascotUrl" alt="Mascotte" class="mascot-owl" />
-      <button
-        class="mascot-float__cta px-4 py-2 bg-accent text-accent-foreground rounded-md font-semibold cursor-pointer hover:bg-accent/90 transition-colors"
-        (click)="openRequestPopup()">
-        Aanvraag versturen
-      </button>
-    </div>
-
     <div class="flex-1 flex flex-col rounded-2xl shadow-xl overflow-hidden preview-panel" aria-live="polite">
     <!-- OUTER WRAPPER -->
     <div
