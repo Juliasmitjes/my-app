@@ -22,9 +22,9 @@
 
 .services-content-shell {
   background:
-    radial-gradient(980px 420px at 14% 10%, rgba(116, 217, 255, 0.2), transparent 64%),
-    radial-gradient(900px 380px at 86% 78%, rgba(74, 176, 255, 0.14), transparent 68%),
-    linear-gradient(165deg, #1a49c7 0%, #1b3ca5 52%, #162f86 100%);
+    radial-gradient(980px 420px at 14% 10%, rgba(116, 217, 255, 0.12), transparent 64%),
+    radial-gradient(900px 380px at 86% 78%, rgba(74, 176, 255, 0.1), transparent 68%),
+    linear-gradient(180deg, #eef3f9 0%, #e9eef6 52%, #e3eaf4 100%);
 }
 
 .services-content-shell::before {
@@ -32,14 +32,16 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(198, 234, 255, 0.08), rgba(0, 0, 0, 0));
+  background:
+    linear-gradient(180deg, rgba(205, 230, 255, 0.14), rgba(0, 0, 0, 0)),
+    radial-gradient(700px 260px at 50% 6%, rgba(69, 142, 255, 0.07), transparent 68%);
 }
 
 .services-content-card {
-  background: rgba(19, 57, 156, 0.46);
+  background: rgba(255, 255, 255, 0.74);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(126, 196, 255, 0.35);
-  box-shadow: 0 24px 44px rgba(7, 31, 104, 0.22);
+  border: 1px solid rgba(140, 186, 236, 0.42);
+  box-shadow: 0 24px 44px rgba(29, 52, 92, 0.14);
 }
 :host ::ng-deep .next-step-btn:disabled,
 :host ::ng-deep .next-step-btn:disabled:hover {

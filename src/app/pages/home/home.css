@@ -103,9 +103,9 @@
 
 .services-shell-wrap {
   position: relative;
-  background: linear-gradient(165deg, #1a49c7 0%, #1b3ca5 52%, #162f86 100%);
-  border-top: 1px solid rgba(126, 196, 255, 0.35);
-  border-bottom: 1px solid rgba(126, 196, 255, 0.25);
+  background: linear-gradient(180deg, #edf2f8 0%, #e8eef6 48%, #e3eaf4 100%);
+  border-top: 1px solid rgba(146, 183, 228, 0.38);
+  border-bottom: 1px solid rgba(146, 183, 228, 0.3);
 }
 
 .services-shell-wrap::before {
@@ -113,8 +113,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(900px 380px at 10% 10%, rgba(120, 220, 255, 0.14), transparent 62%),
-    radial-gradient(800px 350px at 90% 80%, rgba(95, 190, 255, 0.1), transparent 66%);
+    radial-gradient(900px 380px at 10% 10%, rgba(120, 220, 255, 0.11), transparent 62%),
+    radial-gradient(800px 350px at 90% 80%, rgba(95, 190, 255, 0.08), transparent 66%);
   pointer-events: none;
 }
 
