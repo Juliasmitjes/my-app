@@ -104,6 +104,7 @@
       @if (selectedCategory === 'portfolio') {
         <app-portfolio
           [locked]="locked"
+          [editorOnly]="true"
           [uploads]="uploads"
           [layoutConfig]="builderState.layoutConfig"
           [contentSaved]="builderState.contentSaved ?? false"
@@ -115,6 +116,7 @@
         <app-service
           [templateGroup]="'product'"
           [locked]="locked"
+          [editorOnly]="true"
           [uploads]="uploads"
           [layoutConfig]="builderState.layoutConfig"
           [contentSaved]="builderState.contentSaved ?? false"
@@ -125,6 +127,7 @@
       @if (selectedCategory === 'service') {
         <app-service
           [locked]="locked"
+          [editorOnly]="true"
           [uploads]="uploads"
           [layoutConfig]="builderState.layoutConfig"
           [contentSaved]="builderState.contentSaved ?? false"

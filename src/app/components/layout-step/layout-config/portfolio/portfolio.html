@@ -7,6 +7,7 @@
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
   @for (template of templates; track template.id) {
+    @if (!editorOnly || template.id === currentTemplate.id) {
     <div
       class="p-4 rounded-2xl border border-border/40 bg-white/70 transition-all"
       [class.ring-2]="template.id === currentTemplate.id"
@@ -16,24 +17,26 @@
           <div class="space-y-2">
             <h4 class="text-base font-semibold">{{ template.label }}</h4>
           </div>
-        <button
-          type="button"
-          class="px-3 py-1.5 rounded-xl text-sm font-semibold transition-colors duration-150 cursor-pointer"
-          [class.bg-accent]="!(locked && template.id === currentTemplate.id && contentSaved)"
-          [class.text-accent-foreground]="!(locked && template.id === currentTemplate.id && contentSaved)"
-          [class.hover:shadow-md]="!(locked && template.id === currentTemplate.id && contentSaved)"
-          [class.hover:scale-[1.02]]="!(locked && template.id === currentTemplate.id && contentSaved)"
-          [class.shadow]="!(locked && template.id === currentTemplate.id && contentSaved)"
-          [class.bg-muted/40]="locked && template.id === currentTemplate.id && contentSaved"
-          [class.text-muted-foreground]="locked && template.id === currentTemplate.id && contentSaved"
-          [class.border]="locked && template.id === currentTemplate.id && contentSaved"
-          [class.border-border/60]="locked && template.id === currentTemplate.id && contentSaved"
-          (click)="onTemplateAction(template, $event)"
-        >
-          {{ locked && template.id === currentTemplate.id
-              ? (contentSaved ? (isArtistTemplate(template) ? 'Bewerk' : 'Bewerk') : (isArtistTemplate(template) ? 'Bewaar' : 'Bewaar'))
-              : 'Kies dit template' }}
-        </button>
+          @if (!editorOnly) {
+            <button
+              type="button"
+              class="px-3 py-1.5 rounded-xl text-sm font-semibold transition-colors duration-150 cursor-pointer"
+              [class.bg-accent]="!(locked && template.id === currentTemplate.id && contentSaved)"
+              [class.text-accent-foreground]="!(locked && template.id === currentTemplate.id && contentSaved)"
+              [class.hover:shadow-md]="!(locked && template.id === currentTemplate.id && contentSaved)"
+              [class.hover:scale-[1.02]]="!(locked && template.id === currentTemplate.id && contentSaved)"
+              [class.shadow]="!(locked && template.id === currentTemplate.id && contentSaved)"
+              [class.bg-muted/40]="locked && template.id === currentTemplate.id && contentSaved"
+              [class.text-muted-foreground]="locked && template.id === currentTemplate.id && contentSaved"
+              [class.border]="locked && template.id === currentTemplate.id && contentSaved"
+              [class.border-border/60]="locked && template.id === currentTemplate.id && contentSaved"
+              (click)="onTemplateAction(template, $event)"
+            >
+              {{ locked && template.id === currentTemplate.id
+                  ? (contentSaved ? (isArtistTemplate(template) ? 'Bewerk' : 'Bewerk') : (isArtistTemplate(template) ? 'Bewaar' : 'Bewaar'))
+                  : 'Kies dit template' }}
+            </button>
+          }
       </div>
 
       <div
@@ -500,6 +503,7 @@
         }
       </div>
     </div>
+    }
   }
 </div>
 

@@ -124,6 +124,7 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
 export class Service implements OnChanges, OnDestroy {
   readonly self = this;
   @Input() locked = false;
+  @Input() editorOnly = false;
   @Input() uploads: Record<string, any> = {};
   @Input() layoutConfig?: BuilderState['layoutConfig'];
   @Input() contentSaved = false;

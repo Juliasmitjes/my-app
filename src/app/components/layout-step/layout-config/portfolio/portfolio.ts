@@ -91,6 +91,7 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
 })
 export class Portfolio implements OnChanges, OnDestroy {
   @Input() locked = false;
+  @Input() editorOnly = false;
   @Input() uploads: Record<string, any> = {};
   @Input() layoutConfig?: BuilderState['layoutConfig'];
   @Input() contentSaved = false;
