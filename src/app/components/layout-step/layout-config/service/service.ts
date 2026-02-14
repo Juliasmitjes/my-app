@@ -83,15 +83,15 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
     {
       id: 'product-showcase',
       label: 'Showcase',
-      description: 'Grote hero met details eronder.',
+      description: 'Hero met korte tekst en twee productkaarten.',
       cols: 2,
-      rows: 3,
+      rows: 2,
       cells: ['image', 'text', 'image', 'image']
     },
     {
       id: 'product-launchpad',
       label: 'Launchpad',
-      description: 'Productintro met focus op de hero.',
+      description: 'Split layout met foto, tekst en detailbeeld.',
       cols: 2,
       rows: 2,
       cells: ['image', 'text', 'image']
@@ -99,10 +99,10 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
     {
       id: 'product-catalog',
       label: 'Catalog',
-      description: 'Meerdere items in een strak raster.',
-      cols: 3,
+      description: 'Licht catalogusgrid met 3 foto\'s en 1 tekstblok.',
+      cols: 2,
       rows: 2,
-      cells: ['image', 'image', 'image', 'image', 'text', 'text']
+      cells: ['image', 'image', 'image', 'text']
     }
   ]
 };

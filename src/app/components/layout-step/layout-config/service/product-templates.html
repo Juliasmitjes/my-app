@@ -430,7 +430,7 @@
       }
     </div>
 
-    <div class="grid gap-3 p-4 md:grid-cols-3 auto-rows-[140px] flex-1">
+    <div class="grid grid-cols-2 gap-3 p-4 auto-rows-[180px] flex-1">
       @for (cell of catalogCells; let i = $index; track i) {
         <div
           class="relative border border-border/60 bg-white shadow-sm"
@@ -509,9 +509,9 @@
 
           @if (getCellValue(catalogCells, i) === 'text') {
             @if (ctx.getTextContent(i); as textBlock) {
-              <div class="h-full p-4 text-xs text-muted-foreground flex flex-col justify-center">
+              <div class="h-full p-5 text-sm text-muted-foreground flex flex-col justify-center">
                 @if (textBlock.title) {
-                  <div class="text-sm font-semibold text-foreground mb-2">
+                  <div class="text-base font-semibold text-foreground mb-2">
                     {{ textBlock.title }}
                   </div>
                 }
@@ -533,7 +533,7 @@
             <img class="w-full h-full rounded-none object-cover" [src]="ctx.getImagePreview(i)" alt="" />
           } @else {
             <div class="flex items-center justify-center p-6 rounded-none bg-muted/20 h-full">
-              <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon>
+              <lucide-icon name="image" class="w-10 h-10 opacity-70"></lucide-icon>
             </div>
           }
         </div>

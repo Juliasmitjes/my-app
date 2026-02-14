@@ -18,7 +18,7 @@ export class ProductTemplates {
 
   readonly showcaseCells: CellType[] = ['image', 'text', 'image', 'image'];
   readonly launchpadCells: CellType[] = ['image', 'text', 'image'];
-  readonly catalogCells: CellType[] = ['image', 'image', 'image', 'image', 'text', 'text'];
+  readonly catalogCells: CellType[] = ['image', 'image', 'image', 'text'];
 
   getCellValue(cells: CellType[], index: number): CellType {
     return cells[index] ?? 'image';
