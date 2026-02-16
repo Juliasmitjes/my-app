@@ -6,12 +6,12 @@
       Alleen het deel binnen het witte vierkant wordt opgeslagen.
     </p>
 
-    <div class="w-full max-w-xl mx-auto h-[400px] rounded-xl relative bg-neutral-900 overflow-hidden">
+    <div class="w-full max-w-xl mx-auto h-[400px] rounded-xl relative bg-neutral-900 overflow-hidden z-0">
       <img #imageElement class="block max-w-full" />
     </div>
 
-    <div class="flex justify-end gap-3 pt-2">
-      <button class="px-4 py-2 rounded-xl bg-muted/60 cursor-pointer" (click)="cancel.emit()">Annuleren</button>
+    <div class="relative z-10 flex justify-end gap-3 pt-2">
+      <button class="px-4 py-2 rounded-xl bg-muted/60 cursor-pointer" (click)="onCancel()">Annuleren</button>
       <button class="px-4 py-2 rounded-xl bg-accent text-accent-foreground cursor-pointer" (click)="saveCrop()">Opslaan</button>
     </div>
 

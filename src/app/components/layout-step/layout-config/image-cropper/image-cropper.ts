@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import Cropper from 'cropperjs';
+import 'cropperjs/dist/cropper.css';
 
 @Component({
   selector: 'app-image-cropper',
@@ -16,6 +17,7 @@ export class ImageCropper implements AfterViewInit {
 
   @ViewChild('imageElement') imageElement!: ElementRef<HTMLImageElement>;
   cropper!: Cropper;
+  private objectUrl: string | null = null;
 
   ngAfterViewInit() {
     const img = this.imageElement.nativeElement;
@@ -61,12 +63,32 @@ export class ImageCropper implements AfterViewInit {
       });
     };
 
-    img.src = URL.createObjectURL(this.file);
+    this.objectUrl = URL.createObjectURL(this.file);
+    img.src = this.objectUrl;
   }
 
   saveCrop() {
+    if (!this.cropper) return;
     this.cropper.getCroppedCanvas().toBlob((blob: Blob | null) => {
-      if (blob) this.cropped.emit(blob);
+      if (blob) {
+        this.cleanup();
+        this.cropped.emit(blob);
+      }
     });
+  }
+
+  onCancel(): void {
+    this.cleanup();
+    this.cancel.emit();
+  }
+
+  private cleanup(): void {
+    if (this.cropper) {
+      this.cropper.destroy();
+    }
+    if (this.objectUrl) {
+      URL.revokeObjectURL(this.objectUrl);
+      this.objectUrl = null;
+    }
   }
 }
