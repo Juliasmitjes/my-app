@@ -11,7 +11,7 @@
           @if (!layout.hidden) {
             <button
               type="button"
-              class="template-category-pill"
+              class="template-category-pill cursor-pointer"
               [class.template-category-pill--active]="selectedCategory === layout.id"
               (click)="onSelect(layout.id)"
             >
