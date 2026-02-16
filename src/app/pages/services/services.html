@@ -70,17 +70,10 @@ class="services-topbar sticky top-0 z-50 shadow-md">
 
   <!-- stappen -->
    <div class="relative px-6 md:px-20">
-    @if (currentStep() === 0) {
-      <div class="services-step-intro mt-12 mb-8 text-center">
-        <h2 class="text-3xl font-bold tracking-tight">Kies jouw template</h2>
-      </div>
-    }
-
     <!-- content card -->
     <div
       class="services-content-card relative mb-12 mt-16 rounded-2xl p-10 min-h-[500px] transition-all duration-500"
       [class.services-content-card--layout]="currentStep() === 0 || currentStep() === 1"
-      [class.services-content-card--select]="currentStep() === 0"
     >
 
       @switch (currentStep()) {

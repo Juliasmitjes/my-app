@@ -37,15 +37,6 @@
     radial-gradient(700px 260px at 50% 6%, rgba(69, 142, 255, 0.07), transparent 68%);
 }
 
-.services-step-intro h2 {
-  color: #24457a;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
-}
-
-.services-step-intro .text-muted-foreground {
-  color: #4f74a7;
-}
-
 .services-content-card {
   background: rgba(255, 255, 255, 0.74);
   backdrop-filter: blur(10px);
@@ -66,10 +57,6 @@
   padding: 0;
 }
 
-:host ::ng-deep .services-content-card--select .template-selector-shell > h2,
-:host ::ng-deep .services-content-card--select .template-selector-shell > p {
-  display: none;
-}
 :host ::ng-deep .next-step-btn:disabled,
 :host ::ng-deep .next-step-btn:disabled:hover {
   background-color: hsl(var(--muted));
