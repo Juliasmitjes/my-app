@@ -56,24 +56,24 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
   service: [
     {
       id: 'service-hospitality',
-      label: 'Hospitality',
-      description: 'Sfeervol beeldgrid met ruimte voor tekst.',
+      label: 'Magazine Layout',
+      description: 'Redactionele verdeling van content.',
       cols: 4,
       rows: 3,
       cells: ['image', 'image', 'image', 'image', 'text']
     },
     {
       id: 'service-wellness',
-      label: 'Wellness',
-      description: 'Intro tekst met beeld.',
+      label: 'Typography',
+      description: 'Tekstfirst met ondersteunend beeld.',
       cols: 2,
       rows: 2,
       cells: ['text', 'image', 'image']
     },
     {
       id: 'service-industry',
-      label: 'Industry',
-      description: 'Hero met beeld en tekst.',
+      label: 'Impact Hero',
+      description: 'Sterke hero met duidelijke kernboodschap.',
       cols: 1,
       rows: 2,
       cells: ['image', 'text']
@@ -82,24 +82,24 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
   product: [
     {
       id: 'product-showcase',
-      label: 'Showcase',
-      description: 'Hero met korte tekst en twee productkaarten.',
+      label: 'Cards',
+      description: 'Hero met twee productkaarten.',
       cols: 2,
       rows: 2,
       cells: ['image', 'text', 'image', 'image']
     },
     {
       id: 'product-launchpad',
-      label: 'Launchpad',
-      description: 'Split layout met foto, tekst en detailbeeld.',
+      label: 'Split Screen',
+      description: 'Productintro in twee kolommen.',
       cols: 2,
       rows: 2,
       cells: ['image', 'text', 'image']
     },
     {
       id: 'product-catalog',
-      label: 'Catalog',
-      description: 'Licht catalogusgrid met 3 foto\'s en 1 tekstblok.',
+      label: 'Clean & Simple',
+      description: 'Licht catalogusgrid met 3 foto\'s.',
       cols: 2,
       rows: 2,
       cells: ['image', 'image', 'image', 'text']

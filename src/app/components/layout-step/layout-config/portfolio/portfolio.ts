@@ -27,24 +27,24 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
   portfolio: [
     {
       id: 'portfolio-artist',
-      label: 'Artist',
-      description: 'Beeldgrid met artistieke uitstraling.',
+      label: 'Editorial',
+      description: 'Dynamische spread met storytelling.',
       cols: 3,
       rows: 4,
       cells: ['image', 'image', 'image', 'image', 'image', 'image', 'image', 'image', 'image']
     },
     {
       id: 'portfolio-designer',
-      label: 'Designer',
-      description: 'Intro tekst met twee beelden.',
+      label: 'Storyline',
+      description: 'Tekstgedreven intro met visuele focus.',
       cols: 2,
       rows: 3,
       cells: ['text', 'image', 'image', 'image', 'image']
     },
     {
       id: 'portfolio-illustrator',
-      label: 'Illustrator',
-      description: 'Hero met beeld en tekst.',
+      label: 'Assymetry',
+      description: 'Speelse, asymmetrische compositie.',
       cols: 1,
       rows: 2,
       cells: ['image', 'text']
