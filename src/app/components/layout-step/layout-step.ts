@@ -29,16 +29,16 @@ interface TemplateCard {
   subtitle: string;
   cols: number;
   cells: Array<'text' | 'image' | 'video'>;
-  visual: 'cards' | 'split' | 'asymmetry' | 'magazine' | 'typography' | 'clean';
+  visual: 'cards' | 'split' | 'asymmetry' | 'magazine' | 'typography' | 'clean' | 'editorial' | 'storyline' | 'impact';
 }
 
 const TEMPLATE_LIBRARY: TemplateCard[] = [
-  { id: 'portfolio-artist', category: 'portfolio', title: 'Cards', subtitle: 'Grid met visuele kaarten', cols: 4, cells: ['image', 'image', 'image', 'image', 'text', 'text'], visual: 'cards' },
-  { id: 'portfolio-designer', category: 'portfolio', title: 'Split Screen', subtitle: 'Links beeld, rechts copy', cols: 2, cells: ['text', 'image', 'image'], visual: 'split' },
+  { id: 'portfolio-artist', category: 'portfolio', title: 'Editorial', subtitle: 'Dynamische spread met storytelling', cols: 4, cells: ['image', 'image', 'image', 'image', 'text', 'text'], visual: 'editorial' },
+  { id: 'portfolio-designer', category: 'portfolio', title: 'Storyline', subtitle: 'Tekstgedreven intro met visuele focus', cols: 2, cells: ['text', 'image', 'image'], visual: 'storyline' },
   { id: 'portfolio-illustrator', category: 'portfolio', title: 'Assymetry', subtitle: 'Speelse, asymmetrische compositie', cols: 2, cells: ['image', 'image', 'image', 'image', 'text'], visual: 'asymmetry' },
   { id: 'service-hospitality', category: 'service', title: 'Magazine Layout', subtitle: 'Redactionele verdeling van content', cols: 4, cells: ['image', 'image', 'image', 'image', 'text'], visual: 'magazine' },
   { id: 'service-wellness', category: 'service', title: 'Typography', subtitle: 'Tekstfirst met ondersteunend beeld', cols: 2, cells: ['text', 'image', 'image'], visual: 'typography' },
-  { id: 'service-industry', category: 'service', title: 'Clean & Simple', subtitle: 'Hero + compacte uitleg', cols: 1, cells: ['image', 'text'], visual: 'clean' },
+  { id: 'service-industry', category: 'service', title: 'Impact Hero', subtitle: 'Sterke hero met duidelijke kernboodschap', cols: 1, cells: ['image', 'text'], visual: 'impact' },
   { id: 'product-showcase', category: 'product', title: 'Cards', subtitle: 'Hero met twee productkaarten', cols: 2, cells: ['image', 'text', 'image', 'image'], visual: 'cards' },
   { id: 'product-launchpad', category: 'product', title: 'Split Screen', subtitle: 'Productintro in twee kolommen', cols: 2, cells: ['image', 'text', 'image'], visual: 'split' },
   { id: 'product-catalog', category: 'product', title: 'Clean & Simple', subtitle: 'Licht catalogusgrid met 3 foto\'s', cols: 2, cells: ['image', 'image', 'image', 'text'], visual: 'clean' }

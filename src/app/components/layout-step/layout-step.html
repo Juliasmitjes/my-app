@@ -51,6 +51,33 @@
                           <div class="preview-line"></div>
                         </div>
                       }
+                      @case ('editorial') {
+                        <div class="preview-editorial">
+                          <div class="preview-box preview-box--hero"></div>
+                          <div class="preview-editorial__stack">
+                            <div class="preview-line"></div>
+                            <div class="preview-line preview-line--short"></div>
+                            <div class="preview-box"></div>
+                          </div>
+                          <div class="preview-box"></div>
+                          <div class="preview-box"></div>
+                        </div>
+                      }
+                      @case ('storyline') {
+                        <div class="preview-storyline">
+                          <div class="preview-storyline__rail">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                          </div>
+                          <div class="preview-storyline__content">
+                            <div class="preview-headline"></div>
+                            <div class="preview-line"></div>
+                            <div class="preview-line preview-line--short"></div>
+                            <div class="preview-box preview-box--lg"></div>
+                          </div>
+                        </div>
+                      }
                       @case ('magazine') {
                         <div class="preview-magazine">
                           <div class="preview-col"></div>
@@ -71,6 +98,20 @@
                           <div class="preview-line"></div>
                           <div class="preview-line preview-line--short"></div>
                           <div class="preview-box preview-box--lg"></div>
+                        </div>
+                      }
+                      @case ('impact') {
+                        <div class="preview-impact">
+                          <div class="preview-impact__hero"></div>
+                          <div class="preview-impact__overlay">
+                            <div class="preview-headline"></div>
+                            <div class="preview-line"></div>
+                            <div class="preview-line preview-line--short"></div>
+                          </div>
+                          <div class="preview-impact__footer">
+                            <div class="preview-line preview-line--xs"></div>
+                            <div class="preview-line preview-line--short"></div>
+                          </div>
                         </div>
                       }
                       @default {
