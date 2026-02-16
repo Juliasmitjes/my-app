@@ -1,7 +1,6 @@
 import { Component, signal, computed } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 
-import { Progress } from '../../components/progress/progress';
 import { LayoutStep } from '../../components/layout-step/layout-step';
 import { ColorStep } from '../../components/color-step/color-step';
 import { FontStep } from '../../components/font-step/font-step';
@@ -16,7 +15,6 @@ import { BuilderState } from '../../types/builder-state';
   selector: 'app-services',
   standalone: true,
   imports: [
-    Progress,
     LayoutStep,
     ColorStep,
     FontStep,

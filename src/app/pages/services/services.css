@@ -7,7 +7,7 @@
 }
 
 .services-topbar {
-  background: linear-gradient(180deg, rgba(22, 56, 160, 0.9), rgba(20, 49, 143, 0.88));
+  background: linear-gradient(160deg, #1a49c7 0%, #1b3ca5 50%, #162f86 100%);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid #162f86;
 }
@@ -37,6 +37,15 @@
     radial-gradient(700px 260px at 50% 6%, rgba(69, 142, 255, 0.07), transparent 68%);
 }
 
+.services-step-intro h2 {
+  color: #24457a;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.services-step-intro .text-muted-foreground {
+  color: #4f74a7;
+}
+
 .services-content-card {
   background: rgba(255, 255, 255, 0.74);
   backdrop-filter: blur(10px);
@@ -55,6 +64,11 @@
   border: 0;
   border-radius: 0;
   padding: 0;
+}
+
+:host ::ng-deep .services-content-card--select .template-selector-shell > h2,
+:host ::ng-deep .services-content-card--select .template-selector-shell > p {
+  display: none;
 }
 :host ::ng-deep .next-step-btn:disabled,
 :host ::ng-deep .next-step-btn:disabled:hover {
