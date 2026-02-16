@@ -138,7 +138,9 @@
 .hero-metric__sub {
   margin-top: 2px;
   font-size: 18px;
-  color: rgba(90, 114, 145, 0.86);
+  font-weight: 450;
+  letter-spacing: 0.005em;
+  color: rgba(78, 102, 136, 0.9);
 }
 
 @media (max-width: 1535px) {
@@ -169,6 +171,7 @@
 
   .hero-metric__sub {
     font-size: 15px;
+    color: rgba(78, 102, 136, 0.88);
   }
 }
 
@@ -195,7 +198,8 @@
   }
 
   .hero-metric__sub {
-    font-size: 13px;
+    font-size: 14px;
+    color: rgba(78, 102, 136, 0.86);
   }
 }
 
