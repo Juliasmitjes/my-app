@@ -544,8 +544,10 @@ onImageCropped(blob: Blob) {
   };
 
   this.update.emit({ uploads: this.uploads });
+  this.update.emit({ contentSaved: true });
 
   this.showCropper = false;
+  this.uploadEditing = false;
   this.cropperFile = null;
   this.cropperKey = null;
   this.cropperAspectRatio = null;

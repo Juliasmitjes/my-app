@@ -5,6 +5,10 @@
 :host ::ng-deep .cropper-container {
   direction: ltr;
   max-width: 100%;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1;
+  pointer-events: auto;
 }
 
 :host ::ng-deep .cropper-view-box {
@@ -28,4 +32,8 @@
 
 :host ::ng-deep .cropper-point {
   opacity: 0.95;
+}
+
+:host ::ng-deep .cropper-modal {
+  pointer-events: none;
 }

@@ -289,7 +289,7 @@
   <app-image-cropper
     [file]="cropperFile!"
     [aspectRatio]="cropperAspectRatio"
-    (cancel)="onCropperCancel()"
+    (closed)="onCropperCancel()"
     (cropped)="onImageCropped($event)"
   ></app-image-cropper>
 } @placeholder {

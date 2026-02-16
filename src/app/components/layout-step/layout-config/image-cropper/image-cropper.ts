@@ -12,7 +12,7 @@ export class ImageCropper implements AfterViewInit {
 
   @Input() file!: File;
   @Input() aspectRatio: number | null = null;
-  @Output() cancel = new EventEmitter<void>();
+  @Output() closed = new EventEmitter<void>();
   @Output() cropped = new EventEmitter<Blob>();
 
   @ViewChild('imageElement') imageElement!: ElementRef<HTMLImageElement>;
@@ -67,9 +67,13 @@ export class ImageCropper implements AfterViewInit {
     img.src = this.objectUrl;
   }
 
-  saveCrop() {
+  saveCrop(event?: Event) {
+    event?.stopPropagation();
     if (!this.cropper) return;
-    this.cropper.getCroppedCanvas().toBlob((blob: Blob | null) => {
+    const canvas = this.cropper.getCroppedCanvas();
+    if (!canvas) return;
+
+    canvas.toBlob((blob: Blob | null) => {
       if (blob) {
         this.cleanup();
         this.cropped.emit(blob);
@@ -77,9 +81,10 @@ export class ImageCropper implements AfterViewInit {
     });
   }
 
-  onCancel(): void {
+  onCancel(event?: Event): void {
+    event?.stopPropagation();
     this.cleanup();
-    this.cancel.emit();
+    this.closed.emit();
   }
 
   private cleanup(): void {
