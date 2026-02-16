@@ -43,6 +43,19 @@
   border: 1px solid rgba(140, 186, 236, 0.42);
   box-shadow: 0 24px 44px rgba(29, 52, 92, 0.14);
 }
+
+.services-content-card--layout {
+  background: linear-gradient(160deg, #1a49c7 0%, #1b3ca5 50%, #162f86 100%);
+  border: 1px solid rgba(120, 176, 255, 0.3);
+  box-shadow: 0 24px 44px rgba(10, 34, 104, 0.3);
+}
+
+:host ::ng-deep .services-content-card--layout .template-selector-shell {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+}
 :host ::ng-deep .next-step-btn:disabled,
 :host ::ng-deep .next-step-btn:disabled:hover {
   background-color: hsl(var(--muted));
