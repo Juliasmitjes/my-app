@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import Cropper from 'cropperjs';
-import 'cropperjs/dist/cropper.css';
 
 @Component({
   selector: 'app-image-cropper',
