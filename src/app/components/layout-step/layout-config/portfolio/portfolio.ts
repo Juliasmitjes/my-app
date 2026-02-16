@@ -488,6 +488,7 @@ export class Portfolio implements OnChanges, OnDestroy {
   }
 
   getImagePreview(index: number): string | null {
+    const exampleImage = 'assets/images/exampleImage.png';
     const cell = this.grid[index];
     if (!cell || cell.value !== 'image') {
       return null;
@@ -497,7 +498,7 @@ export class Portfolio implements OnChanges, OnDestroy {
     const file = this.uploads?.[key];
 
     if (!file || file?.kind === 'inline') {
-      return null;
+      return exampleImage;
     }
 
     if (file instanceof File) {
@@ -514,7 +515,7 @@ export class Portfolio implements OnChanges, OnDestroy {
       return file;
     }
 
-    return null;
+    return exampleImage;
   }
 
   getBusinessNameForTemplate(templateId?: string): string {

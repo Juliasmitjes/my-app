@@ -242,6 +242,24 @@
   padding-top: 28px;
 }
 
+.upload-primary-btn {
+  border: 1px solid rgba(109, 213, 255, 0.85);
+  background: linear-gradient(135deg, rgba(74, 193, 247, 0.36), rgba(45, 127, 216, 0.36));
+  color: #e7f8ff;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 9px 24px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+  transition: 180ms ease;
+}
+
+.upload-primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(15, 60, 146, 0.32);
+  border-color: rgba(138, 226, 255, 0.95);
+}
+
 :host ::ng-deep .upload-shell h3,
 :host ::ng-deep .upload-shell h4 {
   color: #e3f6ff;

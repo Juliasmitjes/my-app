@@ -99,6 +99,7 @@ export class LayoutStep implements OnChanges {
   cropperFile: File | null = null;
   cropperKey: string | null = null;
   cropperAspectRatio: number | null = null;
+  uploadEditing = false;
 
   layouts = [
     {
@@ -139,6 +140,10 @@ export class LayoutStep implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if (changes['mode']) {
+      this.uploadEditing = false;
+    }
+
     if (changes['builderState']) {
       this.uploads = this.builderState?.uploads ?? {};
       this.locked = !!this.builderState?.layoutLocked;
@@ -211,6 +216,24 @@ export class LayoutStep implements OnChanges {
         el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 50);
     }
+  }
+
+  onUploadPrimaryAction(): void {
+    if (!this.uploadEditing) {
+      this.uploadEditing = true;
+      this.update.emit({ contentSaved: false });
+      return;
+    }
+
+    const hasUploads = Object.keys(this.uploads ?? {}).length > 0;
+    if (!hasUploads) {
+      this.toast.error('Upload eerst minimaal één item');
+      return;
+    }
+
+    this.uploadEditing = false;
+    this.update.emit({ contentSaved: true });
+    this.toast.success('Content opgeslagen');
   }
 
   chooseTemplate(card: TemplateCard): void {
