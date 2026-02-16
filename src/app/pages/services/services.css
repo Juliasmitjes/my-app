@@ -9,7 +9,7 @@
 .services-topbar {
   background: linear-gradient(180deg, rgba(22, 56, 160, 0.9), rgba(20, 49, 143, 0.88));
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(138, 203, 255, 0.3);
+  border-bottom: 1px solid #162f86;
 }
 
 .services-topbar .text-foreground {
