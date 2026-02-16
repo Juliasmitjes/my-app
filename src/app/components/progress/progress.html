@@ -1,62 +1,28 @@
 <div
-  class="progress-track hidden sm:grid w-full max-w-5xl mx-auto py-6"
+  class="progress-track hidden sm:grid w-full max-w-5xl mx-auto py-4"
   [style.gridTemplateColumns]="'repeat(' + steps.length + ', 1fr)'"
 >
   @for (step of steps; track step; let i = $index) {
-    @if (i < steps.length - 1) {
-      <div class="progress-step">
-        <div
-          class="progress-circle"
-          [class.progress-circle--done]="i < currentStep"
-          [class.progress-circle--active]="i === currentStep"
-          [class.progress-circle--todo]="i > currentStep"
-        >
-          @if (i < currentStep) {
-            <span class="progress-check">✓</span>
+    <div
+      class="progress-step"
+      [class.progress-step--done]="i < currentStep"
+      [class.progress-step--active]="i === currentStep"
+      [class.progress-step--todo]="i > currentStep"
+    >
+      <div class="progress-chip">
+        <span class="progress-chip__badge">
+          @if (i === steps.length - 1) {
+            <lucide-icon
+              name="trophy"
+              class="w-4 h-4 transition-all duration-300 progress-trophy"
+              [class.scale-110]="currentStep === steps.length - 1"
+            ></lucide-icon>
           } @else {
-            <span>{{ i + 1 }}</span>
+            {{ i + 1 }}
           }
-        </div>
-
-        <div
-          class="progress-label"
-          [class.progress-label--active]="i === currentStep"
-          [class.progress-label--done]="i < currentStep"
-          [class.progress-label--todo]="i > currentStep"
-        >
-          {{ step }}
-        </div>
-
-        @if (i < steps.length - 2) {
-          <div
-            class="progress-line"
-            [class.progress-line--done]="i < currentStep"
-            [class.progress-line--todo]="i >= currentStep"
-          ></div>
-        }
+        </span>
+        <div class="progress-chip__label">{{ step }}</div>
       </div>
-    } @else {
-      <div class="progress-step progress-step--result">
-        <div
-          class="progress-circle progress-circle--trophy"
-          [class.progress-circle--active]="currentStep === steps.length - 1"
-          [class.progress-circle--todo]="currentStep < steps.length - 1"
-        >
-          <lucide-icon
-            name="trophy"
-            class="w-6 h-6 transition-all duration-300 progress-trophy"
-            [class.scale-110]="currentStep === steps.length - 1"
-          ></lucide-icon>
-        </div>
-
-        <div
-          class="progress-label"
-          [class.progress-label--active]="currentStep === steps.length - 1"
-          [class.progress-label--todo]="currentStep < steps.length - 1"
-        >
-          {{ step }}
-        </div>
-      </div>
-    }
+    </div>
   }
 </div>

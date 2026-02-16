@@ -1,98 +1,107 @@
 .progress-track {
   position: relative;
+  gap: 10px;
 }
 
 .progress-step {
-  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
 }
 
-.progress-circle {
-  width: 44px;
-  height: 44px;
-  border-radius: 9999px;
+.progress-chip {
+  width: 100%;
+  min-height: 62px;
+  border-radius: 14px;
+  border: 1px solid rgba(162, 193, 229, 0.6);
+  background: linear-gradient(160deg, rgba(233, 242, 252, 0.92), rgba(221, 235, 248, 0.86));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  transition: border-color 200ms ease, background 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+}
+
+.progress-chip__badge {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid rgba(138, 179, 222, 0.72);
+  background: rgba(211, 230, 248, 0.95);
+  color: #264874;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 17px;
-  font-weight: 700;
-  transition: all 0.25s ease;
-  border: 1px solid transparent;
-}
-
-.progress-circle--todo {
-  background: #d7ebfb;
-  color: #5d7fa7;
-  border-color: #bfdbf3;
-}
-
-.progress-circle--active {
-  background: linear-gradient(145deg, #72cdf6 0%, #59b8e8 100%);
-  color: #ffffff;
-  border-color: rgba(109, 203, 246, 0.9);
-  box-shadow: 0 8px 18px rgba(71, 166, 224, 0.34);
-}
-
-.progress-circle--done {
-  background: linear-gradient(145deg, #a4dcf8 0%, #7fcdf2 100%);
-  color: #1f4872;
-  border-color: rgba(119, 199, 239, 0.9);
-}
-
-.progress-circle--trophy {
-  font-size: 0;
-}
-
-.progress-check {
-  font-size: 17px;
-  font-weight: 800;
-}
-
-.progress-label {
-  margin-top: 10px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
+  flex-shrink: 0;
+}
+
+.progress-chip__label {
+  font-size: 16px;
+  font-weight: 500;
   text-transform: lowercase;
   letter-spacing: 0.01em;
-  transition: color 0.25s ease;
+  color: #2f5483;
+  line-height: 1.2;
 }
 
-.progress-label--todo {
-  color: #6b88ad;
+.progress-step--todo .progress-chip {
+  border-color: rgba(165, 196, 230, 0.6);
+  background: linear-gradient(160deg, rgba(233, 242, 252, 0.88), rgba(221, 235, 248, 0.82));
 }
 
-.progress-label--active {
-  color: #59b8e8;
+.progress-step--done .progress-chip {
+  border-color: rgba(135, 196, 241, 0.78);
+  background: linear-gradient(160deg, rgba(203, 233, 252, 0.94), rgba(186, 223, 248, 0.9));
+  box-shadow: 0 8px 16px rgba(89, 147, 204, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 
-.progress-label--done {
-  color: #6185a6;
+.progress-step--done .progress-chip__badge {
+  border-color: rgba(119, 191, 239, 0.9);
+  background: linear-gradient(150deg, #9ad8f8, #79c8f0);
+  color: #173f6a;
 }
 
-.progress-line {
-  position: absolute;
-  top: 22px;
-  left: 56%;
-  width: 88%;
-  height: 2px;
-  z-index: -1;
-  transition: background-color 0.25s ease;
+.progress-step--active .progress-chip {
+  border-color: rgba(104, 192, 241, 0.95);
+  background: linear-gradient(155deg, rgba(186, 229, 252, 0.98), rgba(163, 215, 247, 0.94));
+  box-shadow: 0 10px 20px rgba(73, 145, 205, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.58);
+  transform: translateY(-1px);
 }
 
-.progress-line--todo {
-  background: #c8ddf0;
+.progress-step--active .progress-chip__badge {
+  border-color: rgba(109, 203, 246, 0.95);
+  background: linear-gradient(145deg, #72cdf6 0%, #59b8e8 100%);
+  color: #ffffff;
 }
 
-.progress-line--done {
-  background: linear-gradient(90deg, #9fdaf7, #74c9f2);
+.progress-step--active .progress-chip__label {
+  color: #215a94;
 }
 
 .progress-trophy {
-  color: #5d7fa7;
+  color: #264874;
 }
 
-.progress-circle--active .progress-trophy {
+.progress-step--active .progress-trophy {
   color: #ffffff;
+}
+
+@media (max-width: 1280px) {
+  .progress-chip {
+    min-height: 56px;
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .progress-chip__badge {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  .progress-chip__label {
+    font-size: 15px;
+  }
 }
