@@ -275,6 +275,11 @@
   color: #e8f7ff;
 }
 
+:host ::ng-deep .upload-shell .upload-single-grid {
+  grid-template-columns: minmax(0, 680px) !important;
+  justify-content: center;
+}
+
 :host ::ng-deep .upload-shell button.bg-accent {
   background: rgba(24, 173, 255, 0.28);
   color: #e3f6ff;
