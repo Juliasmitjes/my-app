@@ -1,6 +1,6 @@
 .progress-track {
   position: relative;
-  gap: 10px;
+  gap: 8px;
 }
 
 .progress-step {
@@ -10,74 +10,70 @@
 
 .progress-chip {
   width: 100%;
-  min-height: 62px;
-  border-radius: 14px;
-  border: 1px solid rgba(162, 193, 229, 0.6);
-  background: linear-gradient(160deg, rgba(233, 242, 252, 0.92), rgba(221, 235, 248, 0.86));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  min-height: 56px;
+  border-radius: 12px;
+  border: 1px solid rgba(168, 195, 224, 0.55);
+  background: rgba(230, 240, 250, 0.6);
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  transition: border-color 200ms ease, background 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+  gap: 8px;
+  padding: 8px 10px;
+  transition: border-color 180ms ease, background 180ms ease, color 180ms ease;
 }
 
 .progress-chip__badge {
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
-  border: 1px solid rgba(138, 179, 222, 0.72);
-  background: rgba(211, 230, 248, 0.95);
-  color: #264874;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  border: 1px solid rgba(149, 183, 219, 0.7);
+  background: rgba(225, 238, 251, 0.85);
+  color: #355b88;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   flex-shrink: 0;
 }
 
 .progress-chip__label {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   text-transform: lowercase;
-  letter-spacing: 0.01em;
-  color: #2f5483;
+  letter-spacing: 0.008em;
+  color: #355b88;
   line-height: 1.2;
 }
 
 .progress-step--todo .progress-chip {
-  border-color: rgba(165, 196, 230, 0.6);
-  background: linear-gradient(160deg, rgba(233, 242, 252, 0.88), rgba(221, 235, 248, 0.82));
+  border-color: rgba(171, 198, 226, 0.5);
+  background: rgba(231, 241, 251, 0.54);
 }
 
 .progress-step--done .progress-chip {
-  border-color: rgba(135, 196, 241, 0.78);
-  background: linear-gradient(160deg, rgba(203, 233, 252, 0.94), rgba(186, 223, 248, 0.9));
-  box-shadow: 0 8px 16px rgba(89, 147, 204, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  border-color: rgba(141, 194, 236, 0.68);
+  background: rgba(212, 235, 251, 0.68);
 }
 
 .progress-step--done .progress-chip__badge {
-  border-color: rgba(119, 191, 239, 0.9);
-  background: linear-gradient(150deg, #9ad8f8, #79c8f0);
-  color: #173f6a;
+  border-color: rgba(123, 189, 233, 0.8);
+  background: rgba(172, 220, 248, 0.72);
+  color: #2c5480;
 }
 
 .progress-step--active .progress-chip {
-  border-color: rgba(104, 192, 241, 0.95);
-  background: linear-gradient(155deg, rgba(186, 229, 252, 0.98), rgba(163, 215, 247, 0.94));
-  box-shadow: 0 10px 20px rgba(73, 145, 205, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.58);
-  transform: translateY(-1px);
+  border-color: rgba(108, 188, 236, 0.9);
+  background: rgba(196, 229, 249, 0.8);
 }
 
 .progress-step--active .progress-chip__badge {
-  border-color: rgba(109, 203, 246, 0.95);
-  background: linear-gradient(145deg, #72cdf6 0%, #59b8e8 100%);
+  border-color: rgba(106, 196, 241, 0.9);
+  background: rgba(103, 186, 232, 0.92);
   color: #ffffff;
 }
 
 .progress-step--active .progress-chip__label {
-  color: #215a94;
+  color: #2f649d;
 }
 
 .progress-trophy {
@@ -90,18 +86,18 @@
 
 @media (max-width: 1280px) {
   .progress-chip {
-    min-height: 56px;
-    padding: 8px 10px;
+    min-height: 52px;
+    padding: 7px 9px;
     gap: 8px;
   }
 
   .progress-chip__badge {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     font-size: 14px;
   }
 
   .progress-chip__label {
-    font-size: 15px;
+    font-size: 14px;
   }
 }
