@@ -24,13 +24,13 @@ interface TemplateCard {
   subtitle: string;
   cols: number;
   cells: Array<'text' | 'image' | 'video'>;
-  visual: 'service' | 'portfolio' | 'product' ;
+  visual: 'editorial' | 'storyline' | 'asymmetry';
 }
 
 const TEMPLATE_LIBRARY: TemplateCard[] = [
-  { id: 'portfolio', title: 'Portfolio', subtitle: 'Dynamische spread met storytelling', cols: 4, cells: ['image', 'image', 'image', 'image', 'text', 'text'], visual: 'portfolio' },
-  { id: 'product', title: 'Product', subtitle: 'Tekstgedreven intro met visuele focus', cols: 2, cells: ['text', 'image', 'image'], visual: 'product' },
-  { id: 'service', title: 'Service', subtitle: 'Speelse, asymmetrische compositie', cols: 2, cells: ['image', 'image', 'image', 'image', 'text'], visual: 'service' }
+  { id: 'portfolio-artist', title: 'Editorial', subtitle: 'Dynamische spread met storytelling', cols: 4, cells: ['image', 'image', 'image', 'image', 'text', 'text'], visual: 'editorial' },
+  { id: 'portfolio-designer', title: 'Storyline', subtitle: 'Tekstgedreven intro met visuele focus', cols: 2, cells: ['text', 'image', 'image'], visual: 'storyline' },
+  { id: 'portfolio-illustrator', title: 'Assymetry', subtitle: 'Speelse, asymmetrische compositie', cols: 2, cells: ['image', 'image', 'image', 'image', 'text'], visual: 'asymmetry' }
 ];
 
 @Component({
