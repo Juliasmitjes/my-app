@@ -24,24 +24,24 @@ interface TemplateOption {
 const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
   portfolio: [
     {
-      id: 'portfolio-artist',
-      label: 'Editorial',
+      id: 'portfolio',
+      label: 'Portfolio',
       description: 'Dynamische spread met storytelling.',
       cols: 3,
       rows: 4,
       cells: ['image', 'image', 'image', 'image', 'image', 'image', 'image', 'image', 'image']
     },
     {
-      id: 'portfolio-designer',
-      label: 'Storyline',
+      id: 'product',
+      label: 'Product',
       description: 'Tekstgedreven intro met visuele focus.',
       cols: 2,
       rows: 3,
       cells: ['text', 'image', 'image', 'image', 'image']
     },
     {
-      id: 'portfolio-illustrator',
-      label: 'Assymetry',
+      id: 'service',
+      label: 'Service',
       description: 'Speelse, asymmetrische compositie.',
       cols: 1,
       rows: 2,
@@ -109,7 +109,7 @@ export class Portfolio implements OnChanges, OnDestroy {
 
   isArtistTemplate(template?: TemplateOption | null): boolean {
     const target = template ?? this.currentTemplate;
-    return target?.id === 'portfolio-artist';
+    return target?.id === 'portfolio';
   }
 
   readonly artistPreviewCells: CellType[] = [
@@ -147,12 +147,12 @@ export class Portfolio implements OnChanges, OnDestroy {
 
   isDesignerTemplate(template?: TemplateOption | null): boolean {
     const target = template ?? this.currentTemplate;
-    return target?.id === 'portfolio-designer';
+    return target?.id === 'product';
   }
 
   isIllustratorTemplate(template?: TemplateOption | null): boolean {
     const target = template ?? this.currentTemplate;
-    return target?.id === 'portfolio-illustrator';
+    return target?.id === 'service';
   }
 
   isImageCell(value: CellType): boolean {

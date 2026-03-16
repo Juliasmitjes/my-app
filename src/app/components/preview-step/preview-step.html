@@ -344,7 +344,7 @@
                     [style.background]="'color-mix(in srgb, ' + selectedThemeColors[1] + ' 70%, white)'"
                   >
                     @if (isPortfolioTemplate) {
-                      @if (portfolioTemplateId === 'portfolio-artist') {
+                      @if (portfolioTemplateId === 'portfolio') {
                         <div class="rounded-2xl border border-border/40 bg-muted/20 overflow-hidden">
                           <div class="px-4 py-3 bg-muted/60 border border-border/40">
                             <div class="flex items-center justify-between text-xs text-muted-foreground">
@@ -394,7 +394,7 @@
                             </div>
                           </div>
                         </div>
-                      } @else if (portfolioTemplateId === 'portfolio-designer') {
+                      } @else if (portfolioTemplateId === 'product') {
                         <div class="border border-border/40 bg-muted/40">
                           <div class="px-6 pt-6 pb-4">
                             <div class="flex items-center justify-between text-xs text-muted-foreground">
@@ -446,7 +446,7 @@
                             </div>
                           </div>
                         </div>
-                      } @else if (portfolioTemplateId === 'portfolio-illustrator') {
+                      } @else if (portfolioTemplateId === 'service') {
                         <div class="border border-border/40 bg-muted/20">
                           <div class="px-6 pt-6 pb-4">
                             <div class="flex items-center justify-between text-xs text-muted-foreground">

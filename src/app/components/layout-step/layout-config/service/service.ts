@@ -29,24 +29,24 @@ interface TemplateOption {
 const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
   portfolio: [
     {
-      id: 'portfolio-artist',
-      label: 'Artist',
+      id: 'portfolio',
+      label: 'Portfolio',
       description: 'Expressieve grid met mix van tekst en beeld.',
       cols: 4,
       rows: 3,
       cells: ['image', 'image', 'image', 'image', 'text', 'text']
     },
     {
-      id: 'portfolio-designer',
-      label: 'Designer',
+      id: 'product',
+      label: 'Product',
       description: 'Minimalistische presentatie met focus op typografie.',
       cols: 2,
       rows: 2,
       cells: ['text', 'image', 'image']
     },
     {
-      id: 'portfolio-illustrator',
-      label: 'Illustrator',
+      id: 'service',
+      label: 'Service',
       description: 'Illustraties in een compacte grid met tekstblok.',
       cols: 2,
       rows: 3,
