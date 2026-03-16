@@ -7,8 +7,6 @@ import { UploadUnit } from '../upload-unit/upload-unit';
 
 export type CellType = 'text' | 'image' | 'video';
 
-type TemplateGroup = 'portfolio' | 'product' | 'service' | 'local' | null;
-
 interface GridCell {
   value: CellType;
   labelMap: Record<CellType, string>;
@@ -49,32 +47,6 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
       rows: 2,
       cells: ['image', 'text']
     }
-  ],
-  product: [
-    {
-      id: 'product-focus',
-      label: 'Product focus',
-      description: 'Productbeeld met uitleg.',
-      cols: 2,
-      rows: 2,
-      cells: ['image', 'image', 'text', 'text']
-    },
-    {
-      id: 'product-deal',
-      label: 'Deal highlight',
-      description: 'Aanbieding met beeld en tekst.',
-      cols: 2,
-      rows: 2,
-      cells: ['text', 'image', 'text', 'image']
-    },
-    {
-      id: 'product-tiles',
-      label: 'Product tiles',
-      description: 'Afbeeldingen met korte info.',
-      cols: 2,
-      rows: 2,
-      cells: ['image', 'text', 'image', 'text']
-    }
   ]
 };
 
@@ -95,7 +67,6 @@ export class Portfolio implements OnChanges, OnDestroy {
   @Input() uploads: Record<string, any> = {};
   @Input() layoutConfig?: BuilderState['layoutConfig'];
   @Input() contentSaved = false;
-  @Input() templateGroup: TemplateGroup = 'portfolio';
 
   @Output() configChange = new EventEmitter<any>();
 
@@ -115,10 +86,6 @@ export class Portfolio implements OnChanges, OnDestroy {
   private blobUrlCache = new Map<string, string>();
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['templateGroup']) {
-      this.syncTemplateSet();
-    }
-
     if (changes['uploads']) {
       this.resetBlobUrls();
     }
@@ -130,10 +97,6 @@ export class Portfolio implements OnChanges, OnDestroy {
 
   ngOnDestroy(): void {
     this.resetBlobUrls();
-  }
-
-  get groupTitle(): string {
-    return this.templateGroup === 'product' ? 'Product templates' : 'Portfolio templates';
   }
 
   get businessNameDisplay(): string {
@@ -232,16 +195,6 @@ export class Portfolio implements OnChanges, OnDestroy {
     };
   }
 
-  private syncTemplateSet() {
-    const group = this.templateGroup === 'product' ? 'product' : 'portfolio';
-    this.templates = TEMPLATE_SETS[group];
-    const savedTemplateId = this.layoutConfig?.templateId;
-    const found = savedTemplateId ? this.templates.find(t => t.id === savedTemplateId) : null;
-    this.currentTemplate = found ?? this.templates[0];
-    this.applyTemplate(this.currentTemplate);
-    this.syncBusinessNameInput(this.currentTemplate.id);
-  }
-
   selectTemplate(template: TemplateOption) {
     if (this.locked) return;
     this.currentTemplate = template;
@@ -312,7 +265,7 @@ export class Portfolio implements OnChanges, OnDestroy {
       config: {
         cols: this.cols,
         cells: this.grid.map(c => c.value),
-        templateGroup: this.templateGroup,
+        templateGroup: 'portfolio',
         templateId: this.currentTemplate?.id
       }
     });
@@ -389,7 +342,6 @@ export class Portfolio implements OnChanges, OnDestroy {
         cellIndex: index,
         uploadType: type,
         uploadKey,
-        templateGroup: this.templateGroup,
         aspectRatio
       },
       contentSaved: false

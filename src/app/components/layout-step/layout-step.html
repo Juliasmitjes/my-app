@@ -6,21 +6,6 @@
         Klik op een layout. Uploaden doe je in de volgende stap.
       </p>
 
-      <div class="flex flex-wrap items-center justify-center gap-2 mb-6">
-        @for (layout of layouts; track layout.id) {
-          @if (!layout.hidden) {
-            <button
-              type="button"
-              class="template-category-pill cursor-pointer"
-              [class.template-category-pill--active]="selectedCategory === layout.id"
-              (click)="onSelect(layout.id)"
-            >
-              {{ layout.name }}
-            </button>
-          }
-        }
-      </div>
-
       @if (visibleTemplateCards.length) {
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           @for (card of visibleTemplateCards; track card.id) {
@@ -35,26 +20,18 @@
                   <div class="template-window__bar"></div>
                   <div class="template-window__body">
                     @switch (card.visual) {
-                      @case ('split') {
-                        <div class="preview-split">
-                          <div class="preview-box"></div>
-                          <div class="preview-lines">
-                            <span></span><span></span><span></span>
-                          </div>
-                        </div>
-                      }
-                      @case ('asymmetry') {
-                        <div class="preview-asymmetry">
+                      @case ('portfolio') {
+                        <div class="preview-portfolio">
                           <div class="preview-box preview-box--lg"></div>
                           <div class="preview-box"></div>
                           <div class="preview-box"></div>
                           <div class="preview-line"></div>
                         </div>
                       }
-                      @case ('editorial') {
-                        <div class="preview-editorial">
+                      @case ('product') {
+                        <div class="preview-product">
                           <div class="preview-box preview-box--hero"></div>
-                          <div class="preview-editorial__stack">
+                          <div class="preview-product__stack">
                             <div class="preview-line"></div>
                             <div class="preview-line preview-line--short"></div>
                             <div class="preview-box"></div>
@@ -63,54 +40,18 @@
                           <div class="preview-box"></div>
                         </div>
                       }
-                      @case ('storyline') {
-                        <div class="preview-storyline">
-                          <div class="preview-storyline__rail">
+                      @case ('service') {
+                        <div class="preview-service">
+                          <div class="preview-service__rail">
                             <span></span>
                             <span></span>
                             <span></span>
                           </div>
-                          <div class="preview-storyline__content">
+                          <div class="preview-service__content">
                             <div class="preview-headline"></div>
                             <div class="preview-line"></div>
                             <div class="preview-line preview-line--short"></div>
                             <div class="preview-box preview-box--lg"></div>
-                          </div>
-                        </div>
-                      }
-                      @case ('magazine') {
-                        <div class="preview-magazine">
-                          <div class="preview-col"></div>
-                          <div class="preview-col preview-col--wide"></div>
-                          <div class="preview-col"></div>
-                        </div>
-                      }
-                      @case ('typography') {
-                        <div class="preview-typography">
-                          <div class="preview-headline"></div>
-                          <div class="preview-line"></div>
-                          <div class="preview-line preview-line--short"></div>
-                          <div class="preview-line preview-line--xs"></div>
-                        </div>
-                      }
-                      @case ('clean') {
-                        <div class="preview-clean">
-                          <div class="preview-line"></div>
-                          <div class="preview-line preview-line--short"></div>
-                          <div class="preview-box preview-box--lg"></div>
-                        </div>
-                      }
-                      @case ('impact') {
-                        <div class="preview-impact">
-                          <div class="preview-impact__hero"></div>
-                          <div class="preview-impact__overlay">
-                            <div class="preview-headline"></div>
-                            <div class="preview-line"></div>
-                            <div class="preview-line preview-line--short"></div>
-                          </div>
-                          <div class="preview-impact__footer">
-                            <div class="preview-line preview-line--xs"></div>
-                            <div class="preview-line preview-line--short"></div>
                           </div>
                         </div>
                       }
@@ -155,7 +96,6 @@
 
       <!-- Configuratieblok -->
       <div class="mt-2">
-      @if (selectedCategory === 'portfolio') {
         <app-portfolio
           [locked]="uploadEditing && locked"
           [editorOnly]="true"
@@ -164,40 +104,6 @@
           [contentSaved]="uploadEditing ? false : (builderState.contentSaved ?? false)"
           (configChange)="onConfigChange($event)"
         ></app-portfolio>
-      }
-
-      @if (selectedCategory === 'product') {
-        <app-service
-          [templateGroup]="'product'"
-          [locked]="uploadEditing && locked"
-          [editorOnly]="true"
-          [uploads]="uploads"
-          [layoutConfig]="builderState.layoutConfig"
-          [contentSaved]="uploadEditing ? false : (builderState.contentSaved ?? false)"
-          (configChange)="onConfigChange($event)"
-        ></app-service>
-      }
-
-      @if (selectedCategory === 'service') {
-        <app-service
-          [locked]="uploadEditing && locked"
-          [editorOnly]="true"
-          [uploads]="uploads"
-          [layoutConfig]="builderState.layoutConfig"
-          [contentSaved]="uploadEditing ? false : (builderState.contentSaved ?? false)"
-          (configChange)="onConfigChange($event)"
-        ></app-service>
-      }
-
-      @if (selectedCategory === 'local') {
-        <app-local-business
-          [locked]="uploadEditing && locked"
-          [uploads]="uploads"
-          [layoutConfig]="builderState.layoutConfig"
-          [contentSaved]="uploadEditing ? false : (builderState.contentSaved ?? false)"
-          (configChange)="onConfigChange($event)"
-        ></app-local-business>
-      }
       </div>
     </div>
   }

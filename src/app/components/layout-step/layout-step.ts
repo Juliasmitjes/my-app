@@ -12,36 +12,25 @@ import {
 import { CommonModule } from '@angular/common';
 import { BuilderState } from '../../types/builder-state';
 import { Portfolio } from './layout-config/portfolio/portfolio';
-import { Service } from './layout-config/service/service';
-import { LocalBusiness } from './layout-config/local-business/local-business';
-import { NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from '../ui/toast/toast.service';
 import { ImageCropper } from './layout-config/image-cropper/image-cropper';
 
 type StepMode = 'select' | 'upload';
-type TemplateCategory = 'portfolio' | 'service' | 'product';
 
 interface TemplateCard {
   id: string;
-  category: TemplateCategory;
   title: string;
   subtitle: string;
   cols: number;
   cells: Array<'text' | 'image' | 'video'>;
-  visual: 'cards' | 'split' | 'asymmetry' | 'magazine' | 'typography' | 'clean' | 'editorial' | 'storyline' | 'impact';
+  visual: 'service' | 'portfolio' | 'product' ;
 }
 
 const TEMPLATE_LIBRARY: TemplateCard[] = [
-  { id: 'portfolio-artist', category: 'portfolio', title: 'Editorial', subtitle: 'Dynamische spread met storytelling', cols: 4, cells: ['image', 'image', 'image', 'image', 'text', 'text'], visual: 'editorial' },
-  { id: 'portfolio-designer', category: 'portfolio', title: 'Storyline', subtitle: 'Tekstgedreven intro met visuele focus', cols: 2, cells: ['text', 'image', 'image'], visual: 'storyline' },
-  { id: 'portfolio-illustrator', category: 'portfolio', title: 'Assymetry', subtitle: 'Speelse, asymmetrische compositie', cols: 2, cells: ['image', 'image', 'image', 'image', 'text'], visual: 'asymmetry' },
-  { id: 'service-hospitality', category: 'service', title: 'Magazine Layout', subtitle: 'Redactionele verdeling van content', cols: 4, cells: ['image', 'image', 'image', 'image', 'text'], visual: 'magazine' },
-  { id: 'service-wellness', category: 'service', title: 'Typography', subtitle: 'Tekstfirst met ondersteunend beeld', cols: 2, cells: ['text', 'image', 'image'], visual: 'typography' },
-  { id: 'service-industry', category: 'service', title: 'Impact Hero', subtitle: 'Sterke hero met duidelijke kernboodschap', cols: 1, cells: ['image', 'text'], visual: 'impact' },
-  { id: 'product-showcase', category: 'product', title: 'Cards', subtitle: 'Hero met twee productkaarten', cols: 2, cells: ['image', 'text', 'image', 'image'], visual: 'cards' },
-  { id: 'product-launchpad', category: 'product', title: 'Split Screen', subtitle: 'Productintro in twee kolommen', cols: 2, cells: ['image', 'text', 'image'], visual: 'split' },
-  { id: 'product-catalog', category: 'product', title: 'Clean & Simple', subtitle: 'Licht catalogusgrid met 3 foto\'s', cols: 2, cells: ['image', 'image', 'image', 'text'], visual: 'clean' }
+  { id: 'portfolio', title: 'Portfolio', subtitle: 'Dynamische spread met storytelling', cols: 4, cells: ['image', 'image', 'image', 'image', 'text', 'text'], visual: 'portfolio' },
+  { id: 'product', title: 'Product', subtitle: 'Tekstgedreven intro met visuele focus', cols: 2, cells: ['text', 'image', 'image'], visual: 'product' },
+  { id: 'service', title: 'Service', subtitle: 'Speelse, asymmetrische compositie', cols: 2, cells: ['image', 'image', 'image', 'image', 'text'], visual: 'service' }
 ];
 
 @Component({
@@ -50,8 +39,6 @@ const TEMPLATE_LIBRARY: TemplateCard[] = [
   imports: [
     CommonModule,
     Portfolio,
-    Service,
-    LocalBusiness,
     FormsModule,
     ImageCropper
   ],
@@ -68,8 +55,7 @@ export class LayoutStep implements OnChanges {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   constructor(
-  private toast: ToastService,
-  private ngZone: NgZone
+  private toast: ToastService
 ) {}
 
   @Output() update = new EventEmitter<Partial<BuilderState>>();
@@ -80,7 +66,6 @@ export class LayoutStep implements OnChanges {
 
   // teksteditor
   showTextEditor = false;
-  textEditorValue = '';
   editorTitle = '';
   editorSubtitle = '';
   editorBody = '';
@@ -90,10 +75,7 @@ export class LayoutStep implements OnChanges {
   currentUploadKeyCol1: string | null = null;
   currentUploadKeyCol2: string | null = null;
 
-  currentUploadType: 'image' | 'video' | 'text' | null = null;
-
   selectedConfig: any = null;
-  selectedCategory: 'portfolio' | 'service' | 'product' | 'local' | null = null;
 
   showCropper = false;
   cropperFile: File | null = null;
@@ -101,38 +83,8 @@ export class LayoutStep implements OnChanges {
   cropperAspectRatio: number | null = null;
   uploadEditing = false;
 
-  layouts = [
-    {
-      id: 'portfolio',
-      name: 'Portfolio',
-      description: 'Werk, cases of projecten laten zien',
-      icon: 'palette',
-      layoutType: 'grid',
-      hidden: false
-    },
-    {
-      id: 'service',
-      name: 'Service',
-      description: 'Diensten overzichtelijk presenteren',
-      icon: 'hand-platter',
-      layoutType: 'grid',
-      hidden: false
-    },
-    {
-      id: 'product',
-      name: 'Product',
-      description: 'Producten of aanbod tonen',
-      icon: 'shopping-cart',
-      layoutType: 'grid',
-      hidden: false
-    }
-  ] as const;
-
   get visibleTemplateCards(): TemplateCard[] {
-    if (!this.selectedCategory || this.selectedCategory === 'local') {
-      return [];
-    }
-    return TEMPLATE_LIBRARY.filter(card => card.category === this.selectedCategory);
+    return TEMPLATE_LIBRARY;
   }
 
   get selectedTemplateId(): string | null {
@@ -150,71 +102,6 @@ export class LayoutStep implements OnChanges {
       if (this.builderState?.layout) {
         this.selectedLayout = this.builderState.layout;
       }
-      if (this.builderState?.layoutConfig?.templateGroup) {
-        this.selectedCategory = this.builderState.layoutConfig.templateGroup;
-      }
-    }
-  }
-
-  trackById(index: number, item: any) {
-    return item.id;
-  }
-
-  // -----------------------------
-  // LAYOUT SELECTIE
-  // -----------------------------
-  onSelect(id: string) {
-    if (this.mode === 'select') {
-      this.selectedCategory = id as TemplateCategory;
-
-      this.update.emit({
-        layout: 'grid',
-        layoutLocked: false,
-        contentSaved: false,
-        layoutConfig: {
-          ...this.builderState.layoutConfig,
-          templateGroup: this.selectedCategory,
-          templateId: undefined,
-          cols: undefined,
-          cells: undefined
-        }
-      });
-      return;
-    }
-
-    this.locked = false;
-
-    const selected = this.layouts.find(layout => layout.id === id);
-    if (!selected) return;
-
-    const value = selected.layoutType as BuilderState['layout'];
-
-    this.selectLayout.emit(value);
-    this.update.emit({
-      layout: value,
-      layoutConfig: {
-        ...this.builderState.layoutConfig,
-        templateGroup: selected.id
-      }
-    });
-    this.update.emit({ contentSaved: false });
-
-    this.selectedLayout = value;
-    this.selectedCategory = selected.id;
-
-    // scroll op mobiel
-    const scrollMap: Record<string, string> = {
-      single: 'single-layout-top',
-      'two-column': 'two-layout-top',
-      grid: 'grid-layout-top'
-    };
-
-    if (value && window.innerWidth < 640) {
-
-      setTimeout(() => {
-        const el = document.getElementById(scrollMap[value]);
-        el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 50);
     }
   }
 
@@ -237,7 +124,6 @@ export class LayoutStep implements OnChanges {
   }
 
   chooseTemplate(card: TemplateCard): void {
-    this.selectedCategory = card.category;
     this.selectedLayout = 'grid';
     this.locked = true;
 
@@ -247,7 +133,7 @@ export class LayoutStep implements OnChanges {
       contentSaved: false,
       layoutConfig: {
         ...this.builderState.layoutConfig,
-        templateGroup: card.category,
+        templateGroup: 'portfolio',
         templateId: card.id,
         cols: card.cols,
         cells: card.cells
@@ -285,21 +171,10 @@ export class LayoutStep implements OnChanges {
     }
 
     if (event.config?.subtitle !== undefined) {
-      const templateGroup = event.config?.templateGroup ?? 'portfolio';
-      const templateId = event.config?.businessNameTemplateId as string | undefined;
-      const subtitleKeyMap: Record<string, string> = {
-        portfolio: 'artist_subtitle',
-        service: 'service_subtitle',
-        product: 'product_subtitle'
-      };
-      const subtitleKey =
-        (templateGroup === 'service' || templateGroup === 'product') && templateId
-          ? `${templateGroup}_subtitle_${templateId}`
-          : subtitleKeyMap[templateGroup] ?? 'artist_subtitle';
       if (subtitleValue) {
-        newUploads[subtitleKey] = subtitleValue;
+        newUploads['artist_subtitle'] = subtitleValue;
       } else {
-        delete newUploads[subtitleKey];
+        delete newUploads['artist_subtitle'];
       }
     }
 
@@ -398,7 +273,6 @@ export class LayoutStep implements OnChanges {
       this.currentUploadKeyCol2 = null;
     }
 
-    this.currentUploadType = type;
     this.cropperAspectRatio = type === 'image' ? (aspectRatio ?? null) : null;
 
     switch (type) {

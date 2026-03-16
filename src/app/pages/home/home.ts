@@ -9,7 +9,7 @@ import { SpeechBubble } from '../../components/ui/speech-bubble/speech-bubble';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, Button, LucideAngularModule, Services, Footer, SpeechBubble],
+  imports: [CommonModule, Button, LucideAngularModule, Services, Footer],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
