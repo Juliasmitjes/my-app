@@ -200,6 +200,114 @@
   gap: 8px;
 }
 
+.preview-product-site {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+}
+
+.preview-product-site__topbar {
+  height: 24px;
+  padding: 0 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  display: grid;
+  grid-template-columns: 1fr 1.4fr auto;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+}
+
+.preview-product-logo {
+  height: 6px;
+  width: 40px;
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.75);
+}
+
+.preview-product-nav {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.preview-product-nav span {
+  height: 5px;
+  width: 18px;
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.5);
+}
+
+.preview-product-cta {
+  height: 10px;
+  width: 34px;
+  border-radius: 999px;
+  background: rgba(176, 97, 34, 0.86);
+}
+
+.preview-product-hero {
+  position: relative;
+  min-height: 142px;
+  background:
+    linear-gradient(145deg, #7b684f 0%, #947b58 30%, #6d5a41 55%, #4f4435 100%);
+}
+
+.preview-product-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.preview-product-copy {
+  position: relative;
+  z-index: 1;
+  width: 58%;
+  padding: 12px 10px;
+  display: grid;
+  gap: 6px;
+}
+
+.preview-product-title {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.preview-product-title--short {
+  width: 86%;
+}
+
+.preview-product-subtitle {
+  margin-top: 2px;
+  width: 70%;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.preview-product-actions {
+  margin-top: 6px;
+  display: flex;
+  gap: 6px;
+}
+
+.preview-product-actions span {
+  display: inline-block;
+  height: 12px;
+  width: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.preview-product-actions span:first-child {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(255, 255, 255, 0.92);
+}
+
 .preview-magazine {
   display: grid;
   grid-template-columns: 0.8fr 1.5fr 0.8fr;
