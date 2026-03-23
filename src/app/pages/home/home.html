@@ -36,19 +36,46 @@
     </div>
 
     <div class="hero-preview-wrap">
-      <div class="hero-preview">
-        <article class="preview-card preview-card--main">
-          <span class="preview-pill"></span>
-          <h3></h3>
-          <p></p>
-          <div class="preview-grid">
-            <span></span>
+      <div class="hero-preview" aria-hidden="true">
+        <div class="web-canvas">
+          <div class="web-canvas__bar">
+            <span></span><span></span><span></span>
+            <div class="web-canvas__url"></div>
+          </div>
+
+          <div class="web-canvas__body">
+            <aside class="web-sidebar">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </aside>
+
+            <section class="web-content">
+              <div class="web-hero"></div>
+              <div class="web-lines">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="web-cards">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <div class="mobile-canvas">
+          <div class="mobile-canvas__notch"></div>
+          <div class="mobile-canvas__hero"></div>
+          <div class="mobile-canvas__lines">
             <span></span>
             <span></span>
           </div>
-        </article>
-        <article class="preview-card preview-card--soft"></article>
-        <article class="preview-card preview-card--muted"></article>
+          <div class="mobile-canvas__card"></div>
+        </div>
       </div>
       <div class="hero-stats">
         <span>5 stappen</span>
