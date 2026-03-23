@@ -1,8 +1,8 @@
 <div class="step-container">
   @if (mode === 'select') {
-    <div class="template-selector-shell mx-auto max-w-[1280px]">
+    <div class="mx-auto max-w-[1280px]">
       <h2 class="text-2xl font-bold text-center mb-2">Kies jouw template</h2>
-      <p class="text-center text-sm text-primary-foreground/80 mb-6">
+      <p class="step-lead text-center text-sm mb-6">
         Klik op een layout. Uploaden doe je in de volgende stap.
       </p>
 
@@ -21,16 +21,35 @@
                   <div class="template-window__body">
                     @switch (card.visual) {
                       @case ('editorial') {
-                        <div class="preview-editorial">
-                          <div class="preview-box preview-box--hero"></div>
-                          <div class="preview-editorial__stack">
-                            <div class="preview-headline"></div>
-                            <div class="preview-line"></div>
-                            <div class="preview-line preview-line--short"></div>
-                            <div class="preview-box"></div>
+                        <div class="preview-portfolio-site">
+                          <div class="preview-portfolio-site__top">
+                            <span class="preview-nav-line w-20"></span>
+                            <div class="preview-portfolio-site__top-center">
+                              <span class="preview-nav-line w-14"></span>
+                              <span class="preview-nav-line w-10"></span>
+                              <span class="preview-nav-line w-8"></span>
+                            </div>
+                            <span class="preview-nav-line w-16"></span>
                           </div>
-                          <div class="preview-box"></div>
-                          <div class="preview-box"></div>
+
+                          <div class="preview-portfolio-site__intro">
+                            <div class="preview-headline"></div>
+                            <div class="preview-line w-28"></div>
+                          </div>
+
+                          <div class="preview-portfolio-site__gallery">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                          </div>
+
+                          <div class="preview-portfolio-site__footer">
+                            <span class="preview-nav-line w-24"></span>
+                            <span class="preview-nav-line w-28"></span>
+                          </div>
                         </div>
                       }
                       @case ('storyline') {
@@ -81,9 +100,9 @@
       }
     </div>
   } @else {
-    <div class="template-selector-shell upload-shell mx-auto max-w-6xl">
+    <div class="upload-shell mx-auto max-w-6xl">
       <h2 class="text-2xl font-bold text-center mb-2">Upload content</h2>
-      <p class="text-center text-sm text-primary-foreground/80 mb-6">
+      <p class="step-lead text-center text-sm mb-6">
         Vul je gekozen template in met beeld en tekst.
       </p>
 
