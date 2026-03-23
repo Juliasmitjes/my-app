@@ -1,67 +1,61 @@
-<section class="relative min-h-[100vh] flex items-center overflow-hidden bg-primary home-hero-shell">
-
-  <!-- achtergrond met depth en glow -->
-  <div
-    class="absolute inset-0 bg-cover bg-center scale-105 animate-[slowZoom_30s_ease-in-out_infinite_alternate] hero-image-layer"
-    style="background-image: url('assets/images/background.jpg')"
-  >
-    <div class="absolute inset-0 hero-image-overlay"></div>
-  </div>
-
-  <div class="hero-side-panel hidden xl:flex">
-    <div class="hero-side-panel__inner">
-      <div class="hero-metric">
-        <div class="hero-metric__value">100%</div>
-        <p class="hero-metric__label">Maatwerk</p>
-        <p class="hero-metric__sub">Elke site uniek</p>
-      </div>
-      <div class="hero-metric">
-        <div class="hero-metric__value">7</div>
-        <p class="hero-metric__label">Dagen support</p>
-        <p class="hero-metric__sub">Altijd bereikbaar</p>
-      </div>
-      <div class="hero-metric">
-        <div class="hero-metric__value">5</div>
-        <p class="hero-metric__label">Minuten</p>
-        <p class="hero-metric__sub">Om te bouwen</p>
-      </div>
+<section class="home-hero-shell">
+  <header class="home-topbar">
+    <div class="home-topbar__inner">
+      <p class="home-brand">WithSmith</p>
+      <p class="home-kicker">Website studio</p>
     </div>
-  </div>
+  </header>
 
-  <!-- content -->
-  <div class="relative z-10 container mx-auto px-6 py-10 md:py-14 xl:py-16 2xl:py-24 flex flex-col md:flex-row items-center gap-8 lg:gap-10 xl:gap-12">
+  <div class="home-hero-content">
+    <h1 class="home-title">
+      Strak design,
+      <span>snel live.</span>
+    </h1>
+    <p class="home-subtitle">
+      Jouw professionele website in 5 stappen. 
+    </p>
 
-    <!-- tekstblok -->
-    <div class="flex-1 text-center md:text-left space-y-6 lg:space-y-8 max-w-xl hero-copy-card">
-      <div class="hero-brand-chip inline-block px-4 py-2 rounded-full font-semibold">
-        <span class="text-2xl md:text-3xl font-extrabold tracking-tight hero-ink"> With<span class="text-accent">Smith</span> </span>
-      </div>
+    <div class="home-actions">
+      <app-button
+        variant="hero"
+        size="lg"
+        [buttonClass]="'home-primary-btn hover:scale-100 active:scale-100'"
+        (click)="scrollToServices()"
+      >
+        Start project
+      </app-button>
 
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl 2xl:text-7xl font-extrabold hero-ink leading-[1.05] tracking-tight">
-        Jouw website
-        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-accent via-primary to-accent animate-gradient-x">
-          in 5 stappen
-        </span>
-      </h1>
-
-      <p class="text-base sm:text-lg xl:text-xl text-foreground/85 leading-relaxed">
-        Snel, simpel én betaalbaar: jouw professionele website.  
-        <span class="hero-highlight">Perfect voor starters en kleine ondernemers.</span>
-      </p>
-
-      <div class="pt-4">
-        <app-button
-          variant="hero"
-          size="lg"
-          [buttonClass]="'hero-cta-btn hover:scale-100 active:scale-100 2xl:text-lg'"
-          (click)="scrollToServices()"
-        >
-          Aan de slag
-          <lucide-icon name="arrow-down" class="ml-2 h-4 w-5"></lucide-icon>
-        </app-button>
-      </div>
+      <app-button
+        variant="outline"
+        size="lg"
+        [buttonClass]="'home-secondary-btn hover:scale-100 active:scale-100'"
+        (click)="scrollToContact()"
+      >
+        Plan gesprek
+      </app-button>
     </div>
 
+    <div class="hero-preview-wrap">
+      <div class="hero-preview">
+        <article class="preview-card preview-card--main">
+          <span class="preview-pill"></span>
+          <h3></h3>
+          <p></p>
+          <div class="preview-grid">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </article>
+        <article class="preview-card preview-card--soft"></article>
+        <article class="preview-card preview-card--muted"></article>
+      </div>
+      <div class="hero-stats">
+        <span>5 stappen</span>
+        <span>100% maatwerk</span>
+        <span>Snelle oplevering</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -76,5 +70,3 @@
 </section>
 
 <app-footer id="footer" class="block w-full"></app-footer>
-
-
