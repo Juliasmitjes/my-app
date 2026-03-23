@@ -1,15 +1,15 @@
 <!-- STICKY HEADER BUITEN DE SECTION -->
 <header id="mainHeader"
-class="services-topbar sticky top-0 z-50 shadow-md">
-  <div class="max-w-7xl mx-auto px-6 md:px-20 py-4">
+class="services-topbar sticky top-0 z-50">
+  <div class="services-topbar__inner max-w-7xl mx-auto px-6 md:px-20 py-4">
     <div class="flex items-center justify-between">
 
       <!-- Logo -->
       <div class="flex items-center gap-2">
-        <div class="w-9 h-9 flex items-center justify-center bg-gradient-to-br from-primary to-accent rounded-xl shadow-md">
-          <span class="text-white text-lg font-bold">W</span>
+        <div class="services-logo-mark w-9 h-9 flex items-center justify-center rounded-xl">
+          <span class="services-logo-letter text-lg font-bold">W</span>
         </div>
-       <span class="hidden sm:inline text-lg font-semibold text-foreground tracking-tight">
+       <span class="hidden sm:inline text-lg font-semibold text-foreground tracking-tight services-brand-label">
         WithSmith
       </span>
       </div>
@@ -38,7 +38,7 @@ class="services-topbar sticky top-0 z-50 shadow-md">
       <!-- Preview button -->
       <div class="hidden sm:flex items-center gap-3">
         <button
-          class="px-3 py-2 text-white text-sm font-medium rounded-md border border-border hover:bg-accent/20 transition cursor-pointer"
+          class="services-preview-btn px-3 py-2 text-sm font-medium rounded-md border transition cursor-pointer"
           (click)="openPreviewPanel()"
           aria-haspopup="dialog"
           [attr.aria-expanded]="showPreviewPanel()"
@@ -52,7 +52,7 @@ class="services-topbar sticky top-0 z-50 shadow-md">
 
 <!-- SECTION MET DE CONTENT -->
 <section id="contentSection"
- class="services-content-shell relative min-h-full overflow-hidden pb-16">
+ class="services-content-shell relative overflow-hidden pb-16">
 
   <!-- preview panel -->
   @defer (when showPreviewPanel()) {
@@ -69,10 +69,10 @@ class="services-topbar sticky top-0 z-50 shadow-md">
   }
 
   <!-- stappen -->
-   <div class="relative px-6 md:px-20">
+   <div class="services-shell-inner relative px-6 md:px-20">
     <!-- content card -->
     <div
-      class="services-content-card relative mb-12 mt-16 rounded-2xl p-10 min-h-[500px] transition-all duration-500"
+      class="services-content-card relative mb-12 mt-16 rounded-2xl p-10 transition-all duration-500"
       [class.services-content-card--layout]="currentStep() === 0 || currentStep() === 1"
     >
 
@@ -151,12 +151,12 @@ class="services-topbar sticky top-0 z-50 shadow-md">
     </div>
 
     <!-- navigatie -->
-    <div class="flex justify-between items-center">
+    <div class="services-nav-row flex justify-between items-center">
       <app-button
         variant="default"
         (click)="prevStep()"
         [disabled]="currentStep() === 0"
-        [buttonClass]="'transition-all hover:scale-105 hover:bg-primary/10 transition-transform duration-300 ease-in-out prev-step-btn'"
+        [buttonClass]="'services-nav-btn transition-all hover:scale-[1.02] transition-transform duration-300 ease-in-out prev-step-btn'"
       >
         Vorige
       </app-button>
@@ -165,7 +165,7 @@ class="services-topbar sticky top-0 z-50 shadow-md">
         variant="default"
         (click)="nextStep()"
         [disabled]="!canProceed()"
-        [buttonClass]="'transition-all hover:scale-105 hover:bg-accent/10 transition-transform duration-300 ease-in-out next-step-btn'"
+        [buttonClass]="'services-nav-btn services-nav-btn--next transition-all hover:scale-[1.02] transition-transform duration-300 ease-in-out next-step-btn'"
       >
         {{ currentStep() === steps.length - 2 ? 'Resultaat' : 'Volgende' }}
       </app-button>

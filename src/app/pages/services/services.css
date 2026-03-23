@@ -2,52 +2,90 @@
   0%, 100% { opacity: 0.7; transform: scale(1); }
   50% { opacity: 1; transform: scale(1.05); }
 }
+
 .animate-pulse {
   animation: pulse 6s ease-in-out infinite;
 }
 
+:host {
+  display: block;
+  --services-bg: #f5f5f7;
+  --services-surface: #ffffff;
+  --services-border: rgba(0, 0, 0, 0.08);
+  --services-text: #1d1d1f;
+  --services-muted: rgba(29, 29, 31, 0.58);
+  --services-accent: #3778f0;
+}
+
 .services-topbar {
-  background: linear-gradient(160deg, #1a49c7 0%, #1b3ca5 50%, #162f86 100%);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid #162f86;
+  background: rgba(245, 245, 247, 0.92);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--services-border);
+}
+
+.services-topbar__inner {
+  max-width: 1280px;
+}
+
+.services-logo-mark {
+  border: 1px solid rgba(55, 120, 240, 0.32);
+  background: #eef4ff;
+  box-shadow: none;
+}
+
+.services-logo-letter {
+  color: var(--services-accent);
+}
+
+.services-brand-label {
+  color: var(--services-text);
 }
 
 .services-topbar .text-foreground {
-  color: rgba(233, 247, 255, 0.96);
+  color: var(--services-text);
 }
 
 .services-topbar .text-muted-foreground {
-  color: rgba(188, 223, 255, 0.9);
+  color: var(--services-muted);
+}
+
+.services-preview-btn {
+  color: var(--services-accent);
+  border-color: rgba(55, 120, 240, 0.36);
+  background: var(--services-surface);
+}
+
+.services-preview-btn:hover {
+  background: #f0f5ff;
 }
 
 .services-content-shell {
-  background:
-    radial-gradient(980px 420px at 14% 10%, rgba(116, 217, 255, 0.12), transparent 64%),
-    radial-gradient(900px 380px at 86% 78%, rgba(74, 176, 255, 0.1), transparent 68%),
-    linear-gradient(180deg, #eef3f9 0%, #e9eef6 52%, #e3eaf4 100%);
+  min-height: clamp(720px, calc(100svh - 48px), 1200px);
+  background: var(--services-bg);
 }
 
 .services-content-shell::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(205, 230, 255, 0.14), rgba(0, 0, 0, 0)),
-    radial-gradient(700px 260px at 50% 6%, rgba(69, 142, 255, 0.07), transparent 68%);
+  content: none;
+}
+
+.services-shell-inner {
+  width: min(1280px, 100%);
+  margin-inline: auto;
+  padding-bottom: clamp(36px, 5vh, 66px);
 }
 
 .services-content-card {
-  background: rgba(255, 255, 255, 0.74);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(140, 186, 236, 0.42);
-  box-shadow: 0 24px 44px rgba(29, 52, 92, 0.14);
+  min-height: clamp(480px, 60vh, 860px);
+  background: var(--services-surface);
+  border: 1px solid var(--services-border);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  border-radius: 26px;
 }
 
 .services-content-card--layout {
-  background: linear-gradient(160deg, #1a49c7 0%, #1b3ca5 50%, #162f86 100%);
-  border: 1px solid rgba(120, 176, 255, 0.3);
-  box-shadow: 0 24px 44px rgba(10, 34, 104, 0.3);
+  background: var(--services-surface);
+  border: 1px solid rgba(55, 120, 240, 0.2);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
 }
 
 :host ::ng-deep .services-content-card--layout .template-selector-shell {
@@ -57,10 +95,128 @@
   padding: 0;
 }
 
+.services-nav-row {
+  gap: 18px;
+  padding-bottom: 8px;
+}
+
+:host ::ng-deep .services-nav-btn {
+  border-radius: 999px;
+  border: 1px solid var(--services-border);
+  background: var(--services-surface);
+  color: var(--services-text);
+  min-width: 120px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+:host ::ng-deep .services-nav-btn:hover {
+  background: #fafafa;
+}
+
+:host ::ng-deep .services-nav-btn--next {
+  border-color: rgba(55, 120, 240, 0.36);
+  color: var(--services-accent);
+}
+
 :host ::ng-deep .next-step-btn:disabled,
-:host ::ng-deep .next-step-btn:disabled:hover {
-  background-color: hsl(var(--muted));
-  color: hsl(var(--muted-foreground));
+:host ::ng-deep .next-step-btn:disabled:hover,
+:host ::ng-deep .prev-step-btn:disabled,
+:host ::ng-deep .prev-step-btn:disabled:hover {
+  background-color: rgba(233, 236, 242, 0.92);
+  color: rgba(107, 114, 128, 0.9);
   box-shadow: none;
   transform: none;
+  border-color: rgba(12, 12, 13, 0.08);
+}
+
+@media (max-width: 1200px) {
+  .services-content-shell {
+    min-height: clamp(680px, calc(100svh - 48px), 980px);
+  }
+
+  .services-content-card {
+    min-height: clamp(440px, 56vh, 720px);
+    padding: clamp(22px, 3vw, 36px);
+  }
+}
+
+@media (max-height: 860px) and (min-width: 901px) {
+  .services-content-shell {
+    min-height: auto;
+  }
+
+  .services-shell-inner {
+    padding-bottom: 28px;
+  }
+
+  .services-content-card {
+    margin-top: 24px;
+    min-height: clamp(390px, 52vh, 620px);
+  }
+}
+
+@media (max-width: 900px) {
+  .services-content-shell {
+    min-height: auto;
+    padding-bottom: 28px;
+  }
+
+  .services-shell-inner {
+    padding-inline: 16px;
+  }
+
+  .services-content-card {
+    margin-top: 22px;
+    min-height: 420px;
+    border-radius: 22px;
+    padding: 18px;
+  }
+
+  .services-nav-row {
+    position: sticky;
+    bottom: 10px;
+    z-index: 20;
+    background: rgba(245, 245, 247, 0.92);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--services-border);
+    border-radius: 16px;
+    padding: 10px;
+  }
+
+  :host ::ng-deep .services-nav-btn {
+    min-width: 0;
+    width: 48%;
+  }
+}
+
+@media (max-width: 640px) {
+  .services-topbar {
+    top: 0;
+  }
+
+  .services-topbar__inner {
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .services-content-card {
+    padding: 14px;
+    min-height: 390px;
+  }
+
+  .services-nav-row {
+    gap: 10px;
+  }
+}
+
+@media (min-width: 1700px) {
+  .services-shell-inner {
+    width: min(1440px, 100%);
+  }
+
+  .services-content-card {
+    min-height: clamp(560px, 62vh, 980px);
+  }
 }
