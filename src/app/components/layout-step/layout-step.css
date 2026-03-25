@@ -172,7 +172,7 @@
 .preview-product-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(17, 24, 39, 0.28);
+  background: #dfe7f5;
 }
 
 .preview-product-copy {
@@ -285,14 +285,14 @@
 .preview-portfolio-site__body {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  gap: 10px;
+  gap: 12px;
   padding: 8px;
 }
 
 .preview-portfolio-site__intro {
   display: grid;
   gap: 6px;
-  padding-top: 2px;
+  padding-top: 6px;
 }
 
 .preview-portfolio-site__gallery {
@@ -307,7 +307,7 @@
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.08);
   background: linear-gradient(180deg, #edf2fb 0%, #e5ebf5 100%);
-  min-height: 78px;
+  min-height: 64px;
 }
 
 .preview-portfolio-site__footer {
