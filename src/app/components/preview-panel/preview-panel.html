@@ -66,17 +66,6 @@
                   }
                 </div>
               </div>
-
-              @if (currentStep < 5) {
-                <button
-                  class="px-2 py-1 text-xs rounded border whitespace-nowrap text-left"
-                  [style.background]="selectedThemeColors[7]"
-                  [style.color]="selectedThemeColors[8]"
-                  [style.borderColor]="selectedThemeColors[9]"
-                >
-                  Button
-                </button>
-              }
             </div>
           </div>
         }
@@ -357,6 +346,51 @@
                   >
                     @if (isPortfolioTemplate) {
                       @if (portfolioTemplateId === 'portfolio') {
+                        <div class="preview-panel-portfolio">
+                          <div class="preview-panel-portfolio__topbar">
+                            <span class="preview-panel-portfolio__logo" [style.fontFamily]="headingFont">
+                              Bedrijf
+                            </span>
+                            <div class="preview-panel-portfolio__nav">
+                              <span>Button</span>
+                              <span>Button</span>
+                              <span>Button</span>
+                            </div>
+                            <span class="preview-panel-portfolio__meta">Button</span>
+                          </div>
+
+                          <div class="preview-panel-portfolio__body">
+                            <div class="preview-panel-portfolio__intro">
+                              <div class="preview-panel-portfolio__title" [style.fontFamily]="headingFont">
+                                {{ getPortfolioBusinessName() }}
+                              </div>
+                              <div class="preview-panel-portfolio__subtitle">
+                                {{ getPortfolioSubtitle() }}
+                              </div>
+                            </div>
+
+                            <div class="preview-panel-portfolio__gallery">
+                              @for (index of [0,1,2,3,4,5,6,7,8,9]; track index) {
+                                <div class="preview-panel-portfolio__image">
+                                  <img
+                                    class="w-full h-full object-cover"
+                                    [src]="getPortfolioImage(index)"
+                                    alt=""
+                                  />
+                                </div>
+                              }
+                            </div>
+
+                            <div class="preview-panel-portfolio__footer">
+                              <span class="preview-panel-portfolio__footer-left">Button</span>
+                              <div class="preview-panel-portfolio__footer-right">
+                                <span>Button</span>
+                                <span>Button</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      } @else if (portfolioTemplateId === '__portfolio_legacy_disabled__') {
                         <div class="rounded-2xl border border-border/40 bg-muted/20 overflow-hidden">
                           <div class="px-4 py-3 bg-muted/60 border border-border/40">
                             <div class="flex items-center justify-between text-xs text-muted-foreground">
@@ -495,7 +529,7 @@
                                   Jouw titel
                                 </div>
                                 <div class="text-sm sm:text-base mt-2 text-white/90">
-                                  Hier komt jouw ondertitel. Maak het pakkend!
+                                  Hier komt jouw ondertitel. 
                                 </div>
                               }
                             </div>

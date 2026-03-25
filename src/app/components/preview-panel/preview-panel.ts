@@ -192,7 +192,7 @@ export class PreviewPanel implements OnChanges {
     const value = this.builderState.uploads?.['artist_subtitle'];
     return typeof value === 'string' && value.trim()
       ? value
-      : 'Hier komt jouw ondertitel. Maak het pakkend!';
+      : 'Hier komt jouw ondertitel.';
   }
 
   getPortfolioTextBlock(index: number): { title: string; subtitle: string; body: string } | null {

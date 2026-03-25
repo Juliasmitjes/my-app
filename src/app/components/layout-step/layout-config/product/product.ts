@@ -110,7 +110,7 @@ export class Product implements OnChanges, OnDestroy {
   }
 
   get subtitleDisplay(): string {
-    return this.subtitleInput.trim() || 'Hier komt jouw ondertitel. Maak het pakkend!';
+    return this.subtitleInput.trim() || 'Hier komt jouw ondertitel.';
   }
 
   isShowcaseTemplate(template?: TemplateOption | null): boolean {
