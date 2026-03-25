@@ -251,14 +251,13 @@
 .preview-product-hero {
   position: relative;
   min-height: 142px;
-  background:
-    linear-gradient(180deg, #edf2fb 0%, #e5ebf5 100%);
+  background: #edf2fb;
 }
 
 .preview-product-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(17, 24, 39, 0.28);
 }
 
 .preview-product-copy {
@@ -387,8 +386,8 @@
 .preview-portfolio-site__body {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  gap: 12px;
-  padding: 10px;
+  gap: 10px;
+  padding: 8px;
 }
 
 .preview-portfolio-site__intro {
@@ -400,16 +399,16 @@
 .preview-portfolio-site__gallery {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
+  gap: 8px;
   align-items: stretch;
-  padding-bottom: 4px;
+  padding-bottom: 2px;
 }
 
 .preview-portfolio-site__gallery span {
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.08);
   background: linear-gradient(180deg, #edf2fb 0%, #e5ebf5 100%);
-  min-height: 90px;
+  min-height: 78px;
 }
 
 .preview-portfolio-site__footer {
@@ -417,7 +416,7 @@
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
-  padding-top: 8px;
+  padding-top: 4px;
   margin-top: auto;
 }
 
