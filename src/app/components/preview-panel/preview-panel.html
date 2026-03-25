@@ -485,65 +485,40 @@
                           </div>
                         </div>
                       } @else if (portfolioTemplateId === 'service') {
-                        <div class="border border-border/40 bg-muted/20">
-                          <div class="px-6 pt-6 pb-4">
-                            <div class="flex items-center justify-between text-xs text-muted-foreground">
-                              <span class="font-semibold text-foreground text-lg">{{ getPortfolioBusinessName() }}</span>
-                              <div class="flex items-center gap-4">
-                                <span>Button</span>
-                                <span>Button</span>
-                              </div>
+                        <div class="preview-panel-service">
+                          <div class="preview-panel-service__topbar">
+                            <span class="preview-panel-service__brandmark" [style.fontFamily]="headingFont">
+                              Bedrijf
+                            </span>
+                            <div class="preview-panel-service__topactions">
+                              <span>Button</span>
+                              <span>Button</span>
                             </div>
                           </div>
-                          <div class="relative w-full aspect-[16/9] overflow-hidden border-t border-border/30">
-                            <img
-                              class="w-full h-full object-cover"
-                              [src]="getPortfolioImage(0)"
-                              alt=""
-                            />
-                            <div class="absolute inset-0 bg-black/35"></div>
-                            <div class="absolute inset-0 p-6 flex flex-col justify-center text-white text-center">
-                              @if (getPortfolioTextBlock(1); as textBlock) {
-                                <div class="space-y-2">
-                                  @if (textBlock.title) {
-                                    <div class="text-2xl sm:text-3xl font-semibold tracking-tight">
-                                      {{ textBlock.title }}
-                                    </div>
-                                  }
-                                  @if (textBlock.subtitle) {
-                                    <div class="text-sm sm:text-base text-white/90">
-                                      {{ textBlock.subtitle }}
-                                    </div>
-                                  }
-                                </div>
-                              } @else {
-                                <div class="text-2xl sm:text-3xl mt-6 font-semibold tracking-tight">
-                                  Jouw titel
-                                </div>
-                                <div class="text-sm sm:text-base mt-2 text-white/90">
-                                  Hier komt jouw ondertitel. 
-                                </div>
-                              }
+
+                          <div class="preview-panel-service__body">
+                            <div class="preview-panel-service__brand">
+                              <div class="preview-panel-service__badge"></div>
+                              <div class="preview-panel-service__ribbon">Bedrijfsnaam</div>
+                              <div class="preview-panel-service__subtitle">Hier komt jouw ondertitel</div>
                             </div>
-                          </div>
-                          <div class="px-6 py-6 border-t border-border/30 text-center">
-                            @if (getPortfolioTextBlock(1); as textBlock) {
-                              <div class="space-y-2 text-muted-foreground">
-                                <div class="text-xs sm:text-sm min-h-[2.5rem]">
-                                  {{ textBlock.body || '' }}
-                                </div>
-                              </div>
-                            } @else {
-                              <div class="text-xs sm:text-sm text-muted-foreground min-h-[2.5rem]">
-                                Hier komt jouw tekst.
-                              </div>
-                            }
-                          </div>
-                          <div class="px-6 py-4 border-t border-border/40 bg-muted/20 text-xs text-muted-foreground">
-                            <div class="flex items-center justify-between">
-                              <span>ЖИ 2026 {{ getPortfolioBusinessName() }}</span>
-                              <div class="flex items-center gap-4">
-                                <span>Button</span>
+
+                            <div class="preview-panel-service__nav">
+                              <span>Button</span>
+                              <span>Button</span>
+                              <span>Button</span>
+                              <span>Button</span>
+                              <span>Button</span>
+                            </div>
+
+                            <div class="preview-panel-service__hero">
+                              <div class="preview-panel-service__hero-text">Hier komt jouw tekst</div>
+                              <div class="preview-panel-service__cupcake"></div>
+                            </div>
+
+                            <div class="preview-panel-service__footer">
+                              <span class="preview-panel-service__footer-left">Button</span>
+                              <div class="preview-panel-service__footer-right">
                                 <span>Button</span>
                                 <span>Button</span>
                               </div>
