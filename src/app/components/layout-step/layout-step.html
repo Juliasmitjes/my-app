@@ -17,106 +17,103 @@
             >
               <div class="template-card__preview" [attr.data-visual]="card.visual">
                 <div class="template-window">
-                 
-                  <div class="template-window__body">
-                    @switch (card.visual) {
-                      @case ('editorial') {
-                        <div class="preview-portfolio-site">
-                          <div class="preview-portfolio-site__topbar">
-                            <span class="preview-portfolio-logo"></span>
-                            <div class="preview-portfolio-nav">
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                            </div>
-                            <span class="preview-portfolio-meta"></span>
+                  @switch (card.visual) {
+                    @case ('editorial') {
+                      <div class="preview-portfolio-site">
+                        <div class="preview-portfolio-site__topbar">
+                          <span class="preview-portfolio-logo"></span>
+                          <div class="preview-portfolio-nav">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                          </div>
+                          <span class="preview-portfolio-meta"></span>
+                        </div>
+
+                        <div class="preview-portfolio-site__body">
+                          <div class="preview-portfolio-site__intro">
+                            <div class="preview-headline"></div>
+                            <div class="preview-line w-28"></div>
                           </div>
 
-                          <div class="preview-portfolio-site__body">
-                            <div class="preview-portfolio-site__intro">
-                              <div class="preview-headline"></div>
-                              <div class="preview-line w-28"></div>
-                            </div>
-
-                            <div class="preview-portfolio-site__gallery">
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                            </div>
+                          <div class="preview-portfolio-site__gallery">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
                           </div>
                         </div>
-                      }
-                      @case ('storyline') {
-                        <div class="preview-product-site">
-                          <div class="preview-product-site__topbar">
-                            <span class="preview-product-logo"></span>
-                            <div class="preview-product-nav">
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                            </div>
-                            <span class="preview-product-cta"></span>
-                          </div>
-
-                          <div class="preview-product-hero">
-                            <div class="preview-product-overlay"></div>
-                            <div class="preview-product-copy">
-                              <div class="preview-product-title"></div>
-                              <div class="preview-product-title preview-product-title--short"></div>
-                              <div class="preview-product-subtitle"></div>
-                              <div class="preview-product-actions">
-                                <span></span>
-                                <span></span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      }
-                      @case ('asymmetry') {
-                        <div class="preview-service-site">
-                          <div class="preview-service-site__topbar">
-                            <span class="preview-service-auth"></span>
-                          </div>
-
-                          <div class="preview-service-site__body">
-                            <div class="preview-service-brand">
-                              <div class="preview-service-badge"></div>
-                              <div class="preview-service-ribbon"></div>
-                              <div class="preview-service-subtitle"></div>
-                            </div>
-
-                            <div class="preview-service-nav">
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                            </div>
-
-                            <div class="preview-service-hero">
-                              <div class="preview-service-cupcake"></div>
-                            </div>
-                          </div>
-                        </div>
-                      }
-                      @default {
-                        <div class="preview-cards">
-                          <div class="preview-card"></div>
-                          <div class="preview-card"></div>
-                          <div class="preview-card"></div>
-                          <div class="preview-card"></div>
-                        </div>
-                      }
+                      </div>
                     }
-                  </div>
+                    @case ('storyline') {
+                      <div class="preview-product-site">
+                        <div class="preview-product-site__topbar">
+                          <span class="preview-product-logo"></span>
+                          <div class="preview-product-nav">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                          </div>
+                          <span class="preview-product-cta"></span>
+                        </div>
+
+                        <div class="preview-product-hero">
+                          <div class="preview-product-overlay"></div>
+                          <div class="preview-product-copy">
+                            <div class="preview-product-title"></div>
+                            <div class="preview-product-title preview-product-title--short"></div>
+                            <div class="preview-product-subtitle"></div>
+                            <div class="preview-product-actions">
+                              <span></span>
+                              <span></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    }
+                    @case ('asymmetry') {
+                      <div class="preview-service-site">
+                        <div class="preview-service-site__topbar">
+                          <span class="preview-service-auth"></span>
+                        </div>
+
+                        <div class="preview-service-site__body">
+                          <div class="preview-service-brand">
+                            <div class="preview-service-badge"></div>
+                            <div class="preview-service-ribbon"></div>
+                            <div class="preview-service-subtitle"></div>
+                          </div>
+
+                          <div class="preview-service-nav">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                          </div>
+
+                          <div class="preview-service-hero">
+                            <div class="preview-service-cupcake"></div>
+                          </div>
+                        </div>
+                      </div>
+                    }
+                    @default {
+                      <div class="preview-cards">
+                        <div class="preview-card"></div>
+                        <div class="preview-card"></div>
+                        <div class="preview-card"></div>
+                        <div class="preview-card"></div>
+                      </div>
+                    }
+                  }
                 </div>
               </div>
 
