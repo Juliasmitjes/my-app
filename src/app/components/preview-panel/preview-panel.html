@@ -638,22 +638,6 @@
         </div> <!-- /INNER WRAPPER -->
       </div> <!-- /OUTER WRAPPER -->
 
-      <!-- FOOTER INFO -->
-      <div
-        class="mt-4 ml-2 text-xs font-semibold space-y-1"
-        [style.color]="builderState.colorTheme ? selectedThemeColors[6] : '#ffffff'"
-      >
-        <div>Layout: {{ builderState.layout || '-' }}</div>
-        <div>Theme: {{ builderState.colorTheme || '-' }}</div>
-        <div>
-          Fonts:
-          {{ builderState.headingFontVariant || builderState.fontVariant || '-' }}
-          /
-          {{ builderState.bodyFontVariant || builderState.fontVariant || '-' }}
-        </div>
-        <div>Navigation: {{ builderState.navigation || '-' }}</div>
-        <div>Pages: {{ canShowPages ? pages.join(', ') : '-' }}</div>
-      </div>
     </aside>
   </div>
 }
