@@ -252,7 +252,7 @@
   position: relative;
   min-height: 142px;
   background:
-    linear-gradient(145deg, #7b684f 0%, #947b58 30%, #6d5a41 55%, #4f4435 100%);
+    linear-gradient(180deg, #edf2fb 0%, #e5ebf5 100%);
 }
 
 .preview-product-overlay {
@@ -331,22 +331,50 @@
 
 .preview-portfolio-site {
   display: grid;
-  grid-template-rows: auto auto 1fr auto;
-  gap: 12px;
+  grid-template-rows: auto 1fr;
   height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #ffffff;
 }
 
-.preview-portfolio-site__top {
+.preview-portfolio-site__topbar {
+  height: 24px;
+  padding: 0 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 8px;
+  background: #ffffff;
 }
 
-.preview-portfolio-site__top-center {
+.preview-portfolio-logo {
+  height: 6px;
+  width: 38px;
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.75);
+}
+
+.preview-portfolio-nav {
   display: flex;
   justify-content: center;
   gap: 6px;
+}
+
+.preview-portfolio-nav span {
+  height: 5px;
+  width: 16px;
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.5);
+}
+
+.preview-portfolio-meta {
+  height: 5px;
+  width: 34px;
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.28);
 }
 
 .preview-nav-line {
@@ -354,6 +382,13 @@
   height: 6px;
   border-radius: 999px;
   background: rgba(17, 24, 39, 0.22);
+}
+
+.preview-portfolio-site__body {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 12px;
+  padding: 10px;
 }
 
 .preview-portfolio-site__intro {
