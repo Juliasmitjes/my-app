@@ -441,54 +441,46 @@
                           </div>
                         </div>
                       } @else if (portfolioTemplateId === 'product') {
-                        <div class="border border-border/40 bg-muted/40">
-                          <div class="px-6 pt-6 pb-4">
-                            <div class="flex items-center justify-between text-xs text-muted-foreground">
-                              <span class="font-semibold text-foreground text-lg">{{ getPortfolioBusinessName() }}</span>
-                              <div class="flex items-center gap-4">
+                        <div class="preview-panel-product">
+                          <div class="preview-panel-product__topbar">
+                            <span class="preview-panel-product__logo" [style.fontFamily]="headingFont">
+                              Bedrijf
+                            </span>
+                            <div class="preview-panel-product__nav">
+                              <span>Button</span>
+                              <span>Button</span>
+                              <span>Button</span>
+                              <span>Button</span>
+                            </div>
+                            <span class="preview-panel-product__cta">Button</span>
+                          </div>
+
+                          <div class="preview-panel-product__body">
+                            <div class="preview-panel-product__hero">
+                              <div class="preview-panel-product__overlay"></div>
+                              <div class="preview-panel-product__copy">
+                                <div class="preview-panel-product__title" [style.fontFamily]="headingFont">
+                                  Bedrijfsnaam
+                                </div>
+                                <div class="preview-panel-product__subtitle">
+                                  Hier komt jouw ondertitel
+                                </div>
+                                <div class="preview-panel-product__bodycopy">
+                                  Hier komt jouw tekst
+                                </div>
+                                <div class="preview-panel-product__actions">
+                                  <span></span>
+                                  <span></span>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="preview-panel-product__footer">
+                              <span class="preview-panel-product__footer-left">Button</span>
+                              <div class="preview-panel-product__footer-right">
                                 <span>Button</span>
                                 <span>Button</span>
                               </div>
-                            </div>
-                          </div>
-                          <div class="px-6 py-8 text-center">
-                            @if (getPortfolioTextBlock(0); as textBlock) {
-                              <div class="space-y-2 text-muted-foreground">
-                                @if (textBlock.title) {
-                                  <div class="text-base font-semibold text-foreground">{{ textBlock.title }}</div>
-                                }
-                                @if (textBlock.subtitle) {
-                                  <div class="text-sm">{{ textBlock.subtitle }}</div>
-                                }
-                                @if (textBlock.body) {
-                                  <div class="text-sm">{{ textBlock.body }}</div>
-                                }
-                              </div>
-                            } @else {
-                              <div class="text-sm text-muted-foreground">
-                                Hi! Ik ben jouw designer. Hier komt jouw intro.
-                              </div>
-                            }
-                          </div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-0">
-                          @for (cellIndex of [1, 2, 3, 4]; track cellIndex) {
-                            <div class="border border-border/60 bg-white w-full aspect-[4/3] overflow-hidden">
-                              <img
-                                class="w-full h-full object-cover"
-                                [src]="getPortfolioImage(cellIndex)"
-                                alt=""
-                              />
-                            </div>
-                          }
-                        </div>
-                        <div class="px-6 py-4 border border-border/40 bg-muted/40 text-xs text-muted-foreground">
-                          <div class="flex items-center justify-between">
-                            <span>ЖИ 2026 {{ getPortfolioBusinessName() }}</span>
-                            <div class="flex items-center gap-4">
-                              <span>Button</span>
-                              <span>Button</span>
-                              <span>Button</span>
                             </div>
                           </div>
                         </div>

@@ -224,7 +224,7 @@ export class PreviewPanel implements OnChanges {
   }
 
   get logoLabel(): string {
-    return this.builderState.logo || 'Your Site';
+    return this.builderState.logo || 'Jouw site';
   }
 
   get headingFont(): string {

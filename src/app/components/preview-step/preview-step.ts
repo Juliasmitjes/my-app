@@ -70,7 +70,7 @@ export class PreviewStep implements OnChanges, OnDestroy {
   }
 
   get logoLabel(): string {
-    return this.builderState?.logo || 'Your Site';
+    return this.builderState?.logo || 'Jouw site';
   }
 
   pageLabel(p: string): string {
