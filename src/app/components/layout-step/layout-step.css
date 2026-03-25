@@ -165,7 +165,7 @@
 
 .preview-product-hero {
   position: relative;
-  min-height: 142px;
+  min-height: 170px;
   background: #edf2fb;
 }
 
@@ -179,7 +179,7 @@
   position: relative;
   z-index: 1;
   width: 58%;
-  padding: 12px 10px;
+  padding: 18px 10px 12px;
   display: grid;
   gap: 6px;
 }
