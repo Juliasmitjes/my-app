@@ -3,8 +3,13 @@
     @if (!editorOnly || template.id === currentTemplate.id) {
     <div
       class="p-4 rounded-2xl border border-border/40 bg-white/70 transition-all"
+      [class.p-0]="editorOnly"
+      [class.rounded-none]="editorOnly"
+      [class.border-0]="editorOnly"
+      [class.bg-transparent]="editorOnly"
       [class.ring-2]="template.id === currentTemplate.id"
       [class.ring-accent]="template.id === currentTemplate.id"
+      [class.ring-0]="editorOnly"
     >
         <div class="flex items-start justify-between gap-3">
           <div class="space-y-2">
@@ -33,10 +38,11 @@
       </div>
 
       <div
-        class="mt-4 w-full text-left rounded-2xl border border-border/50 bg-muted/20 min-h-[840px] flex flex-col"
+        class="mt-4 w-full text-left rounded-2xl border border-border/50 bg-muted/20 min-h-[560px] flex flex-col overflow-hidden"
+        [class.mt-2]="editorOnly"
       >
         @if (isArtistTemplate(template)) {
-            <div class="px-4 py-3 bg-muted/60 border border-border/40">
+            <div class="px-4 py-5 bg-muted/60 border-b border-border/40">
               <div class="grid grid-cols-[auto_1fr_auto] items-center gap-4 text-xs text-muted-foreground">
                 <span class="font-semibold text-foreground">{{ getBusinessNameForTemplate(template.id) }}</span>
                 <div class="flex items-center justify-center gap-4">
@@ -47,7 +53,8 @@
                 <span class="justify-self-end text-muted-foreground/70">Button</span>
               </div>
             </div>
-            <div class="text-left pt-6 pb-2 pl-4">
+            <div class="flex-1 flex flex-col pt-8 pb-10">
+            <div class="text-left pb-2 pl-4">
               @if (locked && template.id === currentTemplate.id && isEditingBusinessName) {
                 <div class="max-w-[260px] 2xl:max-w-md space-y-2">
                   <input
@@ -86,13 +93,11 @@
                 }
               </div>
             }
-        }
-
-        @if (isArtistTemplate(template)) {
           <div
-            class="grid gap-3 p-4"
+            class="grid gap-3 px-4 pt-0 pb-0 mt-4"
             [style.gridTemplateColumns]="'repeat(' + template.cols + ', minmax(0, 1fr))'"
             [style.gridAutoRows]="'120px'"
+            style="margin-bottom: auto;"
           >
             @for (cell of artistPreviewCells; let i = $index; track i) {
               <div
@@ -153,7 +158,8 @@
               </div>
             }
           </div>
-          <div class="px-4 py-3 bg-muted/60 border border-border/40 text-xs text-muted-foreground mt-auto">
+          </div>
+          <div class="px-4 py-5 bg-muted/60 border-t border-border/40 text-xs text-muted-foreground mt-auto">
             <div class="flex items-center justify-between">
               <span>© 2026 {{ getBusinessNameForTemplate(template.id) }}</span>
             </div>
