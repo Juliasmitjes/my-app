@@ -97,7 +97,7 @@
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 28px;
-  padding: 18px 24px 24px;
+  padding: 18px 24px 0;
 }
 
 .preview-panel-portfolio__intro {
@@ -134,8 +134,12 @@
 }
 
 .preview-panel-portfolio__footer {
-  padding-top: 12px;
+  position: relative;
+  z-index: 1;
+  min-height: 52px;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
   font-size: 12px;
   line-height: 1.2;
   color: rgba(29, 29, 31, 0.45);
@@ -143,6 +147,8 @@
   margin-right: -24px;
   padding-left: 24px;
   padding-right: 24px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .preview-panel-product {
@@ -268,8 +274,10 @@
 .preview-panel-product__footer {
   position: relative;
   z-index: 1;
-  padding-top: 12px;
+  min-height: 52px;
   border-top: 1px solid rgba(255, 255, 255, 0.22);
+  display: flex;
+  align-items: center;
   font-size: 12px;
   line-height: 1.2;
   color: rgba(255, 255, 255, 0.82);
@@ -277,7 +285,6 @@
   margin-right: 0;
   padding-left: 24px;
   padding-right: 24px;
-  padding-bottom: 24px;
 }
 
 .preview-panel-service {
@@ -316,7 +323,7 @@
   display: grid;
   grid-template-rows: auto auto 1fr auto;
   gap: 20px;
-  padding: 24px;
+  padding: 24px 24px 0;
 }
 
 .preview-panel-service__brand {
@@ -374,8 +381,12 @@
 }
 
 .preview-panel-service__footer {
-  padding-top: 12px;
+  position: relative;
+  z-index: 1;
+  min-height: 52px;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
   font-size: 12px;
   line-height: 1.2;
   color: rgba(29, 29, 31, 0.45);
@@ -383,4 +394,6 @@
   margin-right: -24px;
   padding-left: 24px;
   padding-right: 24px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
