@@ -38,11 +38,11 @@
       </div>
 
       <div
-        class="mt-4 w-full text-left rounded-2xl border border-border/50 bg-muted/20 min-h-[560px] flex flex-col overflow-hidden"
+        class="mt-4 w-full text-left rounded-2xl border border-[#dbe7f7] bg-[#f8fbff] min-h-[560px] flex flex-col overflow-hidden"
         [class.mt-2]="editorOnly"
       >
         @if (isArtistTemplate(template)) {
-            <div class="px-4 py-5 bg-muted/60 border-b border-border/40">
+            <div class="px-4 py-5 bg-[#f3f8ff] border-b border-[#dbe7f7]">
               <div class="grid grid-cols-[auto_1fr_auto] items-center gap-4 text-xs text-muted-foreground">
                 <span class="font-semibold text-foreground">{{ getBusinessNameForTemplate(template.id) }}</span>
                 <div class="flex items-center justify-center gap-4">
@@ -147,7 +147,7 @@
                     alt=""
                   />
                 } @else {
-                  <div class="flex items-center justify-center p-6 rounded-none bg-muted/20 h-full">
+                  <div class="flex items-center justify-center p-6 rounded-none bg-[#f3f8ff] h-full">
                     @switch (cell) {
                       @case ('text')  { <lucide-icon name="text-align-justify" class="w-8 h-8 opacity-70"></lucide-icon> }
                       @case ('image') { <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon> }
@@ -159,14 +159,14 @@
             }
           </div>
           </div>
-          <div class="px-4 py-5 bg-muted/60 border-t border-border/40 text-xs text-muted-foreground mt-auto">
+          <div class="px-4 py-5 bg-[#f3f8ff] border-t border-[#dbe7f7] text-xs text-muted-foreground mt-auto">
             <div class="flex items-center justify-between">
               <span>© 2026 {{ getBusinessNameForTemplate(template.id) }}</span>
             </div>
           </div>
         } @else if (isDesignerTemplate(template)) {
-          <div class="border border-border/40 bg-muted/40 overflow-hidden">
-            <div class="px-6 pt-6 pb-4 border-b border-border/40">
+          <div class="border border-[#dbe7f7] bg-[#f8fbff] overflow-hidden">
+            <div class="px-6 pt-6 pb-4 border-b border-[#dbe7f7] bg-[#f3f8ff]">
               <div class="flex items-center justify-between text-xs text-muted-foreground">
                 @if (locked && template.id === currentTemplate.id && isEditingBusinessName) {
                   <input
@@ -199,7 +199,7 @@
 
                   <button type="button"
                           (click)="onSaveClick(0, $event)"
-                          class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-border/60 bg-muted/40 text-foreground hover:bg-muted/60"
+                          class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-[#dbe7f7] bg-[#f3f8ff] text-foreground hover:bg-[#edf4ff]"
                           [class.text-muted-foreground]="!isUploadComplete(0)">
                     {{ isSaved[0] ? 'Bewerk' : 'Bewaar' }}
                   </button>
@@ -270,22 +270,22 @@
                     alt=""
                   />
                 } @else {
-                  <div class="flex items-center justify-center p-6 rounded-none bg-muted/20 h-full">
+                  <div class="flex items-center justify-center p-6 rounded-none bg-[#f3f8ff] h-full">
                     <lucide-icon name="image" class="w-8 h-8 opacity-70"></lucide-icon>
                   </div>
                 }
               </div>
             }
           </div>
-          <div class="px-6 py-4 border-t border-border/40 bg-muted/40 text-xs text-muted-foreground mt-auto">
+          <div class="px-6 py-4 border-t border-[#dbe7f7] bg-[#f3f8ff] text-xs text-muted-foreground mt-auto">
             <div class="flex items-center justify-between">
               <span>© 2026 {{ getBusinessNameForTemplate(template.id) }}</span>
               
             </div>
           </div>
         } @else if (isIllustratorTemplate(template)) {
-          <div class="border border-border/40 bg-muted/20 flex flex-col h-full min-h-[840px] overflow-hidden">
-            <div class="px-6 pt-6 pb-4 border-b border-border/40">
+          <div class="border border-[#dbe7f7] bg-[#f8fbff] flex flex-col h-full min-h-[840px] overflow-hidden">
+            <div class="px-6 pt-6 pb-4 border-b border-[#dbe7f7] bg-[#f3f8ff]">
               <div class="flex items-center justify-between text-xs text-muted-foreground">
                 @if (locked && template.id === currentTemplate.id && isEditingBusinessName) {
                   <input
@@ -314,7 +314,7 @@
                   alt=""
                 />
               } @else {
-                <div class="flex items-center justify-center w-full h-full bg-muted/20">
+                <div class="flex items-center justify-center w-full h-full bg-[#f3f8ff]">
                   <lucide-icon name="image" class="w-10 h-10 opacity-60"></lucide-icon>
                 </div>
               }
@@ -392,7 +392,7 @@
 
                   <button type="button"
                           (click)="onSaveClick(1, $event)"
-                          class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-border/60 bg-muted/40 text-foreground hover:bg-muted/60"
+                          class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-[#dbe7f7] bg-[#f3f8ff] text-foreground hover:bg-[#edf4ff]"
                           [class.text-muted-foreground]="!isUploadComplete(1)">
                     {{ isSaved[1] ? 'Bewerk' : 'Bewaar' }}
                   </button>
@@ -412,7 +412,7 @@
               }
             </div>
 
-            <div class="px-6 py-4 border-t border-border/40 bg-muted/20 text-xs text-muted-foreground mt-auto">
+            <div class="px-6 py-4 border-t border-[#dbe7f7] bg-[#f3f8ff] text-xs text-muted-foreground mt-auto">
               <div class="flex items-center justify-between">
                 <span>© 2026 {{ getBusinessNameForTemplate(template.id) }}</span>
                 
