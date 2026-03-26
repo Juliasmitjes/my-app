@@ -27,9 +27,9 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
       id: 'portfolio',
       label: 'Portfolio',
       description: 'Dynamische spread met storytelling.',
-      cols: 3,
-      rows: 4,
-      cells: ['image', 'image', 'image', 'image', 'image', 'image', 'image', 'image', 'image']
+      cols: 5,
+      rows: 2,
+      cells: ['image', 'image', 'image', 'image', 'image', 'image', 'image', 'image', 'image', 'image']
     },
     {
       id: 'product',
@@ -121,17 +121,9 @@ export class Portfolio implements OnChanges, OnDestroy {
     'image',
     'image',
     'image',
+    'image',
     'image'
   ];
-
-  get artistGridAreas(): string {
-    return '"a a b" "c d d" "e e f" "g h i"';
-  }
-
-  getArtistArea(index: number): string {
-    const areas = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
-    return areas[index] ?? '';
-  }
 
   getArtistPreviewCell(index: number): CellType {
     return this.artistPreviewCells[index] ?? 'image';
@@ -157,31 +149,6 @@ export class Portfolio implements OnChanges, OnDestroy {
 
   isImageCell(value: CellType): boolean {
     return value === 'image';
-  }
-
-  getArtistCellClass(index: number): string {
-    switch (index) {
-      case 0:
-        return 'row-span-2';
-      case 1:
-        return 'row-span-1';
-      case 2:
-        return 'row-span-2';
-      case 3:
-        return 'row-span-1';
-      case 4:
-        return 'row-span-2';
-      case 5:
-        return 'row-span-1';
-      case 6:
-        return 'row-span-2';
-      case 7:
-        return 'row-span-1';
-      case 8:
-        return 'row-span-2';
-      default:
-        return '';
-    }
   }
 
   private createDefaultCell(value: CellType): GridCell {

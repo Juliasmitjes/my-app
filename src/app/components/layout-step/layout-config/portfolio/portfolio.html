@@ -36,14 +36,20 @@
         class="mt-4 w-full text-left rounded-2xl border border-border/50 bg-muted/20 min-h-[840px] flex flex-col"
       >
         @if (isArtistTemplate(template)) {
-            <div class="px-4 pt-4 pb-3 space-y-4 bg-muted/60 border border-border/40">
-              <div class="flex items-center justify-between text-xs text-muted-foreground">
+            <div class="px-4 py-3 bg-muted/60 border border-border/40">
+              <div class="grid grid-cols-[auto_1fr_auto] items-center gap-4 text-xs text-muted-foreground">
                 <span class="font-semibold text-foreground">{{ getBusinessNameForTemplate(template.id) }}</span>
+                <div class="flex items-center justify-center gap-4">
+                  <span>Button</span>
+                  <span>Button</span>
+                  <span>Button</span>
+                </div>
+                <span class="justify-self-end text-muted-foreground/70">Button</span>
               </div>
             </div>
-            <div class="text-center pt-6 pb-2">
+            <div class="text-left pt-6 pb-2 pl-4">
               @if (locked && template.id === currentTemplate.id && isEditingBusinessName) {
-                <div class="max-w-[260px] 2xl:max-w-md mx-auto space-y-2">
+                <div class="max-w-[260px] 2xl:max-w-md space-y-2">
                   <input
                     type="text"
                     [(ngModel)]="businessNameInput"
@@ -55,7 +61,7 @@
                   />
                 </div>
               } @else {
-                <div class="text-2xl sm:text-3xl 2xl:text-2xl font-semibold tracking-tight">
+                <div class="text-2xl sm:text-3xl font-semibold tracking-tight">
                   {{ getBusinessNameForTemplate(template.id) }}
                 </div>
                 <div class="text-sm text-muted-foreground mt-3">
@@ -64,9 +70,9 @@
               }
             </div>
             @if (locked && template.id === currentTemplate.id) {
-              <div class="text-center pb-2">
+              <div class="text-left pb-2 pl-4">
                 @if (isEditingSubtitle) {
-                  <div class="max-w-[260px] 2xl:max-w-md mx-auto space-y-2">
+                  <div class="max-w-[260px] 2xl:max-w-md space-y-2">
                     <input
                       type="text"
                       [(ngModel)]="subtitleInput"
@@ -87,7 +93,6 @@
             class="grid gap-3 p-4"
             [style.gridTemplateColumns]="'repeat(' + template.cols + ', minmax(0, 1fr))'"
             [style.gridAutoRows]="'120px'"
-            [style.gridTemplateAreas]="artistGridAreas"
           >
             @for (cell of artistPreviewCells; let i = $index; track i) {
               <div
@@ -96,7 +101,6 @@
                 [class.rounded-none]="template.id === currentTemplate.id && getImagePreview(i)"
                 [class.border-0]="template.id === currentTemplate.id && getImagePreview(i)"
                 [class.bg-transparent]="template.id === currentTemplate.id && getImagePreview(i)"
-                [style.gridArea]="getArtistArea(i)"
                 #artistCell
               >
                 @if (template.id === currentTemplate.id && locked && !contentSaved) {
@@ -131,10 +135,10 @@
                   </div>
                 }
 
-                @if (template.id === currentTemplate.id && getImagePreview(i)) {
+                @if (template.id === currentTemplate.id && (getImagePreview(i) || true)) {
                   <img
                     class="w-full h-full rounded-none object-cover"
-                    [src]="getImagePreview(i)"
+                    [src]="getImagePreview(i) || 'assets/images/exampleImage.png'"
                     alt=""
                   />
                 } @else {
