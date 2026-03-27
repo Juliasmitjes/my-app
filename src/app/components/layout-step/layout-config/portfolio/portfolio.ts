@@ -35,9 +35,9 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
       id: 'product',
       label: 'Product',
       description: 'Tekstgedreven intro met visuele focus.',
-      cols: 2,
-      rows: 3,
-      cells: ['text', 'image', 'image', 'image', 'image']
+      cols: 1,
+      rows: 2,
+      cells: ['text', 'image']
     },
     {
       id: 'service',
