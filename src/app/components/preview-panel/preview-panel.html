@@ -438,7 +438,7 @@
                         <div class="preview-panel-product">
                           <div class="preview-panel-product__topbar" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
                             <span class="preview-panel-product__logo" [style.fontFamily]="headingFont" [style.color]="selectedThemeColors[2]">
-                              Bedrijf
+                              {{ getPortfolioBusinessName() }}
                             </span>
                             <div class="preview-panel-product__nav" [style.color]="selectedThemeColors[6]">
                               <span>Button</span>
@@ -450,17 +450,18 @@
                           </div>
 
                           <div class="preview-panel-product__body">
-                            <div class="preview-panel-product__overlay"></div>
+                            <div class="preview-panel-product__overlay" [style.background-image]="'linear-gradient(rgba(17, 24, 39, 0.24), rgba(17, 24, 39, 0.24)), url(' + getPreviewImage(1) + ')'"></div>
                             <div class="preview-panel-product__hero">
+                              @let textBlock = getProductPreviewText();
                               <div class="preview-panel-product__copy">
                                 <div class="preview-panel-product__title" [style.fontFamily]="headingFont">
-                                  Bedrijfsnaam
+                                  {{ getPortfolioBusinessName() }}
                                 </div>
                                 <div class="preview-panel-product__subtitle">
-                                  Hier komt jouw ondertitel
+                                  {{ textBlock?.subtitle || 'Hier komt jouw ondertitel' }}
                                 </div>
                                 <div class="preview-panel-product__bodycopy">
-                                  Hier komt jouw tekst
+                                  {{ textBlock?.body || 'Hier komt jouw tekst' }}
                                 </div>
                                 <div class="preview-panel-product__actions">
                                   <span>Button</span>
@@ -470,7 +471,7 @@
                             </div>
 
                             <div class="preview-panel-product__footer" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[1] + ' 22%, transparent)'" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[9] + ' 35%, white)'">
-                              <span class="preview-panel-product__footer-copy">© 2026 Bedrijfsnaam</span>
+                              <span class="preview-panel-product__footer-copy">© 2026 {{ getPortfolioBusinessName() }}</span>
                             </div>
                           </div>
                         </div>
@@ -478,7 +479,7 @@
                         <div class="preview-panel-service">
                           <div class="preview-panel-service__topbar" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
                             <span class="preview-panel-service__brandmark" [style.fontFamily]="headingFont" [style.color]="selectedThemeColors[2]">
-                              Bedrijf
+                              {{ getPortfolioBusinessName() }}
                             </span>
                             <div class="preview-panel-service__topactions" [style.color]="selectedThemeColors[6]">
                               <span>Button</span>
@@ -488,8 +489,8 @@
 
                           <div class="preview-panel-service__body">
                             <div class="preview-panel-service__brand">
-                              <div class="preview-panel-service__ribbon" [style.color]="selectedThemeColors[2]">Bedrijfsnaam</div>
-                              <div class="preview-panel-service__subtitle" [style.color]="selectedThemeColors[6]">Hier komt jouw ondertitel</div>
+                              <div class="preview-panel-service__ribbon" [style.color]="selectedThemeColors[2]">{{ getPortfolioBusinessName() }}</div>
+                              <div class="preview-panel-service__subtitle" [style.color]="selectedThemeColors[6]">{{ getPortfolioSubtitle() }}</div>
                             </div>
 
                             <div class="preview-panel-service__nav">
@@ -501,11 +502,11 @@
                             </div>
 
                             <div class="preview-panel-service__hero">
-                              <div class="preview-panel-service__overlay"></div>
+                              <div class="preview-panel-service__overlay" [style.background-image]="'url(' + getPreviewImage(0) + ')'"></div>
                             </div>
 
                             <div class="preview-panel-service__footer" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
-                              <span class="preview-panel-service__footer-copy" [style.color]="selectedThemeColors[6]">© 2026 Bedrijfsnaam</span>
+                              <span class="preview-panel-service__footer-copy" [style.color]="selectedThemeColors[6]">© 2026 {{ getPortfolioBusinessName() }}</span>
                             </div>
                           </div>
                         </div>

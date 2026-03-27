@@ -206,6 +206,14 @@ export class PreviewPanel implements OnChanges {
     );
   }
 
+  getPreviewImage(index: number): string {
+    return this.getPortfolioImage(index);
+  }
+
+  getProductPreviewText(): { title: string; subtitle: string; body: string } | null {
+    return this.getPortfolioTextBlock(0);
+  }
+
   /* ────────────────────────────────────────────────
    * STATE HELPERS
    * ────────────────────────────────────────────────
