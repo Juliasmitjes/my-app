@@ -108,7 +108,7 @@
                 [class.bg-transparent]="template.id === currentTemplate.id && getImagePreview(i)"
                 #artistCell
               >
-                @if (template.id === currentTemplate.id && locked && !contentSaved) {
+                @if (template.id === currentTemplate.id && locked) {
                   <div
                     class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px]
                            flex items-center justify-center rounded-none"
@@ -125,17 +125,6 @@
                         (requestUpload)="onRequestUpload(i, $event, getArtistValue(i), artistCell)"
                         (requestClear)="onRequestClear(i, $event)">
                       </app-upload-unit>
-
-                      <button type="button"
-                              (click)="onSaveClick(i, $event)"
-                              class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
-                              [class.text-white/90]="isUploadComplete(i) && !isSaved[i]"
-                              [class.border-white/60]="isUploadComplete(i) && !isSaved[i]"
-                              [class.text-white/70]="isSaved[i]"
-                              [class.border-white/30]="isSaved[i]"
-                              [class.text-white/60]="!isUploadComplete(i)">
-                      {{ isSaved[i] ? 'Bewerk' : 'Bewaar' }}
-                      </button>
                     </div>
                   </div>
                 }
@@ -203,7 +192,7 @@
 
               <div class="absolute inset-0 bg-black/25"></div>
 
-              @if (template.id === currentTemplate.id && locked && !contentSaved) {
+              @if (template.id === currentTemplate.id && locked) {
                 <div
                   class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px] flex items-center justify-center"
                   (click)="$event.stopPropagation()"
@@ -219,23 +208,12 @@
                       (requestUpload)="onRequestUpload(1, $event, 'image')"
                       (requestClear)="onRequestClear(1, $event)">
                     </app-upload-unit>
-
-                    <button type="button"
-                            (click)="onSaveClick(1, $event)"
-                            class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
-                            [class.text-white/90]="isUploadComplete(1) && !isSaved[1]"
-                            [class.border-white/60]="isUploadComplete(1) && !isSaved[1]"
-                            [class.text-white/70]="isSaved[1]"
-                            [class.border-white/30]="isSaved[1]"
-                            [class.text-white/60]="!isUploadComplete(1)">
-                      {{ isSaved[1] ? 'Bewerk' : 'Bewaar' }}
-                    </button>
                   </div>
                 </div>
               }
 
               <div class="relative z-10 flex-1 w-[58%] px-6 pt-10 pb-6 text-white">
-                @if (template.id === currentTemplate.id && locked && !isSaved[0]) {
+                @if (template.id === currentTemplate.id && locked) {
                   <div class="flex flex-col items-start gap-2">
                     <app-upload-unit
                       [locked]="locked"
@@ -247,17 +225,6 @@
                       (requestUpload)="onRequestUpload(0, $event, 'text')"
                       (requestClear)="onRequestClear(0, $event)">
                     </app-upload-unit>
-
-                    <button type="button"
-                            (click)="onSaveClick(0, $event)"
-                            class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
-                            [class.text-white/90]="isUploadComplete(0) && !isSaved[0]"
-                            [class.border-white/60]="isUploadComplete(0) && !isSaved[0]"
-                            [class.text-white/70]="isSaved[0]"
-                            [class.border-white/30]="isSaved[0]"
-                            [class.text-white/60]="!isUploadComplete(0)">
-                      {{ isSaved[0] ? 'Bewerk' : 'Bewaar' }}
-                    </button>
                   </div>
                 } @else {
                   @if (getTextContent(0); as textBlock) {
@@ -357,7 +324,7 @@
 
                 <div class="absolute inset-0 bg-black/25"></div>
 
-                @if (template.id === currentTemplate.id && locked && !contentSaved) {
+                @if (template.id === currentTemplate.id && locked) {
                   <div
                     class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px] flex items-center justify-center"
                     (click)="$event.stopPropagation()"
@@ -373,17 +340,6 @@
                         (requestUpload)="onRequestUpload(0, $event, 'image')"
                         (requestClear)="onRequestClear(0, $event)">
                       </app-upload-unit>
-
-                      <button type="button"
-                              (click)="onSaveClick(0, $event)"
-                              class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
-                              [class.text-white/90]="isUploadComplete(0) && !isSaved[0]"
-                              [class.border-white/60]="isUploadComplete(0) && !isSaved[0]"
-                              [class.text-white/70]="isSaved[0]"
-                              [class.border-white/30]="isSaved[0]"
-                              [class.text-white/60]="!isUploadComplete(0)">
-                        {{ isSaved[0] ? 'Bewerk' : 'Bewaar' }}
-                      </button>
                     </div>
                   </div>
                 }
@@ -409,7 +365,7 @@
                   [class.bg-transparent]="getImagePreview(i)"
                   #gridCell
                 >
-                  @if (locked && !contentSaved) {
+                  @if (locked) {
                     <div
                       class="absolute inset-0 z-20 bg-black/45 backdrop-blur-[30px]
                              flex items-center justify-center rounded-none"
@@ -426,17 +382,6 @@
                           (requestUpload)="onRequestUpload(i, $event, cell.value, gridCell)"
                           (requestClear)="onRequestClear(i, $event)">
                         </app-upload-unit>
-
-                        <button type="button"
-                                (click)="onSaveClick(i, $event)"
-                                class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-white/40 bg-transparent text-white/80 hover:bg-white/10"
-                                [class.text-white/90]="isUploadComplete(i) && !isSaved[i]"
-                                [class.border-white/60]="isUploadComplete(i) && !isSaved[i]"
-                                [class.text-white/70]="isSaved[i]"
-                                [class.border-white/30]="isSaved[i]"
-                                [class.text-white/60]="!isUploadComplete(i)">
-                          {{ isSaved[i] ? 'Bewerk' : 'Bewaar' }}
-                        </button>
                       </div>
                     </div>
                   }
@@ -488,6 +433,7 @@
 <ng-template>
   <app-upload-unit></app-upload-unit>
 </ng-template>
+
 
 
 

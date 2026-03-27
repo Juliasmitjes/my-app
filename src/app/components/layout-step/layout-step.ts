@@ -28,9 +28,9 @@ interface TemplateCard {
 }
 
 const TEMPLATE_LIBRARY: TemplateCard[] = [
-  { id: 'portfolio', title: 'Portfolio', subtitle: 'Dynamische spread met storytelling', cols: 4, cells: ['image', 'image', 'image', 'image', 'text', 'text'], visual: 'editorial' },
-  { id: 'product', title: 'Product', subtitle: 'Tekstgedreven intro met visuele focus', cols: 2, cells: ['text', 'image', 'image'], visual: 'storyline' },
-  { id: 'service', title: 'Service', subtitle: 'Speelse, asymmetrische compositie', cols: 2, cells: ['image', 'image', 'image', 'image', 'text'], visual: 'asymmetry' }
+  { id: 'portfolio', title: 'Portfolio', subtitle: 'Dynamische spread met storytelling', cols: 5, cells: ['image', 'image', 'image', 'image', 'image', 'image', 'image', 'image', 'image', 'image'], visual: 'editorial' },
+  { id: 'product', title: 'Product', subtitle: 'Tekstgedreven intro met visuele focus', cols: 1, cells: ['text', 'image'], visual: 'storyline' },
+  { id: 'service', title: 'Service', subtitle: 'Speelse, asymmetrische compositie', cols: 1, cells: ['image'], visual: 'asymmetry' }
 ];
 
 @Component({
@@ -313,9 +313,13 @@ export class LayoutStep implements OnChanges {
   }
 
   if (file.type.startsWith('image')) {
-    this.cropperFile = file;
-    this.cropperKey = key;
-    this.showCropper = true;
+    this.uploads = {
+      ...this.uploads,
+      [key]: file
+    };
+
+    this.update.emit({ uploads: this.uploads });
+    this.toast.success('Foto geüpload');
 
     input.value = '';
     return;
@@ -371,7 +375,7 @@ export class LayoutStep implements OnChanges {
     this.showTextEditor = false;
   }
 
-saveTextEditor() {
+  saveTextEditor() {
   const isEmpty = !this.editorBody.trim();
 
   if (isEmpty) {
@@ -400,6 +404,9 @@ saveTextEditor() {
 
   this.update.emit({ uploads: this.uploads });
   this.showTextEditor = false;
+  this.currentUploadKey = null;
+  this.currentUploadKeyCol1 = null;
+  this.currentUploadKeyCol2 = null;
 }
 
 get canSaveText(): boolean {
@@ -418,13 +425,14 @@ onImageCropped(blob: Blob) {
   };
 
   this.update.emit({ uploads: this.uploads });
-  this.update.emit({ contentSaved: true });
 
   this.showCropper = false;
-  this.uploadEditing = false;
   this.cropperFile = null;
   this.cropperKey = null;
   this.cropperAspectRatio = null;
+  this.currentUploadKey = null;
+  this.currentUploadKeyCol1 = null;
+  this.currentUploadKeyCol2 = null;
 
   this.toast.success('Foto bijgewerkt');
 }
@@ -434,5 +442,8 @@ onImageCropped(blob: Blob) {
     this.cropperFile = null;
     this.cropperKey = null;
     this.cropperAspectRatio = null;
+    this.currentUploadKey = null;
+    this.currentUploadKeyCol1 = null;
+    this.currentUploadKeyCol2 = null;
   }
 }

@@ -44,8 +44,8 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
       label: 'Service',
       description: 'Speelse, asymmetrische compositie.',
       cols: 1,
-      rows: 2,
-      cells: ['image', 'text']
+      rows: 1,
+      cells: ['image']
     }
   ]
 };
@@ -251,7 +251,13 @@ export class Portfolio implements OnChanges, OnDestroy {
     const businessName = this.currentTemplate ? this.getSavedBusinessName(this.currentTemplate.id) : '';
     const subtitle = this.uploads?.['artist_subtitle'];
 
-    if (cols && cells && cells.length) {
+    // Keep the editable upload templates in sync with their canonical layout
+    // so upload keys and slot indexes stay stable after template redesigns.
+    if (savedTemplateId && this.currentTemplate) {
+      this.cols = this.currentTemplate.cols;
+      this.rows = this.currentTemplate.rows;
+      this.grid = this.currentTemplate.cells.map(value => this.createDefaultCell(value));
+    } else if (cols && cells && cells.length) {
       this.cols = cols;
       this.rows = Math.max(1, Math.ceil(cells.length / cols));
       this.grid = cells.map(value => this.createDefaultCell(value));
