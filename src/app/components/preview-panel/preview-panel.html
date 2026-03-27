@@ -21,9 +21,7 @@
       <!-- OUTER WRAPPER (keeps rounded corners + clipping) -->
       <div
         class="flex-1 rounded-lg shadow-lg overflow-hidden"
-        [style.background]="builderState.layout === 'single' || builderState.layout === 'two-column' || builderState.layout === 'grid'
-          ? 'color-mix(in srgb, ' + selectedThemeColors[1] + ' 70%, white)'
-          : selectedThemeColors[3]"
+        [style.background]="'#f7f9fc'"
         [style.fontFamily]="bodyFont"
       >
         <!-- INNER WRAPPER (scrolls) -->
@@ -32,8 +30,8 @@
           <!-- TOP BAR -->
           <div
             class="p-3 border-b"
-            [style.background]="selectedThemeColors[1]"
-            [style.borderColor]="selectedThemeColors[9]"
+            [style.background]="'#ffffff'"
+            [style.borderColor]="'rgba(0, 0, 0, 0.08)'"
           >
             <div class="flex items-start justify-between gap-4">
               <div class="flex flex-col gap-2">
@@ -149,7 +147,7 @@
                   @if (builderState.layout === 'single') {
                   <div
                     class="flex flex-col gap-8 sm:gap-10 py-6 sm:py-8"
-                    [style.background]="'color-mix(in srgb, ' + selectedThemeColors[1] + ' 70%, white)'"
+                    [style.background]="'#f7f9fc'"
                   >
                     @for (block of singleBlocks; track block) {
                       @switch (block) {
@@ -230,7 +228,7 @@
                 @if (builderState.layout === 'two-column') {
                   <div
                     class="py-6 sm:py-8 px-6 pb-10 pr-4"
-                    [style.background]="'color-mix(in srgb, ' + selectedThemeColors[1] + ' 70%, white)'"
+                    [style.background]="'#f7f9fc'"
                   >
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10 items-start">
                     <!-- COL 1 -->
@@ -342,29 +340,29 @@
                 @if (builderState.layout === 'grid') {
                   <div
                     class="py-6 sm:py-8 px-6 pb-10 pr-4"
-                    [style.background]="'color-mix(in srgb, ' + selectedThemeColors[1] + ' 70%, white)'"
+                    [style.background]="'#f7f9fc'"
                   >
                     @if (isPortfolioTemplate) {
                       @if (portfolioTemplateId === 'portfolio') {
                         <div class="preview-panel-portfolio">
-                          <div class="preview-panel-portfolio__topbar">
-                            <span class="preview-panel-portfolio__logo" [style.fontFamily]="headingFont">
+                          <div class="preview-panel-portfolio__topbar" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
+                            <span class="preview-panel-portfolio__logo" [style.fontFamily]="headingFont" [style.color]="selectedThemeColors[2]">
                               Bedrijf
                             </span>
-                            <div class="preview-panel-portfolio__nav">
+                            <div class="preview-panel-portfolio__nav" [style.color]="selectedThemeColors[6]">
                               <span>Button</span>
                               <span>Button</span>
                               <span>Button</span>
                             </div>
-                            <span class="preview-panel-portfolio__meta">Button</span>
+                            <span class="preview-panel-portfolio__meta" [style.color]="selectedThemeColors[6]">Button</span>
                           </div>
 
                           <div class="preview-panel-portfolio__body">
                             <div class="preview-panel-portfolio__intro">
-                              <div class="preview-panel-portfolio__title" [style.fontFamily]="headingFont">
+                              <div class="preview-panel-portfolio__title" [style.fontFamily]="headingFont" [style.color]="selectedThemeColors[2]">
                                 {{ getPortfolioBusinessName() }}
                               </div>
-                              <div class="preview-panel-portfolio__subtitle">
+                              <div class="preview-panel-portfolio__subtitle" [style.color]="selectedThemeColors[6]">
                                 {{ getPortfolioSubtitle() }}
                               </div>
                             </div>
@@ -381,8 +379,8 @@
                               }
                             </div>
 
-                            <div class="preview-panel-portfolio__footer">
-                              <span class="preview-panel-portfolio__footer-copy">© 2026 Bedrijfsnaam</span>
+                            <div class="preview-panel-portfolio__footer" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
+                              <span class="preview-panel-portfolio__footer-copy" [style.color]="selectedThemeColors[6]">© 2026 Bedrijfsnaam</span>
                             </div>
                           </div>
                         </div>
@@ -438,17 +436,17 @@
                         </div>
                       } @else if (portfolioTemplateId === 'product') {
                         <div class="preview-panel-product">
-                          <div class="preview-panel-product__topbar">
-                            <span class="preview-panel-product__logo" [style.fontFamily]="headingFont">
+                          <div class="preview-panel-product__topbar" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
+                            <span class="preview-panel-product__logo" [style.fontFamily]="headingFont" [style.color]="selectedThemeColors[2]">
                               Bedrijf
                             </span>
-                            <div class="preview-panel-product__nav">
+                            <div class="preview-panel-product__nav" [style.color]="selectedThemeColors[6]">
                               <span>Button</span>
                               <span>Button</span>
                               <span>Button</span>
                               <span>Button</span>
                             </div>
-                            <span class="preview-panel-product__cta">Button</span>
+                            <span class="preview-panel-product__cta" [style.color]="selectedThemeColors[2]">Button</span>
                           </div>
 
                           <div class="preview-panel-product__body">
@@ -471,18 +469,18 @@
                               </div>
                             </div>
 
-                            <div class="preview-panel-product__footer">
+                            <div class="preview-panel-product__footer" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[1] + ' 22%, transparent)'" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[9] + ' 35%, white)'">
                               <span class="preview-panel-product__footer-copy">© 2026 Bedrijfsnaam</span>
                             </div>
                           </div>
                         </div>
                       } @else if (portfolioTemplateId === 'service') {
                         <div class="preview-panel-service">
-                          <div class="preview-panel-service__topbar">
-                            <span class="preview-panel-service__brandmark" [style.fontFamily]="headingFont">
+                          <div class="preview-panel-service__topbar" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
+                            <span class="preview-panel-service__brandmark" [style.fontFamily]="headingFont" [style.color]="selectedThemeColors[2]">
                               Bedrijf
                             </span>
-                            <div class="preview-panel-service__topactions">
+                            <div class="preview-panel-service__topactions" [style.color]="selectedThemeColors[6]">
                               <span>Button</span>
                               <span>Button</span>
                             </div>
@@ -490,24 +488,24 @@
 
                           <div class="preview-panel-service__body">
                             <div class="preview-panel-service__brand">
-                              <div class="preview-panel-service__ribbon">Bedrijfsnaam</div>
-                              <div class="preview-panel-service__subtitle">Hier komt jouw ondertitel</div>
+                              <div class="preview-panel-service__ribbon" [style.color]="selectedThemeColors[2]">Bedrijfsnaam</div>
+                              <div class="preview-panel-service__subtitle" [style.color]="selectedThemeColors[6]">Hier komt jouw ondertitel</div>
                             </div>
 
                             <div class="preview-panel-service__nav">
-                              <span>Button</span>
-                              <span>Button</span>
-                              <span>Button</span>
-                              <span>Button</span>
-                              <span>Button</span>
+                              <span [style.background]="selectedThemeColors[7]" [style.color]="selectedThemeColors[8]" [style.borderColor]="selectedThemeColors[9]">Button</span>
+                              <span [style.background]="selectedThemeColors[7]" [style.color]="selectedThemeColors[8]" [style.borderColor]="selectedThemeColors[9]">Button</span>
+                              <span [style.background]="selectedThemeColors[7]" [style.color]="selectedThemeColors[8]" [style.borderColor]="selectedThemeColors[9]">Button</span>
+                              <span [style.background]="selectedThemeColors[7]" [style.color]="selectedThemeColors[8]" [style.borderColor]="selectedThemeColors[9]">Button</span>
+                              <span [style.background]="selectedThemeColors[7]" [style.color]="selectedThemeColors[8]" [style.borderColor]="selectedThemeColors[9]">Button</span>
                             </div>
 
                             <div class="preview-panel-service__hero">
                               <div class="preview-panel-service__overlay"></div>
                             </div>
 
-                            <div class="preview-panel-service__footer">
-                              <span class="preview-panel-service__footer-copy">© 2026 Bedrijfsnaam</span>
+                            <div class="preview-panel-service__footer" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
+                              <span class="preview-panel-service__footer-copy" [style.color]="selectedThemeColors[6]">© 2026 Bedrijfsnaam</span>
                             </div>
                           </div>
                         </div>
@@ -594,3 +592,4 @@
     </aside>
   </div>
 }
+
