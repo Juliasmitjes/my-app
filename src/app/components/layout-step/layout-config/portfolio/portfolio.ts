@@ -382,6 +382,17 @@ export class Portfolio implements OnChanges, OnDestroy {
     this.isEditingBusinessName = true;
   }
 
+  onBusinessNameInputChange(value: string): void {
+    this.businessNameInput = value;
+    this.configChange.emit({
+      layout: 'grid',
+      config: {
+        businessName: value,
+        businessNameTemplateId: this.currentTemplate.id
+      }
+    });
+  }
+
   saveSubtitle(): void {
     const value = this.subtitleInput.trim();
     const businessValue = this.businessNameInput.trim();
