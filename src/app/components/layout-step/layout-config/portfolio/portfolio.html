@@ -228,11 +228,7 @@
                   </div>
                 } @else {
                   @if (getTextContent(0); as textBlock) {
-                    @if (textBlock.title) {
-                      <div class="text-[2rem] leading-tight font-semibold">{{ textBlock.title }}</div>
-                    } @else {
-                      <div class="text-[2rem] leading-tight font-semibold">Bedrijfsnaam</div>
-                    }
+                    <div class="text-[2rem] leading-tight font-semibold">{{ getBusinessNameForTemplate(template.id) }}</div>
                     @if (textBlock.subtitle) {
                       <div class="mt-4 text-base text-white/90">{{ textBlock.subtitle }}</div>
                     } @else {
@@ -244,7 +240,7 @@
                       <div class="mt-4 text-sm text-white/80">Hier komt jouw tekst</div>
                     }
                   } @else {
-                    <div class="text-[2rem] leading-tight font-semibold">Bedrijfsnaam</div>
+                    <div class="text-[2rem] leading-tight font-semibold">{{ getBusinessNameForTemplate(template.id) }}</div>
                     <div class="mt-4 text-base text-white/90">Hier komt jouw ondertitel</div>
                     <div class="mt-4 text-sm text-white/80">Hier komt jouw tekst</div>
                   }
@@ -433,6 +429,8 @@
 <ng-template>
   <app-upload-unit></app-upload-unit>
 </ng-template>
+
+
 
 
 
