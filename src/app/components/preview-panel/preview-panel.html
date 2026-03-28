@@ -26,47 +26,6 @@
       >
         <!-- INNER WRAPPER (scrolls) -->
         <div class="h-full flex flex-col">
-        @if (canShowLayout && (!canShowNavigation || builderState.navigation === 'top')) {
-          <!-- TOP BAR -->
-          <div
-            class="p-3 border-b"
-            [style.background]="'#ffffff'"
-            [style.borderColor]="'rgba(0, 0, 0, 0.08)'"
-          >
-            <div class="flex items-start justify-between gap-4">
-              <div class="flex flex-col gap-2">
-                <span
-                  class="font-semibold text-sm"
-                  [style.color]="selectedThemeColors[2]"
-                  [style.fontFamily]="headingFont"
-                >
-                  {{ logoLabel }}
-                </span>
-
-                <div class="flex flex-wrap gap-2">
-                  @if (canShowPages) {
-                    @for (p of pages; track p) {
-                      @if (p !== 'home') {
-                        <button
-                          type="button"
-                          class="text-xs px-2 py-1 rounded border text-left"
-                          [class.opacity-70]="activePage !== p"
-                          [style.background]="selectedThemeColors[7]"
-                          [style.color]="selectedThemeColors[8]"
-                          [style.borderColor]="selectedThemeColors[9]"
-                          (click)="setActivePage(p)"
-                          [attr.aria-current]="activePage === p ? 'page' : null"
-                        >
-                          {{ pageLabel(p) }}
-                        </button>
-                      }
-                    }
-                  }
-                </div>
-              </div>
-            </div>
-          </div>
-        }
 
           <!-- BODY (scrolls) -->
           <div
@@ -339,8 +298,15 @@
                 <!-- GRID -->
                 @if (builderState.layout === 'grid') {
                   <div
-                    class="py-6 sm:py-8 px-6 pb-10 pr-4"
-                    [style.background]="'#f7f9fc'"
+                    class=""
+                    [class.p-0]="isPortfolioTemplate"
+                    [class.pb-0]="isPortfolioTemplate"
+                    [class.py-6]="!isPortfolioTemplate"
+                    [class.sm:py-8]="!isPortfolioTemplate"
+                    [class.px-6]="!isPortfolioTemplate"
+                    [class.pb-10]="!isPortfolioTemplate"
+                    [class.pr-4]="!isPortfolioTemplate"
+                    [style.background]="isPortfolioTemplate ? 'transparent' : '#f7f9fc'"
                   >
                     @if (isPortfolioTemplate) {
                       @if (portfolioTemplateId === 'portfolio') {
