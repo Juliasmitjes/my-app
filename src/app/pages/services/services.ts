@@ -8,6 +8,7 @@ import { ContentStep, PageDef } from '../../components/content-step/content-step
 import { PreviewStep } from '../../components/preview-step/preview-step';
 import { PreviewPanel } from '../../components/preview-panel/preview-panel';
 import { Button } from '../../components/ui/button/button';
+import { ToastService } from '../../components/ui/toast/toast.service';
 
 import { BuilderState } from '../../types/builder-state';
 
@@ -28,6 +29,7 @@ import { BuilderState } from '../../types/builder-state';
   styleUrl: './services.css'
 })
 export class Services {
+  constructor(private toast: ToastService) {}
 
   /* ───── STAPPEN ───── */
 
@@ -44,6 +46,7 @@ export class Services {
   readonly currentStepOneBased = computed(() => this.currentStep() + 1);
 
   readonly showPreviewPanel = signal<boolean>(false);
+  readonly hasSelectedTemplate = computed<boolean>(() => !!this.builderState().layoutConfig?.templateId);
 
   /* ───── BUILDER STATE ───── */
 
@@ -179,6 +182,11 @@ export class Services {
   /* ───── PREVIEW PANEL ───── */
 
   openPreviewPanel(): void {
+    if (!this.hasSelectedTemplate()) {
+      this.toast.info('Kies eerst een template');
+      return;
+    }
+
     this.showPreviewPanel.set(true);
   }
 

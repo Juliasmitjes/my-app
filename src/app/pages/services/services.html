@@ -40,8 +40,11 @@ class="services-topbar sticky top-0 z-50">
         <button
           class="services-preview-btn px-3 py-2 text-sm font-medium rounded-md border transition cursor-pointer"
           (click)="openPreviewPanel()"
+          [class.opacity-50]="!hasSelectedTemplate()"
+          [class.cursor-not-allowed]="!hasSelectedTemplate()"
           aria-haspopup="dialog"
           [attr.aria-expanded]="showPreviewPanel()"
+          [attr.aria-disabled]="!hasSelectedTemplate()"
         >
           Voorbeeld bekijken
         </button>
