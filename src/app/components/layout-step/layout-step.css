@@ -12,24 +12,7 @@
 }
 
 .template-card {
-  border: 1px solid var(--ls-border);
-  background: var(--ls-surface);
-  border-radius: 18px;
-  padding: 14px;
-  transition: 200ms ease;
   width: 100%;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
-}
-
-.template-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(55, 120, 240, 0.4);
-  box-shadow: 0 14px 24px rgba(0, 0, 0, 0.08);
-}
-
-.template-card--selected {
-  border-color: rgba(55, 120, 240, 0.55);
-  box-shadow: 0 0 0 2px rgba(55, 120, 240, 0.2), 0 14px 24px rgba(0, 0, 0, 0.08);
 }
 
 .template-card__preview {
@@ -37,6 +20,21 @@
   border-radius: 14px;
   background: #f8fbff;
   padding: 12px;
+  width: 100%;
+  display: block;
+  transition: 200ms ease;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+}
+
+.template-card__preview:hover {
+  transform: translateY(-2px);
+  border-color: rgba(55, 120, 240, 0.4);
+  box-shadow: 0 14px 24px rgba(0, 0, 0, 0.08);
+}
+
+.template-card__preview--selected {
+  border-color: rgba(55, 120, 240, 0.55);
+  box-shadow: 0 0 0 2px rgba(55, 120, 240, 0.2), 0 14px 24px rgba(0, 0, 0, 0.08);
 }
 
 .template-card__title {
