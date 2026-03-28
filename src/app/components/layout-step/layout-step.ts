@@ -28,9 +28,9 @@ interface TemplateCard {
 }
 
 const TEMPLATE_LIBRARY: TemplateCard[] = [
-  { id: 'portfolio', title: 'Portfolio', subtitle: 'Dynamische spread met storytelling', cols: 5, cells: ['image', 'image', 'image', 'image', 'image', 'image', 'image', 'image', 'image', 'image'], visual: 'editorial' },
-  { id: 'product', title: 'Product', subtitle: 'Tekstgedreven intro met visuele focus', cols: 1, cells: ['text', 'image'], visual: 'storyline' },
-  { id: 'service', title: 'Service', subtitle: 'Speelse, asymmetrische compositie', cols: 1, cells: ['image'], visual: 'asymmetry' }
+  { id: 'portfolio', title: 'Portfolio', subtitle: 'Jouw creaties staan centraal', cols: 5, cells: ['image', 'image', 'image', 'image', 'image', 'image', 'image', 'image', 'image', 'image'], visual: 'editorial' },
+  { id: 'product', title: 'Product', subtitle: 'Eén duidelijke afbeelding met jouw product', cols: 1, cells: ['text', 'image'], visual: 'storyline' },
+  { id: 'service', title: 'Service', subtitle: 'Focus op conversie naar jouw diensten', cols: 1, cells: ['image'], visual: 'asymmetry' }
 ];
 
 @Component({

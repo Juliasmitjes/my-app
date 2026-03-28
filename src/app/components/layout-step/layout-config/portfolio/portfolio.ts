@@ -26,7 +26,7 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
     {
       id: 'portfolio',
       label: 'Portfolio',
-      description: 'Dynamische spread met storytelling.',
+      description: 'Jouw creaties staan centraal',
       cols: 5,
       rows: 2,
       cells: ['image', 'image', 'image', 'image', 'image', 'image', 'image', 'image', 'image', 'image']
@@ -34,7 +34,7 @@ const TEMPLATE_SETS: Record<string, TemplateOption[]> = {
     {
       id: 'product',
       label: 'Product',
-      description: 'Tekstgedreven intro met visuele focus.',
+      description: 'Eén duidelijke afbeelding met jouw product',
       cols: 1,
       rows: 2,
       cells: ['text', 'image']
