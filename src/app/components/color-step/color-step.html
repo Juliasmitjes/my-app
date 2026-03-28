@@ -12,25 +12,20 @@
   <!-- Thema's -->
   <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
     @for (theme of themes; track theme.id) {
-      <div
-        class="relative group p-6 rounded-3xl cursor-pointer transition-all duration-500 flex flex-col items-center text-center space-y-5
-               bg-white/60 dark:bg-muted/30 backdrop-blur-sm border border-border/50 hover:shadow-xl hover:scale-[1.03]"
-        [class.scale-[1.03]]="builderState.colorTheme === theme.id"
-        [class.shadow-xl]="builderState.colorTheme === theme.id"
-        [class.bg-primary/10]="builderState.colorTheme === theme.id"
-        (click)="onSelectTheme(theme.id)"
-        role="button"
-        tabindex="0"
-        (keydown.enter)="onSelectTheme(theme.id)"
-        (keydown.space)="onSelectTheme(theme.id)"
-        aria-pressed="{{ builderState.colorTheme === theme.id }}"
-      >
+      <div class="flex flex-col items-center text-center space-y-4">
         <!-- Mockup voorbeeld -->
         <div
-          class="w-full rounded-xl overflow-hidden shadow-md transition-all duration-300"
+          class="color-theme-preview w-full rounded-[1.75rem] overflow-hidden transition-all duration-300 cursor-pointer"
           [class.ring-2]="builderState.colorTheme === theme.id"
           [class.ring-accent]="builderState.colorTheme === theme.id"
           [class.shadow-lg]="builderState.colorTheme === theme.id"
+          [class.color-theme-preview--selected]="builderState.colorTheme === theme.id"
+          (click)="onSelectTheme(theme.id)"
+          role="button"
+          tabindex="0"
+          (keydown.enter)="onSelectTheme(theme.id)"
+          (keydown.space)="onSelectTheme(theme.id)"
+          aria-pressed="{{ builderState.colorTheme === theme.id }}"
         >
           <div class="h-10 flex">
             <div class="flex-1" [style.background]="theme.colors[1]"></div>
@@ -58,9 +53,6 @@
         <div class="w-full">
           <p class="theme-title text-lg font-semibold tracking-tight">
             {{ theme.name }}
-          </p>
-          <p class="text-sm text-muted-foreground mt-1">
-            {{ theme.description || 'Rustig en professioneel kleurenschema' }}
           </p>
         </div>
 
