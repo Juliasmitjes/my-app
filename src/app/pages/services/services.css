@@ -55,8 +55,16 @@
   background: var(--services-surface);
 }
 
-.services-preview-btn:hover {
+.services-preview-btn:not(:disabled):hover {
   background: #f0f5ff;
+}
+
+.services-preview-btn:disabled {
+  color: rgba(29, 29, 31, 0.35);
+  border-color: rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.72);
+  cursor: default;
+  box-shadow: none;
 }
 
 .services-content-shell {
