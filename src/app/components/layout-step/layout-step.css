@@ -24,6 +24,8 @@
   display: block;
   transition: 200ms ease;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+  position: relative;
+  overflow: hidden;
 }
 
 .template-card__preview:hover {
@@ -37,20 +39,40 @@
   box-shadow: 0 0 0 2px rgba(55, 120, 240, 0.2), 0 14px 24px rgba(0, 0, 0, 0.08);
 }
 
+.template-card__hover {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(55, 120, 240, 0.14);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 180ms ease;
+  pointer-events: none;
+}
+
+.template-card__preview:hover .template-card__hover,
+.template-card__preview:focus-visible .template-card__hover {
+  opacity: 1;
+}
+
+.template-card__hover-copy {
+  max-width: 26ch;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.45;
+  font-weight: 600;
+  color: rgba(20, 36, 72, 0.9);
+}
+
 .template-card__title {
   font-size: 18px;
   font-weight: 700;
   color: var(--ls-text);
   letter-spacing: -0.01em;
   line-height: 1.2;
-}
-
-.template-card__subtitle {
-  font-size: 13px;
-  color: var(--ls-muted);
-  margin-top: 6px;
-  line-height: 1.45;
-  max-width: 36ch;
 }
 
 .template-card__content {
