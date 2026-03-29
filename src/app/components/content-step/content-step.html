@@ -4,17 +4,13 @@
     <h2 class="text-2xl font-bold mb-2">Selecteer pagina's</h2>
   </div>
 
-  <!-- Kaart -->
-  <div
-    class="w-full max-w-3xl mx-auto bg-white/60 dark:bg-muted/30 backdrop-blur-sm rounded-3xl p-8 shadow-sm flex flex-col items-center border border-border/50"
-  >
-
-    <!-- Opties -->
-    <div class="space-y-4 w-full max-w-md mx-auto text-left max-h-[60vh] overflow-y-auto pr-2">
+  <div class="w-full max-w-3xl mx-auto">
+    <div class="space-y-4 w-full max-w-4xl mx-auto text-left max-h-[60vh] overflow-y-auto pr-2">
       @for (item of contents; track item.id) {
         <label
           for="page-{{ item.id }}"
-          class="flex items-start gap-4 p-4 rounded-2xl border border-border/50 bg-background/40 hover:bg-accent/5 transition cursor-pointer w-full"
+          class="content-option-card flex items-start gap-4 p-5 rounded-[1.25rem] transition cursor-pointer w-full"
+          [class.content-option-card--selected]="pages.includes(item.id)"
         >
           <input
             id="page-{{ item.id }}"
