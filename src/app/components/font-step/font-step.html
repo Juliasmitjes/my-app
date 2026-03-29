@@ -1,7 +1,7 @@
 <div class="space-y-8 w-full max-w-5xl mx-auto px-4 sm:px-6">
   <!-- Titel -->
   <div class="text-center space-y-2">
-    <h2 class="text-3xl font-bold">Kies jouw lettertype</h2>
+    <h2 class="text-3xl font-bold">Kies een lettertype</h2>
 
   </div>
 
@@ -45,12 +45,12 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 md:gap-6">
 
       @for (variant of fontVariants; track variant.id) {
         <div
-          class="font-option-card group cursor-pointer px-7 py-7 rounded-[1.75rem]
-                 transition-all duration-300 md:hover:scale-[1.015]"
+          class="font-option-card group cursor-pointer px-5 py-5 rounded-[1.25rem]
+                 transition-all duration-300"
           [class.font-option-card--selected]="isSelected(variant.id)"
           (click)="onSelectVariant(variant.id)"
           role="button"
@@ -59,7 +59,7 @@
           (keydown.space)="onSelectVariant(variant.id)"
           aria-pressed="{{ isSelected(variant.id) }}"
         >
-          <div class="flex items-center justify-between text-xs uppercase tracking-wide text-muted-foreground mb-2">
+          <div class="flex items-center justify-between text-[11px] uppercase tracking-[0.08em] text-muted-foreground mb-2">
             <span>{{ variant.name }}</span>
             <div class="flex items-center gap-1">
               @if (isHeadingSelected(variant.id)) {
@@ -76,7 +76,7 @@
           </div>
           <!-- Voorbeeldtekst -->
           <p
-            class="text-lg md:text-xl leading-relaxed text-foreground"
+            class="text-base md:text-lg leading-snug text-foreground"
             [ngStyle]="{ 'font-family': fontMap[variant.id] }"
           >
             {{ userSampleText || variant.sample }}

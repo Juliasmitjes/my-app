@@ -26,7 +26,6 @@ export class FontStep {
     { id: 'oswald', name: 'Oswald', sample: 'Sterk en karaktervol' },
     { id: 'playfair', name: 'Playfair Display', sample: 'Elegant en verfijnd' },
     { id: 'poppins', name: 'Poppins', sample: 'Modern en vriendelijk' },
-    { id: 'raleway', name: 'Raleway', sample: 'Licht en stijlvol' },
     { id: 'roboto', name: 'Roboto', sample: 'Geometrisch en betrouwbaar' }
   ] as const;
 
