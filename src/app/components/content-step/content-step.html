@@ -1,15 +1,15 @@
-<div class="step-container min-h-screen flex flex-col justify-center items-center text-center space-y-10">
+<div class="step-container w-full max-w-6xl mx-auto flex flex-col items-center text-center space-y-8 px-4 sm:px-6">
   <!-- Titel -->
   <div>
     <h2 class="text-2xl font-bold mb-2">Selecteer pagina's</h2>
   </div>
 
-  <div class="w-full max-w-3xl mx-auto">
-    <div class="space-y-4 w-full max-w-4xl mx-auto text-left max-h-[60vh] overflow-y-auto pr-2">
+  <div class="w-full">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 md:gap-6 text-left">
       @for (item of contents; track item.id) {
         <label
           for="page-{{ item.id }}"
-          class="content-option-card flex items-start gap-4 p-5 rounded-[1.25rem] transition cursor-pointer w-full"
+          class="content-option-card flex items-start gap-4 p-5 rounded-[1.25rem] transition cursor-pointer w-full min-h-[220px]"
           [class.content-option-card--selected]="pages.includes(item.id)"
         >
           <input
@@ -40,11 +40,11 @@
             </p>
 
             @if (pages.includes(item.id)) {
-              <div class="mt-3 flex items-center gap-3">
+              <div class="mt-4 flex items-center gap-3">
                 @if (!isConfirmed(item.id)) {
                   <button
                     type="button"
-                    class="px-3 py-1 text-xs rounded-md border"
+                    class="px-3 py-1.5 text-xs rounded-xl border bg-white"
                     (click)="confirmPage(item.id, $event)"
                   >
                     Bevestigen
@@ -52,7 +52,7 @@
                 } @else {
                   <button
                     type="button"
-                    class="px-3 py-1 text-xs rounded-md border"
+                    class="px-3 py-1.5 text-xs rounded-xl border bg-white"
                     (click)="openEditor(item, $event)"
                   >
                     Invullen
@@ -66,7 +66,7 @@
       }
 
       <!-- Teller -->
-      <div class="text-center mt-6">
+      <div class="text-center mt-2 xl:col-span-3">
         <p class="text-sm text-muted-foreground">
           <span class="font-medium text-foreground">
             {{ additionalPagesCount }}
