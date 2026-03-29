@@ -3,6 +3,24 @@
   justify-content: center;
 }
 
+.font-option-card {
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.08);
+}
+
+.font-option-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 30px rgba(15, 23, 42, 0.1);
+}
+
+.font-option-card--selected {
+  border-color: rgba(55, 120, 240, 0.55);
+  box-shadow:
+    0 0 0 2px rgba(55, 120, 240, 0.2),
+    0 14px 24px rgba(0, 0, 0, 0.08);
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

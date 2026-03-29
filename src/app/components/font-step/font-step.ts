@@ -18,7 +18,6 @@ export class FontStep {
   @Output() userSampleTextChange = new EventEmitter<string>();
 
   fontVariants = [
-    { id: 'dm-sans', name: 'DM Sans', sample: 'Strak en modern' },
     { id: 'inter', name: 'Inter', sample: 'Simpel en helder' },
     { id: 'lora', name: 'Lora', sample: 'Warm en literair' },
     { id: 'manrope', name: 'Manrope', sample: 'Minimalistisch en helder' },
@@ -28,8 +27,7 @@ export class FontStep {
     { id: 'playfair', name: 'Playfair Display', sample: 'Elegant en verfijnd' },
     { id: 'poppins', name: 'Poppins', sample: 'Modern en vriendelijk' },
     { id: 'raleway', name: 'Raleway', sample: 'Licht en stijlvol' },
-    { id: 'roboto', name: 'Roboto', sample: 'Geometrisch en betrouwbaar' },
-    { id: 'space-grotesk', name: 'Space Grotesk', sample: 'Technisch en scherp' }
+    { id: 'roboto', name: 'Roboto', sample: 'Geometrisch en betrouwbaar' }
   ] as const;
 
   selectionTarget: 'headings' | 'body' = 'headings';
