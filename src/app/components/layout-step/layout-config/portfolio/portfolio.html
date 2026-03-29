@@ -7,9 +7,8 @@
       [class.rounded-none]="editorOnly"
       [class.border-0]="editorOnly"
       [class.bg-transparent]="editorOnly"
-      [class.ring-2]="template.id === currentTemplate.id"
-      [class.ring-accent]="template.id === currentTemplate.id"
-      [class.ring-0]="editorOnly"
+      [class.ring-2]="template.id === currentTemplate.id && !editorOnly"
+      [class.ring-accent]="template.id === currentTemplate.id && !editorOnly"
     >
         <div class="flex items-start justify-between gap-3">
           <div class="space-y-2">
