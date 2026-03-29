@@ -5,11 +5,11 @@
   </div>
 
   <div class="w-full">
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 md:gap-6 text-left">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-4 text-left">
       @for (item of contents; track item.id) {
         <label
           for="page-{{ item.id }}"
-          class="content-option-card flex items-start gap-4 p-5 rounded-[1.25rem] transition cursor-pointer w-full min-h-[220px]"
+          class="content-option-card flex items-start gap-3 p-3 rounded-[1rem] transition cursor-pointer w-full min-h-[132px]"
           [class.content-option-card--selected]="pages.includes(item.id)"
         >
           <input
@@ -26,25 +26,25 @@
               @if (item.icon) {
                 <lucide-icon
                   [name]="item.icon"
-                  class="w-5 h-5 text-accent">
+                  class="w-4 h-4 text-accent">
                 </lucide-icon>
               }
-              <span class="font-medium text-foreground">{{ item.name }}</span>
+              <span class="text-[0.95rem] font-medium text-foreground">{{ item.name }}</span>
               @if (item.required) {
                 <span class="text-xs text-muted-foreground ml-2">(verplicht)</span>
               }
             </div>
 
-            <p class="text-sm text-muted-foreground mt-1">
+            <p class="text-[0.95rem] text-muted-foreground mt-1">
               {{ item.description }}
             </p>
 
             @if (pages.includes(item.id)) {
-              <div class="mt-4 flex items-center gap-3">
+              <div class="mt-2 flex items-center gap-2">
                 @if (!isConfirmed(item.id)) {
                   <button
                     type="button"
-                    class="px-3 py-1.5 text-xs rounded-xl border bg-white"
+                    class="px-3 py-1 text-xs rounded-xl border bg-white"
                     (click)="confirmPage(item.id, $event)"
                   >
                     Bevestigen
@@ -52,7 +52,7 @@
                 } @else {
                   <button
                     type="button"
-                    class="px-3 py-1.5 text-xs rounded-xl border bg-white"
+                    class="px-3 py-1 text-xs rounded-xl border bg-white"
                     (click)="openEditor(item, $event)"
                   >
                     Invullen

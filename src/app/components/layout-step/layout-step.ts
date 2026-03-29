@@ -120,7 +120,6 @@ export class LayoutStep implements OnChanges {
 
     this.uploadEditing = false;
     this.update.emit({ contentSaved: true });
-    this.toast.success('Content opgeslagen');
   }
 
   chooseTemplate(card: TemplateCard): void {
