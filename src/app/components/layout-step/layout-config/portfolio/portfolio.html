@@ -38,7 +38,7 @@
       </div>
 
       <div
-        class="mt-4 w-full text-left rounded-2xl border border-[#dbe7f7] bg-[#f8fbff] min-h-[560px] flex flex-col overflow-hidden"
+        class="mt-4 w-full text-left rounded-2xl border border-border/30 bg-white min-h-[560px] flex flex-col overflow-hidden shadow-sm"
         [class.mt-2]="editorOnly"
       >
         @if (isArtistTemplate(template)) {
@@ -154,7 +154,7 @@
             </div>
           </div>
         } @else if (isDesignerTemplate(template)) {
-          <div class="border border-[#dbe7f7] bg-[#f8fbff] overflow-hidden flex flex-col min-h-[560px]">
+          <div class="border border-border/30 bg-white overflow-hidden flex flex-col min-h-[560px] rounded-2xl shadow-sm">
             <div class="px-6 py-5 border-b border-[#dbe7f7] bg-[#f3f8ff]">
               <div class="grid grid-cols-[auto_1fr_auto] items-center gap-4 text-xs text-muted-foreground">
                 @if (locked && template.id === currentTemplate.id && isEditingBusinessName) {
@@ -258,7 +258,7 @@
             </div>
           </div>
         } @else if (isIllustratorTemplate(template)) {
-          <div class="border border-[#dbe7f7] bg-[#f8fbff] overflow-hidden flex flex-col min-h-[560px]">
+          <div class="border border-border/30 bg-white overflow-hidden flex flex-col min-h-[560px] rounded-2xl shadow-sm">
             <div class="px-6 py-5 border-b border-[#dbe7f7] bg-[#f3f8ff]">
               <div class="grid grid-cols-[auto_1fr] items-center gap-4 text-xs text-muted-foreground">
                 @if (locked && template.id === currentTemplate.id && isEditingBusinessName) {
