@@ -83,6 +83,18 @@ export class PageContentModal implements OnChanges, OnDestroy {
     return 'assets/images/exampleImage.png';
   }
 
+  get isAboutPage(): boolean {
+    return this.page?.id === 'about';
+  }
+
+  get aboutSectionTitle(): string {
+    return this.page?.name ? `Over ${this.page.name.toLowerCase()}` : 'Over mij';
+  }
+
+  get bodyColumns(): [string, string] {
+    return this.splitBodyIntoColumns(this.body);
+  }
+
   onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
@@ -143,5 +155,33 @@ export class PageContentModal implements OnChanges, OnDestroy {
       URL.revokeObjectURL(this.imagePreviewUrl);
       this.imagePreviewUrl = null;
     }
+  }
+
+  private splitBodyIntoColumns(value: string): [string, string] {
+    const fallback =
+      'Vertel hier in een paar zinnen wie je bent, waar je voor staat en waarom bezoekers juist met jou willen werken.';
+    const normalized = (value || fallback).replace(/\s+/g, ' ').trim();
+
+    if (!normalized) {
+      return [fallback, fallback];
+    }
+
+    const sentences = normalized.match(/[^.!?]+[.!?]?/g)?.map(part => part.trim()).filter(Boolean) ?? [];
+
+    if (sentences.length >= 2) {
+      const midpoint = Math.ceil(sentences.length / 2);
+      return [
+        sentences.slice(0, midpoint).join(' '),
+        sentences.slice(midpoint).join(' ')
+      ];
+    }
+
+    const words = normalized.split(' ');
+    const midpoint = Math.ceil(words.length / 2);
+
+    return [
+      words.slice(0, midpoint).join(' '),
+      words.slice(midpoint).join(' ') || words.slice(0, midpoint).join(' ')
+    ];
   }
 }

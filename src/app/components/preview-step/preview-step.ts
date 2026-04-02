@@ -260,6 +260,18 @@ export class PreviewStep implements OnChanges, OnDestroy {
     return this.getUploadFor(`page_${pageId}_image`);
   }
 
+  get isAboutPageActive(): boolean {
+    return this.activePage === 'about';
+  }
+
+  get aboutPageSectionTitle(): string {
+    return 'Over mij';
+  }
+
+  getAboutBodyColumns(pageId: string): [string, string] {
+    return this.splitBodyIntoColumns(this.getPageText(pageId)?.body ?? '');
+  }
+
   getUploadFor(key: string | null): string | null {
     if (!key) return null;
 
@@ -297,5 +309,32 @@ export class PreviewStep implements OnChanges, OnDestroy {
   closeRequestPopup() {
     this.showRequestPopup = false;
   }
-}
 
+  private splitBodyIntoColumns(value: string): [string, string] {
+    const fallback =
+      'Vertel hier in een paar zinnen wie je bent, waar je voor staat en wat bezoekers op jouw Over-pagina moeten onthouden.';
+    const normalized = (value || fallback).replace(/\s+/g, ' ').trim();
+
+    if (!normalized) {
+      return [fallback, fallback];
+    }
+
+    const sentences = normalized.match(/[^.!?]+[.!?]?/g)?.map(part => part.trim()).filter(Boolean) ?? [];
+
+    if (sentences.length >= 2) {
+      const midpoint = Math.ceil(sentences.length / 2);
+      return [
+        sentences.slice(0, midpoint).join(' '),
+        sentences.slice(midpoint).join(' ')
+      ];
+    }
+
+    const words = normalized.split(' ');
+    const midpoint = Math.ceil(words.length / 2);
+
+    return [
+      words.slice(0, midpoint).join(' '),
+      words.slice(midpoint).join(' ') || words.slice(0, midpoint).join(' ')
+    ];
+  }
+}

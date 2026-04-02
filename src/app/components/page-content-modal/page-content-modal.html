@@ -2,7 +2,7 @@
   <div class="fixed inset-0 z-50 flex items-center justify-center">
     <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" (click)="close()"></div>
 
-    <div class="relative w-[92vw] max-w-5xl max-h-[90vh] overflow-hidden rounded-2xl shadow-xl bg-white">
+    <div class="page-content-modal relative w-[92vw] max-w-6xl max-h-[90vh] overflow-hidden rounded-2xl shadow-xl bg-white">
       <div class="flex items-center justify-between px-6 py-4 border-b border-border/50">
         <div>
           <div class="text-sm text-muted-foreground">Pagina invullen</div>
@@ -11,69 +11,145 @@
         <button class="text-sm px-3 py-1 rounded-md border" (click)="close()">Sluiten</button>
       </div>
 
-      <div class="grid md:grid-cols-2">
+      <div class="grid md:grid-cols-[minmax(0,1.2fr)_minmax(20rem,0.8fr)]">
         <!-- Preview -->
-        <div class="p-6" [style.background]="selectedThemeColors[1]">
-          <div class="rounded-xl overflow-hidden border border-border/40">
-            <div class="px-4 py-3 border-b" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
-              <div class="text-sm font-semibold" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
-                {{ builderState.logo || 'Jouw site' }}
+        <div class="p-6 md:p-8" [style.background]="selectedThemeColors[1]">
+          @if (isAboutPage) {
+            <div
+              class="about-preview overflow-hidden"
+              [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 88%, ' + selectedThemeColors[1] + ')'"
+              [style.color]="selectedThemeColors[6]"
+            >
+              <div class="about-preview__hero">
+                <div
+                  class="about-preview__hero-image"
+                  [style.background-image]="'linear-gradient(rgba(15, 23, 42, 0.38), rgba(15, 23, 42, 0.38)), url(' + previewImage + ')'"
+                ></div>
+                <div class="about-preview__hero-copy">
+                  <h3
+                    class="about-preview__name"
+                    [style.color]="selectedThemeColors[0]"
+                    [style.fontFamily]="headingFont"
+                  >
+                    {{ title || 'Jouw naam' }}
+                  </h3>
+                  <p
+                    class="about-preview__role"
+                    [style.color]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 72%, transparent)'"
+                    [style.fontFamily]="bodyFont"
+                  >
+                    {{ subtitle || 'Jouw functietitel' }}
+                  </p>
+                </div>
+              </div>
+
+              <div class="about-preview__avatar-wrap">
+                <div
+                  class="about-preview__avatar-ring"
+                  [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 92%, white)'"
+                >
+                  <img [src]="previewImage" alt="Portret" class="about-preview__avatar" />
+                </div>
+              </div>
+
+              <div class="about-preview__content">
+                <div class="about-preview__heading-row">
+                  <div>
+                    <div
+                      class="about-preview__section-title"
+                      [style.color]="selectedThemeColors[2]"
+                      [style.fontFamily]="headingFont"
+                    >
+                      {{ aboutSectionTitle }}
+                    </div>
+                    <span
+                      class="about-preview__accent"
+                      [style.background]="selectedThemeColors[5]"
+                    ></span>
+                  </div>
+
+                  <div class="about-preview__socials">
+                    @for (label of ['in', 'tw', 'f']; track label) {
+                      <span
+                        class="about-preview__social"
+                        [style.background]="selectedThemeColors[2]"
+                        [style.color]="selectedThemeColors[0]"
+                        [style.fontFamily]="headingFont"
+                      >
+                        {{ label }}
+                      </span>
+                    }
+                  </div>
+                </div>
+
+                <div class="about-preview__columns" [style.fontFamily]="bodyFont">
+                  <p class="about-preview__body">{{ bodyColumns[0] }}</p>
+                  <p class="about-preview__body">{{ bodyColumns[1] }}</p>
+                </div>
               </div>
             </div>
-
-            <div class="p-5 space-y-4" [style.fontFamily]="bodyFont">
-              <div class="aspect-[5/4] overflow-hidden">
-                <img [src]="previewImage" alt="Voorbeeldafbeelding" class="w-full h-full object-cover" />
+          } @else {
+            <div class="rounded-xl overflow-hidden border border-border/40">
+              <div class="px-4 py-3 border-b" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
+                <div class="text-sm font-semibold" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                  {{ builderState.logo || 'Jouw site' }}
+                </div>
               </div>
 
-              <div>
-                <h3 class="text-xl font-semibold mb-1" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
-                  {{ title || 'Paginatitel' }}
-                </h3>
-                <p class="text-sm opacity-80 mb-2" [style.color]="selectedThemeColors[6]">
-                  {{ subtitle || 'Korte subtitel die de toon zet.' }}
-                </p>
-                <p class="text-sm leading-relaxed" [style.color]="selectedThemeColors[6]">
-                  {{ body || 'Hier komt jouw pagina-inhoud. Houd het kort en krachtig voor het voorbeeld.' }}
-                </p>
+              <div class="p-5 space-y-4" [style.fontFamily]="bodyFont">
+                <div class="aspect-[5/4] overflow-hidden">
+                  <img [src]="previewImage" alt="Voorbeeldafbeelding" class="w-full h-full object-cover" />
+                </div>
+
+                <div>
+                  <h3 class="text-xl font-semibold mb-1" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                    {{ title || 'Paginatitel' }}
+                  </h3>
+                  <p class="text-sm opacity-80 mb-2" [style.color]="selectedThemeColors[6]">
+                    {{ subtitle || 'Korte subtitel die de toon zet.' }}
+                  </p>
+                  <p class="text-sm leading-relaxed" [style.color]="selectedThemeColors[6]">
+                    {{ body || 'Hier komt jouw pagina-inhoud. Houd het kort en krachtig voor het voorbeeld.' }}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          }
         </div>
 
         <!-- Form -->
-        <div class="p-6 space-y-4">
+        <div class="p-6 space-y-4 overflow-y-auto">
           <div>
-            <label class="text-sm font-medium block mb-1">Titel</label>
+            <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Naam / hoofdtitel' : 'Titel' }}</label>
             <input
               [(ngModel)]="title"
               class="w-full rounded-md border px-3 py-2 text-sm"
-              placeholder="Titel"
+              [placeholder]="isAboutPage ? 'Bijv. Sophie de Vries' : 'Titel'"
               type="text"
             />
           </div>
 
           <div>
-            <label class="text-sm font-medium block mb-1">Subtitel</label>
+            <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Rol / ondertitel' : 'Subtitel' }}</label>
             <input
               [(ngModel)]="subtitle"
               class="w-full rounded-md border px-3 py-2 text-sm"
-              placeholder="Subtitel"
+              [placeholder]="isAboutPage ? 'Bijv. Creatief strateeg' : 'Subtitel'"
               type="text"
             />
           </div>
 
           <div>
-            <label class="text-sm font-medium block mb-1">Tekst</label>
+            <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Over-tekst' : 'Tekst' }}</label>
             <textarea
               [(ngModel)]="body"
               class="w-full rounded-md border px-3 py-2 text-sm min-h-[140px]"
-              placeholder="Schrijf hier je tekst..."
+              [placeholder]="isAboutPage ? 'Schrijf hier het verhaal voor de Over-pagina...' : 'Schrijf hier je tekst...'"
             ></textarea>
           </div>
 
           <div>
-            <label class="text-sm font-medium block mb-1">Visual (optioneel)</label>
+            <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Portretfoto (optioneel)' : 'Visual (optioneel)' }}</label>
             <input type="file" accept="image/*" (change)="onFileChange($event)" />
           </div>
 
