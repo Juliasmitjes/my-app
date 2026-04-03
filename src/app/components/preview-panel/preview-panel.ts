@@ -333,6 +333,10 @@ export class PreviewPanel implements OnChanges {
     return this.activePage === 'about';
   }
 
+  get isBlogPageActive(): boolean {
+    return this.activePage === 'blog';
+  }
+
   get aboutPageSectionTitle(): string {
     return 'Over';
   }
@@ -361,6 +365,29 @@ export class PreviewPanel implements OnChanges {
     }
 
     return resolved;
+  }
+
+  getBlogHeroLabel(pageId: string): string {
+    return this.getPageText(pageId)?.subtitle?.trim() || 'Stories & inspiratie';
+  }
+
+  getBlogCards(pageId: string): Array<{ title: string; meta: string; excerpt: string }> {
+    const text = this.getPageText(pageId);
+    const title = text?.title?.trim() || 'Jouw eerste blogpost';
+    const excerpt = text?.body?.trim() || 'Schrijf hier een korte introductie die uitnodigt om verder te lezen.';
+
+    return [
+      {
+        title,
+        meta: text?.subtitle?.trim() || 'Admin • 1 min read',
+        excerpt
+      },
+      {
+        title: text?.title?.trim() ? `${text.title.trim()} vervolg` : 'Een tweede blogmoment',
+        meta: 'Admin • 2 min read',
+        excerpt
+      }
+    ];
   }
 
   /* ────────────────────────────────────────────────

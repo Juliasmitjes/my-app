@@ -102,6 +102,51 @@
                 </div>
               </div>
             </div>
+          } @else if (isBlogPage) {
+            <div
+              class="blog-preview overflow-hidden"
+              [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 92%, ' + selectedThemeColors[1] + ')'"
+            >
+              <div class="blog-preview__hero">
+                <div
+                  class="blog-preview__hero-image"
+                  [style.background-image]="'linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url(' + previewImage + ')'"
+                ></div>
+                <div class="blog-preview__hero-label" [style.color]="selectedThemeColors[2]" [style.fontFamily]="bodyFont">
+                  {{ blogHeroLabel }}
+                </div>
+              </div>
+
+              <div class="blog-preview__feed">
+                @for (card of blogCards; let i = $index; track card.title + i) {
+                  <article
+                    class="blog-preview__card"
+                    [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 96%, ' + selectedThemeColors[1] + ')'"
+                    [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[9] + ' 42%, transparent)'"
+                  >
+                    <div class="blog-preview__card-image-wrap">
+                      <img [src]="previewImage" alt="Blogbeeld" class="blog-preview__card-image" />
+                    </div>
+
+                    <div class="blog-preview__card-body">
+                      <div class="blog-preview__card-meta" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                        {{ card.meta }}
+                      </div>
+                      <h3 class="blog-preview__card-title" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                        {{ card.title }}
+                      </h3>
+                      <p class="blog-preview__card-excerpt" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                        {{ card.excerpt }}
+                      </p>
+                      <div class="blog-preview__card-footer" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                        <span>0 views</span>
+                        <span>0 comments</span>
+                      </div>
+                    </div>
+                  </article>
+                }
+              </div>
+            </div>
           } @else {
             <div class="rounded-xl overflow-hidden border border-border/40">
               <div class="px-4 py-3 border-b" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
@@ -134,31 +179,31 @@
         <!-- Form -->
         <div class="page-content-modal__form p-6 space-y-4 overflow-y-auto">
           <div>
-            <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Naam / hoofdtitel' : 'Titel' }}</label>
+            <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Naam / hoofdtitel' : isBlogPage ? 'Blogtitel' : 'Titel' }}</label>
             <input
               [(ngModel)]="title"
               class="w-full rounded-md border px-3 py-2 text-sm"
-              [placeholder]="isAboutPage ? 'Bijv. Sophie de Vries' : 'Titel'"
+              [placeholder]="isAboutPage ? 'Bijv. Sophie de Vries' : isBlogPage ? 'Bijv. Playing with patterns' : 'Titel'"
               type="text"
             />
           </div>
 
           <div>
-            <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Rol / ondertitel' : 'Subtitel' }}</label>
+            <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Rol / ondertitel' : isBlogPage ? 'Bovenregel / bloglabel' : 'Subtitel' }}</label>
             <input
               [(ngModel)]="subtitle"
               class="w-full rounded-md border px-3 py-2 text-sm"
-              [placeholder]="isAboutPage ? 'Bijv. Creatief strateeg' : 'Subtitel'"
+              [placeholder]="isAboutPage ? 'Bijv. Creatief strateeg' : isBlogPage ? 'Bijv. Design for life' : 'Subtitel'"
               type="text"
             />
           </div>
 
           <div>
-            <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Over-tekst' : 'Tekst' }}</label>
+            <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Over-tekst' : isBlogPage ? 'Intro / samenvatting' : 'Tekst' }}</label>
             <textarea
               [(ngModel)]="body"
               class="w-full rounded-md border px-3 py-2 text-sm min-h-[140px]"
-              [placeholder]="isAboutPage ? 'Schrijf hier het verhaal voor de Over-pagina...' : 'Schrijf hier je tekst...'"
+              [placeholder]="isAboutPage ? 'Schrijf hier het verhaal voor de Over-pagina...' : isBlogPage ? 'Schrijf hier een korte samenvatting van je blogpost...' : 'Schrijf hier je tekst...'"
             ></textarea>
           </div>
 

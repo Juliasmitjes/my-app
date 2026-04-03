@@ -120,8 +120,37 @@ export class PageContentModal implements OnChanges, OnDestroy {
     return this.page?.id === 'about';
   }
 
+  get isBlogPage(): boolean {
+    return this.page?.id === 'blog';
+  }
+
   get aboutSectionTitle(): string {
     return this.page?.name ?? 'Over';
+  }
+
+  get blogHeroLabel(): string {
+    return this.subtitle?.trim() || 'Stories & inspiratie';
+  }
+
+  get blogCards(): Array<{ title: string; meta: string; excerpt: string }> {
+    const firstTitle = this.title?.trim() || 'Jouw eerste blogpost';
+    const secondTitle = this.title?.trim()
+      ? `${this.title.trim()} vervolg`
+      : 'Een tweede blogmoment';
+    const excerpt = this.body?.trim() || 'Schrijf hier een korte introductie die uitnodigt om verder te lezen.';
+
+    return [
+      {
+        title: firstTitle,
+        meta: this.subtitle?.trim() || 'Admin • 1 min read',
+        excerpt
+      },
+      {
+        title: secondTitle,
+        meta: 'Admin • 2 min read',
+        excerpt
+      }
+    ];
   }
 
   get bodyColumns(): [string, string] {

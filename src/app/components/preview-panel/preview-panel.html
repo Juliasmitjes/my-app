@@ -180,6 +180,52 @@
                         </div>
                       </section>
                     </div>
+                  } @else if (isBlogPageActive) {
+                    @let blogImage = getPageImage(activePage) || 'assets/images/exampleImage.png';
+                    @let blogHeroLabel = getBlogHeroLabel(activePage);
+                    @let blogCards = getBlogCards(activePage);
+
+                    <div [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 92%, ' + selectedThemeColors[1] + ')'">
+                      <section class="relative min-h-[14rem] px-6 py-6 sm:px-10 sm:py-8 overflow-hidden">
+                        <div
+                          class="absolute inset-0 bg-cover bg-center"
+                          [style.background-image]="'linear-gradient(rgba(255,255,255,0.24), rgba(255,255,255,0.24)), url(' + blogImage + ')'"
+                        ></div>
+                        <div class="relative z-10 text-center uppercase tracking-[0.42em] text-xs sm:text-sm" [style.color]="selectedThemeColors[2]" [style.fontFamily]="bodyFont">
+                          {{ blogHeroLabel }}
+                        </div>
+                      </section>
+
+                      <section class="relative z-10 px-6 pb-8 sm:px-10 sm:pb-10 -mt-12 sm:-mt-14 grid gap-4">
+                        @for (card of blogCards; let i = $index; track card.title + i) {
+                          <article
+                            class="grid border"
+                            [style.gridTemplateColumns]="'minmax(0,0.48fr) minmax(0,0.52fr)'"
+                            [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 96%, ' + selectedThemeColors[1] + ')'"
+                            [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[9] + ' 42%, transparent)'"
+                          >
+                            <div class="min-h-[12rem]">
+                              <img [src]="blogImage" alt="Blogbeeld" class="w-full h-full object-cover" />
+                            </div>
+                            <div class="flex flex-col gap-3 p-5">
+                              <div class="text-[0.68rem]" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                                {{ card.meta }}
+                              </div>
+                              <h3 class="m-0 text-2xl uppercase leading-tight font-medium" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                                {{ card.title }}
+                              </h3>
+                              <p class="m-0 text-sm leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                                {{ card.excerpt }}
+                              </p>
+                              <div class="mt-auto pt-4 flex gap-4 text-[0.68rem]" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                                <span>0 views</span>
+                                <span>0 comments</span>
+                              </div>
+                            </div>
+                          </article>
+                        }
+                      </section>
+                    </div>
                   } @else if (builderState.layout === 'single') {
                   <div
                     class="flex flex-col gap-8 sm:gap-10 py-6 sm:py-8"

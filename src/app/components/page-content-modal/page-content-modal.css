@@ -194,6 +194,102 @@
   opacity: 0.88;
 }
 
+.blog-preview {
+  min-height: 100%;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: var(--about-shadow);
+}
+
+.blog-preview__hero {
+  position: relative;
+  min-height: 18rem;
+  padding: 1.5rem 2rem 6rem;
+}
+
+.blog-preview__hero-image {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.blog-preview__hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0.52) 100%);
+}
+
+.blog-preview__hero-label {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.42em;
+  font-size: 0.88rem;
+}
+
+.blog-preview__feed {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1rem;
+  padding: 0 2rem 2rem;
+  margin-top: -3.5rem;
+}
+
+.blog-preview__card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.48fr) minmax(0, 0.52fr);
+  border: 1px solid;
+}
+
+.blog-preview__card-image-wrap {
+  min-height: 15rem;
+}
+
+.blog-preview__card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.blog-preview__card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.blog-preview__card-meta {
+  font-size: 0.72rem;
+}
+
+.blog-preview__card-title {
+  margin: 0;
+  font-size: 1.65rem;
+  line-height: 1.08;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.blog-preview__card-excerpt {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.blog-preview__card-footer {
+  margin-top: auto;
+  display: flex;
+  gap: 1rem;
+  padding-top: 1rem;
+  font-size: 0.72rem;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
 @media (max-width: 768px) {
   .page-content-modal__preview {
     max-height: 48vh;
@@ -226,6 +322,20 @@
   .about-preview__columns {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+  }
+
+  .blog-preview__hero {
+    min-height: 14rem;
+    padding: 1.25rem 1.25rem 5rem;
+  }
+
+  .blog-preview__feed {
+    padding: 0 1.25rem 1.5rem;
+    margin-top: -2.5rem;
+  }
+
+  .blog-preview__card {
+    grid-template-columns: 1fr;
   }
 }
 
