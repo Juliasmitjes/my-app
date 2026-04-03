@@ -8,6 +8,9 @@ type PageTextBlock = {
   title: string;
   subtitle: string;
   body: string;
+  contactEmail?: string;
+  contactPhone?: string;
+  contactButtonLabel?: string;
   socials?: {
     linkedin?: string;
     instagram?: string;
@@ -301,6 +304,9 @@ export class PreviewPanel implements OnChanges {
       title: value.title ?? '',
       subtitle: value.subtitle ?? '',
       body: value.body ?? '',
+      contactEmail: value.contactEmail ?? '',
+      contactPhone: value.contactPhone ?? '',
+      contactButtonLabel: value.contactButtonLabel ?? '',
       socials: value.socials ?? {}
     };
   }
@@ -335,6 +341,10 @@ export class PreviewPanel implements OnChanges {
 
   get isBlogPageActive(): boolean {
     return this.activePage === 'blog';
+  }
+
+  get isContactPageActive(): boolean {
+    return this.activePage === 'contact';
   }
 
   get aboutPageSectionTitle(): string {
@@ -388,6 +398,16 @@ export class PreviewPanel implements OnChanges {
         excerpt
       }
     ];
+  }
+
+  getContactPageData(pageId: string): { heading: string; email: string; phone: string; buttonLabel: string } {
+    const text = this.getPageText(pageId);
+    return {
+      heading: text?.title?.trim() || 'contact.',
+      email: text?.contactEmail?.trim() || 'info@mysite.com',
+      phone: text?.contactPhone?.trim() || '+31 6 12345678',
+      buttonLabel: text?.contactButtonLabel?.trim() || 'Send'
+    };
   }
 
   /* ────────────────────────────────────────────────

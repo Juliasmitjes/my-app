@@ -268,6 +268,54 @@
                       }
                     </section>
                   </div>
+                } @else if (isContactPageActive) {
+                  @let contact = getContactPageData(activePage);
+
+                  <div [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 97%, ' + selectedThemeColors[1] + ')'">
+                    <section class="max-w-3xl mx-auto px-6 py-10 sm:px-10 sm:py-14">
+                      <h2 class="m-0 text-center text-5xl sm:text-7xl leading-none" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                        {{ contact.heading }}
+                      </h2>
+
+                      <div class="mt-10 grid gap-5" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                        <div class="grid gap-5 sm:grid-cols-2">
+                          <div class="grid gap-2">
+                            <label class="text-sm">First Name *</label>
+                            <div class="h-11 border" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 24%, transparent)'"></div>
+                          </div>
+                          <div class="grid gap-2">
+                            <label class="text-sm">Last Name *</label>
+                            <div class="h-11 border" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 24%, transparent)'"></div>
+                          </div>
+                        </div>
+
+                        <div class="grid gap-2">
+                          <label class="text-sm">Email *</label>
+                          <div class="h-11 border" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 24%, transparent)'"></div>
+                        </div>
+
+                        <div class="grid gap-2">
+                          <label class="text-sm">Phone</label>
+                          <div class="h-11 border" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 24%, transparent)'"></div>
+                        </div>
+
+                        <div class="grid gap-2">
+                          <label class="text-sm">Message *</label>
+                          <div class="min-h-[9rem] border" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 24%, transparent)'"></div>
+                        </div>
+
+                        <div class="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
+                          <div class="flex flex-wrap gap-5 text-sm">
+                            <span>{{ contact.email }}</span>
+                            <span>{{ contact.phone }}</span>
+                          </div>
+                          <button type="button" class="px-8 py-3" [style.background]="selectedThemeColors[2]" [style.color]="selectedThemeColors[0]">
+                            {{ contact.buttonLabel }}
+                          </button>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
                 } @else if (builderState.layout === 'single') {
                   <div
                     class="flex flex-col gap-8 sm:gap-10 py-6 sm:py-8"

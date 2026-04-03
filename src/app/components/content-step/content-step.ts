@@ -103,6 +103,9 @@ ngOnInit() {
         summary: string;
         image?: File | string | null;
       }>;
+      contactEmail?: string;
+      contactPhone?: string;
+      contactButtonLabel?: string;
       socials?: {
         linkedin?: string;
         instagram?: string;
@@ -149,6 +152,9 @@ ngOnInit() {
           title,
           subtitle,
           body,
+          contactEmail: (payload as any).contactEmail ?? '',
+          contactPhone: (payload as any).contactPhone ?? '',
+          contactButtonLabel: (payload as any).contactButtonLabel ?? '',
           socials: socials ?? {}
         }
       };

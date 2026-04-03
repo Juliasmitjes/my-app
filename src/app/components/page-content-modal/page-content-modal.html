@@ -120,6 +120,52 @@
                 }
               </div>
             </div>
+          } @else if (isContactPage) {
+            <div class="contact-preview" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 97%, ' + selectedThemeColors[1] + ')'">
+              <div class="contact-preview__inner">
+                <h2 class="contact-preview__title" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                  {{ contactHeadingPreview }}
+                </h2>
+
+                <div class="contact-preview__form" [style.fontFamily]="bodyFont" [style.color]="selectedThemeColors[6]">
+                  <div class="contact-preview__row contact-preview__row--split">
+                    <div class="contact-preview__field">
+                      <label>First Name *</label>
+                      <div class="contact-preview__input"></div>
+                    </div>
+                    <div class="contact-preview__field">
+                      <label>Last Name *</label>
+                      <div class="contact-preview__input"></div>
+                    </div>
+                  </div>
+
+                  <div class="contact-preview__field">
+                    <label>Email *</label>
+                    <div class="contact-preview__input"></div>
+                  </div>
+
+                  <div class="contact-preview__field">
+                    <label>Phone</label>
+                    <div class="contact-preview__input"></div>
+                  </div>
+
+                  <div class="contact-preview__field">
+                    <label>Message *</label>
+                    <div class="contact-preview__textarea"></div>
+                  </div>
+
+                  <div class="contact-preview__footer">
+                    <div class="contact-preview__meta">
+                      <span>{{ contactEmailPreview }}</span>
+                      <span>{{ contactPhonePreview }}</span>
+                    </div>
+                    <button type="button" class="contact-preview__button" [style.background]="selectedThemeColors[2]" [style.color]="selectedThemeColors[0]">
+                      {{ contactButtonPreview }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           } @else {
             <div class="rounded-xl overflow-hidden border border-border/40">
               <div class="px-4 py-3 border-b" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
@@ -214,6 +260,26 @@
                   {{ post.title || ('Blogpost ' + (i + 1)) }}
                 </button>
               }
+            </div>
+          } @else if (isContactPage) {
+            <div>
+              <label class="text-sm font-medium block mb-1">Titel bovenaan</label>
+              <input [(ngModel)]="title" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. contact." type="text" />
+            </div>
+
+            <div>
+              <label class="text-sm font-medium block mb-1">E-mailadres</label>
+              <input [(ngModel)]="contactEmail" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="info@bedrijf.nl" type="text" />
+            </div>
+
+            <div>
+              <label class="text-sm font-medium block mb-1">Telefoonnummer</label>
+              <input [(ngModel)]="contactPhone" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="+31 6 12345678" type="text" />
+            </div>
+
+            <div>
+              <label class="text-sm font-medium block mb-1">Knoptekst</label>
+              <input [(ngModel)]="contactButtonLabel" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Send" type="text" />
             </div>
           } @else {
             <div>

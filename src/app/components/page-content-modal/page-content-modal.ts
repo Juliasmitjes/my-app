@@ -39,6 +39,9 @@ export class PageContentModal implements OnChanges, OnDestroy {
       summary: string;
       image?: File | string | null;
     }>;
+    contactEmail?: string;
+    contactPhone?: string;
+    contactButtonLabel?: string;
     socials?: {
       linkedin?: string;
       instagram?: string;
@@ -55,6 +58,9 @@ export class PageContentModal implements OnChanges, OnDestroy {
   blogHeroTitle = '';
   blogPosts: BlogPostDraft[] = [];
   activeBlogPostIndex = 0;
+  contactEmail = '';
+  contactPhone = '';
+  contactButtonLabel = '';
   linkedinUrl = '';
   instagramUrl = '';
   facebookUrl = '';
@@ -139,6 +145,10 @@ export class PageContentModal implements OnChanges, OnDestroy {
     return this.page?.id === 'blog';
   }
 
+  get isContactPage(): boolean {
+    return this.page?.id === 'contact';
+  }
+
   get aboutSectionTitle(): string {
     return this.page?.name ?? 'Over';
   }
@@ -170,6 +180,22 @@ export class PageContentModal implements OnChanges, OnDestroy {
 
   get blogHeroTitlePreview(): string {
     return this.blogHeroTitle?.trim() || 'Jouw blog';
+  }
+
+  get contactHeadingPreview(): string {
+    return this.title?.trim() || 'contact.';
+  }
+
+  get contactEmailPreview(): string {
+    return this.contactEmail?.trim() || 'info@mysite.com';
+  }
+
+  get contactPhonePreview(): string {
+    return this.contactPhone?.trim() || '+31 6 12345678';
+  }
+
+  get contactButtonPreview(): string {
+    return this.contactButtonLabel?.trim() || 'Send';
   }
 
   get blogCards(): Array<{ title: string; meta: string; excerpt: string; image: string }> {
@@ -264,6 +290,9 @@ export class PageContentModal implements OnChanges, OnDestroy {
         summary: post.summary.trim(),
         image: post.image
       })),
+      contactEmail: this.contactEmail.trim(),
+      contactPhone: this.contactPhone.trim(),
+      contactButtonLabel: this.contactButtonLabel.trim(),
       socials: {
         linkedin: this.linkedinUrl.trim(),
         instagram: this.instagramUrl.trim(),
@@ -283,6 +312,9 @@ export class PageContentModal implements OnChanges, OnDestroy {
       this.subtitle = entry.value.subtitle ?? '';
       this.body = entry.value.body ?? '';
       this.blogHeroTitle = entry.value.heroTitle ?? '';
+      this.contactEmail = entry.value.contactEmail ?? '';
+      this.contactPhone = entry.value.contactPhone ?? '';
+      this.contactButtonLabel = entry.value.contactButtonLabel ?? '';
       this.linkedinUrl = entry.value.socials?.linkedin ?? '';
       this.instagramUrl = entry.value.socials?.instagram ?? '';
       this.facebookUrl = entry.value.socials?.facebook ?? '';
@@ -291,6 +323,9 @@ export class PageContentModal implements OnChanges, OnDestroy {
       this.subtitle = '';
       this.body = '';
       this.blogHeroTitle = '';
+      this.contactEmail = '';
+      this.contactPhone = '';
+      this.contactButtonLabel = '';
       this.linkedinUrl = '';
       this.instagramUrl = '';
       this.facebookUrl = '';
