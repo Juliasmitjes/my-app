@@ -19,6 +19,13 @@ type ServiceItemDraft = {
   buttonLabel: string;
 };
 
+type TeamMemberDraft = {
+  name: string;
+  role: string;
+  intro: string;
+  image: File | string | null;
+};
+
 @Component({
   selector: 'app-page-content-modal',
   standalone: true,
@@ -52,6 +59,12 @@ export class PageContentModal implements OnChanges, OnDestroy {
       price?: string;
       buttonLabel?: string;
     }>;
+    teamMembers?: Array<{
+      name: string;
+      role?: string;
+      intro?: string;
+      image?: File | string | null;
+    }>;
     contactEmail?: string;
     contactPhone?: string;
     contactButtonLabel?: string;
@@ -73,6 +86,8 @@ export class PageContentModal implements OnChanges, OnDestroy {
   activeBlogPostIndex = 0;
   serviceItems: ServiceItemDraft[] = [];
   activeServiceIndex = 0;
+  teamMembers: TeamMemberDraft[] = [];
+  activeTeamMemberIndex = 0;
   bookingServiceTitle: string | null = null;
   selectedBookingDate = '';
   selectedBookingSlot = '';
@@ -172,6 +187,10 @@ export class PageContentModal implements OnChanges, OnDestroy {
     return this.page?.id === 'diensten';
   }
 
+  get isTeamPage(): boolean {
+    return this.page?.id === 'team';
+  }
+
   get aboutSectionTitle(): string {
     return this.page?.name ?? 'Over';
   }
@@ -205,6 +224,18 @@ export class PageContentModal implements OnChanges, OnDestroy {
     return this.blogHeroTitle?.trim() || 'Jouw blog';
   }
 
+  get teamKickerPreview(): string {
+    return this.subtitle?.trim() || 'Ons team';
+  }
+
+  get teamHeadingPreview(): string {
+    return this.title?.trim() || 'De mensen achter het merk';
+  }
+
+  get teamIntroPreview(): string {
+    return this.body?.trim() || 'Laat zien wie er achter je bedrijf zitten en waar ieder teamlid in uitblinkt.';
+  }
+
   get contactHeadingPreview(): string {
     return this.title?.trim() || 'contact.';
   }
@@ -228,6 +259,15 @@ export class PageContentModal implements OnChanges, OnDestroy {
     }
 
     return this.serviceItems[this.activeServiceIndex] ?? this.serviceItems[0];
+  }
+
+  get currentTeamMember(): TeamMemberDraft {
+    if (!this.teamMembers.length) {
+      this.teamMembers = [{ name: '', role: '', intro: '', image: null }];
+      this.activeTeamMemberIndex = 0;
+    }
+
+    return this.teamMembers[this.activeTeamMemberIndex] ?? this.teamMembers[0];
   }
 
   get servicesHeadingPreview(): string {
@@ -276,6 +316,24 @@ export class PageContentModal implements OnChanges, OnDestroy {
     return ['09:00', '10:30', '13:00', '14:30', '16:00', '19:00'];
   }
 
+  get teamPreviewCards(): Array<{ name: string; role: string; intro: string; image: string }> {
+    const members = this.teamMembers.length
+      ? this.teamMembers
+      : [{
+          name: 'Sophie de Vries',
+          role: 'Creatief directeur',
+          intro: 'Sophie bewaakt de creatieve richting en vertaalt ideeën naar een sterk merkverhaal.',
+          image: null
+        }];
+
+    return members.map((member, index) => ({
+      name: member.name?.trim() || `Teamlid ${index + 1}`,
+      role: member.role?.trim() || 'Functie',
+      intro: member.intro?.trim() || 'Voeg hier een korte introductie van dit teamlid toe.',
+      image: this.getFilePreview(member.image) || 'assets/images/exampleImage.png'
+    }));
+  }
+
   get backgroundFileLabel(): string {
     return this.getFileLabel(this.backgroundImage, 'Nog geen bestand gekozen');
   }
@@ -292,11 +350,15 @@ export class PageContentModal implements OnChanges, OnDestroy {
     return this.getFileLabel(this.currentBlogPost.image, 'Nog geen bestand gekozen');
   }
 
+  get activeTeamMemberFileLabel(): string {
+    return this.getFileLabel(this.currentTeamMember.image, 'Nog geen bestand gekozen');
+  }
+
   get blogBackgroundFileLabel(): string {
     return this.getFileLabel(this.backgroundImage, 'Nog geen bestand gekozen');
   }
 
-  onFileChange(event: Event, type: 'default' | 'background' | 'portrait' | 'blog-post' = 'default'): void {
+  onFileChange(event: Event, type: 'default' | 'background' | 'portrait' | 'blog-post' | 'team-member' = 'default'): void {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
     const file = input.files[0];
@@ -323,6 +385,16 @@ export class PageContentModal implements OnChanges, OnDestroy {
       return;
     }
 
+    if (type === 'team-member') {
+      const members = [...this.teamMembers];
+      members[this.activeTeamMemberIndex] = {
+        ...this.currentTeamMember,
+        image: file
+      };
+      this.teamMembers = members;
+      return;
+    }
+
     this.image = file;
     this.setPreviewUrl(file, 'default');
   }
@@ -343,6 +415,15 @@ export class PageContentModal implements OnChanges, OnDestroy {
 
   selectServiceItem(index: number): void {
     this.activeServiceIndex = index;
+  }
+
+  addTeamMember(): void {
+    this.teamMembers = [...this.teamMembers, { name: '', role: '', intro: '', image: null }];
+    this.activeTeamMemberIndex = this.teamMembers.length - 1;
+  }
+
+  selectTeamMember(index: number): void {
+    this.activeTeamMemberIndex = index;
   }
 
   openBooking(serviceTitle: string): void {
@@ -391,6 +472,12 @@ export class PageContentModal implements OnChanges, OnDestroy {
         price: item.price.trim(),
         buttonLabel: item.buttonLabel.trim()
       })),
+      teamMembers: this.teamMembers.map(member => ({
+        name: member.name.trim(),
+        role: member.role.trim(),
+        intro: member.intro.trim(),
+        image: member.image
+      })),
       contactEmail: this.contactEmail.trim(),
       contactPhone: this.contactPhone.trim(),
       contactButtonLabel: this.contactButtonLabel.trim(),
@@ -421,6 +508,14 @@ export class PageContentModal implements OnChanges, OnDestroy {
             buttonLabel: item.buttonLabel ?? ''
           }))
         : [];
+      this.teamMembers = Array.isArray(entry.value.members)
+        ? entry.value.members.map((member: any, index: number) => ({
+            name: member.name ?? '',
+            role: member.role ?? '',
+            intro: member.intro ?? '',
+            image: this.builderState?.uploads?.[`page_${pageId}_member_${index}_image`] ?? null
+          }))
+        : [];
       this.contactEmail = entry.value.contactEmail ?? '';
       this.contactPhone = entry.value.contactPhone ?? '';
       this.contactButtonLabel = entry.value.contactButtonLabel ?? '';
@@ -433,6 +528,7 @@ export class PageContentModal implements OnChanges, OnDestroy {
       this.body = '';
       this.blogHeroTitle = '';
       this.serviceItems = [];
+      this.teamMembers = [];
       this.contactEmail = '';
       this.contactPhone = '';
       this.contactButtonLabel = '';
@@ -458,6 +554,8 @@ export class PageContentModal implements OnChanges, OnDestroy {
       this.activeBlogPostIndex = 0;
       this.serviceItems = [];
       this.activeServiceIndex = 0;
+      this.teamMembers = [];
+      this.activeTeamMemberIndex = 0;
     } else if (this.isServicesPage) {
       this.blogPosts = [];
       this.activeBlogPostIndex = 0;
@@ -465,11 +563,24 @@ export class PageContentModal implements OnChanges, OnDestroy {
         ? this.serviceItems
         : [{ title: this.body || '', duration: '', price: '', buttonLabel: 'Boek nu' }];
       this.activeServiceIndex = 0;
+      this.teamMembers = [];
+      this.activeTeamMemberIndex = 0;
+    } else if (this.isTeamPage) {
+      this.blogPosts = [];
+      this.activeBlogPostIndex = 0;
+      this.serviceItems = [];
+      this.activeServiceIndex = 0;
+      this.teamMembers = this.teamMembers.length
+        ? this.teamMembers
+        : [{ name: '', role: '', intro: '', image: null }];
+      this.activeTeamMemberIndex = 0;
     } else {
       this.blogPosts = [];
       this.activeBlogPostIndex = 0;
       this.serviceItems = [];
       this.activeServiceIndex = 0;
+      this.teamMembers = [];
+      this.activeTeamMemberIndex = 0;
     }
 
     this.resetPreviewUrls();

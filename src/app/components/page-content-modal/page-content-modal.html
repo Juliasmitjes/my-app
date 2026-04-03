@@ -267,6 +267,43 @@
                 }
               </div>
             </div>
+          } @else if (isTeamPage) {
+            <div class="rounded-[1.5rem] shadow-[var(--about-shadow)]" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 96%, ' + selectedThemeColors[1] + ')'">
+              <div class="grid gap-8 px-8 py-10">
+                <div class="grid gap-3 text-center">
+                  <div class="text-xs font-semibold uppercase tracking-[0.28em]" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                    {{ teamKickerPreview }}
+                  </div>
+                  <h2 class="m-0 text-5xl leading-none" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                    {{ teamHeadingPreview }}
+                  </h2>
+                  <p class="mx-auto max-w-2xl text-base leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                    {{ teamIntroPreview }}
+                  </p>
+                </div>
+
+                <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                  @for (member of teamPreviewCards; let i = $index; track member.name + i) {
+                    <article class="grid gap-4 rounded-[1.5rem] border p-5" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 14%, transparent)'" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 98%, ' + selectedThemeColors[1] + ')'">
+                      <div class="aspect-[4/5] overflow-hidden rounded-[1.25rem]">
+                        <img [src]="member.image" [alt]="member.name" class="h-full w-full object-cover" />
+                      </div>
+                      <div class="grid gap-2">
+                        <h3 class="m-0 text-2xl" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                          {{ member.name }}
+                        </h3>
+                        <div class="text-sm font-semibold uppercase tracking-[0.18em]" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                          {{ member.role }}
+                        </div>
+                        <p class="m-0 text-sm leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                          {{ member.intro }}
+                        </p>
+                      </div>
+                    </article>
+                  }
+                </div>
+              </div>
+            </div>
           } @else {
             <div class="rounded-xl overflow-hidden border border-border/40">
               <div class="px-4 py-3 border-b" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
@@ -431,6 +468,72 @@
                   (click)="selectServiceItem(i)"
                 >
                   {{ item.title || ('Dienst ' + (i + 1)) }}
+                </button>
+              }
+            </div>
+          } @else if (isTeamPage) {
+            <div>
+              <label class="text-sm font-medium block mb-1">Bovenregel</label>
+              <input [(ngModel)]="subtitle" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Ons team" type="text" />
+            </div>
+
+            <div>
+              <label class="text-sm font-medium block mb-1">Titel bovenaan</label>
+              <input [(ngModel)]="title" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. De mensen achter het merk" type="text" />
+            </div>
+
+            <div>
+              <label class="text-sm font-medium block mb-1">Introductietekst</label>
+              <textarea [(ngModel)]="body" class="w-full rounded-md border px-3 py-2 text-sm min-h-[110px]" placeholder="Vertel kort wie jullie zijn en wat bezoekers van het team mogen verwachten."></textarea>
+            </div>
+
+            <div class="page-content-modal__blog-toolbar">
+              <div class="text-sm font-medium">Medewerkers</div>
+              <button type="button" class="page-content-modal__upload-button" (click)="addTeamMember()">Medewerker toevoegen</button>
+            </div>
+
+            <div class="page-content-modal__blog-editor">
+              <div class="page-content-modal__blog-editor-header">
+                <div class="page-content-modal__blog-editor-badge">Je bewerkt nu</div>
+                <div class="page-content-modal__blog-editor-title">
+                  {{ currentTeamMember.name || ('Medewerker ' + (activeTeamMemberIndex + 1)) }}
+                </div>
+              </div>
+
+              <div>
+                <label class="text-sm font-medium block mb-1">Naam</label>
+                <input [(ngModel)]="currentTeamMember.name" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Sophie de Vries" type="text" />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium block mb-1">Rol / functie</label>
+                <input [(ngModel)]="currentTeamMember.role" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Creative lead" type="text" />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium block mb-1">Korte introductie</label>
+                <textarea [(ngModel)]="currentTeamMember.intro" class="w-full rounded-md border px-3 py-2 text-sm min-h-[120px]" placeholder="Schrijf hier in een paar zinnen waar deze medewerker voor staat."></textarea>
+              </div>
+
+              <div>
+                <label class="text-sm font-medium block mb-1">Portretfoto</label>
+                <div class="page-content-modal__upload">
+                  <label for="team-member-upload" class="page-content-modal__upload-button">Kies bestand</label>
+                  <span class="page-content-modal__upload-name">{{ activeTeamMemberFileLabel }}</span>
+                  <input id="team-member-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event, 'team-member')" />
+                </div>
+              </div>
+            </div>
+
+            <div class="page-content-modal__blog-post-list">
+              @for (member of teamMembers; let i = $index; track i) {
+                <button
+                  type="button"
+                  class="page-content-modal__blog-post-chip"
+                  [class.page-content-modal__blog-post-chip--active]="activeTeamMemberIndex === i"
+                  (click)="selectTeamMember(i)"
+                >
+                  {{ member.name || ('Medewerker ' + (i + 1)) }}
                 </button>
               }
             </div>

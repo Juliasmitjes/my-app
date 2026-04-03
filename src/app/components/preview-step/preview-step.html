@@ -413,6 +413,45 @@
                       }
                     </section>
                   </div>
+                } @else if (isTeamPageActive) {
+                  @let team = getTeamPageData(activePage);
+
+                  <div [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 96%, ' + selectedThemeColors[1] + ')'">
+                    <section class="grid gap-8 px-6 py-10 sm:px-10 sm:py-14">
+                      <div class="grid gap-3 text-center">
+                        <div class="text-xs font-semibold uppercase tracking-[0.28em]" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                          {{ team.kicker }}
+                        </div>
+                        <h2 class="m-0 text-5xl sm:text-7xl leading-none" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                          {{ team.heading }}
+                        </h2>
+                        <p class="mx-auto max-w-2xl text-sm sm:text-base leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                          {{ team.intro }}
+                        </p>
+                      </div>
+
+                      <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                        @for (member of team.members; let i = $index; track member.name + i) {
+                          <article class="grid gap-4 rounded-[1.5rem] border p-5" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 14%, transparent)'" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 98%, ' + selectedThemeColors[1] + ')'">
+                            <div class="aspect-[4/5] overflow-hidden rounded-[1.25rem]">
+                              <img [src]="member.image" [alt]="member.name" class="h-full w-full object-cover" />
+                            </div>
+                            <div class="grid gap-2">
+                              <h3 class="m-0 text-2xl" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                                {{ member.name }}
+                              </h3>
+                              <div class="text-sm font-semibold uppercase tracking-[0.18em]" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                                {{ member.role }}
+                              </div>
+                              <p class="m-0 text-sm leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                                {{ member.intro }}
+                              </p>
+                            </div>
+                          </article>
+                        }
+                      </div>
+                    </section>
+                  </div>
                 } @else if (builderState.layout === 'single') {
                   <div
                     class="flex flex-col gap-8 sm:gap-10 py-6 sm:py-8"

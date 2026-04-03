@@ -109,6 +109,12 @@ ngOnInit() {
         price?: string;
         buttonLabel?: string;
       }>;
+      teamMembers?: Array<{
+        name: string;
+        role?: string;
+        intro?: string;
+        image?: File | string | null;
+      }>;
       contactEmail?: string;
       contactPhone?: string;
       contactButtonLabel?: string;
@@ -168,6 +174,33 @@ ngOnInit() {
           }))
         }
       };
+    } else if (pageId === 'team') {
+      const teamMembers = (payload as any).teamMembers ?? [];
+
+      uploads[`page_${pageId}_text`] = {
+        kind: 'inline',
+        value: {
+          title,
+          subtitle,
+          body,
+          members: teamMembers.map((member: any) => ({
+            name: member.name ?? '',
+            role: member.role ?? '',
+            intro: member.intro ?? ''
+          }))
+        }
+      };
+
+      const existingTeamKeys = Object.keys(uploads).filter(key => key.startsWith(`page_${pageId}_member_`) && key.endsWith('_image'));
+      for (const key of existingTeamKeys) {
+        delete uploads[key];
+      }
+
+      teamMembers.forEach((member: any, index: number) => {
+        if (member.image) {
+          uploads[`page_${pageId}_member_${index}_image`] = member.image;
+        }
+      });
     } else {
       uploads[`page_${pageId}_text`] = {
         kind: 'inline',
@@ -212,6 +245,9 @@ ngOnInit() {
     delete uploads[`page_${pageId}_portrait_image`];
     for (const key of Object.keys(uploads)) {
       if (key.startsWith(`page_${pageId}_post_`) && key.endsWith('_image')) {
+        delete uploads[key];
+      }
+      if (key.startsWith(`page_${pageId}_member_`) && key.endsWith('_image')) {
         delete uploads[key];
       }
     }

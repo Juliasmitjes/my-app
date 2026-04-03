@@ -17,6 +17,11 @@ type PageTextBlock = {
     price?: string;
     buttonLabel?: string;
   }>;
+  members?: Array<{
+    name?: string;
+    role?: string;
+    intro?: string;
+  }>;
   socials?: {
     linkedin?: string;
     instagram?: string;
@@ -319,6 +324,7 @@ export class PreviewPanel implements OnChanges {
       contactPhone: value.contactPhone ?? '',
       contactButtonLabel: value.contactButtonLabel ?? '',
       services: value.services ?? [],
+      members: value.members ?? [],
       socials: value.socials ?? {}
     };
   }
@@ -361,6 +367,10 @@ export class PreviewPanel implements OnChanges {
 
   get isServicesPageActive(): boolean {
     return this.activePage === 'diensten';
+  }
+
+  get isTeamPageActive(): boolean {
+    return this.activePage === 'team';
   }
 
   get aboutPageSectionTitle(): string {
@@ -440,6 +450,30 @@ export class PreviewPanel implements OnChanges {
     return {
       heading: text?.title?.trim() || 'Onze diensten',
       items
+    };
+  }
+
+  getTeamPageData(pageId: string): { kicker: string; heading: string; intro: string; members: Array<{ name: string; role: string; intro: string; image: string }> } {
+    const text = this.getPageText(pageId);
+    const members = Array.isArray(text?.members) && text.members.length
+      ? text.members.map((member, index) => ({
+          name: member.name?.trim() || `Teamlid ${index + 1}`,
+          role: member.role?.trim() || 'Functie',
+          intro: member.intro?.trim() || 'Voeg hier een korte introductie van dit teamlid toe.',
+          image: this.getUploadFor(`page_${pageId}_member_${index}_image`) || 'assets/images/exampleImage.png'
+        }))
+      : [{
+          name: 'Sophie de Vries',
+          role: 'Creatief directeur',
+          intro: 'Sophie bewaakt de creatieve richting en vertaalt ideeën naar een sterk merkverhaal.',
+          image: 'assets/images/exampleImage.png'
+        }];
+
+    return {
+      kicker: text?.subtitle?.trim() || 'Ons team',
+      heading: text?.title?.trim() || 'De mensen achter het merk',
+      intro: text?.body?.trim() || 'Laat zien wie er achter je bedrijf zitten en waar ieder teamlid in uitblinkt.',
+      members
     };
   }
 
