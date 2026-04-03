@@ -271,7 +271,6 @@ export class PreviewStep implements OnChanges, OnDestroy {
   getAboutPortraitImage(pageId: string): string {
     return (
       this.getUploadFor(`page_${pageId}_portrait_image`) ||
-      this.getUploadFor(`page_${pageId}_background_image`) ||
       this.getPageImage(pageId) ||
       'assets/images/exampleImage.png'
     );

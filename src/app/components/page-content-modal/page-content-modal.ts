@@ -102,7 +102,9 @@ export class PageContentModal implements OnChanges, OnDestroy {
     if (typeof this.portraitImage === 'string') return this.portraitImage;
     const existing = this.getExistingImage('portrait');
     if (existing) return existing;
-    return this.previewBackgroundImage;
+    const legacy = this.getExistingImage('default');
+    if (legacy) return legacy;
+    return 'assets/images/exampleImage.png';
   }
 
   get isAboutPage(): boolean {
