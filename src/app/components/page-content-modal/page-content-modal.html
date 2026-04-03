@@ -175,22 +175,31 @@
               <button type="button" class="page-content-modal__upload-button" (click)="addBlogPost()">Blogpost toevoegen</button>
             </div>
 
-            <div>
-              <label class="text-sm font-medium block mb-1">Blogpost titel</label>
-              <input [(ngModel)]="currentBlogPost.title" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Playing with patterns" type="text" />
-            </div>
+            <div class="page-content-modal__blog-editor">
+              <div class="page-content-modal__blog-editor-header">
+                <div class="page-content-modal__blog-editor-badge">Je bewerkt nu</div>
+                <div class="page-content-modal__blog-editor-title">
+                  {{ currentBlogPost.title || ('Blogpost ' + (activeBlogPostIndex + 1)) }}
+                </div>
+              </div>
 
-            <div>
-              <label class="text-sm font-medium block mb-1">Blogpost intro</label>
-              <textarea [(ngModel)]="currentBlogPost.summary" class="w-full rounded-md border px-3 py-2 text-sm min-h-[140px]" placeholder="Schrijf hier een korte introductie van deze blogpost..."></textarea>
-            </div>
+              <div>
+                <label class="text-sm font-medium block mb-1">Blogpost titel</label>
+                <input [(ngModel)]="currentBlogPost.title" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Playing with patterns" type="text" />
+              </div>
 
-            <div>
-              <label class="text-sm font-medium block mb-1">Blogfoto (optioneel)</label>
-              <div class="page-content-modal__upload">
-                <label for="blog-post-upload" class="page-content-modal__upload-button">Kies bestand</label>
-                <span class="page-content-modal__upload-name">{{ activeBlogPostFileLabel }}</span>
-                <input id="blog-post-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event, 'blog-post')" />
+              <div>
+                <label class="text-sm font-medium block mb-1">Blogpost intro</label>
+                <textarea [(ngModel)]="currentBlogPost.summary" class="w-full rounded-md border px-3 py-2 text-sm min-h-[140px]" placeholder="Schrijf hier een korte introductie van deze blogpost..."></textarea>
+              </div>
+
+              <div>
+                <label class="text-sm font-medium block mb-1">Blogfoto (optioneel)</label>
+                <div class="page-content-modal__upload">
+                  <label for="blog-post-upload" class="page-content-modal__upload-button">Kies bestand</label>
+                  <span class="page-content-modal__upload-name">{{ activeBlogPostFileLabel }}</span>
+                  <input id="blog-post-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event, 'blog-post')" />
+                </div>
               </div>
             </div>
 
