@@ -12,6 +12,12 @@ type PageTextBlock = {
   contactEmail?: string;
   contactPhone?: string;
   contactButtonLabel?: string;
+  services?: Array<{
+    title?: string;
+    duration?: string;
+    price?: string;
+    buttonLabel?: string;
+  }>;
   socials?: {
     linkedin?: string;
     instagram?: string;
@@ -35,6 +41,10 @@ export class PreviewStep implements OnChanges, OnDestroy {
   @Input() colorThemes: { id: string; colors: string[] }[] = [];
   @Input() mascotUrl!: string;
   activePageId: string | null = null;
+  bookingServiceTitle: string | null = null;
+  selectedBookingDate = '';
+  selectedBookingSlot = '';
+  bookingConfirmed = false;
 
   private _selectedThemeColors: string[] | null = null;
   private blobUrlCache = new Map<string, string>();
@@ -100,6 +110,7 @@ export class PreviewStep implements OnChanges, OnDestroy {
 
   setActivePage(pageId: string): void {
     this.activePageId = pageId;
+    this.closeBooking();
   }
 
   get selectedThemeColors(): string[] {
@@ -266,6 +277,7 @@ export class PreviewStep implements OnChanges, OnDestroy {
       contactEmail: value.contactEmail ?? '',
       contactPhone: value.contactPhone ?? '',
       contactButtonLabel: value.contactButtonLabel ?? '',
+      services: value.services ?? [],
       socials: value.socials ?? {}
     };
   }
@@ -306,6 +318,10 @@ export class PreviewStep implements OnChanges, OnDestroy {
     return this.activePage === 'contact';
   }
 
+  get isServicesPageActive(): boolean {
+    return this.activePage === 'diensten';
+  }
+
   get aboutPageSectionTitle(): string {
     return 'Over';
   }
@@ -337,7 +353,7 @@ export class PreviewStep implements OnChanges, OnDestroy {
   }
 
   getBlogHeroLabel(pageId: string): string {
-    return this.getPageText(pageId)?.subtitle?.trim() || 'Stories & inspiratie';
+    return this.getPageText(pageId)?.subtitle?.trim() || 'Verhalen & inspiratie';
   }
 
   getBlogCards(pageId: string): Array<{ title: string; meta: string; excerpt: string }> {
@@ -348,12 +364,12 @@ export class PreviewStep implements OnChanges, OnDestroy {
     return [
       {
         title,
-        meta: text?.subtitle?.trim() || 'Admin • 1 min read',
+        meta: text?.subtitle?.trim() || 'Beheerder • 1 min leestijd',
         excerpt
       },
       {
         title: text?.title?.trim() ? `${text.title.trim()} vervolg` : 'Een tweede blogmoment',
-        meta: 'Admin • 2 min read',
+        meta: 'Beheerder • 2 min leestijd',
         excerpt
       }
     ];
@@ -365,8 +381,69 @@ export class PreviewStep implements OnChanges, OnDestroy {
       heading: text?.title?.trim() || 'contact.',
       email: text?.contactEmail?.trim() || 'info@mysite.com',
       phone: text?.contactPhone?.trim() || '+31 6 12345678',
-      buttonLabel: text?.contactButtonLabel?.trim() || 'Send'
+      buttonLabel: text?.contactButtonLabel?.trim() || 'Versturen'
     };
+  }
+
+  getServicesPageData(pageId: string): { heading: string; items: Array<{ title: string; duration: string; price: string; buttonLabel: string }> } {
+    const text = this.getPageText(pageId);
+    const items = Array.isArray(text?.services) && text.services.length
+      ? text.services.map(item => ({
+          title: item.title?.trim() || 'Dienst',
+          duration: item.duration?.trim() || '1 uur',
+          price: item.price?.trim() || '€100',
+          buttonLabel: item.buttonLabel?.trim() || 'Boek nu'
+        }))
+      : [{ title: 'Wassen & drogen', duration: '1 uur', price: '€100', buttonLabel: 'Boek nu' }];
+
+    return {
+      heading: text?.title?.trim() || 'Onze diensten',
+      items
+    };
+  }
+
+  get bookingDates(): Array<{ value: string; day: string; label: string }> {
+    const formatter = new Intl.DateTimeFormat('nl-NL', {
+      weekday: 'short',
+      day: 'numeric',
+      month: 'short'
+    });
+
+    return Array.from({ length: 7 }, (_, index) => {
+      const date = new Date();
+      date.setDate(date.getDate() + index);
+      const value = date.toISOString().slice(0, 10);
+      const [day = '', ...rest] = formatter.format(date).replace(/\./g, '').split(' ');
+
+      return {
+        value,
+        day,
+        label: rest.join(' ')
+      };
+    });
+  }
+
+  get bookingSlots(): string[] {
+    return ['09:00', '10:30', '13:00', '14:30', '16:00', '19:00'];
+  }
+
+  openBooking(serviceTitle: string): void {
+    this.bookingServiceTitle = serviceTitle || 'Dienst';
+    this.selectedBookingDate = this.bookingDates[0]?.value ?? '';
+    this.selectedBookingSlot = '';
+    this.bookingConfirmed = false;
+  }
+
+  closeBooking(): void {
+    this.bookingServiceTitle = null;
+    this.selectedBookingDate = '';
+    this.selectedBookingSlot = '';
+    this.bookingConfirmed = false;
+  }
+
+  confirmBooking(): void {
+    if (!this.selectedBookingDate || !this.selectedBookingSlot) return;
+    this.bookingConfirmed = true;
   }
 
   getUploadFor(key: string | null): string | null {

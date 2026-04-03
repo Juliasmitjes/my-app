@@ -166,6 +166,105 @@
                 </div>
               </div>
             </div>
+          } @else if (isServicesPage) {
+            <div class="services-preview" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 97%, ' + selectedThemeColors[1] + ')'">
+              <div class="services-preview__inner">
+                <h2 class="services-preview__title" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                  {{ servicesHeadingPreview }}
+                </h2>
+                @if (!bookingServiceTitle) {
+                  <div class="services-preview__list" [style.fontFamily]="bodyFont">
+                    @for (service of servicesPreviewItems; let i = $index; track service.title + i) {
+                      <article class="services-preview__item" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 22%, transparent)'">
+                        <div class="services-preview__item-name" [style.color]="selectedThemeColors[2]">
+                          {{ service.title || ('Dienst ' + (i + 1)) }}
+                        </div>
+                        <div class="services-preview__item-divider" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 14%, transparent)'"></div>
+                        <div class="services-preview__meta" [style.color]="selectedThemeColors[6]">
+                          <div>{{ service.duration || '1 uur' }}</div>
+                          <div>{{ service.price || '€100' }}</div>
+                        </div>
+                        <button
+                          type="button"
+                          class="services-preview__button"
+                          [style.background]="selectedThemeColors[2]"
+                          [style.color]="selectedThemeColors[0]"
+                          (click)="openBooking(service.title || ('Dienst ' + (i + 1)))"
+                        >
+                          {{ service.buttonLabel || 'Boek nu' }}
+                        </button>
+                      </article>
+                    }
+                  </div>
+                } @else {
+                  <div class="services-preview__booking" [style.fontFamily]="bodyFont">
+                    <div class="services-preview__booking-header">
+                      <div>
+                        <div class="services-preview__booking-kicker" [style.color]="selectedThemeColors[5]">Agenda</div>
+                        <h3 class="services-preview__booking-title" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                          Boek {{ bookingServiceTitle }}
+                        </h3>
+                      </div>
+                      <button type="button" class="services-preview__back" (click)="closeBooking()">Terug</button>
+                    </div>
+
+                    <div class="services-preview__booking-section">
+                      <div class="services-preview__booking-label" [style.color]="selectedThemeColors[6]">Kies een dag</div>
+                      <div class="services-preview__date-list">
+                        @for (date of bookingDates; track date.value) {
+                          <button
+                            type="button"
+                            class="services-preview__date"
+                            [class.services-preview__date--active]="selectedBookingDate === date.value"
+                            [style.borderColor]="selectedBookingDate === date.value ? selectedThemeColors[2] : 'color-mix(in srgb, ' + selectedThemeColors[6] + ' 18%, transparent)'"
+                            [style.color]="selectedBookingDate === date.value ? selectedThemeColors[2] : selectedThemeColors[6]"
+                            (click)="selectedBookingDate = date.value; bookingConfirmed = false"
+                          >
+                            <span>{{ date.day }}</span>
+                            <strong>{{ date.label }}</strong>
+                          </button>
+                        }
+                      </div>
+                    </div>
+
+                    <div class="services-preview__booking-section">
+                      <div class="services-preview__booking-label" [style.color]="selectedThemeColors[6]">Kies een tijdslot</div>
+                      <div class="services-preview__slot-list">
+                        @for (slot of bookingSlots; track slot) {
+                          <button
+                            type="button"
+                            class="services-preview__slot"
+                            [class.services-preview__slot--active]="selectedBookingSlot === slot"
+                            [style.borderColor]="selectedBookingSlot === slot ? selectedThemeColors[2] : 'color-mix(in srgb, ' + selectedThemeColors[6] + ' 18%, transparent)'"
+                            [style.color]="selectedBookingSlot === slot ? selectedThemeColors[2] : selectedThemeColors[6]"
+                            (click)="selectedBookingSlot = slot; bookingConfirmed = false"
+                          >
+                            {{ slot }}
+                          </button>
+                        }
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      class="services-preview__confirm"
+                      [disabled]="!selectedBookingDate || !selectedBookingSlot"
+                      [style.background]="selectedThemeColors[2]"
+                      [style.color]="selectedThemeColors[0]"
+                      (click)="confirmBooking()"
+                    >
+                      Bevestigen
+                    </button>
+
+                    @if (bookingConfirmed) {
+                      <div class="services-preview__confirmation" [style.color]="selectedThemeColors[6]">
+                        Afspraak ingepland voor {{ selectedBookingDate }} om {{ selectedBookingSlot }}.
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
           } @else {
             <div class="rounded-xl overflow-hidden border border-border/40">
               <div class="px-4 py-3 border-b" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
@@ -279,7 +378,59 @@
 
             <div>
               <label class="text-sm font-medium block mb-1">Knoptekst</label>
-              <input [(ngModel)]="contactButtonLabel" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Send" type="text" />
+              <input [(ngModel)]="contactButtonLabel" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Versturen" type="text" />
+            </div>
+          } @else if (isServicesPage) {
+            <div>
+              <label class="text-sm font-medium block mb-1">Titel bovenaan</label>
+              <input [(ngModel)]="title" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Onze diensten" type="text" />
+            </div>
+
+            <div class="page-content-modal__blog-toolbar">
+              <div class="text-sm font-medium">Diensten</div>
+              <button type="button" class="page-content-modal__upload-button" (click)="addServiceItem()">Dienst toevoegen</button>
+            </div>
+
+            <div class="page-content-modal__blog-editor">
+              <div class="page-content-modal__blog-editor-header">
+                <div class="page-content-modal__blog-editor-badge">Je bewerkt nu</div>
+                <div class="page-content-modal__blog-editor-title">
+                  {{ currentService.title || ('Dienst ' + (activeServiceIndex + 1)) }}
+                </div>
+              </div>
+
+              <div>
+                <label class="text-sm font-medium block mb-1">Dienstnaam</label>
+                <input [(ngModel)]="currentService.title" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Wassen & drogen" type="text" />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium block mb-1">Tijdsduur</label>
+                <input [(ngModel)]="currentService.duration" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. 1 uur" type="text" />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium block mb-1">Prijs</label>
+                <input [(ngModel)]="currentService.price" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. €100" type="text" />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium block mb-1">Knoptekst</label>
+                <input [(ngModel)]="currentService.buttonLabel" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Boek nu" type="text" />
+              </div>
+            </div>
+
+            <div class="page-content-modal__blog-post-list">
+              @for (item of serviceItems; let i = $index; track i) {
+                <button
+                  type="button"
+                  class="page-content-modal__blog-post-chip"
+                  [class.page-content-modal__blog-post-chip--active]="activeServiceIndex === i"
+                  (click)="selectServiceItem(i)"
+                >
+                  {{ item.title || ('Dienst ' + (i + 1)) }}
+                </button>
+              }
             </div>
           } @else {
             <div>

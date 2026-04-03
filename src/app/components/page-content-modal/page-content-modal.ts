@@ -12,6 +12,13 @@ type BlogPostDraft = {
   image: File | string | null;
 };
 
+type ServiceItemDraft = {
+  title: string;
+  duration: string;
+  price: string;
+  buttonLabel: string;
+};
+
 @Component({
   selector: 'app-page-content-modal',
   standalone: true,
@@ -39,6 +46,12 @@ export class PageContentModal implements OnChanges, OnDestroy {
       summary: string;
       image?: File | string | null;
     }>;
+    serviceItems?: Array<{
+      title: string;
+      duration?: string;
+      price?: string;
+      buttonLabel?: string;
+    }>;
     contactEmail?: string;
     contactPhone?: string;
     contactButtonLabel?: string;
@@ -58,6 +71,12 @@ export class PageContentModal implements OnChanges, OnDestroy {
   blogHeroTitle = '';
   blogPosts: BlogPostDraft[] = [];
   activeBlogPostIndex = 0;
+  serviceItems: ServiceItemDraft[] = [];
+  activeServiceIndex = 0;
+  bookingServiceTitle: string | null = null;
+  selectedBookingDate = '';
+  selectedBookingSlot = '';
+  bookingConfirmed = false;
   contactEmail = '';
   contactPhone = '';
   contactButtonLabel = '';
@@ -149,6 +168,10 @@ export class PageContentModal implements OnChanges, OnDestroy {
     return this.page?.id === 'contact';
   }
 
+  get isServicesPage(): boolean {
+    return this.page?.id === 'diensten';
+  }
+
   get aboutSectionTitle(): string {
     return this.page?.name ?? 'Over';
   }
@@ -195,7 +218,26 @@ export class PageContentModal implements OnChanges, OnDestroy {
   }
 
   get contactButtonPreview(): string {
-    return this.contactButtonLabel?.trim() || 'Send';
+    return this.contactButtonLabel?.trim() || 'Versturen';
+  }
+
+  get currentService(): ServiceItemDraft {
+    if (!this.serviceItems.length) {
+      this.serviceItems = [{ title: '', duration: '', price: '', buttonLabel: '' }];
+      this.activeServiceIndex = 0;
+    }
+
+    return this.serviceItems[this.activeServiceIndex] ?? this.serviceItems[0];
+  }
+
+  get servicesHeadingPreview(): string {
+    return this.title?.trim() || 'Onze diensten';
+  }
+
+  get servicesPreviewItems(): ServiceItemDraft[] {
+    return this.serviceItems.length
+      ? this.serviceItems
+      : [{ title: 'Wassen & drogen', duration: '1 uur', price: '€100', buttonLabel: 'Boek nu' }];
   }
 
   get blogCards(): Array<{ title: string; meta: string; excerpt: string; image: string }> {
@@ -203,10 +245,35 @@ export class PageContentModal implements OnChanges, OnDestroy {
 
     return posts.map((post, index) => ({
       title: post.title?.trim() || `Blogpost ${index + 1}`,
-      meta: `Admin • ${index + 1} min read`,
+      meta: `Beheerder • ${index + 1} min leestijd`,
       excerpt: post.summary?.trim() || 'Schrijf hier een korte introductie die uitnodigt om verder te lezen.',
       image: this.getFilePreview(post.image) || 'assets/images/exampleImage.png'
     }));
+  }
+
+  get bookingDates(): Array<{ value: string; day: string; label: string }> {
+    const formatter = new Intl.DateTimeFormat('nl-NL', {
+      weekday: 'short',
+      day: 'numeric',
+      month: 'short'
+    });
+
+    return Array.from({ length: 7 }, (_, index) => {
+      const date = new Date();
+      date.setDate(date.getDate() + index);
+      const value = date.toISOString().slice(0, 10);
+      const [day = '', ...rest] = formatter.format(date).replace(/\./g, '').split(' ');
+
+      return {
+        value,
+        day,
+        label: rest.join(' ')
+      };
+    });
+  }
+
+  get bookingSlots(): string[] {
+    return ['09:00', '10:30', '13:00', '14:30', '16:00', '19:00'];
   }
 
   get backgroundFileLabel(): string {
@@ -269,6 +336,34 @@ export class PageContentModal implements OnChanges, OnDestroy {
     this.activeBlogPostIndex = index;
   }
 
+  addServiceItem(): void {
+    this.serviceItems = [...this.serviceItems, { title: '', duration: '', price: '', buttonLabel: '' }];
+    this.activeServiceIndex = this.serviceItems.length - 1;
+  }
+
+  selectServiceItem(index: number): void {
+    this.activeServiceIndex = index;
+  }
+
+  openBooking(serviceTitle: string): void {
+    this.bookingServiceTitle = serviceTitle || 'Dienst';
+    this.selectedBookingDate = this.bookingDates[0]?.value ?? '';
+    this.selectedBookingSlot = '';
+    this.bookingConfirmed = false;
+  }
+
+  closeBooking(): void {
+    this.bookingServiceTitle = null;
+    this.selectedBookingDate = '';
+    this.selectedBookingSlot = '';
+    this.bookingConfirmed = false;
+  }
+
+  confirmBooking(): void {
+    if (!this.selectedBookingDate || !this.selectedBookingSlot) return;
+    this.bookingConfirmed = true;
+  }
+
   close(): void {
     this.dismiss.emit();
   }
@@ -289,6 +384,12 @@ export class PageContentModal implements OnChanges, OnDestroy {
         title: post.title.trim(),
         summary: post.summary.trim(),
         image: post.image
+      })),
+      serviceItems: this.serviceItems.map(item => ({
+        title: item.title.trim(),
+        duration: item.duration.trim(),
+        price: item.price.trim(),
+        buttonLabel: item.buttonLabel.trim()
       })),
       contactEmail: this.contactEmail.trim(),
       contactPhone: this.contactPhone.trim(),
@@ -312,6 +413,14 @@ export class PageContentModal implements OnChanges, OnDestroy {
       this.subtitle = entry.value.subtitle ?? '';
       this.body = entry.value.body ?? '';
       this.blogHeroTitle = entry.value.heroTitle ?? '';
+      this.serviceItems = Array.isArray(entry.value.services)
+        ? entry.value.services.map((item: any) => ({
+            title: item.title ?? '',
+            duration: item.duration ?? '',
+            price: item.price ?? '',
+            buttonLabel: item.buttonLabel ?? ''
+          }))
+        : [];
       this.contactEmail = entry.value.contactEmail ?? '';
       this.contactPhone = entry.value.contactPhone ?? '';
       this.contactButtonLabel = entry.value.contactButtonLabel ?? '';
@@ -323,6 +432,7 @@ export class PageContentModal implements OnChanges, OnDestroy {
       this.subtitle = '';
       this.body = '';
       this.blogHeroTitle = '';
+      this.serviceItems = [];
       this.contactEmail = '';
       this.contactPhone = '';
       this.contactButtonLabel = '';
@@ -346,9 +456,20 @@ export class PageContentModal implements OnChanges, OnDestroy {
         image: this.builderState?.uploads?.[`page_${pageId}_post_${index}_image`] ?? null
       }));
       this.activeBlogPostIndex = 0;
+      this.serviceItems = [];
+      this.activeServiceIndex = 0;
+    } else if (this.isServicesPage) {
+      this.blogPosts = [];
+      this.activeBlogPostIndex = 0;
+      this.serviceItems = this.serviceItems.length
+        ? this.serviceItems
+        : [{ title: this.body || '', duration: '', price: '', buttonLabel: 'Boek nu' }];
+      this.activeServiceIndex = 0;
     } else {
       this.blogPosts = [];
       this.activeBlogPostIndex = 0;
+      this.serviceItems = [];
+      this.activeServiceIndex = 0;
     }
 
     this.resetPreviewUrls();
@@ -362,6 +483,8 @@ export class PageContentModal implements OnChanges, OnDestroy {
     if (this.portraitImage instanceof File) {
       this.setPreviewUrl(this.portraitImage, 'portrait');
     }
+
+    this.closeBooking();
   }
 
   private getExistingImage(type: 'default' | 'background' | 'portrait' = 'default'): string | null {

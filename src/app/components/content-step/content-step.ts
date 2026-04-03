@@ -103,6 +103,12 @@ ngOnInit() {
         summary: string;
         image?: File | string | null;
       }>;
+      serviceItems?: Array<{
+        title: string;
+        duration?: string;
+        price?: string;
+        buttonLabel?: string;
+      }>;
       contactEmail?: string;
       contactPhone?: string;
       contactButtonLabel?: string;
@@ -145,6 +151,23 @@ ngOnInit() {
           uploads[`page_${pageId}_post_${index}_image`] = post.image;
         }
       });
+    } else if (pageId === 'diensten') {
+      const serviceItems = (payload as any).serviceItems ?? [];
+
+      uploads[`page_${pageId}_text`] = {
+        kind: 'inline',
+        value: {
+          title,
+          subtitle,
+          body,
+          services: serviceItems.map((item: any) => ({
+            title: item.title ?? '',
+            duration: item.duration ?? '',
+            price: item.price ?? '',
+            buttonLabel: item.buttonLabel ?? ''
+          }))
+        }
+      };
     } else {
       uploads[`page_${pageId}_text`] = {
         kind: 'inline',
