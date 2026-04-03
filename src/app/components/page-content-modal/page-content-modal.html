@@ -23,7 +23,7 @@
               <div class="about-preview__hero">
                 <div
                   class="about-preview__hero-image"
-                  [style.background-image]="'linear-gradient(rgba(15, 23, 42, 0.38), rgba(15, 23, 42, 0.38)), url(' + previewImage + ')'"
+                  [style.background-image]="'linear-gradient(rgba(15, 23, 42, 0.38), rgba(15, 23, 42, 0.38)), url(' + previewBackgroundImage + ')'"
                 ></div>
                 <div class="about-preview__hero-copy">
                   <h3
@@ -48,7 +48,7 @@
                   class="about-preview__avatar-ring"
                   [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 92%, white)'"
                 >
-                  <img [src]="previewImage" alt="Portret" class="about-preview__avatar" />
+                  <img [src]="previewPortraitImage" alt="Portret" class="about-preview__avatar" />
                 </div>
               </div>
 
@@ -149,9 +149,21 @@
           </div>
 
           <div>
-            <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Portretfoto (optioneel)' : 'Visual (optioneel)' }}</label>
-            <input type="file" accept="image/*" (change)="onFileChange($event)" />
+            @if (isAboutPage) {
+              <label class="text-sm font-medium block mb-1">Achtergrondfoto (optioneel)</label>
+              <input type="file" accept="image/*" (change)="onFileChange($event, 'background')" />
+            } @else {
+              <label class="text-sm font-medium block mb-1">Visual (optioneel)</label>
+              <input type="file" accept="image/*" (change)="onFileChange($event)" />
+            }
           </div>
+
+          @if (isAboutPage) {
+            <div>
+              <label class="text-sm font-medium block mb-1">Portretfoto (optioneel)</label>
+              <input type="file" accept="image/*" (change)="onFileChange($event, 'portrait')" />
+            </div>
+          }
 
           <div class="pt-2 flex gap-3">
             <button class="px-4 py-2 rounded-md border text-sm" (click)="close()">Annuleren</button>

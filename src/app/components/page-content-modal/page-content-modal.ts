@@ -24,13 +24,19 @@ export class PageContentModal implements OnChanges, OnDestroy {
     subtitle: string;
     body: string;
     image?: File | string | null;
+    backgroundImage?: File | string | null;
+    portraitImage?: File | string | null;
   }>();
 
   title = '';
   subtitle = '';
   body = '';
   image: File | string | null = null;
+  backgroundImage: File | string | null = null;
+  portraitImage: File | string | null = null;
   private imagePreviewUrl: string | null = null;
+  private backgroundPreviewUrl: string | null = null;
+  private portraitPreviewUrl: string | null = null;
 
   fontMap = fontMap;
 
@@ -40,7 +46,7 @@ export class PageContentModal implements OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.resetPreviewUrl();
+    this.resetPreviewUrls();
   }
 
   get selectedThemeColors(): string[] {
@@ -83,6 +89,22 @@ export class PageContentModal implements OnChanges, OnDestroy {
     return 'assets/images/exampleImage.png';
   }
 
+  get previewBackgroundImage(): string {
+    if (this.backgroundPreviewUrl) return this.backgroundPreviewUrl;
+    if (typeof this.backgroundImage === 'string') return this.backgroundImage;
+    const existing = this.getExistingImage('background');
+    if (existing) return existing;
+    return 'assets/images/exampleImage.png';
+  }
+
+  get previewPortraitImage(): string {
+    if (this.portraitPreviewUrl) return this.portraitPreviewUrl;
+    if (typeof this.portraitImage === 'string') return this.portraitImage;
+    const existing = this.getExistingImage('portrait');
+    if (existing) return existing;
+    return this.previewBackgroundImage;
+  }
+
   get isAboutPage(): boolean {
     return this.page?.id === 'about';
   }
@@ -95,12 +117,22 @@ export class PageContentModal implements OnChanges, OnDestroy {
     return this.splitBodyIntoColumns(this.body);
   }
 
-  onFileChange(event: Event): void {
+  onFileChange(event: Event, type: 'default' | 'background' | 'portrait' = 'default'): void {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
     const file = input.files[0];
+    if (type === 'background') {
+      this.backgroundImage = file;
+      this.setPreviewUrl(file, 'background');
+      return;
+    }
+    if (type === 'portrait') {
+      this.portraitImage = file;
+      this.setPreviewUrl(file, 'portrait');
+      return;
+    }
     this.image = file;
-    this.setPreviewUrl(file);
+    this.setPreviewUrl(file, 'default');
   }
 
   close(): void {
@@ -114,7 +146,9 @@ export class PageContentModal implements OnChanges, OnDestroy {
       title: this.title.trim(),
       subtitle: this.subtitle.trim(),
       body: this.body.trim(),
-      image: this.image
+      image: this.image,
+      backgroundImage: this.backgroundImage,
+      portraitImage: this.portraitImage
     });
   }
 
@@ -133,28 +167,75 @@ export class PageContentModal implements OnChanges, OnDestroy {
     }
 
     this.image = this.builderState?.uploads?.[`page_${this.page.id}_image`] ?? null;
-    this.resetPreviewUrl();
+    this.backgroundImage = this.builderState?.uploads?.[`page_${this.page.id}_background_image`] ?? null;
+    this.portraitImage = this.builderState?.uploads?.[`page_${this.page.id}_portrait_image`] ?? null;
+
+    this.resetPreviewUrls();
+
     if (this.image instanceof File) {
-      this.setPreviewUrl(this.image);
+      this.setPreviewUrl(this.image, 'default');
+    }
+    if (this.backgroundImage instanceof File) {
+      this.setPreviewUrl(this.backgroundImage, 'background');
+    }
+    if (this.portraitImage instanceof File) {
+      this.setPreviewUrl(this.portraitImage, 'portrait');
     }
   }
 
-  private getExistingImage(): string | null {
+  private getExistingImage(type: 'default' | 'background' | 'portrait' = 'default'): string | null {
     if (!this.page) return null;
-    const stored = this.builderState?.uploads?.[`page_${this.page.id}_image`];
+    const key =
+      type === 'background'
+        ? `page_${this.page.id}_background_image`
+        : type === 'portrait'
+          ? `page_${this.page.id}_portrait_image`
+          : `page_${this.page.id}_image`;
+    const stored = this.builderState?.uploads?.[key];
     return typeof stored === 'string' ? stored : null;
   }
 
-  private setPreviewUrl(file: File): void {
-    this.resetPreviewUrl();
-    this.imagePreviewUrl = URL.createObjectURL(file);
+  private setPreviewUrl(file: File, type: 'default' | 'background' | 'portrait'): void {
+    this.resetPreviewUrl(type);
+    const url = URL.createObjectURL(file);
+    if (type === 'background') {
+      this.backgroundPreviewUrl = url;
+      return;
+    }
+    if (type === 'portrait') {
+      this.portraitPreviewUrl = url;
+      return;
+    }
+    this.imagePreviewUrl = url;
   }
 
-  private resetPreviewUrl(): void {
-    if (this.imagePreviewUrl) {
-      URL.revokeObjectURL(this.imagePreviewUrl);
-      this.imagePreviewUrl = null;
+  private resetPreviewUrls(): void {
+    this.resetPreviewUrl('default');
+    this.resetPreviewUrl('background');
+    this.resetPreviewUrl('portrait');
+  }
+
+  private resetPreviewUrl(type: 'default' | 'background' | 'portrait'): void {
+    const current =
+      type === 'background'
+        ? this.backgroundPreviewUrl
+        : type === 'portrait'
+          ? this.portraitPreviewUrl
+          : this.imagePreviewUrl;
+
+    if (current) {
+      URL.revokeObjectURL(current);
     }
+
+    if (type === 'background') {
+      this.backgroundPreviewUrl = null;
+      return;
+    }
+    if (type === 'portrait') {
+      this.portraitPreviewUrl = null;
+      return;
+    }
+    this.imagePreviewUrl = null;
   }
 
   private splitBodyIntoColumns(value: string): [string, string] {

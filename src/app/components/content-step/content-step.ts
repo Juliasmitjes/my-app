@@ -89,15 +89,32 @@ ngOnInit() {
   }
 
   savePageContent(payload: { pageId: string; title: string; subtitle: string; body: string; image?: File | string | null }): void {
-    const { pageId, title, subtitle, body, image } = payload;
+    const { pageId, title, subtitle, body, image, backgroundImage, portraitImage } = payload as {
+      pageId: string;
+      title: string;
+      subtitle: string;
+      body: string;
+      image?: File | string | null;
+      backgroundImage?: File | string | null;
+      portraitImage?: File | string | null;
+    };
     const uploads = { ...(this.builderState?.uploads ?? {}) };
     uploads[`page_${pageId}_text`] = {
       kind: 'inline',
       value: { title, subtitle, body }
     };
-    if (image) {
+
+    if (pageId === 'about') {
+      if (backgroundImage) {
+        uploads[`page_${pageId}_background_image`] = backgroundImage;
+      }
+      if (portraitImage) {
+        uploads[`page_${pageId}_portrait_image`] = portraitImage;
+      }
+    } else if (image) {
       uploads[`page_${pageId}_image`] = image;
     }
+
     uploads[`page_${pageId}_confirmed`] = true;
     this.update.emit({ uploads });
     this.showModal = false;
@@ -112,6 +129,8 @@ ngOnInit() {
     const uploads = { ...(this.builderState?.uploads ?? {}) };
     delete uploads[`page_${pageId}_text`];
     delete uploads[`page_${pageId}_image`];
+    delete uploads[`page_${pageId}_background_image`];
+    delete uploads[`page_${pageId}_portrait_image`];
     delete uploads[`page_${pageId}_confirmed`];
     this.update.emit({ uploads });
   }

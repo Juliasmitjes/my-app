@@ -260,6 +260,23 @@ export class PreviewStep implements OnChanges, OnDestroy {
     return this.getUploadFor(`page_${pageId}_image`);
   }
 
+  getAboutBackgroundImage(pageId: string): string {
+    return (
+      this.getUploadFor(`page_${pageId}_background_image`) ||
+      this.getPageImage(pageId) ||
+      'assets/images/exampleImage.png'
+    );
+  }
+
+  getAboutPortraitImage(pageId: string): string {
+    return (
+      this.getUploadFor(`page_${pageId}_portrait_image`) ||
+      this.getUploadFor(`page_${pageId}_background_image`) ||
+      this.getPageImage(pageId) ||
+      'assets/images/exampleImage.png'
+    );
+  }
+
   get isAboutPageActive(): boolean {
     return this.activePage === 'about';
   }
