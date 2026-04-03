@@ -10,6 +10,56 @@
   overflow-y: auto;
 }
 
+.page-content-modal__form {
+  min-height: 0;
+  padding-bottom: 2rem;
+}
+
+.page-content-modal__upload {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  flex-wrap: wrap;
+}
+
+.page-content-modal__upload-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 8rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid rgba(15, 23, 42, 0.22);
+  border-radius: 0.75rem;
+  background: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.page-content-modal__upload-button:hover {
+  background: rgba(15, 23, 42, 0.04);
+  border-color: rgba(15, 23, 42, 0.36);
+}
+
+.page-content-modal__upload-name {
+  font-size: 0.9rem;
+  color: rgba(15, 23, 42, 0.72);
+  word-break: break-word;
+}
+
+.page-content-modal__file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .about-preview {
   min-height: 100%;
   border-radius: 1.5rem;
@@ -35,11 +85,24 @@
   filter: blur(0);
 }
 
+.about-preview__hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 23, 42, 0.18) 0%,
+    rgba(15, 23, 42, 0.34) 45%,
+    rgba(15, 23, 42, 0.46) 100%
+  );
+}
+
 .about-preview__hero-copy {
   position: relative;
   z-index: 1;
   display: grid;
   gap: 0.75rem;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.32);
 }
 
 .about-preview__name {
@@ -51,7 +114,8 @@
 
 .about-preview__role {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 1rem;
+  font-weight: 600;
   letter-spacing: 0.38em;
   text-transform: uppercase;
 }
@@ -98,18 +162,11 @@
   text-transform: uppercase;
 }
 
-.about-preview__accent {
-  display: inline-block;
-  width: 3.2rem;
-  height: 0.35rem;
-  border-radius: 999px;
-  margin-top: 1rem;
-}
-
 .about-preview__socials {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .about-preview__social {
@@ -142,6 +199,10 @@
     max-height: 48vh;
   }
 
+  .page-content-modal__form {
+    max-height: 42vh;
+  }
+
   .about-preview__hero {
     min-height: 16rem;
     padding: 2rem 1.5rem 6rem;
@@ -170,6 +231,10 @@
 
 @media (min-width: 769px) {
   .page-content-modal__preview {
+    max-height: calc(90vh - 73px);
+  }
+
+  .page-content-modal__form {
     max-height: calc(90vh - 73px);
   }
 }

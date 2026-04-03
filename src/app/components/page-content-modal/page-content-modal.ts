@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LucideAngularModule } from 'lucide-angular';
 import { BuilderState } from '../../types/builder-state';
 import { PageDef } from '../content-step/content-step';
 import { fontMap } from '../../shared/fonts';
@@ -8,7 +9,7 @@ import { fontMap } from '../../shared/fonts';
 @Component({
   selector: 'app-page-content-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LucideAngularModule],
   templateUrl: './page-content-modal.html',
   styleUrl: './page-content-modal.css'
 })
@@ -26,6 +27,11 @@ export class PageContentModal implements OnChanges, OnDestroy {
     image?: File | string | null;
     backgroundImage?: File | string | null;
     portraitImage?: File | string | null;
+    socials?: {
+      linkedin?: string;
+      instagram?: string;
+      facebook?: string;
+    };
   }>();
 
   title = '';
@@ -34,6 +40,9 @@ export class PageContentModal implements OnChanges, OnDestroy {
   image: File | string | null = null;
   backgroundImage: File | string | null = null;
   portraitImage: File | string | null = null;
+  linkedinUrl = '';
+  instagramUrl = '';
+  facebookUrl = '';
   private imagePreviewUrl: string | null = null;
   private backgroundPreviewUrl: string | null = null;
   private portraitPreviewUrl: string | null = null;
@@ -112,11 +121,31 @@ export class PageContentModal implements OnChanges, OnDestroy {
   }
 
   get aboutSectionTitle(): string {
-    return this.page?.name ? `Over ${this.page.name.toLowerCase()}` : 'Over mij';
+    return this.page?.name ?? 'Over';
   }
 
   get bodyColumns(): [string, string] {
     return this.splitBodyIntoColumns(this.body);
+  }
+
+  get aboutSocialLinks(): Array<{ platform: string; href: string; label: string }> {
+    return this.buildSocialLinks({
+      linkedin: this.linkedinUrl,
+      instagram: this.instagramUrl,
+      facebook: this.facebookUrl
+    });
+  }
+
+  get backgroundFileLabel(): string {
+    return this.getFileLabel(this.backgroundImage, 'Nog geen bestand gekozen');
+  }
+
+  get portraitFileLabel(): string {
+    return this.getFileLabel(this.portraitImage, 'Nog geen bestand gekozen');
+  }
+
+  get defaultFileLabel(): string {
+    return this.getFileLabel(this.image, 'Nog geen bestand gekozen');
   }
 
   onFileChange(event: Event, type: 'default' | 'background' | 'portrait' = 'default'): void {
@@ -150,7 +179,12 @@ export class PageContentModal implements OnChanges, OnDestroy {
       body: this.body.trim(),
       image: this.image,
       backgroundImage: this.backgroundImage,
-      portraitImage: this.portraitImage
+      portraitImage: this.portraitImage,
+      socials: {
+        linkedin: this.linkedinUrl.trim(),
+        instagram: this.instagramUrl.trim(),
+        facebook: this.facebookUrl.trim()
+      }
     });
   }
 
@@ -162,10 +196,16 @@ export class PageContentModal implements OnChanges, OnDestroy {
       this.title = entry.value.title ?? '';
       this.subtitle = entry.value.subtitle ?? '';
       this.body = entry.value.body ?? '';
+      this.linkedinUrl = entry.value.socials?.linkedin ?? '';
+      this.instagramUrl = entry.value.socials?.instagram ?? '';
+      this.facebookUrl = entry.value.socials?.facebook ?? '';
     } else {
       this.title = '';
       this.subtitle = '';
       this.body = '';
+      this.linkedinUrl = '';
+      this.instagramUrl = '';
+      this.facebookUrl = '';
     }
 
     this.image = this.builderState?.uploads?.[`page_${this.page.id}_image`] ?? null;
@@ -266,5 +306,49 @@ export class PageContentModal implements OnChanges, OnDestroy {
       words.slice(0, midpoint).join(' '),
       words.slice(midpoint).join(' ') || words.slice(0, midpoint).join(' ')
     ];
+  }
+
+  private buildSocialLinks(socials: { linkedin?: string; instagram?: string; facebook?: string }): Array<{ platform: string; href: string; label: string }> {
+    const entries = [
+      { key: 'linkedin', platform: 'linkedin', label: 'LinkedIn' },
+      { key: 'instagram', platform: 'instagram', label: 'Instagram' },
+      { key: 'facebook', platform: 'facebook', label: 'Facebook' }
+    ] as const;
+
+    const resolved: Array<{ platform: string; href: string; label: string }> = [];
+
+    for (const entry of entries) {
+      const raw = socials[entry.key]?.trim();
+      if (!raw) continue;
+
+      resolved.push({
+        platform: entry.platform,
+        href: this.normalizeUrl(raw),
+        label: entry.label
+      });
+    }
+
+    return resolved;
+  }
+
+  private normalizeUrl(value: string): string {
+    if (/^https?:\/\//i.test(value)) {
+      return value;
+    }
+
+    return `https://${value}`;
+  }
+
+  private getFileLabel(value: File | string | null, fallback: string): string {
+    if (value instanceof File) {
+      return value.name;
+    }
+
+    if (typeof value === 'string' && value.trim()) {
+      const parts = value.split(/[\\/]/);
+      return parts[parts.length - 1] || fallback;
+    }
+
+    return fallback;
   }
 }

@@ -89,7 +89,7 @@ ngOnInit() {
   }
 
   savePageContent(payload: { pageId: string; title: string; subtitle: string; body: string; image?: File | string | null }): void {
-    const { pageId, title, subtitle, body, image, backgroundImage, portraitImage } = payload as {
+    const { pageId, title, subtitle, body, image, backgroundImage, portraitImage, socials } = payload as {
       pageId: string;
       title: string;
       subtitle: string;
@@ -97,11 +97,21 @@ ngOnInit() {
       image?: File | string | null;
       backgroundImage?: File | string | null;
       portraitImage?: File | string | null;
+      socials?: {
+        linkedin?: string;
+        instagram?: string;
+        facebook?: string;
+      };
     };
     const uploads = { ...(this.builderState?.uploads ?? {}) };
     uploads[`page_${pageId}_text`] = {
       kind: 'inline',
-      value: { title, subtitle, body }
+      value: {
+        title,
+        subtitle,
+        body,
+        socials: socials ?? {}
+      }
     };
 
     if (pageId === 'about') {

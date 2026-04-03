@@ -5,6 +5,17 @@ import { BuilderState } from '../../types/builder-state';
 import { fontMap } from '../../shared/fonts';
 import { RequestPopup } from '../request-popup/request-popup';
 
+type PageTextBlock = {
+  title: string;
+  subtitle: string;
+  body: string;
+  socials?: {
+    linkedin?: string;
+    instagram?: string;
+    facebook?: string;
+  };
+};
+
 @Component({
   selector: 'app-preview-step',
   standalone: true,
@@ -219,7 +230,7 @@ export class PreviewStep implements OnChanges, OnDestroy {
       : 'Hier komt jouw ondertitel.';
   }
 
-  getPortfolioTextBlock(index: number): { title: string; subtitle: string; body: string } | null {
+  getPortfolioTextBlock(index: number): PageTextBlock | null {
     return this.getTextBlock(this.getPortfolioUploadKey(index, 'text'));
   }
 
@@ -236,7 +247,7 @@ export class PreviewStep implements OnChanges, OnDestroy {
     return `${variant}_${kind}`;
   }
 
-  getTextBlock(key: string | null): { title: string; subtitle: string; body: string } | null {
+  getTextBlock(key: string | null): PageTextBlock | null {
     if (!key) return null;
     const uploads = this.builderState.uploads;
     if (!uploads) return null;
@@ -248,11 +259,12 @@ export class PreviewStep implements OnChanges, OnDestroy {
     return {
       title: value.title ?? '',
       subtitle: value.subtitle ?? '',
-      body: value.body ?? ''
+      body: value.body ?? '',
+      socials: value.socials ?? {}
     };
   }
 
-  getPageText(pageId: string): { title: string; subtitle: string; body: string } | null {
+  getPageText(pageId: string): PageTextBlock | null {
     return this.getTextBlock(`page_${pageId}_text`);
   }
 
@@ -281,11 +293,33 @@ export class PreviewStep implements OnChanges, OnDestroy {
   }
 
   get aboutPageSectionTitle(): string {
-    return 'Over mij';
+    return 'Over';
   }
 
   getAboutBodyColumns(pageId: string): [string, string] {
     return this.splitBodyIntoColumns(this.getPageText(pageId)?.body ?? '');
+  }
+
+  getAboutSocialLinks(pageId: string): Array<{ platform: string; href: string; label: string }> {
+    const socials = this.getPageText(pageId)?.socials ?? {};
+    const resolved: Array<{ platform: string; href: string; label: string }> = [];
+
+    for (const entry of [
+      { key: 'linkedin', platform: 'linkedin', label: 'LinkedIn' },
+      { key: 'instagram', platform: 'instagram', label: 'Instagram' },
+      { key: 'facebook', platform: 'facebook', label: 'Facebook' }
+    ] as const) {
+      const raw = socials[entry.key]?.trim();
+      if (!raw) continue;
+
+      resolved.push({
+        platform: entry.platform,
+        href: this.normalizeUrl(raw),
+        label: entry.label
+      });
+    }
+
+    return resolved;
   }
 
   getUploadFor(key: string | null): string | null {
@@ -352,5 +386,13 @@ export class PreviewStep implements OnChanges, OnDestroy {
       words.slice(0, midpoint).join(' '),
       words.slice(midpoint).join(' ') || words.slice(0, midpoint).join(' ')
     ];
+  }
+
+  private normalizeUrl(value: string): string {
+    if (/^https?:\/\//i.test(value)) {
+      return value;
+    }
+
+    return `https://${value}`;
   }
 }
