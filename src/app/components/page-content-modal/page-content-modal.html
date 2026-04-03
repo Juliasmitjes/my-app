@@ -11,7 +11,6 @@
       </div>
 
       <div class="grid max-h-[calc(90vh-73px)] md:grid-cols-[minmax(0,1.2fr)_minmax(20rem,0.8fr)]">
-        <!-- Preview -->
         <div class="page-content-modal__preview p-6 md:p-8" [style.background]="selectedThemeColors[1]">
           @if (isAboutPage) {
             <div
@@ -25,28 +24,17 @@
                   [style.background-image]="'linear-gradient(rgba(15, 23, 42, 0.38), rgba(15, 23, 42, 0.38)), url(' + previewBackgroundImage + ')'"
                 ></div>
                 <div class="about-preview__hero-copy">
-                  <h3
-                    class="about-preview__name"
-                    [style.color]="selectedThemeColors[0]"
-                    [style.fontFamily]="headingFont"
-                  >
+                  <h3 class="about-preview__name" [style.color]="selectedThemeColors[0]" [style.fontFamily]="headingFont">
                     {{ title || 'Jouw naam' }}
                   </h3>
-                  <p
-                    class="about-preview__role"
-                    [style.color]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 88%, transparent)'"
-                    [style.fontFamily]="bodyFont"
-                  >
+                  <p class="about-preview__role" [style.color]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 88%, transparent)'" [style.fontFamily]="bodyFont">
                     {{ subtitle || 'Jouw functietitel' }}
                   </p>
                 </div>
               </div>
 
               <div class="about-preview__avatar-wrap">
-                <div
-                  class="about-preview__avatar-ring"
-                  [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 92%, white)'"
-                >
+                <div class="about-preview__avatar-ring" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 92%, white)'">
                   <img [src]="previewPortraitImage" alt="Portret" class="about-preview__avatar" />
                 </div>
               </div>
@@ -54,11 +42,7 @@
               <div class="about-preview__content">
                 <div class="about-preview__heading-row">
                   <div>
-                    <div
-                      class="about-preview__section-title"
-                      [style.color]="selectedThemeColors[2]"
-                      [style.fontFamily]="headingFont"
-                    >
+                    <div class="about-preview__section-title" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
                       {{ aboutSectionTitle }}
                     </div>
                   </div>
@@ -76,19 +60,13 @@
                       >
                         @switch (social.platform) {
                           @case ('linkedin') {
-                            <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current" aria-hidden="true">
-                              <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A1.97 1.97 0 0 0 3.25 5c0 1.1.88 2 1.97 2h.03a2 2 0 1 0 0-4ZM20.75 12.84c0-3.48-1.86-5.1-4.35-5.1-2 0-2.9 1.1-3.4 1.88V8.5H9.63c.04.75 0 11.5 0 11.5H13v-6.42c0-.34.03-.69.13-.93.27-.69.88-1.41 1.91-1.41 1.35 0 1.88 1.03 1.88 2.54V20h3.38v-7.16Z"></path>
-                            </svg>
+                            <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A1.97 1.97 0 0 0 3.25 5c0 1.1.88 2 1.97 2h.03a2 2 0 1 0 0-4ZM20.75 12.84c0-3.48-1.86-5.1-4.35-5.1-2 0-2.9 1.1-3.4 1.88V8.5H9.63c.04.75 0 11.5 0 11.5H13v-6.42c0-.34.03-.69.13-.93.27-.69.88-1.41 1.91-1.41 1.35 0 1.88 1.03 1.88 2.54V20h3.38v-7.16Z"></path></svg>
                           }
                           @case ('instagram') {
-                            <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current" aria-hidden="true">
-                              <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.8A3.95 3.95 0 0 0 3.8 7.75v8.5a3.95 3.95 0 0 0 3.95 3.95h8.5a3.95 3.95 0 0 0 3.95-3.95v-8.5a3.95 3.95 0 0 0-3.95-3.95h-8.5Zm8.95 1.35a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3ZM12 6.85A5.15 5.15 0 1 1 6.85 12 5.16 5.16 0 0 1 12 6.85Zm0 1.8A3.35 3.35 0 1 0 15.35 12 3.35 3.35 0 0 0 12 8.65Z"></path>
-                            </svg>
+                            <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current" aria-hidden="true"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.8A3.95 3.95 0 0 0 3.8 7.75v8.5a3.95 3.95 0 0 0 3.95 3.95h8.5a3.95 3.95 0 0 0 3.95-3.95v-8.5a3.95 3.95 0 0 0-3.95-3.95h-8.5Zm8.95 1.35a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3ZM12 6.85A5.15 5.15 0 1 1 6.85 12 5.16 5.16 0 0 1 12 6.85Zm0 1.8A3.35 3.35 0 1 0 15.35 12 3.35 3.35 0 0 0 12 8.65Z"></path></svg>
                           }
                           @case ('facebook') {
-                            <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current" aria-hidden="true">
-                              <path d="M13.4 21v-7.7H16l.4-3h-3V8.38c0-.87.24-1.46 1.48-1.46h1.58V4.24A21.2 21.2 0 0 0 14.15 4c-2.54 0-4.27 1.55-4.27 4.4v1.9H7v3h2.88V21h3.52Z"></path>
-                            </svg>
+                            <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current" aria-hidden="true"><path d="M13.4 21v-7.7H16l.4-3h-3V8.38c0-.87.24-1.46 1.48-1.46h1.58V4.24A21.2 21.2 0 0 0 14.15 4c-2.54 0-4.27 1.55-4.27 4.4v1.9H7v3h2.88V21h3.52Z"></path></svg>
                           }
                         }
                       </a>
@@ -103,17 +81,16 @@
               </div>
             </div>
           } @else if (isBlogPage) {
-            <div
-              class="blog-preview overflow-hidden"
-              [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 92%, ' + selectedThemeColors[1] + ')'"
-            >
-              <div class="blog-preview__hero">
-                <div
-                  class="blog-preview__hero-image"
-                  [style.background-image]="'linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url(' + previewImage + ')'"
-                ></div>
-                <div class="blog-preview__hero-label" [style.color]="selectedThemeColors[2]" [style.fontFamily]="bodyFont">
-                  {{ blogHeroLabel }}
+            <div class="blog-preview overflow-hidden" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 94%, ' + selectedThemeColors[1] + ')'">
+              <div class="blog-preview__hero blog-preview__hero--enhanced">
+                <div class="blog-preview__hero-image" [style.background-image]="'linear-gradient(rgba(15, 23, 42, 0.18), rgba(15, 23, 42, 0.18)), url(' + previewBackgroundImage + ')'"></div>
+                <div class="blog-preview__hero-copy">
+                  <div class="blog-preview__hero-label" [style.color]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 90%, transparent)'" [style.fontFamily]="bodyFont">
+                    {{ blogHeroLabel }}
+                  </div>
+                  <h2 class="blog-preview__hero-title" [style.color]="selectedThemeColors[0]" [style.fontFamily]="headingFont">
+                    {{ blogHeroTitlePreview }}
+                  </h2>
                 </div>
               </div>
 
@@ -121,11 +98,11 @@
                 @for (card of blogCards; let i = $index; track card.title + i) {
                   <article
                     class="blog-preview__card"
-                    [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 96%, ' + selectedThemeColors[1] + ')'"
+                    [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 97%, ' + selectedThemeColors[1] + ')'"
                     [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[9] + ' 42%, transparent)'"
                   >
                     <div class="blog-preview__card-image-wrap">
-                      <img [src]="previewImage" alt="Blogbeeld" class="blog-preview__card-image" />
+                      <img [src]="card.image" alt="Blogbeeld" class="blog-preview__card-image" />
                     </div>
 
                     <div class="blog-preview__card-body">
@@ -138,10 +115,6 @@
                       <p class="blog-preview__card-excerpt" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
                         {{ card.excerpt }}
                       </p>
-                      <div class="blog-preview__card-footer" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
-                        <span>0 views</span>
-                        <span>0 comments</span>
-                      </div>
                     </div>
                   </article>
                 }
@@ -176,112 +149,122 @@
           }
         </div>
 
-        <!-- Form -->
         <div class="page-content-modal__form p-6 space-y-4 overflow-y-auto">
-          <div>
-            <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Naam / hoofdtitel' : isBlogPage ? 'Blogtitel' : 'Titel' }}</label>
-            <input
-              [(ngModel)]="title"
-              class="w-full rounded-md border px-3 py-2 text-sm"
-              [placeholder]="isAboutPage ? 'Bijv. Sophie de Vries' : isBlogPage ? 'Bijv. Playing with patterns' : 'Titel'"
-              type="text"
-            />
-          </div>
+          @if (isBlogPage) {
+            <div>
+              <label class="text-sm font-medium block mb-1">Titel bovenaan</label>
+              <input [(ngModel)]="blogHeroTitle" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Journal" type="text" />
+            </div>
 
-          <div>
-            <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Rol / ondertitel' : isBlogPage ? 'Bovenregel / bloglabel' : 'Subtitel' }}</label>
-            <input
-              [(ngModel)]="subtitle"
-              class="w-full rounded-md border px-3 py-2 text-sm"
-              [placeholder]="isAboutPage ? 'Bijv. Creatief strateeg' : isBlogPage ? 'Bijv. Design for life' : 'Subtitel'"
-              type="text"
-            />
-          </div>
+            <div>
+              <label class="text-sm font-medium block mb-1">Bloglabel</label>
+              <input [(ngModel)]="subtitle" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Design for life" type="text" />
+            </div>
 
-          <div>
-            <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Over-tekst' : isBlogPage ? 'Intro / samenvatting' : 'Tekst' }}</label>
-            <textarea
-              [(ngModel)]="body"
-              class="w-full rounded-md border px-3 py-2 text-sm min-h-[140px]"
-              [placeholder]="isAboutPage ? 'Schrijf hier het verhaal voor de Over-pagina...' : isBlogPage ? 'Schrijf hier een korte samenvatting van je blogpost...' : 'Schrijf hier je tekst...'"
-            ></textarea>
-          </div>
-
-          <div>
-            @if (isAboutPage) {
+            <div>
               <label class="text-sm font-medium block mb-1">Achtergrondfoto (optioneel)</label>
               <div class="page-content-modal__upload">
-                <label for="about-background-upload" class="page-content-modal__upload-button">Kies bestand</label>
-                <span class="page-content-modal__upload-name">{{ backgroundFileLabel }}</span>
-                <input
-                  id="about-background-upload"
-                  class="page-content-modal__file-input"
-                  type="file"
-                  accept="image/*"
-                  (change)="onFileChange($event, 'background')"
-                />
+                <label for="blog-background-upload" class="page-content-modal__upload-button">Kies bestand</label>
+                <span class="page-content-modal__upload-name">{{ blogBackgroundFileLabel }}</span>
+                <input id="blog-background-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event, 'background')" />
               </div>
-            } @else {
-              <label class="text-sm font-medium block mb-1">Visual (optioneel)</label>
+            </div>
+
+            <div class="page-content-modal__blog-toolbar">
+              <div class="text-sm font-medium">Blogposts</div>
+              <button type="button" class="page-content-modal__upload-button" (click)="addBlogPost()">Blogpost toevoegen</button>
+            </div>
+
+            <div>
+              <label class="text-sm font-medium block mb-1">Blogpost titel</label>
+              <input [(ngModel)]="currentBlogPost.title" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Playing with patterns" type="text" />
+            </div>
+
+            <div>
+              <label class="text-sm font-medium block mb-1">Blogpost intro</label>
+              <textarea [(ngModel)]="currentBlogPost.summary" class="w-full rounded-md border px-3 py-2 text-sm min-h-[140px]" placeholder="Schrijf hier een korte introductie van deze blogpost..."></textarea>
+            </div>
+
+            <div>
+              <label class="text-sm font-medium block mb-1">Blogfoto (optioneel)</label>
               <div class="page-content-modal__upload">
-                <label for="default-page-upload" class="page-content-modal__upload-button">Kies bestand</label>
-                <span class="page-content-modal__upload-name">{{ defaultFileLabel }}</span>
-                <input
-                  id="default-page-upload"
-                  class="page-content-modal__file-input"
-                  type="file"
-                  accept="image/*"
-                  (change)="onFileChange($event)"
-                />
+                <label for="blog-post-upload" class="page-content-modal__upload-button">Kies bestand</label>
+                <span class="page-content-modal__upload-name">{{ activeBlogPostFileLabel }}</span>
+                <input id="blog-post-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event, 'blog-post')" />
+              </div>
+            </div>
+
+            <div class="page-content-modal__blog-post-list">
+              @for (post of blogPosts; let i = $index; track i) {
+                <button
+                  type="button"
+                  class="page-content-modal__blog-post-chip"
+                  [class.page-content-modal__blog-post-chip--active]="activeBlogPostIndex === i"
+                  (click)="selectBlogPost(i)"
+                >
+                  {{ post.title || ('Blogpost ' + (i + 1)) }}
+                </button>
+              }
+            </div>
+          } @else {
+            <div>
+              <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Naam / hoofdtitel' : 'Titel' }}</label>
+              <input [(ngModel)]="title" class="w-full rounded-md border px-3 py-2 text-sm" [placeholder]="isAboutPage ? 'Bijv. Sophie de Vries' : 'Titel'" type="text" />
+            </div>
+
+            <div>
+              <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Rol / ondertitel' : 'Subtitel' }}</label>
+              <input [(ngModel)]="subtitle" class="w-full rounded-md border px-3 py-2 text-sm" [placeholder]="isAboutPage ? 'Bijv. Creatief strateeg' : 'Subtitel'" type="text" />
+            </div>
+
+            <div>
+              <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Over-tekst' : 'Tekst' }}</label>
+              <textarea [(ngModel)]="body" class="w-full rounded-md border px-3 py-2 text-sm min-h-[140px]" [placeholder]="isAboutPage ? 'Schrijf hier het verhaal voor de Over-pagina...' : 'Schrijf hier je tekst...'"></textarea>
+            </div>
+
+            <div>
+              @if (isAboutPage) {
+                <label class="text-sm font-medium block mb-1">Achtergrondfoto (optioneel)</label>
+                <div class="page-content-modal__upload">
+                  <label for="about-background-upload" class="page-content-modal__upload-button">Kies bestand</label>
+                  <span class="page-content-modal__upload-name">{{ backgroundFileLabel }}</span>
+                  <input id="about-background-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event, 'background')" />
+                </div>
+              } @else {
+                <label class="text-sm font-medium block mb-1">Visual (optioneel)</label>
+                <div class="page-content-modal__upload">
+                  <label for="default-page-upload" class="page-content-modal__upload-button">Kies bestand</label>
+                  <span class="page-content-modal__upload-name">{{ defaultFileLabel }}</span>
+                  <input id="default-page-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event)" />
+                </div>
+              }
+            </div>
+
+            @if (isAboutPage) {
+              <div>
+                <label class="text-sm font-medium block mb-1">Portretfoto (optioneel)</label>
+                <div class="page-content-modal__upload">
+                  <label for="about-portrait-upload" class="page-content-modal__upload-button">Kies bestand</label>
+                  <span class="page-content-modal__upload-name">{{ portraitFileLabel }}</span>
+                  <input id="about-portrait-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event, 'portrait')" />
+                </div>
+              </div>
+
+              <div>
+                <label class="text-sm font-medium block mb-1">LinkedIn-link (optioneel)</label>
+                <input [(ngModel)]="linkedinUrl" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="linkedin.com/in/jouw-profiel" type="text" />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium block mb-1">Instagram-link (optioneel)</label>
+                <input [(ngModel)]="instagramUrl" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="instagram.com/jouw-account" type="text" />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium block mb-1">Facebook-link (optioneel)</label>
+                <input [(ngModel)]="facebookUrl" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="facebook.com/jouw-pagina" type="text" />
               </div>
             }
-          </div>
-
-          @if (isAboutPage) {
-            <div>
-              <label class="text-sm font-medium block mb-1">Portretfoto (optioneel)</label>
-              <div class="page-content-modal__upload">
-                <label for="about-portrait-upload" class="page-content-modal__upload-button">Kies bestand</label>
-                <span class="page-content-modal__upload-name">{{ portraitFileLabel }}</span>
-                <input
-                  id="about-portrait-upload"
-                  class="page-content-modal__file-input"
-                  type="file"
-                  accept="image/*"
-                  (change)="onFileChange($event, 'portrait')"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label class="text-sm font-medium block mb-1">LinkedIn-link (optioneel)</label>
-              <input
-                [(ngModel)]="linkedinUrl"
-                class="w-full rounded-md border px-3 py-2 text-sm"
-                placeholder="linkedin.com/in/jouw-profiel"
-                type="text"
-              />
-            </div>
-
-            <div>
-              <label class="text-sm font-medium block mb-1">Instagram-link (optioneel)</label>
-              <input
-                [(ngModel)]="instagramUrl"
-                class="w-full rounded-md border px-3 py-2 text-sm"
-                placeholder="instagram.com/jouw-account"
-                type="text"
-              />
-            </div>
-
-            <div>
-              <label class="text-sm font-medium block mb-1">Facebook-link (optioneel)</label>
-              <input
-                [(ngModel)]="facebookUrl"
-                class="w-full rounded-md border px-3 py-2 text-sm"
-                placeholder="facebook.com/jouw-pagina"
-                type="text"
-              />
-            </div>
           }
 
           <div class="pt-2 flex gap-3">

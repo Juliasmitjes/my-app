@@ -6,6 +6,12 @@ import { BuilderState } from '../../types/builder-state';
 import { PageDef } from '../content-step/content-step';
 import { fontMap } from '../../shared/fonts';
 
+type BlogPostDraft = {
+  title: string;
+  summary: string;
+  image: File | string | null;
+};
+
 @Component({
   selector: 'app-page-content-modal',
   standalone: true,
@@ -27,6 +33,12 @@ export class PageContentModal implements OnChanges, OnDestroy {
     image?: File | string | null;
     backgroundImage?: File | string | null;
     portraitImage?: File | string | null;
+    blogHeroTitle?: string;
+    blogPosts?: Array<{
+      title: string;
+      summary: string;
+      image?: File | string | null;
+    }>;
     socials?: {
       linkedin?: string;
       instagram?: string;
@@ -40,6 +52,9 @@ export class PageContentModal implements OnChanges, OnDestroy {
   image: File | string | null = null;
   backgroundImage: File | string | null = null;
   portraitImage: File | string | null = null;
+  blogHeroTitle = '';
+  blogPosts: BlogPostDraft[] = [];
+  activeBlogPostIndex = 0;
   linkedinUrl = '';
   instagramUrl = '';
   facebookUrl = '';
@@ -128,31 +143,6 @@ export class PageContentModal implements OnChanges, OnDestroy {
     return this.page?.name ?? 'Over';
   }
 
-  get blogHeroLabel(): string {
-    return this.subtitle?.trim() || 'Stories & inspiratie';
-  }
-
-  get blogCards(): Array<{ title: string; meta: string; excerpt: string }> {
-    const firstTitle = this.title?.trim() || 'Jouw eerste blogpost';
-    const secondTitle = this.title?.trim()
-      ? `${this.title.trim()} vervolg`
-      : 'Een tweede blogmoment';
-    const excerpt = this.body?.trim() || 'Schrijf hier een korte introductie die uitnodigt om verder te lezen.';
-
-    return [
-      {
-        title: firstTitle,
-        meta: this.subtitle?.trim() || 'Admin • 1 min read',
-        excerpt
-      },
-      {
-        title: secondTitle,
-        meta: 'Admin • 2 min read',
-        excerpt
-      }
-    ];
-  }
-
   get bodyColumns(): [string, string] {
     return this.splitBodyIntoColumns(this.body);
   }
@@ -163,6 +153,34 @@ export class PageContentModal implements OnChanges, OnDestroy {
       instagram: this.instagramUrl,
       facebook: this.facebookUrl
     });
+  }
+
+  get currentBlogPost(): BlogPostDraft {
+    if (!this.blogPosts.length) {
+      this.blogPosts = [{ title: '', summary: '', image: null }];
+      this.activeBlogPostIndex = 0;
+    }
+
+    return this.blogPosts[this.activeBlogPostIndex] ?? this.blogPosts[0];
+  }
+
+  get blogHeroLabel(): string {
+    return this.subtitle?.trim() || 'Design for life';
+  }
+
+  get blogHeroTitlePreview(): string {
+    return this.blogHeroTitle?.trim() || 'Jouw blog';
+  }
+
+  get blogCards(): Array<{ title: string; meta: string; excerpt: string; image: string }> {
+    const posts = this.blogPosts.length ? this.blogPosts : [{ title: '', summary: '', image: null }];
+
+    return posts.map((post, index) => ({
+      title: post.title?.trim() || `Blogpost ${index + 1}`,
+      meta: `Admin • ${index + 1} min read`,
+      excerpt: post.summary?.trim() || 'Schrijf hier een korte introductie die uitnodigt om verder te lezen.',
+      image: this.getFilePreview(post.image) || 'assets/images/exampleImage.png'
+    }));
   }
 
   get backgroundFileLabel(): string {
@@ -177,22 +195,52 @@ export class PageContentModal implements OnChanges, OnDestroy {
     return this.getFileLabel(this.image, 'Nog geen bestand gekozen');
   }
 
-  onFileChange(event: Event, type: 'default' | 'background' | 'portrait' = 'default'): void {
+  get activeBlogPostFileLabel(): string {
+    return this.getFileLabel(this.currentBlogPost.image, 'Nog geen bestand gekozen');
+  }
+
+  get blogBackgroundFileLabel(): string {
+    return this.getFileLabel(this.backgroundImage, 'Nog geen bestand gekozen');
+  }
+
+  onFileChange(event: Event, type: 'default' | 'background' | 'portrait' | 'blog-post' = 'default'): void {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
     const file = input.files[0];
+
     if (type === 'background') {
       this.backgroundImage = file;
       this.setPreviewUrl(file, 'background');
       return;
     }
+
     if (type === 'portrait') {
       this.portraitImage = file;
       this.setPreviewUrl(file, 'portrait');
       return;
     }
+
+    if (type === 'blog-post') {
+      const posts = [...this.blogPosts];
+      posts[this.activeBlogPostIndex] = {
+        ...this.currentBlogPost,
+        image: file
+      };
+      this.blogPosts = posts;
+      return;
+    }
+
     this.image = file;
     this.setPreviewUrl(file, 'default');
+  }
+
+  addBlogPost(): void {
+    this.blogPosts = [...this.blogPosts, { title: '', summary: '', image: null }];
+    this.activeBlogPostIndex = this.blogPosts.length - 1;
+  }
+
+  selectBlogPost(index: number): void {
+    this.activeBlogPostIndex = index;
   }
 
   close(): void {
@@ -201,6 +249,7 @@ export class PageContentModal implements OnChanges, OnDestroy {
 
   onSave(): void {
     if (!this.page) return;
+
     this.save.emit({
       pageId: this.page.id,
       title: this.title.trim(),
@@ -209,6 +258,12 @@ export class PageContentModal implements OnChanges, OnDestroy {
       image: this.image,
       backgroundImage: this.backgroundImage,
       portraitImage: this.portraitImage,
+      blogHeroTitle: this.blogHeroTitle.trim(),
+      blogPosts: this.blogPosts.map(post => ({
+        title: post.title.trim(),
+        summary: post.summary.trim(),
+        image: post.image
+      })),
       socials: {
         linkedin: this.linkedinUrl.trim(),
         instagram: this.instagramUrl.trim(),
@@ -219,12 +274,15 @@ export class PageContentModal implements OnChanges, OnDestroy {
 
   private loadExisting(): void {
     if (!this.page) return;
-    const key = `page_${this.page.id}_text`;
+    const pageId = this.page.id;
+
+    const key = `page_${pageId}_text`;
     const entry = this.builderState?.uploads?.[key];
     if (entry?.kind === 'inline' && entry.value) {
       this.title = entry.value.title ?? '';
       this.subtitle = entry.value.subtitle ?? '';
       this.body = entry.value.body ?? '';
+      this.blogHeroTitle = entry.value.heroTitle ?? '';
       this.linkedinUrl = entry.value.socials?.linkedin ?? '';
       this.instagramUrl = entry.value.socials?.instagram ?? '';
       this.facebookUrl = entry.value.socials?.facebook ?? '';
@@ -232,14 +290,31 @@ export class PageContentModal implements OnChanges, OnDestroy {
       this.title = '';
       this.subtitle = '';
       this.body = '';
+      this.blogHeroTitle = '';
       this.linkedinUrl = '';
       this.instagramUrl = '';
       this.facebookUrl = '';
     }
 
-    this.image = this.builderState?.uploads?.[`page_${this.page.id}_image`] ?? null;
-    this.backgroundImage = this.builderState?.uploads?.[`page_${this.page.id}_background_image`] ?? null;
-    this.portraitImage = this.builderState?.uploads?.[`page_${this.page.id}_portrait_image`] ?? null;
+    this.image = this.builderState?.uploads?.[`page_${pageId}_image`] ?? null;
+    this.backgroundImage = this.builderState?.uploads?.[`page_${pageId}_background_image`] ?? null;
+    this.portraitImage = this.builderState?.uploads?.[`page_${pageId}_portrait_image`] ?? null;
+
+    if (this.isBlogPage) {
+      const savedPosts = Array.isArray(entry?.value?.posts) && entry.value.posts.length
+        ? entry.value.posts
+        : [{ title: this.title, summary: this.body }];
+
+      this.blogPosts = savedPosts.map((post: any, index: number) => ({
+        title: post.title ?? '',
+        summary: post.summary ?? '',
+        image: this.builderState?.uploads?.[`page_${pageId}_post_${index}_image`] ?? null
+      }));
+      this.activeBlogPostIndex = 0;
+    } else {
+      this.blogPosts = [];
+      this.activeBlogPostIndex = 0;
+    }
 
     this.resetPreviewUrls();
 
@@ -307,6 +382,18 @@ export class PageContentModal implements OnChanges, OnDestroy {
       return;
     }
     this.imagePreviewUrl = null;
+  }
+
+  private getFilePreview(value: File | string | null): string | null {
+    if (value instanceof File) {
+      return URL.createObjectURL(value);
+    }
+
+    if (typeof value === 'string' && value.trim()) {
+      return value;
+    }
+
+    return null;
   }
 
   private splitBodyIntoColumns(value: string): [string, string] {

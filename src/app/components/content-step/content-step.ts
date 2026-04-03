@@ -97,6 +97,12 @@ ngOnInit() {
       image?: File | string | null;
       backgroundImage?: File | string | null;
       portraitImage?: File | string | null;
+      blogHeroTitle?: string;
+      blogPosts?: Array<{
+        title: string;
+        summary: string;
+        image?: File | string | null;
+      }>;
       socials?: {
         linkedin?: string;
         instagram?: string;
@@ -104,25 +110,59 @@ ngOnInit() {
       };
     };
     const uploads = { ...(this.builderState?.uploads ?? {}) };
-    uploads[`page_${pageId}_text`] = {
-      kind: 'inline',
-      value: {
-        title,
-        subtitle,
-        body,
-        socials: socials ?? {}
-      }
-    };
+    if (pageId === 'blog') {
+      const blogPosts = (payload as any).blogPosts ?? [];
+      const blogHeroTitle = (payload as any).blogHeroTitle ?? '';
 
-    if (pageId === 'about') {
+      uploads[`page_${pageId}_text`] = {
+        kind: 'inline',
+        value: {
+          title,
+          subtitle,
+          body,
+          heroTitle: blogHeroTitle,
+          posts: blogPosts.map((post: any) => ({
+            title: post.title ?? '',
+            summary: post.summary ?? ''
+          }))
+        }
+      };
+
       if (backgroundImage) {
         uploads[`page_${pageId}_background_image`] = backgroundImage;
       }
-      if (portraitImage) {
-        uploads[`page_${pageId}_portrait_image`] = portraitImage;
+
+      const existingBlogPostKeys = Object.keys(uploads).filter(key => key.startsWith(`page_${pageId}_post_`) && key.endsWith('_image'));
+      for (const key of existingBlogPostKeys) {
+        delete uploads[key];
       }
-    } else if (image) {
-      uploads[`page_${pageId}_image`] = image;
+
+      blogPosts.forEach((post: any, index: number) => {
+        if (post.image) {
+          uploads[`page_${pageId}_post_${index}_image`] = post.image;
+        }
+      });
+    } else {
+      uploads[`page_${pageId}_text`] = {
+        kind: 'inline',
+        value: {
+          title,
+          subtitle,
+          body,
+          socials: socials ?? {}
+        }
+      };
+
+      if (pageId === 'about') {
+        if (backgroundImage) {
+          uploads[`page_${pageId}_background_image`] = backgroundImage;
+        }
+        if (portraitImage) {
+          uploads[`page_${pageId}_portrait_image`] = portraitImage;
+        }
+      } else if (image) {
+        uploads[`page_${pageId}_image`] = image;
+      }
     }
 
     uploads[`page_${pageId}_confirmed`] = true;
@@ -141,6 +181,11 @@ ngOnInit() {
     delete uploads[`page_${pageId}_image`];
     delete uploads[`page_${pageId}_background_image`];
     delete uploads[`page_${pageId}_portrait_image`];
+    for (const key of Object.keys(uploads)) {
+      if (key.startsWith(`page_${pageId}_post_`) && key.endsWith('_image')) {
+        delete uploads[key];
+      }
+    }
     delete uploads[`page_${pageId}_confirmed`];
     this.update.emit({ uploads });
   }
