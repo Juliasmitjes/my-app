@@ -197,46 +197,48 @@
                     }
                   </div>
                 } @else {
-                  <div class="services-preview__booking" [style.fontFamily]="bodyFont">
-                    <div class="services-preview__booking-header">
+                  <div class="grid gap-6 rounded-[1.25rem] border p-7" [style.fontFamily]="bodyFont" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 16%, transparent)'" [style.background]="'linear-gradient(180deg, rgba(15, 23, 42, 0.03) 0%, rgba(15, 23, 42, 0.01) 100%)'">
+                    <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                       <div>
-                        <div class="services-preview__booking-kicker" [style.color]="selectedThemeColors[5]">Agenda</div>
-                        <h3 class="services-preview__booking-title" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                        <div class="text-[0.78rem] font-bold uppercase tracking-[0.08em]" [style.color]="selectedThemeColors[5]">Agenda</div>
+                        <h3 class="mt-1.5 mb-0 text-[1.6rem]" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
                           Boek {{ bookingServiceTitle }}
                         </h3>
                       </div>
-                      <button type="button" class="services-preview__back" (click)="closeBooking()">Terug</button>
+                      <button type="button" class="rounded-full border bg-white px-4 py-2 text-[0.85rem]" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 18%, transparent)'" (click)="closeBooking()">Terug</button>
                     </div>
 
-                    <div class="services-preview__booking-section">
-                      <div class="services-preview__booking-label" [style.color]="selectedThemeColors[6]">Kies een dag</div>
-                      <div class="services-preview__date-list">
+                    <div class="grid gap-3">
+                      <div class="text-[0.9rem] font-semibold" [style.color]="selectedThemeColors[6]">Kies een dag</div>
+                      <div class="flex flex-wrap gap-3">
                         @for (date of bookingDates; track date.value) {
                           <button
                             type="button"
-                            class="services-preview__date"
-                            [class.services-preview__date--active]="selectedBookingDate === date.value"
+                            class="grid min-w-[5.6rem] justify-items-start gap-0.5 rounded-2xl border px-4 py-3 text-left"
                             [style.borderColor]="selectedBookingDate === date.value ? selectedThemeColors[2] : 'color-mix(in srgb, ' + selectedThemeColors[6] + ' 18%, transparent)'"
                             [style.color]="selectedBookingDate === date.value ? selectedThemeColors[2] : selectedThemeColors[6]"
+                            [style.background]="'rgba(255, 255, 255, 0.88)'"
+                            [style.boxShadow]="selectedBookingDate === date.value ? '0 8px 18px rgba(15, 23, 42, 0.08)' : 'none'"
                             (click)="selectedBookingDate = date.value; bookingConfirmed = false"
                           >
-                            <span>{{ date.day }}</span>
-                            <strong>{{ date.label }}</strong>
+                            <span class="text-xs uppercase">{{ date.day }}</span>
+                            <strong class="text-[0.95rem]">{{ date.label }}</strong>
                           </button>
                         }
                       </div>
                     </div>
 
-                    <div class="services-preview__booking-section">
-                      <div class="services-preview__booking-label" [style.color]="selectedThemeColors[6]">Kies een tijdslot</div>
-                      <div class="services-preview__slot-list">
+                    <div class="grid gap-3">
+                      <div class="text-[0.9rem] font-semibold" [style.color]="selectedThemeColors[6]">Kies een tijdslot</div>
+                      <div class="flex flex-wrap gap-3">
                         @for (slot of bookingSlots; track slot) {
                           <button
                             type="button"
-                            class="services-preview__slot"
-                            [class.services-preview__slot--active]="selectedBookingSlot === slot"
+                            class="rounded-2xl border px-4 py-3 text-[0.92rem]"
                             [style.borderColor]="selectedBookingSlot === slot ? selectedThemeColors[2] : 'color-mix(in srgb, ' + selectedThemeColors[6] + ' 18%, transparent)'"
                             [style.color]="selectedBookingSlot === slot ? selectedThemeColors[2] : selectedThemeColors[6]"
+                            [style.background]="'rgba(255, 255, 255, 0.88)'"
+                            [style.boxShadow]="selectedBookingSlot === slot ? '0 8px 18px rgba(15, 23, 42, 0.08)' : 'none'"
                             (click)="selectedBookingSlot = slot; bookingConfirmed = false"
                           >
                             {{ slot }}
@@ -247,7 +249,7 @@
 
                     <button
                       type="button"
-                      class="services-preview__confirm"
+                      class="justify-self-start rounded-[0.9rem] px-5 py-3 text-[0.95rem]"
                       [disabled]="!selectedBookingDate || !selectedBookingSlot"
                       [style.background]="selectedThemeColors[2]"
                       [style.color]="selectedThemeColors[0]"
@@ -257,7 +259,7 @@
                     </button>
 
                     @if (bookingConfirmed) {
-                      <div class="services-preview__confirmation" [style.color]="selectedThemeColors[6]">
+                      <div class="text-[0.92rem]" [style.color]="selectedThemeColors[6]">
                         Afspraak ingepland voor {{ selectedBookingDate }} om {{ selectedBookingSlot }}.
                       </div>
                     }
