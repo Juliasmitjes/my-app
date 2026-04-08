@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 import { BuilderState } from '../../types/builder-state';
 import { fontMap } from '../../shared/fonts';
@@ -23,6 +24,11 @@ type PageTextBlock = {
     role?: string;
     intro?: string;
   }>;
+  faqItems?: Array<{
+    question?: string;
+    answer?: string;
+    category?: string;
+  }>;
   socials?: {
     linkedin?: string;
     instagram?: string;
@@ -33,7 +39,7 @@ type PageTextBlock = {
 @Component({
   selector: 'app-preview-step',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule, RequestPopup],
+  imports: [CommonModule, FormsModule, LucideAngularModule, RequestPopup],
   templateUrl: './preview-step.html',
   styleUrl: './preview-step.css'
 })
@@ -50,6 +56,9 @@ export class PreviewStep implements OnChanges, OnDestroy {
   selectedBookingDate = '';
   selectedBookingSlot = '';
   bookingConfirmed = false;
+  faqActiveCategory = '';
+  faqSearchQuery = '';
+  expandedFaqIndex = 0;
 
   private _selectedThemeColors: string[] | null = null;
   private blobUrlCache = new Map<string, string>();
@@ -64,6 +73,7 @@ export class PreviewStep implements OnChanges, OnDestroy {
       if (!this.pages.includes(this.activePageId ?? '')) {
         this.activePageId = this.pages[0] ?? 'home';
       }
+      this.resetFaqState();
     }
   }
 
@@ -116,6 +126,7 @@ export class PreviewStep implements OnChanges, OnDestroy {
   setActivePage(pageId: string): void {
     this.activePageId = pageId;
     this.closeBooking();
+    this.resetFaqState();
   }
 
   get selectedThemeColors(): string[] {
@@ -284,6 +295,7 @@ export class PreviewStep implements OnChanges, OnDestroy {
       contactButtonLabel: value.contactButtonLabel ?? '',
       services: value.services ?? [],
       members: value.members ?? [],
+      faqItems: value.faqItems ?? [],
       socials: value.socials ?? {}
     };
   }
@@ -330,6 +342,10 @@ export class PreviewStep implements OnChanges, OnDestroy {
 
   get isTeamPageActive(): boolean {
     return this.activePage === 'team';
+  }
+
+  get isFaqPageActive(): boolean {
+    return this.activePage === 'faq';
   }
 
   get aboutPageSectionTitle(): string {
@@ -436,6 +452,46 @@ export class PreviewStep implements OnChanges, OnDestroy {
     };
   }
 
+  getFaqPageData(pageId: string): { heading: string; searchPlaceholder: string; intro: string; categories: string[]; items: Array<{ question: string; answer: string; category: string }> } {
+    const text = this.getPageText(pageId);
+    const items = Array.isArray(text?.faqItems) && text.faqItems.length
+      ? text.faqItems.map((item, index) => ({
+          question: item.question?.trim() || `Vraag ${index + 1}`,
+          answer: item.answer?.trim() || 'Schrijf hier het antwoord op deze veelgestelde vraag.',
+          category: item.category?.trim() || 'Algemeen'
+        }))
+      : [{
+          question: 'Kan ik mijn afspraak verzetten?',
+          answer: 'Ja, je kunt je afspraak eenvoudig verzetten via e-mail of telefonisch contact.',
+          category: 'Algemeen'
+        }];
+
+    const categories = [...new Set(items.map(item => item.category))];
+
+    return {
+      heading: text?.title?.trim() || 'Veelgestelde vragen',
+      searchPlaceholder: text?.subtitle?.trim() || 'Waar ben je naar op zoek?',
+      intro: text?.body?.trim() || '',
+      categories,
+      items
+    };
+  }
+
+  getFilteredFaqItems(pageId: string): Array<{ question: string; answer: string; category: string; index: number }> {
+    const faq = this.getFaqPageData(pageId);
+    const category = this.faqActiveCategory || faq.categories[0] || '';
+    const query = this.faqSearchQuery.trim().toLowerCase();
+
+    return faq.items
+      .map((item, index) => ({ ...item, index }))
+      .filter(item => {
+        const matchesCategory = !category || item.category === category;
+        const haystack = `${item.question} ${item.answer} ${item.category}`.toLowerCase();
+        const matchesQuery = !query || haystack.includes(query);
+        return matchesCategory && matchesQuery;
+      });
+  }
+
   get bookingDates(): Array<{ value: string; day: string; label: string }> {
     const formatter = new Intl.DateTimeFormat('nl-NL', {
       weekday: 'short',
@@ -516,6 +572,13 @@ export class PreviewStep implements OnChanges, OnDestroy {
   showRequestPopup: boolean = false;
   closeRequestPopup() {
     this.showRequestPopup = false;
+  }
+
+  private resetFaqState(): void {
+    const faq = this.getFaqPageData(this.activePage);
+    this.faqActiveCategory = faq.categories[0] || '';
+    this.faqSearchQuery = '';
+    this.expandedFaqIndex = 0;
   }
 
   private splitBodyIntoColumns(value: string): [string, string] {

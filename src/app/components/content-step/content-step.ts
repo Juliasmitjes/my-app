@@ -115,6 +115,11 @@ ngOnInit() {
         intro?: string;
         image?: File | string | null;
       }>;
+      faqItems?: Array<{
+        question: string;
+        answer?: string;
+        category?: string;
+      }>;
       contactEmail?: string;
       contactPhone?: string;
       contactButtonLabel?: string;
@@ -201,6 +206,22 @@ ngOnInit() {
           uploads[`page_${pageId}_member_${index}_image`] = member.image;
         }
       });
+    } else if (pageId === 'faq') {
+      const faqItems = (payload as any).faqItems ?? [];
+
+      uploads[`page_${pageId}_text`] = {
+        kind: 'inline',
+        value: {
+          title,
+          subtitle,
+          body,
+          faqItems: faqItems.map((item: any) => ({
+            question: item.question ?? '',
+            answer: item.answer ?? '',
+            category: item.category ?? 'Algemeen'
+          }))
+        }
+      };
     } else {
       uploads[`page_${pageId}_text`] = {
         kind: 'inline',

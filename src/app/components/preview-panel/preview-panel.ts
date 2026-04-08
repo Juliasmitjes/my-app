@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 import { BuilderState } from '../../types/builder-state';
 import { fontMap } from '../../shared/fonts';
@@ -22,6 +23,11 @@ type PageTextBlock = {
     role?: string;
     intro?: string;
   }>;
+  faqItems?: Array<{
+    question?: string;
+    answer?: string;
+    category?: string;
+  }>;
   socials?: {
     linkedin?: string;
     instagram?: string;
@@ -32,7 +38,7 @@ type PageTextBlock = {
 @Component({
   selector: 'app-preview-panel',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [CommonModule, FormsModule, LucideAngularModule],
   templateUrl: './preview-panel.html',
   styleUrls: ['./preview-panel.css']
 })
@@ -51,6 +57,9 @@ export class PreviewPanel implements OnChanges {
   selectedBookingDate = '';
   selectedBookingSlot = '';
   bookingConfirmed = false;
+  faqActiveCategory = '';
+  faqSearchQuery = '';
+  expandedFaqIndex = 0;
 
   iconName = 'monitor';
   title = 'Live voorbeeld';
@@ -76,6 +85,7 @@ export class PreviewPanel implements OnChanges {
       if (!this.pages.includes(this.activePageId ?? '')) {
         this.activePageId = this.pages[0] ?? 'home';
       }
+      this.resetFaqState();
     }
   }
 
@@ -292,6 +302,7 @@ export class PreviewPanel implements OnChanges {
   setActivePage(pageId: string): void {
     this.activePageId = pageId;
     this.closeBooking();
+    this.resetFaqState();
   }
 
   /* ────────────────────────────────────────────────
@@ -325,6 +336,7 @@ export class PreviewPanel implements OnChanges {
       contactButtonLabel: value.contactButtonLabel ?? '',
       services: value.services ?? [],
       members: value.members ?? [],
+      faqItems: value.faqItems ?? [],
       socials: value.socials ?? {}
     };
   }
@@ -371,6 +383,10 @@ export class PreviewPanel implements OnChanges {
 
   get isTeamPageActive(): boolean {
     return this.activePage === 'team';
+  }
+
+  get isFaqPageActive(): boolean {
+    return this.activePage === 'faq';
   }
 
   get aboutPageSectionTitle(): string {
@@ -475,6 +491,46 @@ export class PreviewPanel implements OnChanges {
       intro: text?.body?.trim() || 'Laat zien wie er achter je bedrijf zitten en waar ieder teamlid in uitblinkt.',
       members
     };
+  }
+
+  getFaqPageData(pageId: string): { heading: string; searchPlaceholder: string; intro: string; categories: string[]; items: Array<{ question: string; answer: string; category: string }> } {
+    const text = this.getPageText(pageId);
+    const items = Array.isArray(text?.faqItems) && text.faqItems.length
+      ? text.faqItems.map((item, index) => ({
+          question: item.question?.trim() || `Vraag ${index + 1}`,
+          answer: item.answer?.trim() || 'Schrijf hier het antwoord op deze veelgestelde vraag.',
+          category: item.category?.trim() || 'Algemeen'
+        }))
+      : [{
+          question: 'Kan ik mijn afspraak verzetten?',
+          answer: 'Ja, je kunt je afspraak eenvoudig verzetten via e-mail of telefonisch contact.',
+          category: 'Algemeen'
+        }];
+
+    const categories = [...new Set(items.map(item => item.category))];
+
+    return {
+      heading: text?.title?.trim() || 'Veelgestelde vragen',
+      searchPlaceholder: text?.subtitle?.trim() || 'Waar ben je naar op zoek?',
+      intro: text?.body?.trim() || '',
+      categories,
+      items
+    };
+  }
+
+  getFilteredFaqItems(pageId: string): Array<{ question: string; answer: string; category: string; index: number }> {
+    const faq = this.getFaqPageData(pageId);
+    const category = this.faqActiveCategory || faq.categories[0] || '';
+    const query = this.faqSearchQuery.trim().toLowerCase();
+
+    return faq.items
+      .map((item, index) => ({ ...item, index }))
+      .filter(item => {
+        const matchesCategory = !category || item.category === category;
+        const haystack = `${item.question} ${item.answer} ${item.category}`.toLowerCase();
+        const matchesQuery = !query || haystack.includes(query);
+        return matchesCategory && matchesQuery;
+      });
   }
 
   get bookingDates(): Array<{ value: string; day: string; label: string }> {
@@ -620,5 +676,12 @@ export class PreviewPanel implements OnChanges {
     }
 
     return `https://${value}`;
+  }
+
+  private resetFaqState(): void {
+    const faq = this.getFaqPageData(this.activePage);
+    this.faqActiveCategory = faq.categories[0] || '';
+    this.faqSearchQuery = '';
+    this.expandedFaqIndex = 0;
   }
 }

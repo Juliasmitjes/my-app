@@ -26,6 +26,12 @@ type TeamMemberDraft = {
   image: File | string | null;
 };
 
+type FaqItemDraft = {
+  question: string;
+  answer: string;
+  category: string;
+};
+
 @Component({
   selector: 'app-page-content-modal',
   standalone: true,
@@ -65,6 +71,11 @@ export class PageContentModal implements OnChanges, OnDestroy {
       intro?: string;
       image?: File | string | null;
     }>;
+    faqItems?: Array<{
+      question: string;
+      answer?: string;
+      category?: string;
+    }>;
     contactEmail?: string;
     contactPhone?: string;
     contactButtonLabel?: string;
@@ -88,6 +99,10 @@ export class PageContentModal implements OnChanges, OnDestroy {
   activeServiceIndex = 0;
   teamMembers: TeamMemberDraft[] = [];
   activeTeamMemberIndex = 0;
+  faqItems: FaqItemDraft[] = [];
+  activeFaqIndex = 0;
+  faqActiveCategory = '';
+  faqSearchQuery = '';
   bookingServiceTitle: string | null = null;
   selectedBookingDate = '';
   selectedBookingSlot = '';
@@ -191,6 +206,10 @@ export class PageContentModal implements OnChanges, OnDestroy {
     return this.page?.id === 'team';
   }
 
+  get isFaqPage(): boolean {
+    return this.page?.id === 'faq';
+  }
+
   get aboutSectionTitle(): string {
     return this.page?.name ?? 'Over';
   }
@@ -236,6 +255,14 @@ export class PageContentModal implements OnChanges, OnDestroy {
     return this.body?.trim() || 'Laat zien wie er achter je bedrijf zitten en waar ieder teamlid in uitblinkt.';
   }
 
+  get faqHeadingPreview(): string {
+    return this.title?.trim() || 'Veelgestelde vragen';
+  }
+
+  get faqSearchPlaceholder(): string {
+    return this.subtitle?.trim() || 'Waar ben je naar op zoek?';
+  }
+
   get contactHeadingPreview(): string {
     return this.title?.trim() || 'contact.';
   }
@@ -268,6 +295,15 @@ export class PageContentModal implements OnChanges, OnDestroy {
     }
 
     return this.teamMembers[this.activeTeamMemberIndex] ?? this.teamMembers[0];
+  }
+
+  get currentFaqItem(): FaqItemDraft {
+    if (!this.faqItems.length) {
+      this.faqItems = [{ question: '', answer: '', category: 'Algemeen' }];
+      this.activeFaqIndex = 0;
+    }
+
+    return this.faqItems[this.activeFaqIndex] ?? this.faqItems[0];
   }
 
   get servicesHeadingPreview(): string {
@@ -332,6 +368,34 @@ export class PageContentModal implements OnChanges, OnDestroy {
       intro: member.intro?.trim() || 'Voeg hier een korte introductie van dit teamlid toe.',
       image: this.getFilePreview(member.image) || 'assets/images/exampleImage.png'
     }));
+  }
+
+  get faqCategories(): string[] {
+    const categories = this.faqItems
+      .map(item => item.category?.trim())
+      .filter((value): value is string => !!value);
+    return [...new Set(categories)].length ? [...new Set(categories)] : ['Algemeen'];
+  }
+
+  get filteredFaqPreviewItems(): Array<FaqItemDraft & { index: number }> {
+    const category = this.faqActiveCategory || this.faqCategories[0];
+    const query = this.faqSearchQuery.trim().toLowerCase();
+    const source = this.faqItems.length
+      ? this.faqItems
+      : [{
+          question: 'Kan ik mijn afspraak verzetten?',
+          answer: 'Ja, je kunt je afspraak eenvoudig verzetten via e-mail of telefonisch contact.',
+          category: 'Algemeen'
+        }];
+
+    return source
+      .map((item, index) => ({ ...item, index }))
+      .filter(item => {
+        const matchesCategory = !category || (item.category?.trim() || 'Algemeen') === category;
+        const haystack = `${item.question} ${item.answer} ${item.category}`.toLowerCase();
+        const matchesQuery = !query || haystack.includes(query);
+        return matchesCategory && matchesQuery;
+      });
   }
 
   get backgroundFileLabel(): string {
@@ -426,6 +490,15 @@ export class PageContentModal implements OnChanges, OnDestroy {
     this.activeTeamMemberIndex = index;
   }
 
+  addFaqItem(): void {
+    this.faqItems = [...this.faqItems, { question: '', answer: '', category: this.faqCategories[0] || 'Algemeen' }];
+    this.activeFaqIndex = this.faqItems.length - 1;
+  }
+
+  selectFaqItem(index: number): void {
+    this.activeFaqIndex = index;
+  }
+
   openBooking(serviceTitle: string): void {
     this.bookingServiceTitle = serviceTitle || 'Dienst';
     this.selectedBookingDate = this.bookingDates[0]?.value ?? '';
@@ -478,6 +551,11 @@ export class PageContentModal implements OnChanges, OnDestroy {
         intro: member.intro.trim(),
         image: member.image
       })),
+      faqItems: this.faqItems.map(item => ({
+        question: item.question.trim(),
+        answer: item.answer.trim(),
+        category: item.category.trim()
+      })),
       contactEmail: this.contactEmail.trim(),
       contactPhone: this.contactPhone.trim(),
       contactButtonLabel: this.contactButtonLabel.trim(),
@@ -516,6 +594,13 @@ export class PageContentModal implements OnChanges, OnDestroy {
             image: this.builderState?.uploads?.[`page_${pageId}_member_${index}_image`] ?? null
           }))
         : [];
+      this.faqItems = Array.isArray(entry.value.faqItems)
+        ? entry.value.faqItems.map((item: any) => ({
+            question: item.question ?? '',
+            answer: item.answer ?? '',
+            category: item.category ?? 'Algemeen'
+          }))
+        : [];
       this.contactEmail = entry.value.contactEmail ?? '';
       this.contactPhone = entry.value.contactPhone ?? '';
       this.contactButtonLabel = entry.value.contactButtonLabel ?? '';
@@ -529,6 +614,7 @@ export class PageContentModal implements OnChanges, OnDestroy {
       this.blogHeroTitle = '';
       this.serviceItems = [];
       this.teamMembers = [];
+      this.faqItems = [];
       this.contactEmail = '';
       this.contactPhone = '';
       this.contactButtonLabel = '';
@@ -556,6 +642,8 @@ export class PageContentModal implements OnChanges, OnDestroy {
       this.activeServiceIndex = 0;
       this.teamMembers = [];
       this.activeTeamMemberIndex = 0;
+      this.faqItems = [];
+      this.activeFaqIndex = 0;
     } else if (this.isServicesPage) {
       this.blogPosts = [];
       this.activeBlogPostIndex = 0;
@@ -565,6 +653,8 @@ export class PageContentModal implements OnChanges, OnDestroy {
       this.activeServiceIndex = 0;
       this.teamMembers = [];
       this.activeTeamMemberIndex = 0;
+      this.faqItems = [];
+      this.activeFaqIndex = 0;
     } else if (this.isTeamPage) {
       this.blogPosts = [];
       this.activeBlogPostIndex = 0;
@@ -574,6 +664,23 @@ export class PageContentModal implements OnChanges, OnDestroy {
         ? this.teamMembers
         : [{ name: '', role: '', intro: '', image: null }];
       this.activeTeamMemberIndex = 0;
+      this.faqItems = [];
+      this.activeFaqIndex = 0;
+    } else if (this.isFaqPage) {
+      this.blogPosts = [];
+      this.activeBlogPostIndex = 0;
+      this.serviceItems = [];
+      this.activeServiceIndex = 0;
+      this.teamMembers = [];
+      this.activeTeamMemberIndex = 0;
+      this.faqItems = this.faqItems.length
+        ? this.faqItems
+        : [{
+            question: 'Kan ik mijn afspraak verzetten?',
+            answer: 'Ja, je kunt je afspraak eenvoudig verzetten via e-mail of telefonisch contact.',
+            category: 'Algemeen'
+          }];
+      this.activeFaqIndex = 0;
     } else {
       this.blogPosts = [];
       this.activeBlogPostIndex = 0;
@@ -581,6 +688,8 @@ export class PageContentModal implements OnChanges, OnDestroy {
       this.activeServiceIndex = 0;
       this.teamMembers = [];
       this.activeTeamMemberIndex = 0;
+      this.faqItems = [];
+      this.activeFaqIndex = 0;
     }
 
     this.resetPreviewUrls();
@@ -596,6 +705,8 @@ export class PageContentModal implements OnChanges, OnDestroy {
     }
 
     this.closeBooking();
+    this.faqActiveCategory = this.faqCategories[0] || 'Algemeen';
+    this.faqSearchQuery = '';
   }
 
   private getExistingImage(type: 'default' | 'background' | 'portrait' = 'default'): string | null {
