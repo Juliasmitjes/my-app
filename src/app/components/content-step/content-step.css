@@ -22,3 +22,26 @@
   display: flex;
   flex-direction: column;
 }
+
+.content-option-card__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 7.5rem;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(55, 120, 240, 0.24);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 248, 255, 0.95));
+  color: #31507f;
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1;
+  box-shadow: 0 8px 18px rgba(49, 80, 127, 0.08);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.content-option-card__action:hover {
+  transform: translateY(-1px);
+  border-color: rgba(55, 120, 240, 0.38);
+  box-shadow: 0 12px 22px rgba(49, 80, 127, 0.12);
+}
