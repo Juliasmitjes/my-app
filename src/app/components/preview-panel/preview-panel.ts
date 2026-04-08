@@ -315,7 +315,7 @@ export class PreviewPanel implements OnChanges {
       return Array.from({ length: count }, () => ({ id: null, label: 'Button' }));
     }
 
-    return items.slice(offset, offset + count);
+    return items.slice(offset);
   }
 
   getPreviewCtaItem(offset: number): { id: string | null; label: string } | null {
@@ -324,7 +324,7 @@ export class PreviewPanel implements OnChanges {
       return { id: null, label: 'Button' };
     }
 
-    return items[offset] ?? null;
+    return null;
   }
 
   getHomeActionItems(count: number): Array<{ id: string | null; label: string }> {
