@@ -92,6 +92,15 @@
   line-height: 1.2;
 }
 
+.preview-panel-nav-button {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  line-height: inherit;
+}
+
 .preview-panel-portfolio__meta {
   justify-self: end;
   font-size: 12px;
@@ -269,7 +278,8 @@
   margin-top: 8px;
 }
 
-.preview-panel-product__actions span {
+.preview-panel-action-button {
+  appearance: none;
   width: 86px;
   height: 22px;
   border-radius: 999px;
@@ -283,7 +293,23 @@
   color: rgba(255, 255, 255, 0.92);
 }
 
-.preview-panel-product__actions span:first-child {
+.preview-panel-product__actions span,
+.preview-panel-product__actions button {
+  width: 86px;
+  height: 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.14);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.preview-panel-product__actions span:first-child,
+.preview-panel-product__actions button:first-child {
   background: rgba(255, 255, 255, 0.95);
   border-color: rgba(255, 255, 255, 0.95);
   color: rgba(29, 29, 31, 0.86);
@@ -370,7 +396,8 @@
   gap: 8px;
 }
 
-.preview-panel-service__nav span {
+.preview-panel-service__nav span,
+.preview-panel-service__nav button {
   height: 24px;
   border-radius: 6px;
   border: 1px solid rgba(185, 205, 255, 0.9);
@@ -380,6 +407,10 @@
   font-size: 11px;
   line-height: 1;
   color: rgba(29, 29, 31, 0.58);
+}
+
+.preview-panel-service__nav-button {
+  appearance: none;
 }
 
 .preview-panel-service__hero {

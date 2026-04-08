@@ -736,11 +736,11 @@
                             </span>
                             <div class="preview-panel-portfolio__nav" [style.color]="selectedThemeColors[6]">
                               @for (item of getPreviewNavItems(3); track item.label + $index) {
-                                <span>{{ item.label }}</span>
+                                <button type="button" class="preview-panel-nav-button" [style.color]="selectedThemeColors[6]" (click)="item.id && setActivePage(item.id)">{{ item.label }}</button>
                               }
                             </div>
                             @if (getPreviewCtaItem(3); as ctaItem) {
-                              <span class="preview-panel-portfolio__meta" [style.color]="selectedThemeColors[6]">{{ ctaItem.label }}</span>
+                              <button type="button" class="preview-panel-nav-button preview-panel-portfolio__meta" [style.color]="selectedThemeColors[6]" (click)="ctaItem.id && setActivePage(ctaItem.id)">{{ ctaItem.label }}</button>
                             }
                           </div>
 
@@ -829,11 +829,11 @@
                             </span>
                             <div class="preview-panel-product__nav" [style.color]="selectedThemeColors[6]">
                               @for (item of getPreviewNavItems(4); track item.label + $index) {
-                                <span>{{ item.label }}</span>
+                                <button type="button" class="preview-panel-nav-button" [style.color]="selectedThemeColors[6]" (click)="item.id && setActivePage(item.id)">{{ item.label }}</button>
                               }
                             </div>
                             @if (getPreviewCtaItem(4); as ctaItem) {
-                              <span class="preview-panel-product__cta" [style.color]="selectedThemeColors[2]">{{ ctaItem.label }}</span>
+                              <button type="button" class="preview-panel-nav-button preview-panel-product__cta" [style.color]="selectedThemeColors[2]" (click)="ctaItem.id && setActivePage(ctaItem.id)">{{ ctaItem.label }}</button>
                             }
                           </div>
 
@@ -853,7 +853,7 @@
                                 </div>
                                 <div class="preview-panel-product__actions">
                                   @for (item of getHomeActionItems(2); track item.label + $index) {
-                                    <span>{{ item.label }}</span>
+                                    <button type="button" class="preview-panel-action-button" (click)="item.id && setActivePage(item.id)">{{ item.label }}</button>
                                   }
                                 </div>
                               </div>
@@ -872,7 +872,7 @@
                             </span>
                             <div class="preview-panel-service__topactions" [style.color]="selectedThemeColors[6]">
                               @for (item of getPreviewNavItems(2); track item.label + $index) {
-                                <span>{{ item.label }}</span>
+                                <button type="button" class="preview-panel-nav-button" [style.color]="selectedThemeColors[6]" (click)="item.id && setActivePage(item.id)">{{ item.label }}</button>
                               }
                             </div>
                           </div>
@@ -885,7 +885,7 @@
 
                             <div class="preview-panel-service__nav">
                               @for (item of getPreviewNavItems(5); track item.label + $index) {
-                                <span [style.background]="selectedThemeColors[7]" [style.color]="selectedThemeColors[8]" [style.borderColor]="selectedThemeColors[9]">{{ item.label }}</span>
+                                <button type="button" class="preview-panel-service__nav-button" [style.background]="selectedThemeColors[7]" [style.color]="selectedThemeColors[8]" [style.borderColor]="selectedThemeColors[9]" (click)="item.id && setActivePage(item.id)">{{ item.label }}</button>
                               }
                             </div>
 

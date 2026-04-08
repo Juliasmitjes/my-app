@@ -78,7 +78,7 @@ export class PreviewPanel implements OnChanges {
    */
 
   private _selectedThemeColors: string[] | null = null;
-  private readonly contentPageOrder = ['about', 'diensten', 'team', 'blog', 'reviews', 'faq', 'contact'];
+  private readonly contentPageOrder = ['about', 'diensten', 'portfolio', 'team', 'blog', 'reviews', 'faq', 'contact'];
 
   private blobUrlCache = new Map<string, string>();
 
@@ -303,6 +303,7 @@ export class PreviewPanel implements OnChanges {
       blog: 'Blog',
       contact: 'Contact',
       diensten: 'Diensten',
+      portfolio: 'Portfolio',
       team: 'Team',
       faq: 'FAQ',
       reviews: 'Reviews'
@@ -329,7 +330,7 @@ export class PreviewPanel implements OnChanges {
   }
 
   getHomeActionItems(count: number): Array<{ id: string | null; label: string }> {
-    const items = this.getPreferredContentPageItems(['about', 'contact', 'diensten', 'reviews', 'team', 'blog', 'faq']);
+    const items = this.getPreferredContentPageItems(['about', 'contact', 'diensten', 'portfolio', 'reviews', 'team', 'blog', 'faq']);
     if (!items.length) {
       return Array.from({ length: count }, () => ({ id: null, label: 'Button' }));
     }
