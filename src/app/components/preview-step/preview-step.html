@@ -639,7 +639,7 @@
                 }
 
                 <!-- TWO COLUMNS -->
-                @if (builderState.layout === 'two-column') {
+                @if (builderState.layout === 'two-column' && activePage === 'home') {
                   <div
                     class="py-6 sm:py-8 px-6 pb-10 pr-4"
                     [style.background]="'color-mix(in srgb, ' + selectedThemeColors[1] + ' 70%, white)'"
@@ -751,7 +751,7 @@
                 }
 
                 <!-- GRID -->
-                @if (builderState.layout === 'grid') {
+                @if (builderState.layout === 'grid' && activePage === 'home') {
                   <div
                     class="py-6 sm:py-8 px-6 pb-10 pr-4"
                     [style.background]="'color-mix(in srgb, ' + selectedThemeColors[1] + ' 70%, white)'"
