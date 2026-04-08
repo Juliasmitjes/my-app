@@ -68,6 +68,7 @@ export class PreviewStep implements OnChanges, OnDestroy {
 
   private _selectedThemeColors: string[] | null = null;
   private blobUrlCache = new Map<string, string>();
+  private readonly contentPageOrder = ['about', 'diensten', 'team', 'blog', 'reviews', 'faq', 'contact'];
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['builderState'] || changes['colorThemes']) {
@@ -119,7 +120,44 @@ export class PreviewStep implements OnChanges, OnDestroy {
   }
 
   pageLabel(p: string): string {
-    return p.charAt(0).toUpperCase() + p.slice(1);
+    const labels: Record<string, string> = {
+      home: 'Home',
+      about: 'Over',
+      blog: 'Blog',
+      contact: 'Contact',
+      diensten: 'Diensten',
+      team: 'Team',
+      faq: 'FAQ',
+      reviews: 'Reviews'
+    };
+    return labels[p] ?? (p.charAt(0).toUpperCase() + p.slice(1));
+  }
+
+  getPreviewNavItems(count: number, offset = 0): Array<{ id: string | null; label: string }> {
+    const items = this.getOrderedContentPageItems();
+    if (!items.length) {
+      return Array.from({ length: count }, () => ({ id: null, label: 'Button' }));
+    }
+
+    return items.slice(offset, offset + count);
+  }
+
+  getPreviewCtaItem(offset: number): { id: string | null; label: string } | null {
+    const items = this.getOrderedContentPageItems();
+    if (!items.length) {
+      return { id: null, label: 'Button' };
+    }
+
+    return items[offset] ?? null;
+  }
+
+  getHomeActionItems(count: number): Array<{ id: string | null; label: string }> {
+    const items = this.getPreferredContentPageItems(['about', 'contact', 'diensten', 'reviews', 'team', 'blog', 'faq']);
+    if (!items.length) {
+      return Array.from({ length: count }, () => ({ id: null, label: 'Button' }));
+    }
+
+    return items.slice(0, count);
   }
 
   get activePage(): string {
@@ -650,5 +688,32 @@ export class PreviewStep implements OnChanges, OnDestroy {
     }
 
     return `https://${value}`;
+  }
+
+  private getOrderedContentPageItems(): Array<{ id: string; label: string }> {
+    if (this.currentStep < 5) {
+      return [];
+    }
+
+    const pages = (this.builderState.pages ?? []).filter(page => page !== 'home');
+    return [...pages]
+      .sort((a, b) => this.getPageSortIndex(a) - this.getPageSortIndex(b))
+      .map(id => ({ id, label: this.pageLabel(id) }));
+  }
+
+  private getPreferredContentPageItems(priority: string[]): Array<{ id: string; label: string }> {
+    const items = this.getOrderedContentPageItems();
+    return [...items].sort((a, b) => {
+      const aIndex = priority.indexOf(a.id);
+      const bIndex = priority.indexOf(b.id);
+      const safeA = aIndex === -1 ? Number.MAX_SAFE_INTEGER : aIndex;
+      const safeB = bIndex === -1 ? Number.MAX_SAFE_INTEGER : bIndex;
+      return safeA - safeB;
+    });
+  }
+
+  private getPageSortIndex(pageId: string): number {
+    const index = this.contentPageOrder.indexOf(pageId);
+    return index === -1 ? this.contentPageOrder.length + 1 : index;
   }
 }

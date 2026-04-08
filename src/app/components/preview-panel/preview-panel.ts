@@ -77,6 +77,7 @@ export class PreviewPanel implements OnChanges {
    */
 
   private _selectedThemeColors: string[] | null = null;
+  private readonly contentPageOrder = ['about', 'diensten', 'team', 'blog', 'reviews', 'faq', 'contact'];
 
   private blobUrlCache = new Map<string, string>();
 
@@ -295,7 +296,44 @@ export class PreviewPanel implements OnChanges {
   }
 
   pageLabel(p: string): string {
-    return p.charAt(0).toUpperCase() + p.slice(1);
+    const labels: Record<string, string> = {
+      home: 'Home',
+      about: 'Over',
+      blog: 'Blog',
+      contact: 'Contact',
+      diensten: 'Diensten',
+      team: 'Team',
+      faq: 'FAQ',
+      reviews: 'Reviews'
+    };
+    return labels[p] ?? (p.charAt(0).toUpperCase() + p.slice(1));
+  }
+
+  getPreviewNavItems(count: number, offset = 0): Array<{ id: string | null; label: string }> {
+    const items = this.getOrderedContentPageItems();
+    if (!items.length) {
+      return Array.from({ length: count }, () => ({ id: null, label: 'Button' }));
+    }
+
+    return items.slice(offset, offset + count);
+  }
+
+  getPreviewCtaItem(offset: number): { id: string | null; label: string } | null {
+    const items = this.getOrderedContentPageItems();
+    if (!items.length) {
+      return { id: null, label: 'Button' };
+    }
+
+    return items[offset] ?? null;
+  }
+
+  getHomeActionItems(count: number): Array<{ id: string | null; label: string }> {
+    const items = this.getPreferredContentPageItems(['about', 'contact', 'diensten', 'reviews', 'team', 'blog', 'faq']);
+    if (!items.length) {
+      return Array.from({ length: count }, () => ({ id: null, label: 'Button' }));
+    }
+
+    return items.slice(0, count);
   }
 
   get activePage(): string {
@@ -718,5 +756,32 @@ export class PreviewPanel implements OnChanges {
     this.faqActiveCategory = faq.categories[0] || '';
     this.faqSearchQuery = '';
     this.expandedFaqIndex = 0;
+  }
+
+  private getOrderedContentPageItems(): Array<{ id: string; label: string }> {
+    if (this.currentStep < 5) {
+      return [];
+    }
+
+    const pages = (this.builderState.pages ?? []).filter(page => page !== 'home');
+    return [...pages]
+      .sort((a, b) => this.getPageSortIndex(a) - this.getPageSortIndex(b))
+      .map(id => ({ id, label: this.pageLabel(id) }));
+  }
+
+  private getPreferredContentPageItems(priority: string[]): Array<{ id: string; label: string }> {
+    const items = this.getOrderedContentPageItems();
+    return [...items].sort((a, b) => {
+      const aIndex = priority.indexOf(a.id);
+      const bIndex = priority.indexOf(b.id);
+      const safeA = aIndex === -1 ? Number.MAX_SAFE_INTEGER : aIndex;
+      const safeB = bIndex === -1 ? Number.MAX_SAFE_INTEGER : bIndex;
+      return safeA - safeB;
+    });
+  }
+
+  private getPageSortIndex(pageId: string): number {
+    const index = this.contentPageOrder.indexOf(pageId);
+    return index === -1 ? this.contentPageOrder.length + 1 : index;
   }
 }

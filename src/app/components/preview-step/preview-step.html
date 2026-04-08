@@ -38,35 +38,32 @@
                 </span>
 
                 <div class="flex flex-wrap gap-2">
-                  @if (canShowPages) {
-                    @for (p of pages; track p) {
-                      @if (p !== 'home') {
-                        <button
-                          type="button"
-                          class="text-xs px-2 py-1 rounded border text-left"
-                          [class.opacity-70]="activePage !== p"
-                          [style.background]="selectedThemeColors[7]"
-                          [style.color]="selectedThemeColors[8]"
-                          [style.borderColor]="selectedThemeColors[9]"
-                          (click)="setActivePage(p)"
-                          [attr.aria-current]="activePage === p ? 'page' : null"
-                        >
-                          {{ pageLabel(p) }}
-                        </button>
-                      }
-                    }
+                  @for (item of getPreviewNavItems(4); track item.label + $index) {
+                    <button
+                      type="button"
+                      class="text-xs px-2 py-1 rounded border text-left"
+                      [class.opacity-70]="item.id && activePage !== item.id"
+                      [style.background]="selectedThemeColors[7]"
+                      [style.color]="selectedThemeColors[8]"
+                      [style.borderColor]="selectedThemeColors[9]"
+                      (click)="item.id && setActivePage(item.id)"
+                      [attr.aria-current]="item.id && activePage === item.id ? 'page' : null"
+                    >
+                      {{ item.label }}
+                    </button>
                   }
                 </div>
               </div>
 
-              @if (currentStep < 5) {
+              @if (getPreviewCtaItem(4); as ctaItem) {
                 <button
                   class="px-2 py-1 text-xs rounded border whitespace-nowrap text-left"
                   [style.background]="selectedThemeColors[7]"
                   [style.color]="selectedThemeColors[8]"
                   [style.borderColor]="selectedThemeColors[9]"
+                  (click)="ctaItem.id && setActivePage(ctaItem.id)"
                 >
-                  Button
+                  {{ ctaItem.label }}
                 </button>
               }
             </div>
@@ -110,34 +107,21 @@
                   >
                     {{ logoLabel }}
                   </div>
-                  @if (currentStep < 5) {
-                    <button
-                      class="mb-3 w-full px-2 py-1 text-xs rounded border text-left"
-                      [style.background]="selectedThemeColors[7]"
-                      [style.color]="selectedThemeColors[8]"
-                      [style.borderColor]="selectedThemeColors[9]"
-                    >
-                      Button
-                    </button>
-                  }
-
                   <nav class="space-y-2 text-sm">
-                    @if (canShowPages) {
-                      @for (p of pages; track p) {
-                        <button
-                          type="button"
-                          class="text-xs px-2 py-1 rounded border text-left"
-                          [class.opacity-70]="activePage !== p"
-                          [style.background]="selectedThemeColors[7]"
-                          [style.color]="selectedThemeColors[8]"
-                          [style.borderColor]="selectedThemeColors[9]"
-                          [style.fontFamily]="headingFont"
-                          (click)="setActivePage(p)"
-                          [attr.aria-current]="activePage === p ? 'page' : null"
-                        >
-                          {{ pageLabel(p) }}
-                        </button>
-                      }
+                    @for (item of getPreviewNavItems(5); track item.label + $index) {
+                      <button
+                        type="button"
+                        class="text-xs px-2 py-1 rounded border text-left"
+                        [class.opacity-70]="item.id && activePage !== item.id"
+                        [style.background]="selectedThemeColors[7]"
+                        [style.color]="selectedThemeColors[8]"
+                        [style.borderColor]="selectedThemeColors[9]"
+                        [style.fontFamily]="headingFont"
+                        (click)="item.id && setActivePage(item.id)"
+                        [attr.aria-current]="item.id && activePage === item.id ? 'page' : null"
+                      >
+                        {{ item.label }}
+                      </button>
                     }
                   </nav>
                 </aside>
@@ -779,9 +763,9 @@
                             <div class="flex items-center justify-between text-xs text-muted-foreground">
                               <span class="font-semibold text-foreground">{{ getPortfolioBusinessName() }}</span>
                               <div class="flex items-center gap-4">
-                                <span>Button</span>
-                                <span>Button</span>
-                                <span>Button</span>
+                                @for (item of getPreviewNavItems(3); track item.label + $index) {
+                                  <span>{{ item.label }}</span>
+                                }
                               </div>
                             </div>
                           </div>
@@ -829,8 +813,9 @@
                             <div class="flex items-center justify-between text-xs text-muted-foreground">
                               <span class="font-semibold text-foreground text-lg">{{ getPortfolioBusinessName() }}</span>
                               <div class="flex items-center gap-4">
-                                <span>Button</span>
-                                <span>Button</span>
+                                @for (item of getPreviewNavItems(2); track item.label + $index) {
+                                  <span>{{ item.label }}</span>
+                                }
                               </div>
                             </div>
                           </div>
@@ -881,8 +866,9 @@
                             <div class="flex items-center justify-between text-xs text-muted-foreground">
                               <span class="font-semibold text-foreground text-lg">{{ getPortfolioBusinessName() }}</span>
                               <div class="flex items-center gap-4">
-                                <span>Button</span>
-                                <span>Button</span>
+                                @for (item of getPreviewNavItems(2); track item.label + $index) {
+                                  <span>{{ item.label }}</span>
+                                }
                               </div>
                             </div>
                           </div>
