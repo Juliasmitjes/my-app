@@ -87,7 +87,16 @@
     --gradient-accent: linear-gradient(135deg, #2ed5ff 0%, #5ce3ff 100%);
     --shadow-elegant: 0 14px 42px -12px rgba(11, 36, 110, 0.28);
     --shadow-card: 0 8px 24px -10px rgba(10, 44, 140, 0.2);
-  }}
+  }
+
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
 
   @theme inline {
   --color-background: hsl(var(--background));
