@@ -691,10 +691,6 @@ export class PreviewStep implements OnChanges, OnDestroy {
   }
 
   private getOrderedContentPageItems(): Array<{ id: string; label: string }> {
-    if (this.currentStep < 5) {
-      return [];
-    }
-
     const pages = (this.builderState.pages ?? []).filter(page => page !== 'home');
     return [...pages]
       .sort((a, b) => this.getPageSortIndex(a) - this.getPageSortIndex(b))
