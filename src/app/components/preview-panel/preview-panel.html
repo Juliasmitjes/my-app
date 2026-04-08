@@ -486,6 +486,52 @@
                         </div>
                       </section>
                     </div>
+                  } @else if (isReviewsPageActive) {
+                    @let reviews = getReviewsPageData(activePage);
+
+                    <div [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 96%, ' + selectedThemeColors[1] + ')'">
+                      <section class="grid gap-8 px-6 py-10 sm:px-10 sm:py-14">
+                        <div class="grid gap-3 text-center">
+                          <div class="text-xs font-semibold uppercase tracking-[0.28em]" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                            {{ reviews.kicker }}
+                          </div>
+                          <h2 class="m-0 text-4xl sm:text-6xl leading-none" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                            {{ reviews.heading }}
+                          </h2>
+                          <p class="mx-auto max-w-2xl text-sm sm:text-base leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                            {{ reviews.intro }}
+                          </p>
+                        </div>
+
+                        <div class="grid gap-4">
+                          @for (item of reviews.items; let i = $index; track item.name + i) {
+                            <article class="grid gap-4 rounded-[1.4rem] border p-5 md:grid-cols-[auto_minmax(0,1fr)] md:items-start" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 16%, transparent)'" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 98%, ' + selectedThemeColors[1] + ')'">
+                              <div class="flex h-14 w-14 items-center justify-center rounded-full text-lg font-semibold" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[2] + ' 12%, white)'" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                                {{ item.name.charAt(0) }}
+                              </div>
+                              <div class="grid gap-3">
+                                <div class="flex flex-wrap items-center gap-2">
+                                  @for (star of [1, 2, 3, 4, 5]; track star) {
+                                    <span class="text-lg leading-none" [style.color]="star <= item.rating ? selectedThemeColors[2] : 'color-mix(in srgb, ' + selectedThemeColors[6] + ' 24%, transparent)'">★</span>
+                                  }
+                                </div>
+                                <p class="m-0 text-sm sm:text-base leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                                  “{{ item.quote }}”
+                                </p>
+                                <div class="grid gap-1">
+                                  <strong class="text-base" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                                    {{ item.name }}
+                                  </strong>
+                                  <span class="text-sm" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                                    {{ item.role }}
+                                  </span>
+                                </div>
+                              </div>
+                            </article>
+                          }
+                        </div>
+                      </section>
+                    </div>
                   } @else if (builderState.layout === 'single') {
                   <div
                     class="flex flex-col gap-8 sm:gap-10 py-6 sm:py-8"

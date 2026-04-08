@@ -32,6 +32,13 @@ type FaqItemDraft = {
   category: string;
 };
 
+type ReviewItemDraft = {
+  name: string;
+  role: string;
+  quote: string;
+  rating: number;
+};
+
 @Component({
   selector: 'app-page-content-modal',
   standalone: true,
@@ -76,6 +83,12 @@ export class PageContentModal implements OnChanges, OnDestroy {
       answer?: string;
       category?: string;
     }>;
+    reviewItems?: Array<{
+      name: string;
+      role?: string;
+      quote?: string;
+      rating?: number;
+    }>;
     contactEmail?: string;
     contactPhone?: string;
     contactButtonLabel?: string;
@@ -101,6 +114,8 @@ export class PageContentModal implements OnChanges, OnDestroy {
   activeTeamMemberIndex = 0;
   faqItems: FaqItemDraft[] = [];
   activeFaqIndex = 0;
+  reviewItems: ReviewItemDraft[] = [];
+  activeReviewIndex = 0;
   faqActiveCategory = '';
   faqSearchQuery = '';
   bookingServiceTitle: string | null = null;
@@ -210,6 +225,10 @@ export class PageContentModal implements OnChanges, OnDestroy {
     return this.page?.id === 'faq';
   }
 
+  get isReviewsPage(): boolean {
+    return this.page?.id === 'reviews';
+  }
+
   get aboutSectionTitle(): string {
     return this.page?.name ?? 'Over';
   }
@@ -263,6 +282,14 @@ export class PageContentModal implements OnChanges, OnDestroy {
     return this.subtitle?.trim() || 'Waar ben je naar op zoek?';
   }
 
+  get reviewsHeadingPreview(): string {
+    return this.title?.trim() || 'Wat klanten zeggen';
+  }
+
+  get reviewsIntroPreview(): string {
+    return this.body?.trim() || 'Geef bezoekers vertrouwen met eerlijke ervaringen en duidelijke beoordelingen.';
+  }
+
   get contactHeadingPreview(): string {
     return this.title?.trim() || 'contact.';
   }
@@ -304,6 +331,15 @@ export class PageContentModal implements OnChanges, OnDestroy {
     }
 
     return this.faqItems[this.activeFaqIndex] ?? this.faqItems[0];
+  }
+
+  get currentReview(): ReviewItemDraft {
+    if (!this.reviewItems.length) {
+      this.reviewItems = [{ name: '', role: '', quote: '', rating: 5 }];
+      this.activeReviewIndex = 0;
+    }
+
+    return this.reviewItems[this.activeReviewIndex] ?? this.reviewItems[0];
   }
 
   get servicesHeadingPreview(): string {
@@ -396,6 +432,17 @@ export class PageContentModal implements OnChanges, OnDestroy {
         const matchesQuery = !query || haystack.includes(query);
         return matchesCategory && matchesQuery;
       });
+  }
+
+  get reviewPreviewCards(): ReviewItemDraft[] {
+    return this.reviewItems.length
+      ? this.reviewItems
+      : [{
+          name: 'Sanne de Boer',
+          role: 'Klant',
+          quote: 'Fijne service, snel geholpen en alles voelde meteen professioneel aan.',
+          rating: 5
+        }];
   }
 
   get backgroundFileLabel(): string {
@@ -499,6 +546,15 @@ export class PageContentModal implements OnChanges, OnDestroy {
     this.activeFaqIndex = index;
   }
 
+  addReviewItem(): void {
+    this.reviewItems = [...this.reviewItems, { name: '', role: '', quote: '', rating: 5 }];
+    this.activeReviewIndex = this.reviewItems.length - 1;
+  }
+
+  selectReviewItem(index: number): void {
+    this.activeReviewIndex = index;
+  }
+
   openBooking(serviceTitle: string): void {
     this.bookingServiceTitle = serviceTitle || 'Dienst';
     this.selectedBookingDate = this.bookingDates[0]?.value ?? '';
@@ -556,6 +612,12 @@ export class PageContentModal implements OnChanges, OnDestroy {
         answer: item.answer.trim(),
         category: item.category.trim()
       })),
+      reviewItems: this.reviewItems.map(item => ({
+        name: item.name.trim(),
+        role: item.role.trim(),
+        quote: item.quote.trim(),
+        rating: item.rating
+      })),
       contactEmail: this.contactEmail.trim(),
       contactPhone: this.contactPhone.trim(),
       contactButtonLabel: this.contactButtonLabel.trim(),
@@ -601,6 +663,14 @@ export class PageContentModal implements OnChanges, OnDestroy {
             category: item.category ?? 'Algemeen'
           }))
         : [];
+      this.reviewItems = Array.isArray(entry.value.reviewItems)
+        ? entry.value.reviewItems.map((item: any) => ({
+            name: item.name ?? '',
+            role: item.role ?? '',
+            quote: item.quote ?? '',
+            rating: typeof item.rating === 'number' ? item.rating : 5
+          }))
+        : [];
       this.contactEmail = entry.value.contactEmail ?? '';
       this.contactPhone = entry.value.contactPhone ?? '';
       this.contactButtonLabel = entry.value.contactButtonLabel ?? '';
@@ -644,6 +714,8 @@ export class PageContentModal implements OnChanges, OnDestroy {
       this.activeTeamMemberIndex = 0;
       this.faqItems = [];
       this.activeFaqIndex = 0;
+      this.reviewItems = [];
+      this.activeReviewIndex = 0;
     } else if (this.isServicesPage) {
       this.blogPosts = [];
       this.activeBlogPostIndex = 0;
@@ -655,6 +727,8 @@ export class PageContentModal implements OnChanges, OnDestroy {
       this.activeTeamMemberIndex = 0;
       this.faqItems = [];
       this.activeFaqIndex = 0;
+      this.reviewItems = [];
+      this.activeReviewIndex = 0;
     } else if (this.isTeamPage) {
       this.blogPosts = [];
       this.activeBlogPostIndex = 0;
@@ -666,6 +740,8 @@ export class PageContentModal implements OnChanges, OnDestroy {
       this.activeTeamMemberIndex = 0;
       this.faqItems = [];
       this.activeFaqIndex = 0;
+      this.reviewItems = [];
+      this.activeReviewIndex = 0;
     } else if (this.isFaqPage) {
       this.blogPosts = [];
       this.activeBlogPostIndex = 0;
@@ -681,6 +757,26 @@ export class PageContentModal implements OnChanges, OnDestroy {
             category: 'Algemeen'
           }];
       this.activeFaqIndex = 0;
+      this.reviewItems = [];
+      this.activeReviewIndex = 0;
+    } else if (this.isReviewsPage) {
+      this.blogPosts = [];
+      this.activeBlogPostIndex = 0;
+      this.serviceItems = [];
+      this.activeServiceIndex = 0;
+      this.teamMembers = [];
+      this.activeTeamMemberIndex = 0;
+      this.faqItems = [];
+      this.activeFaqIndex = 0;
+      this.reviewItems = this.reviewItems.length
+        ? this.reviewItems
+        : [{
+            name: 'Sanne de Boer',
+            role: 'Klant',
+            quote: 'Fijne service, snel geholpen en alles voelde meteen professioneel aan.',
+            rating: 5
+          }];
+      this.activeReviewIndex = 0;
     } else {
       this.blogPosts = [];
       this.activeBlogPostIndex = 0;
@@ -690,6 +786,8 @@ export class PageContentModal implements OnChanges, OnDestroy {
       this.activeTeamMemberIndex = 0;
       this.faqItems = [];
       this.activeFaqIndex = 0;
+      this.reviewItems = [];
+      this.activeReviewIndex = 0;
     }
 
     this.resetPreviewUrls();

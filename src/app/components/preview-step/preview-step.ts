@@ -29,6 +29,12 @@ type PageTextBlock = {
     answer?: string;
     category?: string;
   }>;
+  reviewItems?: Array<{
+    name?: string;
+    role?: string;
+    quote?: string;
+    rating?: number;
+  }>;
   socials?: {
     linkedin?: string;
     instagram?: string;
@@ -296,6 +302,7 @@ export class PreviewStep implements OnChanges, OnDestroy {
       services: value.services ?? [],
       members: value.members ?? [],
       faqItems: value.faqItems ?? [],
+      reviewItems: value.reviewItems ?? [],
       socials: value.socials ?? {}
     };
   }
@@ -346,6 +353,10 @@ export class PreviewStep implements OnChanges, OnDestroy {
 
   get isFaqPageActive(): boolean {
     return this.activePage === 'faq';
+  }
+
+  get isReviewsPageActive(): boolean {
+    return this.activePage === 'reviews';
   }
 
   get aboutPageSectionTitle(): string {
@@ -490,6 +501,30 @@ export class PreviewStep implements OnChanges, OnDestroy {
         const matchesQuery = !query || haystack.includes(query);
         return matchesCategory && matchesQuery;
       });
+  }
+
+  getReviewsPageData(pageId: string): { kicker: string; heading: string; intro: string; items: Array<{ name: string; role: string; quote: string; rating: number }> } {
+    const text = this.getPageText(pageId);
+    const items = Array.isArray(text?.reviewItems) && text.reviewItems.length
+      ? text.reviewItems.map((item, index) => ({
+          name: item.name?.trim() || `Review ${index + 1}`,
+          role: item.role?.trim() || 'Klant',
+          quote: item.quote?.trim() || 'Voeg hier een korte review toe.',
+          rating: Math.max(1, Math.min(5, Number(item.rating) || 5))
+        }))
+      : [{
+          name: 'Sanne de Boer',
+          role: 'Klant',
+          quote: 'Fijne service, snel geholpen en alles voelde meteen professioneel aan.',
+          rating: 5
+        }];
+
+    return {
+      kicker: text?.subtitle?.trim() || 'Reviews',
+      heading: text?.title?.trim() || 'Wat klanten zeggen',
+      intro: text?.body?.trim() || 'Geef bezoekers vertrouwen met eerlijke ervaringen en duidelijke beoordelingen.',
+      items
+    };
   }
 
   get bookingDates(): Array<{ value: string; day: string; label: string }> {

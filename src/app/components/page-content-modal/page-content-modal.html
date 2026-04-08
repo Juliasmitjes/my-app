@@ -379,6 +379,50 @@
                 </div>
               </div>
             </div>
+          } @else if (isReviewsPage) {
+            <div class="rounded-[1.5rem] shadow-[var(--about-shadow)]" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 96%, ' + selectedThemeColors[1] + ')'">
+              <div class="grid gap-8 px-8 py-10">
+                <div class="grid gap-3 text-center">
+                  <div class="text-xs font-semibold uppercase tracking-[0.28em]" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                    {{ subtitle || 'Reviews' }}
+                  </div>
+                  <h2 class="m-0 text-4xl md:text-5xl leading-tight" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                    {{ reviewsHeadingPreview }}
+                  </h2>
+                  <p class="mx-auto max-w-2xl text-sm leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                    {{ reviewsIntroPreview }}
+                  </p>
+                </div>
+
+                <div class="grid gap-4">
+                  @for (item of reviewPreviewCards; let i = $index; track item.name + i) {
+                    <article class="grid gap-4 rounded-[1.4rem] border p-5 md:grid-cols-[auto_minmax(0,1fr)] md:items-start" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 16%, transparent)'" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 98%, ' + selectedThemeColors[1] + ')'">
+                      <div class="flex h-14 w-14 items-center justify-center rounded-full text-lg font-semibold" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[2] + ' 12%, white)'" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                        {{ (item.name || 'R').charAt(0) }}
+                      </div>
+                      <div class="grid gap-3">
+                        <div class="flex flex-wrap items-center gap-2">
+                          @for (star of [1, 2, 3, 4, 5]; track star) {
+                            <span class="text-lg leading-none" [style.color]="star <= item.rating ? selectedThemeColors[2] : 'color-mix(in srgb, ' + selectedThemeColors[6] + ' 24%, transparent)'">★</span>
+                          }
+                        </div>
+                        <p class="m-0 text-base leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                          “{{ item.quote || 'Voeg hier een korte review toe.' }}”
+                        </p>
+                        <div class="grid gap-1">
+                          <strong class="text-base" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                            {{ item.name || ('Review ' + (i + 1)) }}
+                          </strong>
+                          <span class="text-sm" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                            {{ item.role || 'Klant' }}
+                          </span>
+                        </div>
+                      </div>
+                    </article>
+                  }
+                </div>
+              </div>
+            </div>
           } @else {
             <div class="rounded-xl overflow-hidden border border-border/40">
               <div class="px-4 py-3 border-b" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
@@ -666,6 +710,81 @@
                   (click)="selectFaqItem(i)"
                 >
                   {{ item.question || ('Vraag ' + (i + 1)) }}
+                </button>
+              }
+            </div>
+          } @else if (isReviewsPage) {
+            <div>
+              <label class="text-sm font-medium block mb-1">Bovenregel</label>
+              <input [(ngModel)]="subtitle" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Reviews" type="text" />
+            </div>
+
+            <div>
+              <label class="text-sm font-medium block mb-1">Titel bovenaan</label>
+              <input [(ngModel)]="title" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Wat klanten zeggen" type="text" />
+            </div>
+
+            <div>
+              <label class="text-sm font-medium block mb-1">Korte introductie</label>
+              <textarea [(ngModel)]="body" class="w-full rounded-md border px-3 py-2 text-sm min-h-[110px]" placeholder="Vertel kort waarom bezoekers deze reviews mogen vertrouwen."></textarea>
+            </div>
+
+            <div class="page-content-modal__blog-toolbar">
+              <div class="text-sm font-medium">Reviews</div>
+              <button type="button" class="page-content-modal__upload-button" (click)="addReviewItem()">Review toevoegen</button>
+            </div>
+
+            <div class="page-content-modal__blog-editor">
+              <div class="page-content-modal__blog-editor-header">
+                <div class="page-content-modal__blog-editor-badge">Je bewerkt nu</div>
+                <div class="page-content-modal__blog-editor-title">
+                  {{ currentReview.name || ('Review ' + (activeReviewIndex + 1)) }}
+                </div>
+              </div>
+
+              <div>
+                <label class="text-sm font-medium block mb-1">Naam</label>
+                <input [(ngModel)]="currentReview.name" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Sanne de Boer" type="text" />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium block mb-1">Functie / relatie</label>
+                <input [(ngModel)]="currentReview.role" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Klant" type="text" />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium block mb-1">Reviewtekst</label>
+                <textarea [(ngModel)]="currentReview.quote" class="w-full rounded-md border px-3 py-2 text-sm min-h-[130px]" placeholder="Schrijf hier wat deze persoon over jullie bedrijf zegt."></textarea>
+              </div>
+
+              <div>
+                <label class="text-sm font-medium block mb-2">Aantal sterren</label>
+                <div class="flex flex-wrap gap-2">
+                  @for (star of [1, 2, 3, 4, 5]; track star) {
+                    <button
+                      type="button"
+                      class="h-10 w-10 rounded-full border text-lg"
+                      [style.borderColor]="currentReview.rating === star ? selectedThemeColors[2] : 'color-mix(in srgb, ' + selectedThemeColors[6] + ' 22%, transparent)'"
+                      [style.background]="currentReview.rating === star ? 'color-mix(in srgb, ' + selectedThemeColors[2] + ' 10%, white)' : 'transparent'"
+                      [style.color]="selectedThemeColors[2]"
+                      (click)="currentReview.rating = star"
+                    >
+                      ★
+                    </button>
+                  }
+                </div>
+              </div>
+            </div>
+
+            <div class="page-content-modal__blog-post-list">
+              @for (item of reviewItems; let i = $index; track i) {
+                <button
+                  type="button"
+                  class="page-content-modal__blog-post-chip"
+                  [class.page-content-modal__blog-post-chip--active]="activeReviewIndex === i"
+                  (click)="selectReviewItem(i)"
+                >
+                  {{ item.name || ('Review ' + (i + 1)) }}
                 </button>
               }
             </div>

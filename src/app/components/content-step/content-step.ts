@@ -120,6 +120,12 @@ ngOnInit() {
         answer?: string;
         category?: string;
       }>;
+      reviewItems?: Array<{
+        name: string;
+        role?: string;
+        quote?: string;
+        rating?: number;
+      }>;
       contactEmail?: string;
       contactPhone?: string;
       contactButtonLabel?: string;
@@ -219,6 +225,23 @@ ngOnInit() {
             question: item.question ?? '',
             answer: item.answer ?? '',
             category: item.category ?? 'Algemeen'
+          }))
+        }
+      };
+    } else if (pageId === 'reviews') {
+      const reviewItems = (payload as any).reviewItems ?? [];
+
+      uploads[`page_${pageId}_text`] = {
+        kind: 'inline',
+        value: {
+          title,
+          subtitle,
+          body,
+          reviewItems: reviewItems.map((item: any) => ({
+            name: item.name ?? '',
+            role: item.role ?? '',
+            quote: item.quote ?? '',
+            rating: typeof item.rating === 'number' ? item.rating : 5
           }))
         }
       };
