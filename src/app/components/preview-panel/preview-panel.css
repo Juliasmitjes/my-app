@@ -5,6 +5,12 @@
   display: block;
 }
 
+.preview-panel--embedded.preview-overlay {
+  position: relative;
+  inset: auto;
+  z-index: auto;
+}
+
 .backdrop {
   position: absolute;
   inset: 0;
@@ -198,6 +204,18 @@
   gap: 24px;
   padding: 0;
   overflow: hidden;
+}
+
+.preview-panel--embedded.panel {
+  position: relative;
+  right: auto;
+  top: auto;
+  width: 100%;
+  height: auto;
+  min-height: 720px;
+  border-left: 0;
+  border-radius: 1.5rem;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
 }
 
 .preview-panel-product__hero {

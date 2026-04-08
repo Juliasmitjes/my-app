@@ -5,7 +5,6 @@ import { LayoutStep } from '../../components/layout-step/layout-step';
 import { ColorStep } from '../../components/color-step/color-step';
 import { FontStep } from '../../components/font-step/font-step';
 import { ContentStep, PageDef } from '../../components/content-step/content-step';
-import { PreviewStep } from '../../components/preview-step/preview-step';
 import { PreviewPanel } from '../../components/preview-panel/preview-panel';
 import { Button } from '../../components/ui/button/button';
 import { ToastService } from '../../components/ui/toast/toast.service';
@@ -20,7 +19,6 @@ import { BuilderState } from '../../types/builder-state';
     ColorStep,
     FontStep,
     ContentStep,
-    PreviewStep,
     PreviewPanel,
     Button,
     TitleCasePipe

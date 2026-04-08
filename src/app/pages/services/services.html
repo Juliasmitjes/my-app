@@ -137,14 +137,14 @@ class="services-topbar sticky top-0 z-50">
         }
         @case (5) {
           @defer (when currentStep() === 5) {
-            <app-preview-step
+            <app-preview-panel
+              [open]="true"
+              [embedded]="true"
               [builderState]="builderState()"
-              [colorThemes]="colorThemes()"
               [currentStep]="currentStep()"
-              iconName="monitor"
-              title="Resultaat"
-              [mascotUrl]="'../../../assets/images/uil5.png'">
-            </app-preview-step>
+              [colorThemes]="colorThemes()"
+              size="large">
+            </app-preview-panel>
           } @placeholder {
             <div class="min-h-[300px]"></div>
           }

@@ -1,22 +1,27 @@
-@if (open) {
-  <div class="preview-overlay">
-    <div class="backdrop" (click)="close()"></div>
+@if (open || embedded) {
+  <div class="preview-overlay" [class.preview-panel--embedded]="embedded">
+    @if (!embedded) {
+      <div class="backdrop" (click)="close()"></div>
+    }
 
     <aside
       class="panel pb-20 flex flex-col min-h-[400px]"
+      [class.preview-panel--embedded]="embedded"
       [ngClass]="size"
       role="dialog"
       aria-label="Live preview"
     >
-      <!-- HEADER -->
-      <header class="p-4 flex justify-end">
-        <button
-          class="px-3 py-2 text-sm font-medium text-white rounded-md border cursor-pointer border-border hover:bg-accent/20"
-          (click)="close()"
-        >
-          Voorbeeld sluiten 
-        </button>
-      </header>
+      @if (!embedded) {
+        <!-- HEADER -->
+        <header class="p-4 flex justify-end">
+          <button
+            class="px-3 py-2 text-sm font-medium text-white rounded-md border cursor-pointer border-border hover:bg-accent/20"
+            (click)="close()"
+          >
+            Voorbeeld sluiten 
+          </button>
+        </header>
+      }
 
       <!-- OUTER WRAPPER (keeps rounded corners + clipping) -->
       <div

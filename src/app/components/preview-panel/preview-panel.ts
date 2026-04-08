@@ -53,6 +53,7 @@ type PageTextBlock = {
 export class PreviewPanel implements OnChanges {
 
   @Input() open = false;
+  @Input() embedded = false;
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input({ required: true }) builderState!: BuilderState;
   @Input({ required: true }) currentStep!: number;
