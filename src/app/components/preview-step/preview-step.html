@@ -430,20 +430,20 @@
                         </p>
                       </div>
 
-                      <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                      <div class="grid gap-5">
                         @for (member of team.members; let i = $index; track member.name + i) {
-                          <article class="grid gap-4 rounded-[1.5rem] border p-5" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 14%, transparent)'" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 98%, ' + selectedThemeColors[1] + ')'">
-                            <div class="aspect-[4/5] overflow-hidden rounded-[1.25rem]">
+                          <article class="grid gap-5 rounded-[1.5rem] border p-5 md:grid-cols-[14rem_minmax(0,1fr)] md:items-center" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 14%, transparent)'" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 98%, ' + selectedThemeColors[1] + ')'">
+                            <div class="aspect-[4/5] overflow-hidden rounded-[1.25rem] md:aspect-[5/4]">
                               <img [src]="member.image" [alt]="member.name" class="h-full w-full object-cover" />
                             </div>
-                            <div class="grid gap-2">
+                            <div class="grid gap-3 md:gap-4">
                               <h3 class="m-0 text-2xl" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
                                 {{ member.name }}
                               </h3>
                               <div class="text-sm font-semibold uppercase tracking-[0.18em]" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
                                 {{ member.role }}
                               </div>
-                              <p class="m-0 text-sm leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                              <p class="m-0 max-w-2xl text-sm leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
                                 {{ member.intro }}
                               </p>
                             </div>
