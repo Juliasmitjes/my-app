@@ -31,39 +31,34 @@
       >
         <!-- INNER WRAPPER (scrolls) -->
         <div class="h-full flex flex-col">
-          @if (canShowLayout && (!canShowNavigation || builderState.navigation === 'top')) {
+          @if (canShowLayout && activePage !== 'home' && (!canShowNavigation || builderState.navigation === 'top')) {
             <div
-              class="p-3 border-b"
+              class="px-6 py-4 border-b"
               [style.background]="selectedThemeColors[1]"
               [style.borderColor]="selectedThemeColors[9]"
             >
-              <div class="flex items-start justify-between gap-4">
-                <div class="flex flex-col gap-2">
-                  <span
-                    class="font-semibold text-sm"
-                    [style.color]="selectedThemeColors[2]"
-                    [style.fontFamily]="headingFont"
-                  >
-                    {{ logoLabel }}
-                  </span>
+              <div class="flex items-center justify-between gap-6">
+                <span
+                  class="font-semibold text-sm"
+                  [style.color]="selectedThemeColors[2]"
+                >
+                  {{ logoLabel }}
+                </span>
 
-                  <div class="flex flex-wrap gap-2">
-                    @for (item of getPreviewNavItems(5); track item.label + $index) {
-                      <button
-                        type="button"
-                        class="text-xs px-2 py-1 rounded border text-left"
-                        [class.opacity-70]="item.id && activePage !== item.id"
-                        [style.background]="selectedThemeColors[7]"
-                        [style.color]="selectedThemeColors[8]"
-                        [style.borderColor]="selectedThemeColors[9]"
-                        (click)="item.id && setActivePage(item.id)"
-                        [attr.aria-current]="item.id && activePage === item.id ? 'page' : null"
-                      >
-                        {{ item.label }}
-                      </button>
-                    }
-                  </div>
-                </div>
+                <nav class="flex flex-wrap items-center justify-end gap-6">
+                  @for (item of getPreviewNavItems(5); track item.label + $index) {
+                    <button
+                      type="button"
+                      class="text-sm transition-opacity"
+                      [class.opacity-70]="item.id && activePage !== item.id"
+                      [style.color]="selectedThemeColors[6]"
+                      (click)="item.id && setActivePage(item.id)"
+                      [attr.aria-current]="item.id && activePage === item.id ? 'page' : null"
+                    >
+                      {{ item.label }}
+                    </button>
+                  }
+                </nav>
               </div>
             </div>
           }

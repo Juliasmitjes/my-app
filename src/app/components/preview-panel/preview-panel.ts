@@ -317,7 +317,8 @@ export class PreviewPanel implements OnChanges {
       return Array.from({ length: count }, () => ({ id: null, label: 'Button' }));
     }
 
-    return items.slice(offset);
+    const navItems = [{ id: 'home', label: this.pageLabel('home') }, ...items];
+    return navItems.slice(offset);
   }
 
   getPreviewCtaItem(offset: number): { id: string | null; label: string } | null {
