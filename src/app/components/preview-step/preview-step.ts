@@ -116,6 +116,10 @@ export class PreviewStep implements OnChanges, OnDestroy {
   }
 
   get logoLabel(): string {
+    const businessName = this.getPortfolioBusinessName();
+    if (businessName !== 'Bedrijfsnaam') {
+      return businessName;
+    }
     return this.builderState?.logo || 'Jouw site';
   }
 
