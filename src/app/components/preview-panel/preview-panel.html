@@ -31,36 +31,77 @@
       >
         <!-- INNER WRAPPER (scrolls) -->
         <div class="h-full flex flex-col">
-          @if (canShowLayout && activePage !== 'home' && (!canShowNavigation || builderState.navigation === 'top')) {
-            <div
-              class="px-6 py-4 border-b"
-              [style.background]="selectedThemeColors[1]"
-              [style.borderColor]="selectedThemeColors[9]"
-            >
-              <div class="flex items-center justify-between gap-6">
-                <span
-                  class="font-semibold text-sm"
-                  [style.color]="selectedThemeColors[2]"
-                >
+          @if (canShowLayout && (!canShowNavigation || builderState.navigation === 'top')) {
+            @if (isPortfolioTemplate && portfolioTemplateId === 'portfolio') {
+              <div class="preview-panel-portfolio__topbar" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
+                <span class="preview-panel-portfolio__logo" [style.fontFamily]="headingFont" [style.color]="selectedThemeColors[2]">
                   {{ logoLabel }}
                 </span>
-
-                <nav class="flex flex-wrap items-center justify-end gap-6">
-                  @for (item of getPreviewNavItems(5); track item.label + $index) {
-                    <button
-                      type="button"
-                      class="text-sm transition-opacity"
-                      [class.opacity-70]="item.id && activePage !== item.id"
-                      [style.color]="selectedThemeColors[6]"
-                      (click)="item.id && setActivePage(item.id)"
-                      [attr.aria-current]="item.id && activePage === item.id ? 'page' : null"
-                    >
-                      {{ item.label }}
-                    </button>
+                <div class="preview-panel-portfolio__nav" [style.color]="selectedThemeColors[6]">
+                  @for (item of getPreviewNavItems(3); track item.label + $index) {
+                    <button type="button" class="preview-panel-nav-button" [style.color]="selectedThemeColors[6]" (click)="item.id && setActivePage(item.id)">{{ item.label }}</button>
                   }
-                </nav>
+                </div>
+                @if (getPreviewCtaItem(3); as ctaItem) {
+                  <button type="button" class="preview-panel-nav-button preview-panel-portfolio__meta" [style.color]="selectedThemeColors[6]" (click)="ctaItem.id && setActivePage(ctaItem.id)">{{ ctaItem.label }}</button>
+                }
               </div>
-            </div>
+            } @else if (isPortfolioTemplate && portfolioTemplateId === 'product') {
+              <div class="preview-panel-product__topbar" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
+                <span class="preview-panel-product__logo" [style.fontFamily]="headingFont" [style.color]="selectedThemeColors[2]">
+                  {{ logoLabel }}
+                </span>
+                <div class="preview-panel-product__nav" [style.color]="selectedThemeColors[6]">
+                  @for (item of getPreviewNavItems(4); track item.label + $index) {
+                    <button type="button" class="preview-panel-nav-button" [style.color]="selectedThemeColors[6]" (click)="item.id && setActivePage(item.id)">{{ item.label }}</button>
+                  }
+                </div>
+                @if (getPreviewCtaItem(4); as ctaItem) {
+                  <button type="button" class="preview-panel-nav-button preview-panel-product__cta" [style.color]="selectedThemeColors[2]" (click)="ctaItem.id && setActivePage(ctaItem.id)">{{ ctaItem.label }}</button>
+                }
+              </div>
+            } @else if (isPortfolioTemplate && portfolioTemplateId === 'service') {
+              <div class="preview-panel-service__topbar" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
+                <span class="preview-panel-service__brandmark" [style.fontFamily]="headingFont" [style.color]="selectedThemeColors[2]">
+                  {{ logoLabel }}
+                </span>
+                <div class="preview-panel-service__topactions" [style.color]="selectedThemeColors[6]">
+                  @for (item of getPreviewNavItems(2); track item.label + $index) {
+                    <button type="button" class="preview-panel-nav-button" [style.color]="selectedThemeColors[6]" (click)="item.id && setActivePage(item.id)">{{ item.label }}</button>
+                  }
+                </div>
+              </div>
+            } @else if (activePage !== 'home') {
+              <div
+                class="preview-panel-subpage-header border-b"
+                [style.background]="selectedThemeColors[1]"
+                [style.borderColor]="selectedThemeColors[9]"
+              >
+                <div class="preview-panel-subpage-header__inner">
+                  <span
+                    class="font-semibold text-sm"
+                    [style.color]="selectedThemeColors[2]"
+                  >
+                    {{ logoLabel }}
+                  </span>
+
+                  <nav class="preview-panel-subpage-header__nav">
+                    @for (item of getPreviewNavItems(5); track item.label + $index) {
+                      <button
+                        type="button"
+                        class="text-sm transition-opacity"
+                        [class.opacity-70]="item.id && activePage !== item.id"
+                        [style.color]="selectedThemeColors[6]"
+                        (click)="item.id && setActivePage(item.id)"
+                        [attr.aria-current]="item.id && activePage === item.id ? 'page' : null"
+                      >
+                        {{ item.label }}
+                      </button>
+                    }
+                  </nav>
+                </div>
+              </div>
+            }
           }
 
           <!-- BODY (scrolls) -->
@@ -761,20 +802,6 @@
                     @if (isPortfolioTemplate) {
                       @if (portfolioTemplateId === 'portfolio') {
                         <div class="preview-panel-portfolio">
-                          <div class="preview-panel-portfolio__topbar" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
-                            <span class="preview-panel-portfolio__logo" [style.fontFamily]="headingFont" [style.color]="selectedThemeColors[2]">
-                              Bedrijf
-                            </span>
-                            <div class="preview-panel-portfolio__nav" [style.color]="selectedThemeColors[6]">
-                              @for (item of getPreviewNavItems(3); track item.label + $index) {
-                                <button type="button" class="preview-panel-nav-button" [style.color]="selectedThemeColors[6]" (click)="item.id && setActivePage(item.id)">{{ item.label }}</button>
-                              }
-                            </div>
-                            @if (getPreviewCtaItem(3); as ctaItem) {
-                              <button type="button" class="preview-panel-nav-button preview-panel-portfolio__meta" [style.color]="selectedThemeColors[6]" (click)="ctaItem.id && setActivePage(ctaItem.id)">{{ ctaItem.label }}</button>
-                            }
-                          </div>
-
                           <div class="preview-panel-portfolio__body">
                             <div class="preview-panel-portfolio__intro">
                               <div class="preview-panel-portfolio__title" [style.fontFamily]="headingFont" [style.color]="selectedThemeColors[2]">
@@ -854,20 +881,6 @@
                         </div>
                       } @else if (portfolioTemplateId === 'product') {
                         <div class="preview-panel-product">
-                          <div class="preview-panel-product__topbar" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
-                            <span class="preview-panel-product__logo" [style.fontFamily]="headingFont" [style.color]="selectedThemeColors[2]">
-                              {{ getPortfolioBusinessName() }}
-                            </span>
-                            <div class="preview-panel-product__nav" [style.color]="selectedThemeColors[6]">
-                              @for (item of getPreviewNavItems(4); track item.label + $index) {
-                                <button type="button" class="preview-panel-nav-button" [style.color]="selectedThemeColors[6]" (click)="item.id && setActivePage(item.id)">{{ item.label }}</button>
-                              }
-                            </div>
-                            @if (getPreviewCtaItem(4); as ctaItem) {
-                              <button type="button" class="preview-panel-nav-button preview-panel-product__cta" [style.color]="selectedThemeColors[2]" (click)="ctaItem.id && setActivePage(ctaItem.id)">{{ ctaItem.label }}</button>
-                            }
-                          </div>
-
                           <div class="preview-panel-product__body">
                             <div class="preview-panel-product__overlay" [style.background-image]="'linear-gradient(rgba(17, 24, 39, 0.24), rgba(17, 24, 39, 0.24)), url(' + getPreviewImage(1) + ')'"></div>
                             <div class="preview-panel-product__hero">
@@ -897,17 +910,6 @@
                         </div>
                       } @else if (portfolioTemplateId === 'service') {
                         <div class="preview-panel-service">
-                          <div class="preview-panel-service__topbar" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
-                            <span class="preview-panel-service__brandmark" [style.fontFamily]="headingFont" [style.color]="selectedThemeColors[2]">
-                              {{ getPortfolioBusinessName() }}
-                            </span>
-                            <div class="preview-panel-service__topactions" [style.color]="selectedThemeColors[6]">
-                              @for (item of getPreviewNavItems(2); track item.label + $index) {
-                                <button type="button" class="preview-panel-nav-button" [style.color]="selectedThemeColors[6]" (click)="item.id && setActivePage(item.id)">{{ item.label }}</button>
-                              }
-                            </div>
-                          </div>
-
                           <div class="preview-panel-service__body">
                             <div class="preview-panel-service__brand">
                               <div class="preview-panel-service__ribbon" [style.color]="selectedThemeColors[2]">{{ getPortfolioBusinessName() }}</div>

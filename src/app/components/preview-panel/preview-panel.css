@@ -61,6 +61,25 @@
   margin: 0 auto;
 }
 
+.preview-panel-subpage-header {
+  padding: 18px 24px 14px;
+}
+
+.preview-panel-subpage-header__inner {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 16px;
+}
+
+.preview-panel-subpage-header__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 24px;
+}
+
 .preview-panel-portfolio {
   background: #ffffff;
   min-height: 100%;
