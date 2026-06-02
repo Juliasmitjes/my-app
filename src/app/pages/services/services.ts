@@ -72,12 +72,6 @@ export class Services {
       colors: ['#FFFFFF','#EEF2F5','#2F3740','#F7F9FB','#DCE3E8','#6E625A','#20262C','#F2E8DD','#2F3740','#C8D1D8'],
     },
     {
-      id: 'desert-sunset',
-      name: 'Desert Sunset',
-      description: 'Terracotta, warm zand, gedempt roze en nachtblauw',
-      colors: ['#FFF7F0','#F2DCCB','#3A2E2A','#F9EBDD','#D9A48D','#9A5A3A','#2A1F1B','#F1CBB8','#3A2E2A','#C38D75'],
-    },
-    {
       id: 'neo-futurism',
       name: 'Neo-Futurism',
       description: 'Electric blue, neon mint en zilver op diep zwart',
@@ -106,18 +100,6 @@ export class Services {
       name: 'Luxury Noir',
       description: 'Diep zwart met champagnegoud, ivoor en bordeaux',
       colors: ['#0B0B0D','#171719','#E7D6B1','#101112','#2B2522','#C8B188','#F5EFE2','#1F1A18','#F5EFE2','#3A1F2A'],
-    },
-    {
-      id: 'coastal-breeze',
-      name: 'Coastal Breeze',
-      description: 'Zeeblauw, zand, schelpwit en zeeschuimgroen',
-      colors: ['#F9FCFB','#E4F2F0','#1E4C5A','#F2F8F7','#BFE3DD','#5F8B8D','#143642','#D7EFEA','#1E4C5A','#A7D2CC'],
-    },
-    {
-      id: 'cyber-glow',
-      name: 'Cyber Glow',
-      description: 'Magenta en cyan met paars op donkergrijs',
-      colors: ['#111115','#1A1B22','#E9EEF6','#151620','#2A2A36','#A6A8C8','#F1F2F8','#2A2A36','#F1F2F8','#34354A'],
     },
     {
       id: 'earthy-clay',
@@ -155,12 +137,6 @@ export class Services {
       description: 'Beige, warm grijs, zacht bruin en dusty blue',
       colors: ['#FBFAF7','#E6E2DA','#3F3A36','#F5F3EE','#C9C2B6','#6F6660','#2D2A27','#9CB0B3','#3F3A36','#B7ADA3'],
     },
-    {
-      id: 'solar-energy',
-      name: 'Solar Energy',
-      description: 'Warm geel en oranje met krachtig donkerblauw',
-      colors: ['#FFFFFF','#FFF2CC','#243B63','#FFFBF2','#FFD77A','#8A5A2B','#1B2B4A','#F7E1C0','#243B63','#E3C38F'],
-    }
   ]);
 
   /* ───── CONTENT PAGES ───── */
