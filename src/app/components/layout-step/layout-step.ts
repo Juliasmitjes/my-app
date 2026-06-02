@@ -14,7 +14,7 @@ import { BuilderState } from '../../types/builder-state';
 import { Portfolio } from './layout-config/portfolio/portfolio';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from '../ui/toast/toast.service';
-import { ImageCropper } from './layout-config/image-cropper/image-cropper';
+import { ImageCropper, PositionedImage } from './layout-config/image-cropper/image-cropper';
 
 type StepMode = 'select' | 'upload';
 
@@ -201,6 +201,7 @@ export class LayoutStep implements OnChanges {
     const newUploads = { ...this.uploads };
     event.config.clearUploadKeys.forEach((key: string) => {
       delete newUploads[key];
+      delete newUploads[`${key}_position`];
     });
     this.uploads = newUploads;
     this.update.emit({ uploads: this.uploads });
@@ -312,14 +313,9 @@ export class LayoutStep implements OnChanges {
   }
 
   if (file.type.startsWith('image')) {
-    this.uploads = {
-      ...this.uploads,
-      [key]: file
-    };
-
-    this.update.emit({ uploads: this.uploads });
-    this.toast.success('Foto geüpload');
-
+    this.cropperFile = file;
+    this.cropperKey = key;
+    this.showCropper = true;
     input.value = '';
     return;
   }
@@ -413,14 +409,15 @@ get canSaveText(): boolean {
 }
 
 
-onImageCropped(blob: Blob) {
+onImageCropped(result: PositionedImage) {
   if (!this.cropperKey) return;
 
-  const file = new File([blob], 'cropped.jpg', { type: 'image/jpeg' });
+  const file = new File([result.blob], 'positioned.jpg', { type: 'image/jpeg' });
 
   this.uploads = {
     ...this.uploads,
-    [this.cropperKey]: file
+    [this.cropperKey]: file,
+    [`${this.cropperKey}_position`]: result.position
   };
 
   this.update.emit({ uploads: this.uploads });

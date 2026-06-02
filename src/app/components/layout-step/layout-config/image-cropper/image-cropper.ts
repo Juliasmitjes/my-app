@@ -1,5 +1,21 @@
-import { Component, EventEmitter, Input, Output, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import Cropper from 'cropperjs';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+  ViewChild
+} from '@angular/core';
+
+export interface PositionedImage {
+  blob: Blob;
+  position: {
+    x: number;
+    y: number;
+  };
+}
 
 @Component({
   selector: 'app-image-cropper',
@@ -7,92 +23,138 @@ import Cropper from 'cropperjs';
   templateUrl: './image-cropper.html',
   styleUrls: ['./image-cropper.css']
 })
-export class ImageCropper implements AfterViewInit {
-
+export class ImageCropper implements AfterViewInit, OnDestroy {
   @Input() file!: File;
   @Input() aspectRatio: number | null = null;
   @Output() closed = new EventEmitter<void>();
-  @Output() cropped = new EventEmitter<Blob>();
+  @Output() cropped = new EventEmitter<PositionedImage>();
 
+  @ViewChild('frame') frame!: ElementRef<HTMLDivElement>;
   @ViewChild('imageElement') imageElement!: ElementRef<HTMLImageElement>;
-  cropper!: Cropper;
-  private objectUrl: string | null = null;
 
-  ngAfterViewInit() {
-    const img = this.imageElement.nativeElement;
+  imageUrl = '';
+  offsetX = 0;
+  offsetY = 0;
+  imageWidth = 0;
+  imageHeight = 0;
+  frameWidth = 0;
+  frameHeight = 0;
+  private activePointerId: number | null = null;
+  private dragStartX = 0;
+  private dragStartY = 0;
+  private startOffsetX = 0;
+  private startOffsetY = 0;
 
-    img.onload = () => {
-      const ratio = this.aspectRatio && this.aspectRatio > 0 ? this.aspectRatio : 1;
-      this.cropper = new Cropper(img, {
-        aspectRatio: ratio,
-        viewMode: 1,
-        dragMode: 'crop',
-        autoCropArea: 0.8,
-        background: false,
-        responsive: true,
-        zoomable: false,
-        zoomOnTouch: false,
-        zoomOnWheel: false,
-        movable: false,
-        cropBoxResizable: true,
-        cropBoxMovable: true,
-        guides: true,
-        center: true,
-        highlight: true,
-        toggleDragModeOnDblclick: false,
-        ready: () => {
-          const container = this.cropper.getContainerData();
-          const maxWidth = container.width * 0.8;
-          const maxHeight = container.height * 0.8;
-          let width = maxWidth;
-          let height = width / ratio;
+  get frameRatio(): number {
+    return this.aspectRatio && this.aspectRatio > 0 ? this.aspectRatio : 1;
+  }
 
-          if (height > maxHeight) {
-            height = maxHeight;
-            width = height * ratio;
-          }
+  get imageTransform(): string {
+    return `translate3d(${this.offsetX}px, ${this.offsetY}px, 0)`;
+  }
 
-          this.cropper.setCropBoxData({
-            width,
-            height,
-            left: (container.width - width) / 2,
-            top: (container.height - height) / 2
-          });
+  ngAfterViewInit(): void {
+    this.imageUrl = URL.createObjectURL(this.file);
+  }
+
+  onImageLoad(): void {
+    const frame = this.frame.nativeElement;
+    const image = this.imageElement.nativeElement;
+    this.frameWidth = frame.clientWidth;
+    this.frameHeight = frame.clientHeight;
+
+    const scale = Math.max(
+      this.frameWidth / image.naturalWidth,
+      this.frameHeight / image.naturalHeight
+    );
+    this.imageWidth = image.naturalWidth * scale;
+    this.imageHeight = image.naturalHeight * scale;
+    this.offsetX = (this.frameWidth - this.imageWidth) / 2;
+    this.offsetY = (this.frameHeight - this.imageHeight) / 2;
+  }
+
+  onDragStart(event: PointerEvent): void {
+    event.preventDefault();
+    this.activePointerId = event.pointerId;
+    this.dragStartX = event.clientX;
+    this.dragStartY = event.clientY;
+    this.startOffsetX = this.offsetX;
+    this.startOffsetY = this.offsetY;
+    this.frame.nativeElement.setPointerCapture(event.pointerId);
+  }
+
+  onDragMove(event: PointerEvent): void {
+    if (event.pointerId !== this.activePointerId) return;
+    this.offsetX = this.clampOffset(
+      this.startOffsetX + event.clientX - this.dragStartX,
+      this.frameWidth,
+      this.imageWidth
+    );
+    this.offsetY = this.clampOffset(
+      this.startOffsetY + event.clientY - this.dragStartY,
+      this.frameHeight,
+      this.imageHeight
+    );
+  }
+
+  onDragEnd(event: PointerEvent): void {
+    if (event.pointerId !== this.activePointerId) return;
+    this.activePointerId = null;
+    if (this.frame.nativeElement.hasPointerCapture(event.pointerId)) {
+      this.frame.nativeElement.releasePointerCapture(event.pointerId);
+    }
+  }
+
+  saveCrop(event: Event): void {
+    event.stopPropagation();
+    const image = this.imageElement.nativeElement;
+    if (!image.naturalWidth || !this.frameWidth || !this.frameHeight) return;
+
+    const scale = image.naturalWidth / this.imageWidth;
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.round(this.frameWidth * scale);
+    canvas.height = Math.round(this.frameHeight * scale);
+    const context = canvas.getContext('2d');
+    if (!context) return;
+
+    context.drawImage(
+      image,
+      -this.offsetX * scale,
+      -this.offsetY * scale,
+      canvas.width,
+      canvas.height,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+    canvas.toBlob(blob => {
+      if (!blob) return;
+      this.cropped.emit({
+        blob,
+        position: {
+          x: this.toPercentage(this.offsetX, this.frameWidth, this.imageWidth),
+          y: this.toPercentage(this.offsetY, this.frameHeight, this.imageHeight)
         }
       });
-    };
-
-    this.objectUrl = URL.createObjectURL(this.file);
-    img.src = this.objectUrl;
+    }, 'image/jpeg', 0.92);
   }
 
-  saveCrop(event?: Event) {
-    event?.stopPropagation();
-    if (!this.cropper) return;
-    const canvas = this.cropper.getCroppedCanvas();
-    if (!canvas) return;
-
-    canvas.toBlob((blob: Blob | null) => {
-      if (blob) {
-        this.cleanup();
-        this.cropped.emit(blob);
-      }
-    });
-  }
-
-  onCancel(event?: Event): void {
-    event?.stopPropagation();
-    this.cleanup();
+  onCancel(event: Event): void {
+    event.stopPropagation();
     this.closed.emit();
   }
 
-  private cleanup(): void {
-    if (this.cropper) {
-      this.cropper.destroy();
-    }
-    if (this.objectUrl) {
-      URL.revokeObjectURL(this.objectUrl);
-      this.objectUrl = null;
-    }
+  ngOnDestroy(): void {
+    if (this.imageUrl) URL.revokeObjectURL(this.imageUrl);
+  }
+
+  private clampOffset(value: number, frameSize: number, imageSize: number): number {
+    return Math.min(0, Math.max(frameSize - imageSize, value));
+  }
+
+  private toPercentage(offset: number, frameSize: number, imageSize: number): number {
+    const availableDistance = imageSize - frameSize;
+    return availableDistance > 0 ? Math.round((-offset / availableDistance) * 100) : 50;
   }
 }

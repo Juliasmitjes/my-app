@@ -1,19 +1,37 @@
 <div class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[80] pointer-events-auto">
   <div class="relative bg-white/90 backdrop-blur-xl p-6 rounded-3xl shadow-xl w-[90%] max-w-2xl space-y-6 pointer-events-auto">
-
-    <h3 class="text-lg font-semibold text-center">Foto bijsnijden</h3>
+    <h3 class="text-lg font-semibold text-center">Foto positioneren</h3>
     <p class="text-sm text-muted-foreground text-center">
-      Alleen het deel binnen het witte vierkant wordt opgeslagen.
+      Versleep de foto tot het juiste deel binnen het kader staat.
     </p>
 
-    <div class="w-full max-w-xl mx-auto h-[400px] rounded-xl relative isolate bg-neutral-900 overflow-hidden z-0">
-      <img #imageElement class="block max-w-full" />
+    <div class="image-positioner-stage">
+      <div
+        #frame
+        class="image-positioner-frame"
+        [style.aspect-ratio]="frameRatio"
+        (pointerdown)="onDragStart($event)"
+        (pointermove)="onDragMove($event)"
+        (pointerup)="onDragEnd($event)"
+        (pointercancel)="onDragEnd($event)"
+      >
+        <img
+          #imageElement
+          class="image-positioner-image"
+          [src]="imageUrl"
+          [style.width.px]="imageWidth"
+          [style.height.px]="imageHeight"
+          [style.transform]="imageTransform"
+          alt="Te positioneren foto"
+          draggable="false"
+          (load)="onImageLoad()"
+        />
+      </div>
     </div>
 
     <div class="relative z-20 flex justify-end gap-3 pt-2">
       <button type="button" class="px-4 py-2 rounded-xl bg-muted/60 cursor-pointer" (click)="onCancel($event)">Annuleren</button>
       <button type="button" class="px-4 py-2 rounded-xl bg-accent text-accent-foreground cursor-pointer" (click)="saveCrop($event)">Opslaan</button>
     </div>
-
   </div>
 </div>
