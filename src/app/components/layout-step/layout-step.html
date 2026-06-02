@@ -236,14 +236,12 @@
   </div>
 }
 
-@defer (when showCropper) {
+@if (showCropper) {
   <app-image-cropper
     [file]="cropperFile!"
     [aspectRatio]="cropperAspectRatio"
     (closed)="onCropperCancel()"
     (cropped)="onImageCropped($event)"
   ></app-image-cropper>
-} @placeholder {
-  <!-- empty on purpose -->
 }
 }
