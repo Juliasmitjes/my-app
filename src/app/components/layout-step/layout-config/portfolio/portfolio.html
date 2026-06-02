@@ -176,7 +176,7 @@
               </div>
             </div>
 
-            <div class="relative flex flex-col flex-1 min-h-[380px] overflow-hidden">
+            <div class="relative flex flex-col flex-1 min-h-[380px] overflow-hidden" #productHero>
               @if (getImagePreview(1)) {
                 <img
                   class="absolute inset-0 w-full h-full object-cover"
@@ -202,7 +202,7 @@
                       [uploads]="uploads"
                       [isSaved]="isSaved[1]"
                       [isComplete]="isUploadComplete(1)"
-                      (requestUpload)="onRequestUpload(1, $event, 'image')"
+                      (requestUpload)="onRequestUpload(1, $event, 'image', productHero)"
                       (requestClear)="onRequestClear(1, $event)">
                     </app-upload-unit>
                   </div>
@@ -304,7 +304,7 @@
                 <span class="h-6 rounded-md border border-[#dbe7f7] bg-white/70 flex items-center justify-center">Button</span>
               </div>
 
-              <div class="relative flex-1 mt-6 mb-6 overflow-hidden rounded-2xl">
+              <div class="relative flex-1 mt-6 mb-6 overflow-hidden rounded-2xl" #serviceHero>
                 @if (getImagePreview(0)) {
                   <img
                     class="absolute inset-0 w-full h-full object-cover"
@@ -330,7 +330,7 @@
                         [uploads]="uploads"
                         [isSaved]="isSaved[0]"
                         [isComplete]="isUploadComplete(0)"
-                        (requestUpload)="onRequestUpload(0, $event, 'image')"
+                        (requestUpload)="onRequestUpload(0, $event, 'image', serviceHero)"
                         (requestClear)="onRequestClear(0, $event)">
                       </app-upload-unit>
                     </div>
