@@ -1,0 +1,440 @@
+        <div class="page-content-modal__preview p-6 md:p-8" [style.background]="selectedThemeColors[1]">
+          @if (isAboutPage) {
+            <div
+              class="about-preview overflow-hidden"
+              [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 88%, ' + selectedThemeColors[1] + ')'"
+              [style.color]="selectedThemeColors[6]"
+            >
+              <div class="about-preview__hero">
+                <div
+                  class="about-preview__hero-image"
+                  [style.background-image]="'linear-gradient(rgba(15, 23, 42, 0.38), rgba(15, 23, 42, 0.38)), url(' + previewBackgroundImage + ')'"
+                ></div>
+                <div class="about-preview__hero-copy">
+                  <h3 class="about-preview__name" [style.color]="selectedThemeColors[0]" [style.fontFamily]="headingFont">
+                    {{ title || 'Jouw naam' }}
+                  </h3>
+                  <p class="about-preview__role" [style.color]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 88%, transparent)'" [style.fontFamily]="bodyFont">
+                    {{ subtitle || 'Jouw functietitel' }}
+                  </p>
+                </div>
+              </div>
+
+              <div class="about-preview__avatar-wrap">
+                <div class="about-preview__avatar-ring" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 92%, white)'">
+                  <img [src]="previewPortraitImage" alt="Portret" class="about-preview__avatar" />
+                </div>
+              </div>
+
+              <div class="about-preview__content">
+                <div class="about-preview__heading-row">
+                  <div>
+                    <div class="about-preview__section-title" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                      {{ aboutSectionTitle }}
+                    </div>
+                  </div>
+
+                  <div class="about-preview__socials">
+                    @for (social of aboutSocialLinks; track social.href) {
+                      <a
+                        class="about-preview__social"
+                        [href]="social.href"
+                        target="_blank"
+                        rel="noreferrer"
+                        [attr.aria-label]="social.label"
+                        [style.background]="selectedThemeColors[2]"
+                        [style.color]="selectedThemeColors[0]"
+                      >
+                        @switch (social.platform) {
+                          @case ('linkedin') {
+                            <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A1.97 1.97 0 0 0 3.25 5c0 1.1.88 2 1.97 2h.03a2 2 0 1 0 0-4ZM20.75 12.84c0-3.48-1.86-5.1-4.35-5.1-2 0-2.9 1.1-3.4 1.88V8.5H9.63c.04.75 0 11.5 0 11.5H13v-6.42c0-.34.03-.69.13-.93.27-.69.88-1.41 1.91-1.41 1.35 0 1.88 1.03 1.88 2.54V20h3.38v-7.16Z"></path></svg>
+                          }
+                          @case ('instagram') {
+                            <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current" aria-hidden="true"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.8A3.95 3.95 0 0 0 3.8 7.75v8.5a3.95 3.95 0 0 0 3.95 3.95h8.5a3.95 3.95 0 0 0 3.95-3.95v-8.5a3.95 3.95 0 0 0-3.95-3.95h-8.5Zm8.95 1.35a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3ZM12 6.85A5.15 5.15 0 1 1 6.85 12 5.16 5.16 0 0 1 12 6.85Zm0 1.8A3.35 3.35 0 1 0 15.35 12 3.35 3.35 0 0 0 12 8.65Z"></path></svg>
+                          }
+                          @case ('facebook') {
+                            <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current" aria-hidden="true"><path d="M13.4 21v-7.7H16l.4-3h-3V8.38c0-.87.24-1.46 1.48-1.46h1.58V4.24A21.2 21.2 0 0 0 14.15 4c-2.54 0-4.27 1.55-4.27 4.4v1.9H7v3h2.88V21h3.52Z"></path></svg>
+                          }
+                        }
+                      </a>
+                    }
+                  </div>
+                </div>
+
+                <div class="about-preview__columns" [style.fontFamily]="bodyFont">
+                  <p class="about-preview__body">{{ bodyColumns[0] }}</p>
+                  <p class="about-preview__body">{{ bodyColumns[1] }}</p>
+                </div>
+              </div>
+            </div>
+          } @else if (isBlogPage) {
+            <div class="blog-preview overflow-hidden" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 94%, ' + selectedThemeColors[1] + ')'">
+              <div class="blog-preview__hero blog-preview__hero--enhanced">
+                <div class="blog-preview__hero-image" [style.background-image]="'linear-gradient(rgba(15, 23, 42, 0.18), rgba(15, 23, 42, 0.18)), url(' + previewBackgroundImage + ')'"></div>
+                <div class="blog-preview__hero-copy">
+                  <div class="blog-preview__hero-label" [style.color]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 90%, transparent)'" [style.fontFamily]="bodyFont">
+                    {{ blogHeroLabel }}
+                  </div>
+                  <h2 class="blog-preview__hero-title" [style.color]="selectedThemeColors[0]" [style.fontFamily]="headingFont">
+                    {{ blogHeroTitlePreview }}
+                  </h2>
+                </div>
+              </div>
+
+              <div class="blog-preview__feed">
+                @for (card of blogCards; let i = $index; track card.title + i) {
+                  <article
+                    class="blog-preview__card"
+                    [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 97%, ' + selectedThemeColors[1] + ')'"
+                    [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[9] + ' 42%, transparent)'"
+                  >
+                    <div class="blog-preview__card-image-wrap">
+                      <img [src]="card.image" alt="Blogbeeld" class="blog-preview__card-image" />
+                    </div>
+
+                    <div class="blog-preview__card-body">
+                      <div class="blog-preview__card-meta" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                        {{ card.meta }}
+                      </div>
+                      <h3 class="blog-preview__card-title" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                        {{ card.title }}
+                      </h3>
+                      <p class="blog-preview__card-excerpt" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                        {{ card.excerpt }}
+                      </p>
+                    </div>
+                  </article>
+                }
+              </div>
+            </div>
+          } @else if (isContactPage) {
+            <div class="contact-preview" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 97%, ' + selectedThemeColors[1] + ')'">
+              <div class="contact-preview__inner">
+                <h2 class="contact-preview__title" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                  {{ contactHeadingPreview }}
+                </h2>
+
+                <div class="contact-preview__form" [style.fontFamily]="bodyFont" [style.color]="selectedThemeColors[6]">
+                  <div class="contact-preview__row contact-preview__row--split">
+                    <div class="contact-preview__field">
+                      <label>Voornaam *</label>
+                      <div class="contact-preview__input"></div>
+                    </div>
+                    <div class="contact-preview__field">
+                      <label>Achternaam *</label>
+                      <div class="contact-preview__input"></div>
+                    </div>
+                  </div>
+
+                  <div class="contact-preview__field">
+                    <label>Email *</label>
+                    <div class="contact-preview__input"></div>
+                  </div>
+
+                  <div class="contact-preview__field">
+                    <label>Telefoon *</label>
+                    <div class="contact-preview__input"></div>
+                  </div>
+
+                  <div class="contact-preview__field">
+                    <label>Bericht *</label>
+                    <div class="contact-preview__textarea"></div>
+                  </div>
+
+                  <div class="contact-preview__footer">
+                    <div class="contact-preview__meta">
+                      <span>{{ contactEmailPreview }}</span>
+                      <span>{{ contactPhonePreview }}</span>
+                    </div>
+                    <button type="button" class="contact-preview__button" [style.background]="selectedThemeColors[2]" [style.color]="selectedThemeColors[0]">
+                      {{ contactButtonPreview }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          } @else if (isServicesPage) {
+            <div class="services-preview" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 97%, ' + selectedThemeColors[1] + ')'">
+              <div class="services-preview__inner">
+                <h2 class="services-preview__title" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                  {{ servicesHeadingPreview }}
+                </h2>
+                @if (!bookingServiceTitle) {
+                  <div class="services-preview__list" [style.fontFamily]="bodyFont">
+                    @for (service of servicesPreviewItems; let i = $index; track service.title + i) {
+                      <article class="services-preview__item" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 22%, transparent)'">
+                        <div class="services-preview__item-name" [style.color]="selectedThemeColors[2]">
+                          {{ service.title || ('Dienst ' + (i + 1)) }}
+                        </div>
+                        <div class="services-preview__item-divider" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 14%, transparent)'"></div>
+                        <div class="services-preview__meta" [style.color]="selectedThemeColors[6]">
+                          <div>{{ service.duration || '1 uur' }}</div>
+                          <div>{{ service.price || '€100' }}</div>
+                        </div>
+                        <button
+                          type="button"
+                          class="services-preview__button"
+                          [style.background]="selectedThemeColors[2]"
+                          [style.color]="selectedThemeColors[0]"
+                          (click)="openBooking(service.title || ('Dienst ' + (i + 1)))"
+                        >
+                          {{ service.buttonLabel || 'Boek nu' }}
+                        </button>
+                      </article>
+                    }
+                  </div>
+                } @else {
+                  <div class="grid gap-6 rounded-[1.25rem] border p-7" [style.fontFamily]="bodyFont" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 16%, transparent)'" [style.background]="'linear-gradient(180deg, rgba(15, 23, 42, 0.03) 0%, rgba(15, 23, 42, 0.01) 100%)'">
+                    <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                      <div>
+                        <div class="text-[0.78rem] font-bold uppercase tracking-[0.08em]" [style.color]="selectedThemeColors[5]">Agenda</div>
+                        <h3 class="mt-1.5 mb-0 text-[1.6rem]" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                          Boek {{ bookingServiceTitle }}
+                        </h3>
+                      </div>
+                      <button type="button" class="rounded-full border bg-white px-4 py-2 text-[0.85rem]" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 18%, transparent)'" (click)="closeBooking()">Terug</button>
+                    </div>
+
+                    <div class="grid gap-3">
+                      <div class="text-[0.9rem] font-semibold" [style.color]="selectedThemeColors[6]">Kies een dag</div>
+                      <div class="flex flex-wrap gap-3">
+                        @for (date of bookingDates; track date.value) {
+                          <button
+                            type="button"
+                            class="grid min-w-[5.6rem] justify-items-start gap-0.5 rounded-2xl border px-4 py-3 text-left"
+                            [style.borderColor]="selectedBookingDate === date.value ? selectedThemeColors[2] : 'color-mix(in srgb, ' + selectedThemeColors[6] + ' 18%, transparent)'"
+                            [style.color]="selectedBookingDate === date.value ? selectedThemeColors[2] : selectedThemeColors[6]"
+                            [style.background]="'rgba(255, 255, 255, 0.88)'"
+                            [style.boxShadow]="selectedBookingDate === date.value ? '0 8px 18px rgba(15, 23, 42, 0.08)' : 'none'"
+                            (click)="selectedBookingDate = date.value; bookingConfirmed = false"
+                          >
+                            <span class="text-xs uppercase">{{ date.day }}</span>
+                            <strong class="text-[0.95rem]">{{ date.label }}</strong>
+                          </button>
+                        }
+                      </div>
+                    </div>
+
+                    <div class="grid gap-3">
+                      <div class="text-[0.9rem] font-semibold" [style.color]="selectedThemeColors[6]">Kies een tijdslot</div>
+                      <div class="flex flex-wrap gap-3">
+                        @for (slot of bookingSlots; track slot) {
+                          <button
+                            type="button"
+                            class="rounded-2xl border px-4 py-3 text-[0.92rem]"
+                            [style.borderColor]="selectedBookingSlot === slot ? selectedThemeColors[2] : 'color-mix(in srgb, ' + selectedThemeColors[6] + ' 18%, transparent)'"
+                            [style.color]="selectedBookingSlot === slot ? selectedThemeColors[2] : selectedThemeColors[6]"
+                            [style.background]="'rgba(255, 255, 255, 0.88)'"
+                            [style.boxShadow]="selectedBookingSlot === slot ? '0 8px 18px rgba(15, 23, 42, 0.08)' : 'none'"
+                            (click)="selectedBookingSlot = slot; bookingConfirmed = false"
+                          >
+                            {{ slot }}
+                          </button>
+                        }
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      class="justify-self-start rounded-[0.9rem] px-5 py-3 text-[0.95rem]"
+                      [disabled]="!selectedBookingDate || !selectedBookingSlot"
+                      [style.background]="selectedThemeColors[2]"
+                      [style.color]="selectedThemeColors[0]"
+                      (click)="confirmBooking()"
+                    >
+                      Bevestigen
+                    </button>
+
+                    @if (bookingConfirmed) {
+                      <div class="text-[0.92rem]" [style.color]="selectedThemeColors[6]">
+                        Afspraak ingepland voor {{ selectedBookingDate }} om {{ selectedBookingSlot }}.
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          } @else if (isTeamPage) {
+            <div class="rounded-[1.5rem] shadow-[var(--about-shadow)]" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 96%, ' + selectedThemeColors[1] + ')'">
+              <div class="grid gap-8 px-8 py-10">
+                <div class="grid gap-3 text-center">
+                  <div class="text-xs font-semibold uppercase tracking-[0.28em]" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                    {{ teamKickerPreview }}
+                  </div>
+                  <h2 class="m-0 text-5xl leading-none" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                    {{ teamHeadingPreview }}
+                  </h2>
+                  <p class="mx-auto max-w-2xl text-base leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                    {{ teamIntroPreview }}
+                  </p>
+                </div>
+
+                <div class="grid gap-5">
+                  @for (member of teamPreviewCards; let i = $index; track member.name + i) {
+                    <article class="grid gap-5 rounded-[1.5rem] border p-5 md:grid-cols-[14rem_minmax(0,1fr)] md:items-center" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 14%, transparent)'" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 98%, ' + selectedThemeColors[1] + ')'">
+                      <div class="aspect-[4/5] overflow-hidden rounded-[1.25rem] md:aspect-[5/4]">
+                        <img [src]="member.image" [alt]="member.name" class="h-full w-full object-cover" />
+                      </div>
+                      <div class="grid gap-3 md:gap-4">
+                        <h3 class="m-0 text-2xl" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                          {{ member.name }}
+                        </h3>
+                        <div class="text-sm font-semibold uppercase tracking-[0.18em]" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                          {{ member.role }}
+                        </div>
+                        <p class="m-0 max-w-2xl text-sm leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                          {{ member.intro }}
+                        </p>
+                      </div>
+                    </article>
+                  }
+                </div>
+              </div>
+            </div>
+          } @else if (isFaqPage) {
+            <div class="rounded-[1.5rem] shadow-[var(--about-shadow)]" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 96%, ' + selectedThemeColors[1] + ')'">
+              <div class="grid gap-8 px-8 py-10">
+                <div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_18rem] xl:items-start">
+                  <div class="grid gap-3">
+                    <h2 class="m-0 text-4xl leading-none md:text-6xl" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                      {{ faqHeadingPreview }}
+                    </h2>
+                    @if (body.trim()) {
+                      <p class="m-0 max-w-3xl text-sm leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                        {{ body }}
+                      </p>
+                    }
+                  </div>
+
+                  <div class="justify-self-start xl:justify-self-end">
+                    <div class="flex min-w-[16rem] items-center gap-3 border-b pb-3" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 22%, transparent)'">
+                      <input
+                        [(ngModel)]="faqSearchQuery"
+                        class="w-full bg-transparent text-sm outline-none"
+                        [style.color]="selectedThemeColors[6]"
+                        [style.fontFamily]="bodyFont"
+                        [placeholder]="faqSearchPlaceholder"
+                        type="text"
+                      />
+                      <span class="text-base" [style.color]="selectedThemeColors[6]">⌕</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex min-h-[3.5rem] flex-wrap gap-4 border-b pb-5" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 18%, transparent)'">
+                  @if (!(faqCategories.length === 1 && faqCategories[0] === 'Algemeen')) {
+                    @for (category of faqCategories; track category) {
+                      <button
+                        type="button"
+                        class="border-b-2 px-1 pb-3 text-sm"
+                        [style.borderColor]="faqActiveCategory === category ? selectedThemeColors[2] : 'transparent'"
+                        [style.color]="faqActiveCategory === category ? selectedThemeColors[2] : selectedThemeColors[6]"
+                        [style.fontFamily]="bodyFont"
+                        (click)="faqActiveCategory = category"
+                      >
+                        {{ category }}
+                      </button>
+                    }
+                  }
+                </div>
+
+                <div class="grid gap-3">
+                  @for (item of filteredFaqPreviewItems; let i = $index; track item.question + i) {
+                    <article class="border px-5 py-4" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 18%, transparent)'">
+                      <button
+                        type="button"
+                        class="flex w-full cursor-pointer items-start justify-between gap-4 text-left"
+                        (click)="activeFaqIndex = activeFaqIndex === item.index ? -1 : item.index"
+                      >
+                        <span class="text-lg md:text-xl" [style.color]="selectedThemeColors[2]" [style.fontFamily]="bodyFont">
+                          {{ item.question }}
+                        </span>
+                        <span class="text-xl leading-none" [style.color]="selectedThemeColors[6]">
+                          {{ activeFaqIndex === item.index ? '↑' : '↓' }}
+                        </span>
+                      </button>
+
+                      @if (activeFaqIndex === item.index) {
+                        <div class="mt-5 grid gap-4 pr-8">
+                          <p class="m-0 max-w-4xl text-sm leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                            {{ item.answer }}
+                          </p>
+                        </div>
+                      }
+                    </article>
+                  }
+                </div>
+              </div>
+            </div>
+          } @else if (isReviewsPage) {
+            <div class="rounded-[1.5rem] shadow-[var(--about-shadow)]" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 96%, ' + selectedThemeColors[1] + ')'">
+              <div class="grid gap-8 px-8 py-10">
+                <div class="grid gap-3 text-center">
+                  <div class="text-xs font-semibold uppercase tracking-[0.28em]" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                    {{ subtitle || 'Reviews' }}
+                  </div>
+                  <h2 class="m-0 text-4xl md:text-5xl leading-tight" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                    {{ reviewsHeadingPreview }}
+                  </h2>
+                  <p class="mx-auto max-w-2xl text-sm leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                    {{ reviewsIntroPreview }}
+                  </p>
+                </div>
+
+                <div class="grid gap-4">
+                  @for (item of reviewPreviewCards; let i = $index; track item.name + i) {
+                    <article class="grid gap-4 rounded-[1.4rem] border p-5 md:grid-cols-[auto_minmax(0,1fr)] md:items-start" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 16%, transparent)'" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 98%, ' + selectedThemeColors[1] + ')'">
+                      <div class="flex h-14 w-14 items-center justify-center rounded-full text-lg font-semibold" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[2] + ' 12%, white)'" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                        {{ (item.name || 'R').charAt(0) }}
+                      </div>
+                      <div class="grid gap-3">
+                        <div class="flex flex-wrap items-center gap-2">
+                          @for (star of [1, 2, 3, 4, 5]; track star) {
+                            <span class="text-lg leading-none" [style.color]="star <= item.rating ? selectedThemeColors[2] : 'color-mix(in srgb, ' + selectedThemeColors[6] + ' 24%, transparent)'">★</span>
+                          }
+                        </div>
+                        <p class="m-0 text-base leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                          “{{ item.quote || 'Voeg hier een korte review toe.' }}”
+                        </p>
+                        <div class="grid gap-1">
+                          <strong class="text-base" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                            {{ item.name || ('Review ' + (i + 1)) }}
+                          </strong>
+                          <span class="text-sm" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                            {{ item.role || 'Klant' }}
+                          </span>
+                        </div>
+                      </div>
+                    </article>
+                  }
+                </div>
+              </div>
+            </div>
+          } @else {
+            <div class="rounded-xl overflow-hidden border border-border/40">
+              <div class="px-4 py-3 border-b" [style.background]="selectedThemeColors[1]" [style.borderColor]="selectedThemeColors[9]">
+                <div class="text-sm font-semibold" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                  {{ builderState.logo || 'Jouw site' }}
+                </div>
+              </div>
+
+              <div class="p-5 space-y-4" [style.fontFamily]="bodyFont">
+                <div class="aspect-[5/4] overflow-hidden">
+                  <img [src]="previewImage" alt="Voorbeeldafbeelding" class="w-full h-full object-cover" />
+                </div>
+
+                <div>
+                  <h3 class="text-xl font-semibold mb-1" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                    {{ title || 'Paginatitel' }}
+                  </h3>
+                  <p class="text-sm opacity-80 mb-2" [style.color]="selectedThemeColors[6]">
+                    {{ subtitle || 'Korte subtitel die de toon zet.' }}
+                  </p>
+                  <p class="text-sm leading-relaxed" [style.color]="selectedThemeColors[6]">
+                    {{ body || 'Hier komt jouw pagina-inhoud. Houd het kort en krachtig voor het voorbeeld.' }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          }
+        </div>

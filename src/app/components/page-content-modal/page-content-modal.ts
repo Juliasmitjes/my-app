@@ -1,50 +1,29 @@
-import { Component, Input, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 import { BuilderState } from '../../types/builder-state';
 import { PageDef } from '../content-step/content-step';
 import { fontMap } from '../../shared/fonts';
-
-type BlogPostDraft = {
-  title: string;
-  summary: string;
-  image: File | string | null;
-};
-
-type ServiceItemDraft = {
-  title: string;
-  duration: string;
-  price: string;
-  buttonLabel: string;
-};
-
-type TeamMemberDraft = {
-  name: string;
-  role: string;
-  intro: string;
-  image: File | string | null;
-};
-
-type FaqItemDraft = {
-  question: string;
-  answer: string;
-  category: string;
-};
-
-type ReviewItemDraft = {
-  name: string;
-  role: string;
-  quote: string;
-  rating: number;
-};
+import { PageContentPreview } from './page-content-preview/page-content-preview';
+import { PageContentEditor } from './page-content-editor/page-content-editor';
+import {
+  BlogPostDraft,
+  FaqItemDraft,
+  PageContentPayload,
+  ReviewItemDraft,
+  ServiceItemDraft,
+  TeamMemberDraft
+} from './page-content-modal.models';
+import { buildSocialLinks, getFileLabel, splitBodyIntoColumns } from './page-content-modal.utils';
 
 @Component({
   selector: 'app-page-content-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, LucideAngularModule],
+  imports: [CommonModule, FormsModule, LucideAngularModule, PageContentPreview, PageContentEditor],
   templateUrl: './page-content-modal.html',
-  styleUrl: './page-content-modal.css'
+  styleUrl: './page-content-modal.css',
+  encapsulation: ViewEncapsulation.None
 })
 export class PageContentModal implements OnChanges, OnDestroy {
   @Input() visible = false;
@@ -52,52 +31,7 @@ export class PageContentModal implements OnChanges, OnDestroy {
   @Input() builderState!: BuilderState;
   @Input() colorThemes: { id: string; colors: string[] }[] = [];
   @Output() dismiss = new EventEmitter<void>();
-  @Output() save = new EventEmitter<{
-    pageId: string;
-    title: string;
-    subtitle: string;
-    body: string;
-    image?: File | string | null;
-    backgroundImage?: File | string | null;
-    portraitImage?: File | string | null;
-    blogHeroTitle?: string;
-    blogPosts?: Array<{
-      title: string;
-      summary: string;
-      image?: File | string | null;
-    }>;
-    serviceItems?: Array<{
-      title: string;
-      duration?: string;
-      price?: string;
-      buttonLabel?: string;
-    }>;
-    teamMembers?: Array<{
-      name: string;
-      role?: string;
-      intro?: string;
-      image?: File | string | null;
-    }>;
-    faqItems?: Array<{
-      question: string;
-      answer?: string;
-      category?: string;
-    }>;
-    reviewItems?: Array<{
-      name: string;
-      role?: string;
-      quote?: string;
-      rating?: number;
-    }>;
-    contactEmail?: string;
-    contactPhone?: string;
-    contactButtonLabel?: string;
-    socials?: {
-      linkedin?: string;
-      instagram?: string;
-      facebook?: string;
-    };
-  }>();
+  @Output() save = new EventEmitter<PageContentPayload>();
 
   title = '';
   subtitle = '';
@@ -133,6 +67,10 @@ export class PageContentModal implements OnChanges, OnDestroy {
   private portraitPreviewUrl: string | null = null;
 
   fontMap = fontMap;
+
+  get modalContext(): this {
+    return this;
+  }
 
   ngOnChanges(): void {
     if (!this.page) return;
@@ -234,11 +172,11 @@ export class PageContentModal implements OnChanges, OnDestroy {
   }
 
   get bodyColumns(): [string, string] {
-    return this.splitBodyIntoColumns(this.body);
+    return splitBodyIntoColumns(this.body);
   }
 
   get aboutSocialLinks(): Array<{ platform: string; href: string; label: string }> {
-    return this.buildSocialLinks({
+    return buildSocialLinks({
       linkedin: this.linkedinUrl,
       instagram: this.instagramUrl,
       facebook: this.facebookUrl
@@ -446,27 +384,27 @@ export class PageContentModal implements OnChanges, OnDestroy {
   }
 
   get backgroundFileLabel(): string {
-    return this.getFileLabel(this.backgroundImage, 'Nog geen bestand gekozen');
+    return getFileLabel(this.backgroundImage, 'Nog geen bestand gekozen');
   }
 
   get portraitFileLabel(): string {
-    return this.getFileLabel(this.portraitImage, 'Nog geen bestand gekozen');
+    return getFileLabel(this.portraitImage, 'Nog geen bestand gekozen');
   }
 
   get defaultFileLabel(): string {
-    return this.getFileLabel(this.image, 'Nog geen bestand gekozen');
+    return getFileLabel(this.image, 'Nog geen bestand gekozen');
   }
 
   get activeBlogPostFileLabel(): string {
-    return this.getFileLabel(this.currentBlogPost.image, 'Nog geen bestand gekozen');
+    return getFileLabel(this.currentBlogPost.image, 'Nog geen bestand gekozen');
   }
 
   get activeTeamMemberFileLabel(): string {
-    return this.getFileLabel(this.currentTeamMember.image, 'Nog geen bestand gekozen');
+    return getFileLabel(this.currentTeamMember.image, 'Nog geen bestand gekozen');
   }
 
   get blogBackgroundFileLabel(): string {
-    return this.getFileLabel(this.backgroundImage, 'Nog geen bestand gekozen');
+    return getFileLabel(this.backgroundImage, 'Nog geen bestand gekozen');
   }
 
   onFileChange(event: Event, type: 'default' | 'background' | 'portrait' | 'blog-post' | 'team-member' = 'default'): void {
@@ -874,75 +812,4 @@ export class PageContentModal implements OnChanges, OnDestroy {
     return null;
   }
 
-  private splitBodyIntoColumns(value: string): [string, string] {
-    const fallback =
-      'Vertel hier in een paar zinnen wie je bent, waar je voor staat en waarom bezoekers juist met jou willen werken.';
-    const normalized = (value || fallback).replace(/\s+/g, ' ').trim();
-
-    if (!normalized) {
-      return [fallback, fallback];
-    }
-
-    const sentences = normalized.match(/[^.!?]+[.!?]?/g)?.map(part => part.trim()).filter(Boolean) ?? [];
-
-    if (sentences.length >= 2) {
-      const midpoint = Math.ceil(sentences.length / 2);
-      return [
-        sentences.slice(0, midpoint).join(' '),
-        sentences.slice(midpoint).join(' ')
-      ];
-    }
-
-    const words = normalized.split(' ');
-    const midpoint = Math.ceil(words.length / 2);
-
-    return [
-      words.slice(0, midpoint).join(' '),
-      words.slice(midpoint).join(' ') || words.slice(0, midpoint).join(' ')
-    ];
-  }
-
-  private buildSocialLinks(socials: { linkedin?: string; instagram?: string; facebook?: string }): Array<{ platform: string; href: string; label: string }> {
-    const entries = [
-      { key: 'linkedin', platform: 'linkedin', label: 'LinkedIn' },
-      { key: 'instagram', platform: 'instagram', label: 'Instagram' },
-      { key: 'facebook', platform: 'facebook', label: 'Facebook' }
-    ] as const;
-
-    const resolved: Array<{ platform: string; href: string; label: string }> = [];
-
-    for (const entry of entries) {
-      const raw = socials[entry.key]?.trim();
-      if (!raw) continue;
-
-      resolved.push({
-        platform: entry.platform,
-        href: this.normalizeUrl(raw),
-        label: entry.label
-      });
-    }
-
-    return resolved;
-  }
-
-  private normalizeUrl(value: string): string {
-    if (/^https?:\/\//i.test(value)) {
-      return value;
-    }
-
-    return `https://${value}`;
-  }
-
-  private getFileLabel(value: File | string | null, fallback: string): string {
-    if (value instanceof File) {
-      return value.name;
-    }
-
-    if (typeof value === 'string' && value.trim()) {
-      const parts = value.split(/[\\/]/);
-      return parts[parts.length - 1] || fallback;
-    }
-
-    return fallback;
-  }
 }
