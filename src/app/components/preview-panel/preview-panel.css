@@ -261,6 +261,9 @@
   background:
     linear-gradient(rgba(17, 24, 39, 0.24), rgba(17, 24, 39, 0.24)),
     url("/assets/images/exampleImage.png") center center / cover no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   z-index: 0;
 }
 
@@ -446,6 +449,9 @@
   background:
     linear-gradient(rgba(17, 24, 39, 0.24), rgba(17, 24, 39, 0.24)),
     url("/assets/images/exampleImage.png") center center / cover no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .preview-panel-service__footer {
