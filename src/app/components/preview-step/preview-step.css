@@ -17,4 +17,139 @@ img {
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
 }
 
+.about-page-modern {
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.about-page-modern__hero {
+  position: relative;
+  min-height: clamp(20rem, 48vw, 31rem);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.about-page-modern__media {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: scale(1.01);
+}
+
+.about-page-modern__hero::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 42%;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.34) 100%);
+  z-index: 1;
+}
+
+.about-page-modern__hero-copy {
+  position: absolute;
+  inset: auto clamp(1.25rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3.5rem);
+  z-index: 2;
+  display: grid;
+  gap: 0.55rem;
+  max-width: 42rem;
+}
+
+.about-page-modern__eyebrow,
+.about-page-modern__role,
+.about-page-modern__copy p {
+  margin: 0;
+}
+
+.about-page-modern__eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.about-page-modern__name {
+  margin: 0;
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: 700;
+  line-height: 0.94;
+  letter-spacing: 0;
+}
+
+.about-page-modern__role {
+  max-width: 32rem;
+  font-size: clamp(1rem, 2.4vw, 1.45rem);
+  font-weight: 600;
+  line-height: 1.32;
+}
+
+.about-page-modern__content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.56fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+  padding: clamp(2rem, 5vw, 4.5rem);
+}
+
+.about-page-modern__intro {
+  display: grid;
+  gap: 1.5rem;
+  padding-top: 0.35rem;
+}
+
+.about-page-modern__copy {
+  display: grid;
+  gap: 1.25rem;
+  max-width: 42rem;
+  font-size: clamp(0.95rem, 1.7vw, 1.12rem);
+  line-height: 1.78;
+}
+
+.about-page-modern__socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.about-page-modern__social {
+  width: 2.35rem;
+  height: 2.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.66);
+  backdrop-filter: blur(16px);
+}
+
+.about-page-modern__portrait {
+  overflow: hidden;
+  border-radius: 1.5rem;
+  aspect-ratio: 4 / 5;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.16);
+}
+
+.about-page-modern__portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 720px) {
+  .about-page-modern__content {
+    grid-template-columns: 1fr;
+  }
+
+  .about-page-modern__portrait {
+    max-width: 20rem;
+    width: 100%;
+    justify-self: center;
+    order: -1;
+  }
+}
+
 

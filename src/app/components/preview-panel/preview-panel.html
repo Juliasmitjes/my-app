@@ -171,74 +171,67 @@
                     @let aboutColumns = getAboutBodyColumns(activePage);
                     @let aboutSocials = getAboutSocialLinks(activePage);
 
-                    <div [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 88%, ' + selectedThemeColors[1] + ')'">
-                      <section class="relative min-h-[18rem] flex items-start justify-center px-6 py-10 sm:px-10 sm:py-14 text-center overflow-hidden">
+                    <div class="about-page-modern" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 93%, ' + selectedThemeColors[1] + ')'">
+                      <section class="about-page-modern__hero">
                         <div
-                          class="absolute inset-0 bg-cover bg-center"
-                          [style.background-image]="'linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), url(' + aboutBackgroundImage + ')'"
+                          class="about-page-modern__media"
+                          [style.background-image]="'linear-gradient(180deg, rgba(15, 23, 42, 0.08), rgba(15, 23, 42, 0.28)), url(' + aboutBackgroundImage + ')'"
                         ></div>
-                        <div class="relative z-10 grid gap-3">
-                          <h2 class="text-4xl sm:text-6xl font-semibold tracking-[-0.04em]" [style.color]="selectedThemeColors[0]" [style.fontFamily]="headingFont">
+                        <div class="about-page-modern__hero-copy">
+                          <p class="about-page-modern__eyebrow" [style.color]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 86%, transparent)'">
+                            {{ aboutPageSectionTitle }}
+                          </p>
+                          <h2 class="about-page-modern__name" [style.color]="selectedThemeColors[0]" [style.fontFamily]="headingFont">
                             {{ aboutText?.title || 'Jouw naam' }}
                           </h2>
-                          <p class="text-xs sm:text-sm uppercase tracking-[0.38em]" [style.color]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 72%, transparent)'">
+                          <p class="about-page-modern__role" [style.color]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 76%, transparent)'">
                             {{ aboutText?.subtitle || 'Jouw functietitel' }}
                           </p>
                         </div>
                       </section>
 
-                      <section class="px-6 pb-10 sm:px-10 sm:pb-14">
-                        <div class="flex justify-center -mt-20 sm:-mt-24 relative z-10">
-                          <div class="w-40 h-40 sm:w-48 sm:h-48 rounded-full p-1 shadow-xl" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 92%, white)'">
-                            <img [src]="aboutPortraitImage" alt="Portret" class="w-full h-full rounded-full object-cover" />
+                      <section class="about-page-modern__content">
+                        <div class="about-page-modern__intro">
+                          <div class="about-page-modern__copy" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                            <p>{{ aboutColumns[0] }}</p>
+                            <p>{{ aboutColumns[1] }}</p>
+                          </div>
+
+                          <div class="about-page-modern__socials">
+                            @for (social of aboutSocials; track social.href) {
+                              <a
+                                class="about-page-modern__social"
+                                [href]="social.href"
+                                target="_blank"
+                                rel="noreferrer"
+                                [attr.aria-label]="social.label"
+                                [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[2] + ' 18%, transparent)'"
+                                [style.color]="selectedThemeColors[2]"
+                              >
+                                @switch (social.platform) {
+                                  @case ('linkedin') {
+                                    <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current" aria-hidden="true">
+                                      <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A1.97 1.97 0 0 0 3.25 5c0 1.1.88 2 1.97 2h.03a2 2 0 1 0 0-4ZM20.75 12.84c0-3.48-1.86-5.1-4.35-5.1-2 0-2.9 1.1-3.4 1.88V8.5H9.63c.04.75 0 11.5 0 11.5H13v-6.42c0-.34.03-.69.13-.93.27-.69.88-1.41 1.91-1.41 1.35 0 1.88 1.03 1.88 2.54V20h3.38v-7.16Z"></path>
+                                    </svg>
+                                  }
+                                  @case ('instagram') {
+                                    <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current" aria-hidden="true">
+                                      <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.8A3.95 3.95 0 0 0 3.8 7.75v8.5a3.95 3.95 0 0 0 3.95 3.95h8.5a3.95 3.95 0 0 0 3.95-3.95v-8.5a3.95 3.95 0 0 0-3.95-3.95h-8.5Zm8.95 1.35a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3ZM12 6.85A5.15 5.15 0 1 1 6.85 12 5.16 5.16 0 0 1 12 6.85Zm0 1.8A3.35 3.35 0 1 0 15.35 12 3.35 3.35 0 0 0 12 8.65Z"></path>
+                                    </svg>
+                                  }
+                                  @case ('facebook') {
+                                    <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current" aria-hidden="true">
+                                      <path d="M13.4 21v-7.7H16l.4-3h-3V8.38c0-.87.24-1.46 1.48-1.46h1.58V4.24A21.2 21.2 0 0 0 14.15 4c-2.54 0-4.27 1.55-4.27 4.4v1.9H7v3h2.88V21h3.52Z"></path>
+                                    </svg>
+                                  }
+                                }
+                              </a>
+                            }
                           </div>
                         </div>
 
-                        <div class="mt-10 flex flex-col gap-8 sm:mt-14">
-                          <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-                            <div>
-                              <div class="text-2xl sm:text-4xl font-semibold uppercase tracking-[0.18em]" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
-                                {{ aboutPageSectionTitle }}
-                              </div>
-                            </div>
-
-                            <div class="flex items-center gap-3">
-                              @for (social of aboutSocials; track social.href) {
-                                <a
-                                  class="w-8 h-8 rounded-full inline-flex items-center justify-center"
-                                  [href]="social.href"
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  [attr.aria-label]="social.label"
-                                  [style.background]="selectedThemeColors[2]"
-                                  [style.color]="selectedThemeColors[0]"
-                                >
-                                  @switch (social.platform) {
-                                    @case ('linkedin') {
-                                      <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current" aria-hidden="true">
-                                        <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A1.97 1.97 0 0 0 3.25 5c0 1.1.88 2 1.97 2h.03a2 2 0 1 0 0-4ZM20.75 12.84c0-3.48-1.86-5.1-4.35-5.1-2 0-2.9 1.1-3.4 1.88V8.5H9.63c.04.75 0 11.5 0 11.5H13v-6.42c0-.34.03-.69.13-.93.27-.69.88-1.41 1.91-1.41 1.35 0 1.88 1.03 1.88 2.54V20h3.38v-7.16Z"></path>
-                                      </svg>
-                                    }
-                                    @case ('instagram') {
-                                      <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current" aria-hidden="true">
-                                        <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.8A3.95 3.95 0 0 0 3.8 7.75v8.5a3.95 3.95 0 0 0 3.95 3.95h8.5a3.95 3.95 0 0 0 3.95-3.95v-8.5a3.95 3.95 0 0 0-3.95-3.95h-8.5Zm8.95 1.35a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3ZM12 6.85A5.15 5.15 0 1 1 6.85 12 5.16 5.16 0 0 1 12 6.85Zm0 1.8A3.35 3.35 0 1 0 15.35 12 3.35 3.35 0 0 0 12 8.65Z"></path>
-                                      </svg>
-                                    }
-                                    @case ('facebook') {
-                                      <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current" aria-hidden="true">
-                                        <path d="M13.4 21v-7.7H16l.4-3h-3V8.38c0-.87.24-1.46 1.48-1.46h1.58V4.24A21.2 21.2 0 0 0 14.15 4c-2.54 0-4.27 1.55-4.27 4.4v1.9H7v3h2.88V21h3.52Z"></path>
-                                      </svg>
-                                    }
-                                  }
-                                </a>
-                              }
-                            </div>
-                          </div>
-
-                          <div class="grid gap-6 sm:grid-cols-2" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
-                            <p class="m-0 text-sm sm:text-base leading-8">{{ aboutColumns[0] }}</p>
-                            <p class="m-0 text-sm sm:text-base leading-8">{{ aboutColumns[1] }}</p>
-                          </div>
+                        <div class="about-page-modern__portrait" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 98%, white)'">
+                          <img [src]="aboutPortraitImage" alt="Portret" />
                         </div>
                       </section>
                     </div>

@@ -8,30 +8,26 @@
               <div class="about-preview__hero">
                 <div
                   class="about-preview__hero-image"
-                  [style.background-image]="'linear-gradient(rgba(15, 23, 42, 0.38), rgba(15, 23, 42, 0.38)), url(' + previewBackgroundImage + ')'"
+                  [style.background-image]="'linear-gradient(180deg, rgba(15, 23, 42, 0.08), rgba(15, 23, 42, 0.28)), url(' + previewBackgroundImage + ')'"
                 ></div>
                 <div class="about-preview__hero-copy">
+                  <p class="about-preview__eyebrow" [style.color]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 86%, transparent)'" [style.fontFamily]="bodyFont">
+                    {{ aboutSectionTitle }}
+                  </p>
                   <h3 class="about-preview__name" [style.color]="selectedThemeColors[0]" [style.fontFamily]="headingFont">
                     {{ title || 'Jouw naam' }}
                   </h3>
-                  <p class="about-preview__role" [style.color]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 88%, transparent)'" [style.fontFamily]="bodyFont">
+                  <p class="about-preview__role" [style.color]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 76%, transparent)'" [style.fontFamily]="bodyFont">
                     {{ subtitle || 'Jouw functietitel' }}
                   </p>
                 </div>
               </div>
 
-              <div class="about-preview__avatar-wrap">
-                <div class="about-preview__avatar-ring" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 92%, white)'">
-                  <img [src]="previewPortraitImage" alt="Portret" class="about-preview__avatar" />
-                </div>
-              </div>
-
               <div class="about-preview__content">
-                <div class="about-preview__heading-row">
-                  <div>
-                    <div class="about-preview__section-title" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
-                      {{ aboutSectionTitle }}
-                    </div>
+                <div class="about-preview__text-wrap">
+                  <div class="about-preview__columns" [style.fontFamily]="bodyFont">
+                    <p class="about-preview__body">{{ bodyColumns[0] }}</p>
+                    <p class="about-preview__body">{{ bodyColumns[1] }}</p>
                   </div>
 
                   <div class="about-preview__socials">
@@ -42,8 +38,8 @@
                         target="_blank"
                         rel="noreferrer"
                         [attr.aria-label]="social.label"
-                        [style.background]="selectedThemeColors[2]"
-                        [style.color]="selectedThemeColors[0]"
+                        [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[2] + ' 18%, transparent)'"
+                        [style.color]="selectedThemeColors[2]"
                       >
                         @switch (social.platform) {
                           @case ('linkedin') {
@@ -61,9 +57,8 @@
                   </div>
                 </div>
 
-                <div class="about-preview__columns" [style.fontFamily]="bodyFont">
-                  <p class="about-preview__body">{{ bodyColumns[0] }}</p>
-                  <p class="about-preview__body">{{ bodyColumns[1] }}</p>
+                <div class="about-preview__portrait" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 98%, white)'">
+                  <img [src]="previewPortraitImage" alt="Portret" class="about-preview__avatar" />
                 </div>
               </div>
             </div>
