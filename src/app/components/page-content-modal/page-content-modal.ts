@@ -5,7 +5,6 @@ import { LucideAngularModule } from 'lucide-angular';
 import { BuilderState } from '../../types/builder-state';
 import { PageDef } from '../content-step/content-step';
 import { fontMap } from '../../shared/fonts';
-import { PageContentPreview } from './page-content-preview/page-content-preview';
 import { PageContentEditor } from './page-content-editor/page-content-editor';
 import {
   BlogPostDraft,
@@ -20,7 +19,7 @@ import { buildSocialLinks, getFileLabel, splitBodyIntoColumns } from './page-con
 @Component({
   selector: 'app-page-content-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, LucideAngularModule, PageContentPreview, PageContentEditor],
+  imports: [CommonModule, FormsModule, LucideAngularModule, PageContentEditor],
   templateUrl: './page-content-modal.html',
   styleUrl: './page-content-modal.css',
   encapsulation: ViewEncapsulation.None

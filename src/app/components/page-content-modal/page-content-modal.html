@@ -1,15 +1,17 @@
 @if (visible) {
-  <div class="fixed inset-0 z-50 flex items-center justify-center">
-    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" (click)="close()"></div>
+  <div class="fixed inset-0 z-50 flex items-center justify-center px-4 py-6">
+    <div class="absolute inset-0 bg-black/35 backdrop-blur-xl" (click)="close()"></div>
 
-    <div class="page-content-modal relative w-[92vw] max-w-6xl max-h-[90vh] overflow-hidden rounded-2xl shadow-xl bg-white">
-      <div class="flex items-center justify-between px-6 py-4 border-b border-border/50">
-        <div class="text-lg font-semibold">{{ page?.name }}</div>
-        <button class="text-sm px-3 py-1 rounded-md border" (click)="close()">Sluiten</button>
+    <div class="page-content-modal relative w-full max-w-3xl max-h-[92vh] overflow-hidden rounded-[28px] bg-white">
+      <div class="page-content-modal__header">
+        <div>
+          <p class="page-content-modal__eyebrow">Pagina invullen</p>
+          <h2 class="page-content-modal__title">{{ page?.name }}</h2>
+        </div>
+        <button type="button" class="page-content-modal__close" aria-label="Sluiten" (click)="close()">×</button>
       </div>
 
-      <div class="grid max-h-[calc(90vh-73px)] md:grid-cols-[minmax(0,1.2fr)_minmax(20rem,0.8fr)]">
-        <app-page-content-preview [modal]="modalContext"></app-page-content-preview>
+      <div class="page-content-modal__body">
         <app-page-content-editor [modal]="modalContext"></app-page-content-editor>
       </div>
     </div>

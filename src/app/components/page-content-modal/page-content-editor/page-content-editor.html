@@ -1,404 +1,406 @@
-        <div class="page-content-modal__form p-6 space-y-4 overflow-y-auto">
-          @if (isBlogPage) {
-            <div>
-              <label class="text-sm font-medium block mb-1">Titel bovenaan</label>
-              <input [(ngModel)]="blogHeroTitle" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Journal" type="text" />
-            </div>
+<form class="page-content-modal__form" (ngSubmit)="onSave()">
+  @if (isBlogPage) {
+    <section class="page-content-modal__section">
+      <div class="page-content-modal__section-heading">
+        <span>Start</span>
+        <small>De kop van je blogpagina</small>
+      </div>
 
-            <div>
-              <label class="text-sm font-medium block mb-1">Bloglabel</label>
-              <input [(ngModel)]="subtitle" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Design for life" type="text" />
-            </div>
+      <label class="page-content-modal__field">
+        <span>Titel bovenaan</span>
+        <input [(ngModel)]="blogHeroTitle" name="blogHeroTitle" placeholder="Bijv. Journal" type="text" />
+      </label>
 
-            <div>
-              <label class="text-sm font-medium block mb-1">Achtergrondfoto (optioneel)</label>
-              <div class="page-content-modal__upload">
-                <label for="blog-background-upload" class="page-content-modal__upload-button">Kies bestand</label>
-                <span class="page-content-modal__upload-name">{{ blogBackgroundFileLabel }}</span>
-                <input id="blog-background-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event, 'background')" />
-              </div>
-            </div>
+      <label class="page-content-modal__field">
+        <span>Bloglabel</span>
+        <input [(ngModel)]="subtitle" name="blogSubtitle" placeholder="Bijv. Design for life" type="text" />
+      </label>
 
-            <div class="page-content-modal__blog-toolbar">
-              <div class="text-sm font-medium">Blogposts</div>
-              <button type="button" class="page-content-modal__upload-button" (click)="addBlogPost()">Blogpost toevoegen</button>
-            </div>
+      <div class="page-content-modal__field">
+        <span>Achtergrondfoto</span>
+        <label for="blog-background-upload" class="page-content-modal__dropzone">
+          <strong>Upload foto</strong>
+          <small>{{ blogBackgroundFileLabel }}</small>
+        </label>
+        <input id="blog-background-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event, 'background')" />
+      </div>
+    </section>
 
-            <div class="page-content-modal__blog-editor">
-              <div class="page-content-modal__blog-editor-header">
-                <div class="page-content-modal__blog-editor-badge">Je bewerkt nu</div>
-                <div class="page-content-modal__blog-editor-title">
-                  {{ currentBlogPost.title || ('Blogpost ' + (activeBlogPostIndex + 1)) }}
-                </div>
-              </div>
+    <section class="page-content-modal__section">
+      <div class="page-content-modal__section-heading">
+        <span>Blogposts</span>
+        <button type="button" class="page-content-modal__ghost-button" (click)="addBlogPost()">Toevoegen</button>
+      </div>
 
-              <div>
-                <label class="text-sm font-medium block mb-1">Blogpost titel</label>
-                <input [(ngModel)]="currentBlogPost.title" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Playing with patterns" type="text" />
-              </div>
+      <div class="page-content-modal__chips">
+        @for (post of blogPosts; let i = $index; track i) {
+          <button type="button" class="page-content-modal__chip" [class.page-content-modal__chip--active]="activeBlogPostIndex === i" (click)="selectBlogPost(i)">
+            {{ post.title || ('Post ' + (i + 1)) }}
+          </button>
+        }
+      </div>
 
-              <div>
-                <label class="text-sm font-medium block mb-1">Blogpost intro</label>
-                <textarea [(ngModel)]="currentBlogPost.summary" class="w-full rounded-md border px-3 py-2 text-sm min-h-[140px]" placeholder="Schrijf hier een korte introductie van deze blogpost..."></textarea>
-              </div>
+      <div class="page-content-modal__item-card">
+        <label class="page-content-modal__field">
+          <span>Blogpost titel</span>
+          <input [(ngModel)]="currentBlogPost.title" name="blogPostTitle" placeholder="Bijv. Playing with patterns" type="text" />
+        </label>
 
-              <div>
-                <label class="text-sm font-medium block mb-1">Blogfoto (optioneel)</label>
-                <div class="page-content-modal__upload">
-                  <label for="blog-post-upload" class="page-content-modal__upload-button">Kies bestand</label>
-                  <span class="page-content-modal__upload-name">{{ activeBlogPostFileLabel }}</span>
-                  <input id="blog-post-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event, 'blog-post')" />
-                </div>
-              </div>
-            </div>
+        <label class="page-content-modal__field">
+          <span>Blogpost intro</span>
+          <textarea [(ngModel)]="currentBlogPost.summary" name="blogPostSummary" placeholder="Schrijf hier een korte introductie van deze blogpost..."></textarea>
+        </label>
 
-            <div class="page-content-modal__blog-post-list">
-              @for (post of blogPosts; let i = $index; track i) {
-                <button
-                  type="button"
-                  class="page-content-modal__blog-post-chip"
-                  [class.page-content-modal__blog-post-chip--active]="activeBlogPostIndex === i"
-                  (click)="selectBlogPost(i)"
-                >
-                  {{ post.title || ('Blogpost ' + (i + 1)) }}
-                </button>
-              }
-            </div>
-          } @else if (isContactPage) {
-            <div>
-              <label class="text-sm font-medium block mb-1">Titel bovenaan</label>
-              <input [(ngModel)]="title" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. contact." type="text" />
-            </div>
+        <div class="page-content-modal__field">
+          <span>Blogfoto</span>
+          <label for="blog-post-upload" class="page-content-modal__dropzone">
+            <strong>Upload foto</strong>
+            <small>{{ activeBlogPostFileLabel }}</small>
+          </label>
+          <input id="blog-post-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event, 'blog-post')" />
+        </div>
+      </div>
+    </section>
+  } @else if (isContactPage) {
+    <section class="page-content-modal__section">
+      <div class="page-content-modal__section-heading">
+        <span>Contactgegevens</span>
+        <small>Alles wat bezoekers nodig hebben</small>
+      </div>
 
-            <div>
-              <label class="text-sm font-medium block mb-1">E-mailadres</label>
-              <input [(ngModel)]="contactEmail" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="info@bedrijf.nl" type="text" />
-            </div>
+      <label class="page-content-modal__field">
+        <span>Titel bovenaan</span>
+        <input [(ngModel)]="title" name="contactTitle" placeholder="Bijv. contact." type="text" />
+      </label>
 
-            <div>
-              <label class="text-sm font-medium block mb-1">Telefoonnummer</label>
-              <input [(ngModel)]="contactPhone" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="+31 6 12345678" type="text" />
-            </div>
+      <div class="page-content-modal__field-grid">
+        <label class="page-content-modal__field">
+          <span>E-mailadres</span>
+          <input [(ngModel)]="contactEmail" name="contactEmail" placeholder="info@bedrijf.nl" type="email" />
+        </label>
 
-            <div>
-              <label class="text-sm font-medium block mb-1">Knoptekst</label>
-              <input [(ngModel)]="contactButtonLabel" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Versturen" type="text" />
-            </div>
-          } @else if (isServicesPage) {
-            <div>
-              <label class="text-sm font-medium block mb-1">Titel bovenaan</label>
-              <input [(ngModel)]="title" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Onze diensten" type="text" />
-            </div>
+        <label class="page-content-modal__field">
+          <span>Telefoonnummer</span>
+          <input [(ngModel)]="contactPhone" name="contactPhone" placeholder="+31 6 12345678" type="text" />
+        </label>
+      </div>
 
-            <div class="page-content-modal__blog-toolbar">
-              <div class="text-sm font-medium">Diensten</div>
-              <button type="button" class="page-content-modal__upload-button" (click)="addServiceItem()">Dienst toevoegen</button>
-            </div>
+      <label class="page-content-modal__field">
+        <span>Knoptekst</span>
+        <input [(ngModel)]="contactButtonLabel" name="contactButtonLabel" placeholder="Versturen" type="text" />
+      </label>
+    </section>
+  } @else if (isServicesPage) {
+    <section class="page-content-modal__section">
+      <div class="page-content-modal__section-heading">
+        <span>Intro</span>
+        <small>De titel van je dienstenpagina</small>
+      </div>
 
-            <div class="page-content-modal__blog-editor">
-              <div class="page-content-modal__blog-editor-header">
-                <div class="page-content-modal__blog-editor-badge">Je bewerkt nu</div>
-                <div class="page-content-modal__blog-editor-title">
-                  {{ currentService.title || ('Dienst ' + (activeServiceIndex + 1)) }}
-                </div>
-              </div>
+      <label class="page-content-modal__field">
+        <span>Titel bovenaan</span>
+        <input [(ngModel)]="title" name="servicesTitle" placeholder="Bijv. Onze diensten" type="text" />
+      </label>
+    </section>
 
-              <div>
-                <label class="text-sm font-medium block mb-1">Dienstnaam</label>
-                <input [(ngModel)]="currentService.title" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Wassen & drogen" type="text" />
-              </div>
+    <section class="page-content-modal__section">
+      <div class="page-content-modal__section-heading">
+        <span>Diensten</span>
+        <button type="button" class="page-content-modal__ghost-button" (click)="addServiceItem()">Toevoegen</button>
+      </div>
 
-              <div>
-                <label class="text-sm font-medium block mb-1">Tijdsduur</label>
-                <input [(ngModel)]="currentService.duration" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. 1 uur" type="text" />
-              </div>
+      <div class="page-content-modal__chips">
+        @for (item of serviceItems; let i = $index; track i) {
+          <button type="button" class="page-content-modal__chip" [class.page-content-modal__chip--active]="activeServiceIndex === i" (click)="selectServiceItem(i)">
+            {{ item.title || ('Dienst ' + (i + 1)) }}
+          </button>
+        }
+      </div>
 
-              <div>
-                <label class="text-sm font-medium block mb-1">Prijs</label>
-                <input [(ngModel)]="currentService.price" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. €100" type="text" />
-              </div>
+      <div class="page-content-modal__item-card">
+        <label class="page-content-modal__field">
+          <span>Dienstnaam</span>
+          <input [(ngModel)]="currentService.title" name="serviceTitle" placeholder="Bijv. Wassen & drogen" type="text" />
+        </label>
 
-              <div>
-                <label class="text-sm font-medium block mb-1">Knoptekst</label>
-                <input [(ngModel)]="currentService.buttonLabel" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Boek nu" type="text" />
-              </div>
-            </div>
+        <div class="page-content-modal__field-grid">
+          <label class="page-content-modal__field">
+            <span>Tijdsduur</span>
+            <input [(ngModel)]="currentService.duration" name="serviceDuration" placeholder="Bijv. 1 uur" type="text" />
+          </label>
 
-            <div class="page-content-modal__blog-post-list">
-              @for (item of serviceItems; let i = $index; track i) {
-                <button
-                  type="button"
-                  class="page-content-modal__blog-post-chip"
-                  [class.page-content-modal__blog-post-chip--active]="activeServiceIndex === i"
-                  (click)="selectServiceItem(i)"
-                >
-                  {{ item.title || ('Dienst ' + (i + 1)) }}
-                </button>
-              }
-            </div>
-          } @else if (isTeamPage) {
-            <div>
-              <label class="text-sm font-medium block mb-1">Bovenregel</label>
-              <input [(ngModel)]="subtitle" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Ons team" type="text" />
-            </div>
+          <label class="page-content-modal__field">
+            <span>Prijs</span>
+            <input [(ngModel)]="currentService.price" name="servicePrice" placeholder="Bijv. €100" type="text" />
+          </label>
+        </div>
 
-            <div>
-              <label class="text-sm font-medium block mb-1">Titel bovenaan</label>
-              <input [(ngModel)]="title" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. De mensen achter het merk" type="text" />
-            </div>
+        <label class="page-content-modal__field">
+          <span>Knoptekst</span>
+          <input [(ngModel)]="currentService.buttonLabel" name="serviceButtonLabel" placeholder="Bijv. Boek nu" type="text" />
+        </label>
+      </div>
+    </section>
+  } @else if (isTeamPage) {
+    <section class="page-content-modal__section">
+      <div class="page-content-modal__section-heading">
+        <span>Intro</span>
+        <small>Vertel kort wie jullie zijn</small>
+      </div>
 
-            <div>
-              <label class="text-sm font-medium block mb-1">Introductietekst</label>
-              <textarea [(ngModel)]="body" class="w-full rounded-md border px-3 py-2 text-sm min-h-[110px]" placeholder="Vertel kort wie jullie zijn en wat bezoekers van het team mogen verwachten."></textarea>
-            </div>
+      <label class="page-content-modal__field">
+        <span>Bovenregel</span>
+        <input [(ngModel)]="subtitle" name="teamSubtitle" placeholder="Bijv. Ons team" type="text" />
+      </label>
 
-            <div class="page-content-modal__blog-toolbar">
-              <div class="text-sm font-medium">Medewerkers</div>
-              <button type="button" class="page-content-modal__upload-button" (click)="addTeamMember()">Medewerker toevoegen</button>
-            </div>
+      <label class="page-content-modal__field">
+        <span>Titel bovenaan</span>
+        <input [(ngModel)]="title" name="teamTitle" placeholder="Bijv. De mensen achter het merk" type="text" />
+      </label>
 
-            <div class="page-content-modal__blog-editor">
-              <div class="page-content-modal__blog-editor-header">
-                <div class="page-content-modal__blog-editor-badge">Je bewerkt nu</div>
-                <div class="page-content-modal__blog-editor-title">
-                  {{ currentTeamMember.name || ('Medewerker ' + (activeTeamMemberIndex + 1)) }}
-                </div>
-              </div>
+      <label class="page-content-modal__field">
+        <span>Introductietekst</span>
+        <textarea [(ngModel)]="body" name="teamBody" placeholder="Vertel kort wie jullie zijn en wat bezoekers van het team mogen verwachten."></textarea>
+      </label>
+    </section>
 
-              <div>
-                <label class="text-sm font-medium block mb-1">Naam</label>
-                <input [(ngModel)]="currentTeamMember.name" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Sophie de Vries" type="text" />
-              </div>
+    <section class="page-content-modal__section">
+      <div class="page-content-modal__section-heading">
+        <span>Medewerkers</span>
+        <button type="button" class="page-content-modal__ghost-button" (click)="addTeamMember()">Toevoegen</button>
+      </div>
 
-              <div>
-                <label class="text-sm font-medium block mb-1">Rol / functie</label>
-                <input [(ngModel)]="currentTeamMember.role" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Creative lead" type="text" />
-              </div>
+      <div class="page-content-modal__chips">
+        @for (member of teamMembers; let i = $index; track i) {
+          <button type="button" class="page-content-modal__chip" [class.page-content-modal__chip--active]="activeTeamMemberIndex === i" (click)="selectTeamMember(i)">
+            {{ member.name || ('Medewerker ' + (i + 1)) }}
+          </button>
+        }
+      </div>
 
-              <div>
-                <label class="text-sm font-medium block mb-1">Korte introductie</label>
-                <textarea [(ngModel)]="currentTeamMember.intro" class="w-full rounded-md border px-3 py-2 text-sm min-h-[120px]" placeholder="Schrijf hier in een paar zinnen waar deze medewerker voor staat."></textarea>
-              </div>
+      <div class="page-content-modal__item-card">
+        <div class="page-content-modal__field-grid">
+          <label class="page-content-modal__field">
+            <span>Naam</span>
+            <input [(ngModel)]="currentTeamMember.name" name="teamMemberName" placeholder="Bijv. Sophie de Vries" type="text" />
+          </label>
 
-              <div>
-                <label class="text-sm font-medium block mb-1">Portretfoto</label>
-                <div class="page-content-modal__upload">
-                  <label for="team-member-upload" class="page-content-modal__upload-button">Kies bestand</label>
-                  <span class="page-content-modal__upload-name">{{ activeTeamMemberFileLabel }}</span>
-                  <input id="team-member-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event, 'team-member')" />
-                </div>
-              </div>
-            </div>
+          <label class="page-content-modal__field">
+            <span>Rol / functie</span>
+            <input [(ngModel)]="currentTeamMember.role" name="teamMemberRole" placeholder="Bijv. Creative lead" type="text" />
+          </label>
+        </div>
 
-            <div class="page-content-modal__blog-post-list">
-              @for (member of teamMembers; let i = $index; track i) {
-                <button
-                  type="button"
-                  class="page-content-modal__blog-post-chip"
-                  [class.page-content-modal__blog-post-chip--active]="activeTeamMemberIndex === i"
-                  (click)="selectTeamMember(i)"
-                >
-                  {{ member.name || ('Medewerker ' + (i + 1)) }}
-                </button>
-              }
-            </div>
-          } @else if (isFaqPage) {
-            <div>
-              <label class="text-sm font-medium block mb-1">Titel bovenaan</label>
-              <input [(ngModel)]="title" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Veelgestelde vragen" type="text" />
-            </div>
+        <label class="page-content-modal__field">
+          <span>Korte introductie</span>
+          <textarea [(ngModel)]="currentTeamMember.intro" name="teamMemberIntro" placeholder="Schrijf hier in een paar zinnen waar deze medewerker voor staat."></textarea>
+        </label>
 
-            <div>
-              <label class="text-sm font-medium block mb-1">Placeholder zoekveld</label>
-              <input [(ngModel)]="subtitle" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Waar ben je naar op zoek?" type="text" />
-            </div>
+        <div class="page-content-modal__field">
+          <span>Portretfoto</span>
+          <label for="team-member-upload" class="page-content-modal__dropzone">
+            <strong>Upload foto</strong>
+            <small>{{ activeTeamMemberFileLabel }}</small>
+          </label>
+          <input id="team-member-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event, 'team-member')" />
+        </div>
+      </div>
+    </section>
+  } @else if (isFaqPage) {
+    <section class="page-content-modal__section">
+      <div class="page-content-modal__section-heading">
+        <span>FAQ intro</span>
+        <small>Maak zoeken en lezen makkelijk</small>
+      </div>
 
-            <div>
-              <label class="text-sm font-medium block mb-1">Introductietekst (optioneel)</label>
-              <textarea [(ngModel)]="body" class="w-full rounded-md border px-3 py-2 text-sm min-h-[110px]" placeholder="Schrijf hier eventueel een korte introductie boven de vragen."></textarea>
-            </div>
+      <label class="page-content-modal__field">
+        <span>Titel bovenaan</span>
+        <input [(ngModel)]="title" name="faqTitle" placeholder="Bijv. Veelgestelde vragen" type="text" />
+      </label>
 
-            <div class="page-content-modal__blog-toolbar">
-              <div class="text-sm font-medium">Vragen</div>
-              <button type="button" class="page-content-modal__upload-button" (click)="addFaqItem()">Vraag toevoegen</button>
-            </div>
+      <label class="page-content-modal__field">
+        <span>Placeholder zoekveld</span>
+        <input [(ngModel)]="subtitle" name="faqSubtitle" placeholder="Bijv. Waar ben je naar op zoek?" type="text" />
+      </label>
 
-            <div class="page-content-modal__blog-editor">
-              <div class="page-content-modal__blog-editor-header">
-                <div class="page-content-modal__blog-editor-badge">Je bewerkt nu</div>
-                <div class="page-content-modal__blog-editor-title">
-                  {{ currentFaqItem.question || ('Vraag ' + (activeFaqIndex + 1)) }}
-                </div>
-              </div>
+      <label class="page-content-modal__field">
+        <span>Introductietekst</span>
+        <textarea [(ngModel)]="body" name="faqBody" placeholder="Schrijf hier eventueel een korte introductie boven de vragen."></textarea>
+      </label>
+    </section>
 
-              <div>
-                <label class="text-sm font-medium block mb-1">Categorie</label>
-                <input [(ngModel)]="currentFaqItem.category" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Registratie & tickets" type="text" />
-              </div>
+    <section class="page-content-modal__section">
+      <div class="page-content-modal__section-heading">
+        <span>Vragen</span>
+        <button type="button" class="page-content-modal__ghost-button" (click)="addFaqItem()">Toevoegen</button>
+      </div>
 
-              <div>
-                <label class="text-sm font-medium block mb-1">Vraag</label>
-                <input [(ngModel)]="currentFaqItem.question" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Kan ik mijn ticket overdragen?" type="text" />
-              </div>
+      <div class="page-content-modal__chips">
+        @for (item of faqItems; let i = $index; track i) {
+          <button type="button" class="page-content-modal__chip" [class.page-content-modal__chip--active]="activeFaqIndex === i" (click)="selectFaqItem(i)">
+            {{ item.question || ('Vraag ' + (i + 1)) }}
+          </button>
+        }
+      </div>
 
-              <div>
-                <label class="text-sm font-medium block mb-1">Antwoord</label>
-                <textarea [(ngModel)]="currentFaqItem.answer" class="w-full rounded-md border px-3 py-2 text-sm min-h-[140px]" placeholder="Schrijf hier het antwoord op deze veelgestelde vraag."></textarea>
-              </div>
-            </div>
+      <div class="page-content-modal__item-card">
+        <label class="page-content-modal__field">
+          <span>Categorie</span>
+          <input [(ngModel)]="currentFaqItem.category" name="faqCategory" placeholder="Bijv. Registratie & tickets" type="text" />
+        </label>
 
-            <div class="page-content-modal__blog-post-list">
-              @for (item of faqItems; let i = $index; track i) {
-                <button
-                  type="button"
-                  class="page-content-modal__blog-post-chip"
-                  [class.page-content-modal__blog-post-chip--active]="activeFaqIndex === i"
-                  (click)="selectFaqItem(i)"
-                >
-                  {{ item.question || ('Vraag ' + (i + 1)) }}
-                </button>
-              }
-            </div>
-          } @else if (isReviewsPage) {
-            <div>
-              <label class="text-sm font-medium block mb-1">Bovenregel</label>
-              <input [(ngModel)]="subtitle" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Reviews" type="text" />
-            </div>
+        <label class="page-content-modal__field">
+          <span>Vraag</span>
+          <input [(ngModel)]="currentFaqItem.question" name="faqQuestion" placeholder="Bijv. Kan ik mijn ticket overdragen?" type="text" />
+        </label>
 
-            <div>
-              <label class="text-sm font-medium block mb-1">Titel bovenaan</label>
-              <input [(ngModel)]="title" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Wat klanten zeggen" type="text" />
-            </div>
+        <label class="page-content-modal__field">
+          <span>Antwoord</span>
+          <textarea [(ngModel)]="currentFaqItem.answer" name="faqAnswer" placeholder="Schrijf hier het antwoord op deze veelgestelde vraag."></textarea>
+        </label>
+      </div>
+    </section>
+  } @else if (isReviewsPage) {
+    <section class="page-content-modal__section">
+      <div class="page-content-modal__section-heading">
+        <span>Intro</span>
+        <small>Zet vertrouwen direct neer</small>
+      </div>
 
-            <div>
-              <label class="text-sm font-medium block mb-1">Korte introductie</label>
-              <textarea [(ngModel)]="body" class="w-full rounded-md border px-3 py-2 text-sm min-h-[110px]" placeholder="Vertel kort waarom bezoekers deze reviews mogen vertrouwen."></textarea>
-            </div>
+      <label class="page-content-modal__field">
+        <span>Bovenregel</span>
+        <input [(ngModel)]="subtitle" name="reviewsSubtitle" placeholder="Bijv. Reviews" type="text" />
+      </label>
 
-            <div class="page-content-modal__blog-toolbar">
-              <div class="text-sm font-medium">Reviews</div>
-              <button type="button" class="page-content-modal__upload-button" (click)="addReviewItem()">Review toevoegen</button>
-            </div>
+      <label class="page-content-modal__field">
+        <span>Titel bovenaan</span>
+        <input [(ngModel)]="title" name="reviewsTitle" placeholder="Bijv. Wat klanten zeggen" type="text" />
+      </label>
 
-            <div class="page-content-modal__blog-editor">
-              <div class="page-content-modal__blog-editor-header">
-                <div class="page-content-modal__blog-editor-badge">Je bewerkt nu</div>
-                <div class="page-content-modal__blog-editor-title">
-                  {{ currentReview.name || ('Review ' + (activeReviewIndex + 1)) }}
-                </div>
-              </div>
+      <label class="page-content-modal__field">
+        <span>Korte introductie</span>
+        <textarea [(ngModel)]="body" name="reviewsBody" placeholder="Vertel kort waarom bezoekers deze reviews mogen vertrouwen."></textarea>
+      </label>
+    </section>
 
-              <div>
-                <label class="text-sm font-medium block mb-1">Naam</label>
-                <input [(ngModel)]="currentReview.name" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Sanne de Boer" type="text" />
-              </div>
+    <section class="page-content-modal__section">
+      <div class="page-content-modal__section-heading">
+        <span>Reviews</span>
+        <button type="button" class="page-content-modal__ghost-button" (click)="addReviewItem()">Toevoegen</button>
+      </div>
 
-              <div>
-                <label class="text-sm font-medium block mb-1">Functie / relatie</label>
-                <input [(ngModel)]="currentReview.role" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="Bijv. Klant" type="text" />
-              </div>
+      <div class="page-content-modal__chips">
+        @for (item of reviewItems; let i = $index; track i) {
+          <button type="button" class="page-content-modal__chip" [class.page-content-modal__chip--active]="activeReviewIndex === i" (click)="selectReviewItem(i)">
+            {{ item.name || ('Review ' + (i + 1)) }}
+          </button>
+        }
+      </div>
 
-              <div>
-                <label class="text-sm font-medium block mb-1">Reviewtekst</label>
-                <textarea [(ngModel)]="currentReview.quote" class="w-full rounded-md border px-3 py-2 text-sm min-h-[130px]" placeholder="Schrijf hier wat deze persoon over jullie bedrijf zegt."></textarea>
-              </div>
+      <div class="page-content-modal__item-card">
+        <div class="page-content-modal__field-grid">
+          <label class="page-content-modal__field">
+            <span>Naam</span>
+            <input [(ngModel)]="currentReview.name" name="reviewName" placeholder="Bijv. Sanne de Boer" type="text" />
+          </label>
 
-              <div>
-                <label class="text-sm font-medium block mb-2">Aantal sterren</label>
-                <div class="flex flex-wrap gap-2">
-                  @for (star of [1, 2, 3, 4, 5]; track star) {
-                    <button
-                      type="button"
-                      class="h-10 w-10 rounded-full border text-lg"
-                      [style.borderColor]="currentReview.rating === star ? selectedThemeColors[2] : 'color-mix(in srgb, ' + selectedThemeColors[6] + ' 22%, transparent)'"
-                      [style.background]="currentReview.rating === star ? 'color-mix(in srgb, ' + selectedThemeColors[2] + ' 10%, white)' : 'transparent'"
-                      [style.color]="selectedThemeColors[2]"
-                      (click)="currentReview.rating = star"
-                    >
-                      ★
-                    </button>
-                  }
-                </div>
-              </div>
-            </div>
+          <label class="page-content-modal__field">
+            <span>Functie / relatie</span>
+            <input [(ngModel)]="currentReview.role" name="reviewRole" placeholder="Bijv. Klant" type="text" />
+          </label>
+        </div>
 
-            <div class="page-content-modal__blog-post-list">
-              @for (item of reviewItems; let i = $index; track i) {
-                <button
-                  type="button"
-                  class="page-content-modal__blog-post-chip"
-                  [class.page-content-modal__blog-post-chip--active]="activeReviewIndex === i"
-                  (click)="selectReviewItem(i)"
-                >
-                  {{ item.name || ('Review ' + (i + 1)) }}
-                </button>
-              }
-            </div>
-          } @else {
-            <div>
-              <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Naam / hoofdtitel' : 'Titel' }}</label>
-              <input [(ngModel)]="title" class="w-full rounded-md border px-3 py-2 text-sm" [placeholder]="isAboutPage ? 'Bijv. Sophie de Vries' : 'Titel'" type="text" />
-            </div>
+        <label class="page-content-modal__field">
+          <span>Reviewtekst</span>
+          <textarea [(ngModel)]="currentReview.quote" name="reviewQuote" placeholder="Schrijf hier wat deze persoon over jullie bedrijf zegt."></textarea>
+        </label>
 
-            <div>
-              <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Rol / ondertitel' : 'Subtitel' }}</label>
-              <input [(ngModel)]="subtitle" class="w-full rounded-md border px-3 py-2 text-sm" [placeholder]="isAboutPage ? 'Bijv. Creatief strateeg' : 'Subtitel'" type="text" />
-            </div>
-
-            <div>
-              <label class="text-sm font-medium block mb-1">{{ isAboutPage ? 'Over-tekst' : 'Tekst' }}</label>
-              <textarea [(ngModel)]="body" class="w-full rounded-md border px-3 py-2 text-sm min-h-[140px]" [placeholder]="isAboutPage ? 'Schrijf hier het verhaal voor de Over-pagina...' : 'Schrijf hier je tekst...'"></textarea>
-            </div>
-
-            <div>
-              @if (isAboutPage) {
-                <label class="text-sm font-medium block mb-1">Achtergrondfoto (optioneel)</label>
-                <div class="page-content-modal__upload">
-                  <label for="about-background-upload" class="page-content-modal__upload-button">Kies bestand</label>
-                  <span class="page-content-modal__upload-name">{{ backgroundFileLabel }}</span>
-                  <input id="about-background-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event, 'background')" />
-                </div>
-              } @else {
-                <label class="text-sm font-medium block mb-1">Visual (optioneel)</label>
-                <div class="page-content-modal__upload">
-                  <label for="default-page-upload" class="page-content-modal__upload-button">Kies bestand</label>
-                  <span class="page-content-modal__upload-name">{{ defaultFileLabel }}</span>
-                  <input id="default-page-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event)" />
-                </div>
-              }
-            </div>
-
-            @if (isAboutPage) {
-              <div>
-                <label class="text-sm font-medium block mb-1">Portretfoto (optioneel)</label>
-                <div class="page-content-modal__upload">
-                  <label for="about-portrait-upload" class="page-content-modal__upload-button">Kies bestand</label>
-                  <span class="page-content-modal__upload-name">{{ portraitFileLabel }}</span>
-                  <input id="about-portrait-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event, 'portrait')" />
-                </div>
-              </div>
-
-              <div>
-                <label class="text-sm font-medium block mb-1">LinkedIn-link (optioneel)</label>
-                <input [(ngModel)]="linkedinUrl" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="linkedin.com/in/jouw-profiel" type="text" />
-              </div>
-
-              <div>
-                <label class="text-sm font-medium block mb-1">Instagram-link (optioneel)</label>
-                <input [(ngModel)]="instagramUrl" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="instagram.com/jouw-account" type="text" />
-              </div>
-
-              <div>
-                <label class="text-sm font-medium block mb-1">Facebook-link (optioneel)</label>
-                <input [(ngModel)]="facebookUrl" class="w-full rounded-md border px-3 py-2 text-sm" placeholder="facebook.com/jouw-pagina" type="text" />
-              </div>
+        <div class="page-content-modal__field">
+          <span>Aantal sterren</span>
+          <div class="page-content-modal__rating">
+            @for (star of [1, 2, 3, 4, 5]; track star) {
+              <button type="button" [class.page-content-modal__rating-star--active]="currentReview.rating >= star" (click)="currentReview.rating = star">★</button>
             }
-          }
-
-          <div class="pt-2 flex gap-3">
-            <button class="px-4 py-2 rounded-md border text-sm" (click)="close()">Annuleren</button>
-            <button class="px-4 py-2 rounded-md text-sm text-white" [style.background]="selectedThemeColors[2]" (click)="onSave()">
-              Opslaan
-            </button>
           </div>
         </div>
+      </div>
+    </section>
+  } @else {
+    <section class="page-content-modal__section">
+      <div class="page-content-modal__section-heading">
+        <span>{{ isAboutPage ? 'Over' : 'Inhoud' }}</span>
+        <small>{{ isAboutPage ? 'Vertel wie je bent' : 'Vul de pagina direct in' }}</small>
+      </div>
+
+      <label class="page-content-modal__field">
+        <span>{{ isAboutPage ? 'Naam / hoofdtitel' : 'Titel' }}</span>
+        <input [(ngModel)]="title" name="defaultTitle" [placeholder]="isAboutPage ? 'Bijv. Sophie de Vries' : 'Titel'" type="text" />
+      </label>
+
+      <label class="page-content-modal__field">
+        <span>{{ isAboutPage ? 'Rol / ondertitel' : 'Subtitel' }}</span>
+        <input [(ngModel)]="subtitle" name="defaultSubtitle" [placeholder]="isAboutPage ? 'Bijv. Creatief strateeg' : 'Subtitel'" type="text" />
+      </label>
+
+      <label class="page-content-modal__field">
+        <span>{{ isAboutPage ? 'Over-tekst' : 'Tekst' }}</span>
+        <textarea [(ngModel)]="body" name="defaultBody" [placeholder]="isAboutPage ? 'Schrijf hier het verhaal voor de Over-pagina...' : 'Schrijf hier je tekst...'"></textarea>
+      </label>
+
+      @if (isAboutPage) {
+        <div class="page-content-modal__field-grid">
+          <div class="page-content-modal__field">
+            <span>Achtergrondfoto</span>
+            <label for="about-background-upload" class="page-content-modal__dropzone">
+              <strong>Upload foto</strong>
+              <small>{{ backgroundFileLabel }}</small>
+            </label>
+            <input id="about-background-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event, 'background')" />
+          </div>
+
+          <div class="page-content-modal__field">
+            <span>Portretfoto</span>
+            <label for="about-portrait-upload" class="page-content-modal__dropzone">
+              <strong>Upload foto</strong>
+              <small>{{ portraitFileLabel }}</small>
+            </label>
+            <input id="about-portrait-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event, 'portrait')" />
+          </div>
+        </div>
+
+        <div class="page-content-modal__field-grid">
+          <label class="page-content-modal__field">
+            <span>LinkedIn-link</span>
+            <input [(ngModel)]="linkedinUrl" name="linkedinUrl" placeholder="linkedin.com/in/jouw-profiel" type="text" />
+          </label>
+
+          <label class="page-content-modal__field">
+            <span>Instagram-link</span>
+            <input [(ngModel)]="instagramUrl" name="instagramUrl" placeholder="instagram.com/jouw-account" type="text" />
+          </label>
+        </div>
+
+        <label class="page-content-modal__field">
+          <span>Facebook-link</span>
+          <input [(ngModel)]="facebookUrl" name="facebookUrl" placeholder="facebook.com/jouw-pagina" type="text" />
+        </label>
+      } @else {
+        <div class="page-content-modal__field">
+          <span>Visual</span>
+          <label for="default-page-upload" class="page-content-modal__dropzone">
+            <strong>Upload visual</strong>
+            <small>{{ defaultFileLabel }}</small>
+          </label>
+          <input id="default-page-upload" class="page-content-modal__file-input" type="file" accept="image/*" (change)="onFileChange($event)" />
+        </div>
+      }
+    </section>
+  }
+
+  <div class="page-content-modal__actions">
+    <button type="button" class="page-content-modal__secondary-button" (click)="close()">Annuleren</button>
+    <button type="submit" class="page-content-modal__primary-button" [style.background]="selectedThemeColors[2]">
+      Opslaan
+    </button>
+  </div>
+</form>
