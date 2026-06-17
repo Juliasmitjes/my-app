@@ -390,6 +390,10 @@ export class PreviewStep implements OnChanges, OnDestroy {
     return this.activePage === 'diensten';
   }
 
+  get isPortfolioPageActive(): boolean {
+    return this.activePage === 'portfolio';
+  }
+
   get isTeamPageActive(): boolean {
     return this.activePage === 'team';
   }
@@ -479,6 +483,24 @@ export class PreviewStep implements OnChanges, OnDestroy {
     return {
       heading: text?.title?.trim() || 'Onze diensten',
       items
+    };
+  }
+
+  getPortfolioPageData(pageId: string): { heading: string; subtitle: string; intro: string; images: string[] } {
+    const text = this.getPageText(pageId);
+    const pageImage = this.getPageImage(pageId);
+    const images = Array.from({ length: 6 }, (_, index) =>
+      this.getUploadFor(`page_${pageId}_image_${index}`) ||
+      this.getPortfolioImage(index) ||
+      pageImage ||
+      'assets/images/exampleImage.png'
+    );
+
+    return {
+      heading: text?.title?.trim() || this.getPortfolioBusinessName(),
+      subtitle: text?.subtitle?.trim() || this.getPortfolioSubtitle(),
+      intro: text?.body?.trim() || 'Een selectie van werk, projecten en beelden die laten zien waar jouw stijl voor staat.',
+      images
     };
   }
 
