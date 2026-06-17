@@ -172,30 +172,17 @@
                     @let aboutSocials = getAboutSocialLinks(activePage);
 
                     <div class="about-page-modern" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 93%, ' + selectedThemeColors[1] + ')'">
-                      <section class="about-page-modern__hero">
-                        <div
-                          class="about-page-modern__media"
-                          [style.background-image]="'url(' + aboutBackgroundImage + ')'"
-                        ></div>
-                        <div class="about-page-modern__hero-copy">
-                          <p class="about-page-modern__eyebrow" [style.color]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 86%, transparent)'">
+                      <section class="about-page-modern__split">
+                        <div class="about-page-modern__copy-panel">
+                          <p class="about-page-modern__eyebrow">
                             {{ aboutPageSectionTitle }}
                           </p>
-                          <h2 class="about-page-modern__name" [style.color]="selectedThemeColors[0]" [style.fontFamily]="headingFont">
+                          <h2 class="about-page-modern__name" [style.fontFamily]="headingFont">
                             {{ aboutText?.title || 'Jouw naam' }}
                           </h2>
-                          <p class="about-page-modern__role" [style.color]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 76%, transparent)'">
+                          <p class="about-page-modern__role">
                             {{ aboutText?.subtitle || 'Jouw functietitel' }}
                           </p>
-                        </div>
-                      </section>
-
-                      <section class="about-page-modern__content">
-                        <div class="about-page-modern__intro">
-                          <div class="about-page-modern__copy" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
-                            <p>{{ aboutColumns[0] }}</p>
-                            <p>{{ aboutColumns[1] }}</p>
-                          </div>
 
                           <div class="about-page-modern__socials">
                             @for (social of aboutSocials; track social.href) {
@@ -228,10 +215,14 @@
                               </a>
                             }
                           </div>
+
+                          <div class="about-page-modern__copy" [style.fontFamily]="bodyFont">
+                            <p>{{ aboutColumns[0] }}{{ aboutColumns[1] && aboutColumns[1] !== aboutColumns[0] ? ' ' + aboutColumns[1] : '' }}</p>
+                          </div>
                         </div>
 
-                        <div class="about-page-modern__portrait" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 98%, white)'">
-                          <img [src]="aboutPortraitImage" alt="Portret" />
+                        <div class="about-page-modern__visual" aria-hidden="true">
+                          <img [src]="aboutPortraitImage || aboutBackgroundImage" alt="" />
                         </div>
                       </section>
                     </div>
