@@ -507,40 +507,52 @@
 .about-page-modern {
   min-height: 100%;
   overflow: hidden;
+  background:
+    radial-gradient(circle at 82% 8%, rgba(0, 113, 227, 0.08), transparent 28%),
+    linear-gradient(180deg, #f5f5f7 0%, #ffffff 100%) !important;
 }
 
 .about-page-modern__hero {
   position: relative;
-  min-height: clamp(20rem, 48vw, 31rem);
+  min-height: clamp(25rem, 48vw, 34rem);
+  margin: clamp(1rem, 3vw, 1.75rem);
   overflow: hidden;
   isolation: isolate;
+  border-radius: clamp(1.5rem, 4vw, 2.4rem);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(245, 245, 247, 0.9) 100%);
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.12);
 }
 
 .about-page-modern__media {
   position: absolute;
-  inset: 0;
+  inset: clamp(1rem, 3vw, 1.6rem) clamp(1rem, 3vw, 1.6rem) clamp(1rem, 3vw, 1.6rem) 52%;
+  border-radius: clamp(1.15rem, 3vw, 1.9rem);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  transform: scale(1.01);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.36);
+  transform: none;
 }
 
 .about-page-modern__hero::after {
   content: '';
   position: absolute;
-  inset: auto 0 0;
-  height: 42%;
-  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.34) 100%);
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.88) 43%, rgba(255, 255, 255, 0.08) 72%),
+    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.9), transparent 34%);
   z-index: 1;
+  pointer-events: none;
 }
 
 .about-page-modern__hero-copy {
-  position: absolute;
-  inset: auto clamp(1.25rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3.5rem);
+  position: relative;
   z-index: 2;
   display: grid;
-  gap: 0.55rem;
-  max-width: 42rem;
+  gap: 0.9rem;
+  width: min(46%, 28rem);
+  padding: clamp(2rem, 6vw, 4.75rem) clamp(1.4rem, 5vw, 3.2rem);
 }
 
 .about-page-modern__eyebrow,
@@ -550,48 +562,64 @@
 }
 
 .about-page-modern__eyebrow {
+  width: fit-content;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  color: #6e6e73 !important;
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.04em;
   line-height: 1.2;
-  text-transform: uppercase;
+  padding: 0.48rem 0.78rem;
+  text-transform: none;
+  backdrop-filter: blur(16px);
 }
 
 .about-page-modern__name {
   margin: 0;
-  font-size: clamp(3rem, 8vw, 6.5rem);
-  font-weight: 700;
-  line-height: 0.94;
+  color: #1d1d1f !important;
+  font-size: clamp(2.9rem, 6.8vw, 5.6rem);
+  font-weight: 650;
+  line-height: 0.95;
   letter-spacing: 0;
+  text-wrap: balance;
 }
 
 .about-page-modern__role {
   max-width: 32rem;
-  font-size: clamp(1rem, 2.4vw, 1.45rem);
-  font-weight: 600;
-  line-height: 1.32;
+  color: #6e6e73 !important;
+  font-size: clamp(1.05rem, 2.1vw, 1.45rem);
+  font-weight: 550;
+  line-height: 1.35;
 }
 
 .about-page-modern__content {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.56fr);
-  gap: clamp(1.5rem, 4vw, 3.5rem);
-  align-items: start;
-  padding: clamp(2rem, 5vw, 4.5rem);
+  grid-template-columns: minmax(0, 1fr) minmax(12rem, 0.42fr);
+  gap: clamp(1rem, 3vw, 1.8rem);
+  align-items: stretch;
+  padding: 0 clamp(1rem, 3vw, 1.75rem) clamp(1rem, 3vw, 1.75rem);
 }
 
 .about-page-modern__intro {
   display: grid;
   gap: 1.5rem;
-  padding-top: 0.35rem;
+  align-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: clamp(1.25rem, 3vw, 2rem);
+  background: rgba(255, 255, 255, 0.78);
+  padding: clamp(1.25rem, 4vw, 2.35rem);
+  box-shadow: 0 18px 54px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(18px);
 }
 
 .about-page-modern__copy {
   display: grid;
-  gap: 1.25rem;
-  max-width: 42rem;
-  font-size: clamp(0.95rem, 1.7vw, 1.12rem);
-  line-height: 1.78;
+  gap: 1rem;
+  max-width: 46rem;
+  font-size: clamp(0.98rem, 1.4vw, 1.08rem);
+  line-height: 1.75;
 }
 
 .about-page-modern__socials {
@@ -601,22 +629,29 @@
 }
 
 .about-page-modern__social {
-  width: 2.35rem;
-  height: 2.35rem;
+  width: 2.55rem;
+  height: 2.55rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border: 1px solid;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.66);
+  background: rgba(245, 245, 247, 0.9);
   backdrop-filter: blur(16px);
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.about-page-modern__social:hover {
+  background: #ffffff;
+  transform: translateY(-1px);
 }
 
 .about-page-modern__portrait {
   overflow: hidden;
-  border-radius: 1.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: clamp(1.25rem, 3vw, 2rem);
   aspect-ratio: 4 / 5;
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.16);
+  box-shadow: 0 18px 54px rgba(15, 23, 42, 0.09);
 }
 
 .about-page-modern__portrait img {
@@ -627,6 +662,27 @@
 }
 
 @media (max-width: 720px) {
+  .about-page-modern__hero {
+    min-height: auto;
+  }
+
+  .about-page-modern__media {
+    position: relative;
+    inset: auto;
+    display: block;
+    height: 16rem;
+    margin: 1rem;
+  }
+
+  .about-page-modern__hero::after {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.56));
+  }
+
+  .about-page-modern__hero-copy {
+    width: auto;
+    padding: 1.35rem 1.25rem 1.6rem;
+  }
+
   .about-page-modern__content {
     grid-template-columns: 1fr;
   }
