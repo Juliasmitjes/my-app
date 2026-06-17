@@ -25,7 +25,7 @@
 
       <!-- OUTER WRAPPER (keeps rounded corners + clipping) -->
       <div
-        class="flex-1 rounded-lg shadow-lg overflow-hidden"
+        class="preview-panel__frame flex-1 rounded-lg shadow-lg overflow-hidden"
         [style.background]="'#f7f9fc'"
         [style.fontFamily]="bodyFont"
       >
@@ -106,7 +106,7 @@
 
           <!-- BODY (scrolls) -->
           <div
-            class="flex-1 min-h-0 overflow-y-auto"
+            class="preview-panel__body flex-1 min-h-0 overflow-y-auto"
             [ngClass]="isSidebar ? 'm-0' : (builderState.layout === 'single' || builderState.layout === 'two-column' || builderState.layout === 'grid'
               ? 'm-0 p-0'
               : 'm-6 pb-10 pr-4')"
@@ -129,7 +129,7 @@
             }
 
             @if (canShowLayout) {
-              <div class="flex flex-col sm:flex-row h-full gap-4">
+              <div class="preview-panel__canvas flex flex-col sm:flex-row h-full gap-4">
                 @if (isSidebar) {
                   <aside
                     class="w-full sm:w-40 p-3 border"

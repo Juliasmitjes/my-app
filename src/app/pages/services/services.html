@@ -76,6 +76,7 @@ class="services-topbar sticky top-0 z-50">
     <div
       class="services-content-card relative mb-12 mt-16 rounded-2xl p-10 transition-all duration-500"
       [class.services-content-card--layout]="currentStep() === 0 || currentStep() === 1"
+      [class.services-content-card--result]="currentStep() === 5"
     >
 
       @switch (currentStep()) {
@@ -137,14 +138,16 @@ class="services-topbar sticky top-0 z-50">
         }
         @case (5) {
           @defer (when currentStep() === 5) {
-            <app-preview-panel
-              [open]="true"
-              [embedded]="true"
-              [builderState]="builderState()"
-              [currentStep]="currentStep()"
-              [colorThemes]="colorThemes()"
-              size="large">
-            </app-preview-panel>
+            <div class="services-result-preview">
+              <app-preview-panel
+                [open]="true"
+                [embedded]="true"
+                [builderState]="builderState()"
+                [currentStep]="currentStep()"
+                [colorThemes]="colorThemes()"
+                size="large">
+              </app-preview-panel>
+            </div>
           } @placeholder {
             <div class="min-h-[300px]"></div>
           }
