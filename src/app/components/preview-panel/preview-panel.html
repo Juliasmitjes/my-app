@@ -231,43 +231,37 @@
                     @let blogHeroLabel = getBlogHeroLabel(activePage);
                     @let blogCards = getBlogCards(activePage);
 
-                    <div [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 92%, ' + selectedThemeColors[1] + ')'">
-                      <section class="relative min-h-[14rem] px-6 py-6 sm:px-10 sm:py-8 overflow-hidden">
-                        <div
-                          class="absolute inset-0 bg-cover bg-center"
-                          [style.background-image]="'linear-gradient(rgba(255,255,255,0.24), rgba(255,255,255,0.24)), url(' + blogImage + ')'"
-                        ></div>
-                        <div class="relative z-10 text-center uppercase tracking-[0.42em] text-xs sm:text-sm" [style.color]="selectedThemeColors[2]" [style.fontFamily]="bodyFont">
-                          {{ blogHeroLabel }}
+                    <div class="apple-page apple-page--blog">
+                      <section class="apple-hero apple-hero--split">
+                        <div class="apple-hero__copy">
+                          <p class="apple-kicker" [style.fontFamily]="bodyFont">{{ blogHeroLabel }}</p>
+                          <h2 class="apple-title" [style.fontFamily]="headingFont">Blog</h2>
+                          <p class="apple-lead" [style.fontFamily]="bodyFont">
+                            Verhalen, updates en inzichten overzichtelijk op één plek.
+                          </p>
                         </div>
+                        <figure class="apple-hero__media">
+                          <img [src]="blogImage" alt="Blogbeeld" />
+                        </figure>
                       </section>
 
-                      <section class="relative z-10 px-6 pb-8 sm:px-10 sm:pb-10 -mt-12 sm:-mt-14 grid gap-4">
+                      <section class="apple-section apple-blog-list">
                         @for (card of blogCards; let i = $index; track card.title + i) {
                           <article
-                            class="grid border"
-                            [style.gridTemplateColumns]="'minmax(0,0.48fr) minmax(0,0.52fr)'"
-                            [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 96%, ' + selectedThemeColors[1] + ')'"
-                            [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[9] + ' 42%, transparent)'"
+                            class="apple-card apple-blog-card"
                           >
-                            <div class="min-h-[12rem]">
-                              <img [src]="blogImage" alt="Blogbeeld" class="w-full h-full object-cover" />
-                            </div>
-                            <div class="flex flex-col gap-3 p-5">
-                              <div class="text-[0.68rem]" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                            <div class="apple-blog-card__body">
+                              <div class="apple-meta" [style.fontFamily]="bodyFont">
                                 {{ card.meta }}
                               </div>
-                              <h3 class="m-0 text-2xl uppercase leading-tight font-medium" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                              <h3 class="apple-card-title" [style.fontFamily]="headingFont">
                                 {{ card.title }}
                               </h3>
-                              <p class="m-0 text-sm leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                              <p class="apple-card-text" [style.fontFamily]="bodyFont">
                                 {{ card.excerpt }}
                               </p>
-                              <div class="mt-auto pt-4 flex gap-4 text-[0.68rem]" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
-                                <span>0 weergaven</span>
-                                <span>0 reacties</span>
-                              </div>
                             </div>
+                            <span class="apple-arrow">›</span>
                           </article>
                         }
                       </section>
@@ -275,47 +269,45 @@
                   } @else if (isContactPageActive) {
                     @let contact = getContactPageData(activePage);
 
-                    <div [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 97%, ' + selectedThemeColors[1] + ')'">
-                      <section class="max-w-3xl mx-auto px-6 py-10 sm:px-10 sm:py-14">
-                        <h2 class="m-0 text-center text-5xl sm:text-7xl leading-none" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                    <div class="apple-page apple-page--contact">
+                      <section class="apple-section apple-contact">
+                        <div class="apple-center">
+                          <p class="apple-kicker" [style.fontFamily]="bodyFont">Contact</p>
+                          <h2 class="apple-title" [style.fontFamily]="headingFont">
                           {{ contact.heading }}
-                        </h2>
+                          </h2>
+                        </div>
 
-                        <div class="mt-10 grid gap-5" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
-                          <div class="grid gap-5 sm:grid-cols-2">
-                            <div class="grid gap-2">
-                              <label class="text-sm">Voornaam *</label>
-                              <div class="h-11 border" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 24%, transparent)'"></div>
+                        <div class="apple-contact-grid" [style.fontFamily]="bodyFont">
+                          <div class="apple-contact-card apple-card">
+                            <div class="apple-field-grid">
+                              <div class="apple-field">
+                                <span>Voornaam</span>
+                              </div>
+                              <div class="apple-field">
+                                <span>Achternaam</span>
+                              </div>
                             </div>
-                            <div class="grid gap-2">
-                              <label class="text-sm">Achternaam *</label>
-                              <div class="h-11 border" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 24%, transparent)'"></div>
+                            <div class="apple-field">
+                              <span>Email</span>
                             </div>
+                            <div class="apple-field">
+                              <span>Telefoon</span>
+                            </div>
+                            <div class="apple-field apple-field--message">
+                              <span>Bericht</span>
+                            </div>
+                            <button type="button" class="apple-pill apple-pill--dark">
+                              {{ contact.buttonLabel }}
+                            </button>
                           </div>
-
-                          <div class="grid gap-2">
-                            <label class="text-sm">Email *</label>
-                            <div class="h-11 border" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 24%, transparent)'"></div>
-                          </div>
-
-                          <div class="grid gap-2">
-                            <label class="text-sm">Telefoon</label>
-                            <div class="h-11 border" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 24%, transparent)'"></div>
-                          </div>
-
-                          <div class="grid gap-2">
-                            <label class="text-sm">Bericht *</label>
-                            <div class="min-h-[9rem] border" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 24%, transparent)'"></div>
-                          </div>
-
-                          <div class="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
-                            <div class="flex flex-wrap gap-5 text-sm">
+                          <div class="apple-contact-card apple-card apple-contact-card--info">
+                            <p class="apple-meta">Direct bereikbaar</p>
+                            <h3 class="apple-card-title" [style.fontFamily]="headingFont">Laten we kennismaken.</h3>
+                            <div class="apple-contact-lines">
                               <span>{{ contact.email }}</span>
                               <span>{{ contact.phone }}</span>
                             </div>
-                            <button type="button" class="px-8 py-3" [style.background]="selectedThemeColors[2]" [style.color]="selectedThemeColors[0]">
-                              {{ contact.buttonLabel }}
-                            </button>
                           </div>
                         </div>
                       </section>
@@ -323,27 +315,26 @@
                   } @else if (isServicesPageActive) {
                     @let services = getServicesPageData(activePage);
 
-                    <div [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 97%, ' + selectedThemeColors[1] + ')'">
-                      <section class="max-w-4xl mx-auto px-6 py-10 sm:px-10 sm:py-14">
-                        <h2 class="m-0 text-center text-5xl sm:text-7xl leading-none" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
-                          {{ services.heading }}
-                        </h2>
+                    <div class="apple-page apple-page--services">
+                      <section class="apple-section">
+                        <div class="apple-center">
+                          <p class="apple-kicker" [style.fontFamily]="bodyFont">Diensten</p>
+                          <h2 class="apple-title" [style.fontFamily]="headingFont">
+                            {{ services.heading }}
+                          </h2>
+                        </div>
 
                         @if (!bookingServiceTitle) {
-                          <div class="mt-10 grid gap-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                          <div class="apple-service-list" [style.fontFamily]="bodyFont">
                             @for (item of services.items; let i = $index; track item.title + i) {
-                              <article class="grid gap-4 pt-6 border-t" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 22%, transparent)'">
-                                <div class="text-xl" [style.color]="selectedThemeColors[2]">{{ item.title }}</div>
-                                <div class="h-px" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 14%, transparent)'"></div>
-                                <div class="grid gap-1">
-                                  <div>{{ item.duration }}</div>
-                                  <div>{{ item.price }}</div>
+                              <article class="apple-card apple-service-card">
+                                <div>
+                                  <h3 class="apple-card-title" [style.fontFamily]="headingFont">{{ item.title }}</h3>
+                                  <p class="apple-card-text">{{ item.duration }} · {{ item.price }}</p>
                                 </div>
                                 <button
                                   type="button"
-                                  class="justify-self-start px-5 py-3"
-                                  [style.background]="selectedThemeColors[2]"
-                                  [style.color]="selectedThemeColors[0]"
+                                  class="apple-pill apple-pill--dark"
                                   (click)="openBooking(item.title)"
                                 >
                                   {{ item.buttonLabel }}
@@ -352,13 +343,13 @@
                             }
                           </div>
                         } @else {
-                          <div class="mt-10 grid gap-6 rounded-[1.5rem] border p-6" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 18%, transparent)'" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 92%, ' + selectedThemeColors[1] + ')'">
+                          <div class="apple-card apple-booking">
                             <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                               <div class="grid gap-2">
                                 <div class="text-xs uppercase tracking-[0.2em]" [style.color]="selectedThemeColors[5]">Agenda</div>
                                 <h3 class="m-0 text-3xl" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">Boek {{ bookingServiceTitle }}</h3>
                               </div>
-                              <button type="button" class="justify-self-start rounded-full border px-4 py-2 text-sm" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 18%, transparent)'" (click)="closeBooking()">Terug</button>
+                            <button type="button" class="apple-pill" (click)="closeBooking()">Terug</button>
                             </div>
 
                             <div class="grid gap-3">
@@ -367,7 +358,7 @@
                                 @for (date of bookingDates; track date.value) {
                                   <button
                                     type="button"
-                                    class="grid min-w-[5.5rem] gap-1 rounded-2xl border px-4 py-3 text-left"
+                                  class="apple-date-button"
                                     [style.borderColor]="selectedBookingDate === date.value ? selectedThemeColors[2] : 'color-mix(in srgb, ' + selectedThemeColors[6] + ' 18%, transparent)'"
                                     [style.color]="selectedBookingDate === date.value ? selectedThemeColors[2] : selectedThemeColors[6]"
                                     (click)="selectedBookingDate = date.value; bookingConfirmed = false"
@@ -385,7 +376,7 @@
                                 @for (slot of bookingSlots; track slot) {
                                   <button
                                     type="button"
-                                    class="rounded-2xl border px-4 py-3 text-sm"
+                                  class="apple-slot-button"
                                     [style.borderColor]="selectedBookingSlot === slot ? selectedThemeColors[2] : 'color-mix(in srgb, ' + selectedThemeColors[6] + ' 18%, transparent)'"
                                     [style.color]="selectedBookingSlot === slot ? selectedThemeColors[2] : selectedThemeColors[6]"
                                     (click)="selectedBookingSlot = slot; bookingConfirmed = false"
@@ -398,7 +389,7 @@
 
                             <button
                               type="button"
-                              class="justify-self-start rounded-2xl px-5 py-3"
+                            class="apple-pill apple-pill--dark"
                               [disabled]="!selectedBookingDate || !selectedBookingSlot"
                               [style.background]="selectedThemeColors[2]"
                               [style.color]="selectedThemeColors[0]"
@@ -417,37 +408,65 @@
                         }
                       </section>
                     </div>
+                  } @else if (isPortfolioPageActive) {
+                    @let portfolio = getPortfolioPageData(activePage);
+
+                    <div class="apple-page apple-page--portfolio">
+                      <section class="apple-section">
+                        <div class="apple-center">
+                          <p class="apple-kicker" [style.fontFamily]="bodyFont">Portfolio</p>
+                          <h2 class="apple-title" [style.fontFamily]="headingFont">
+                            {{ portfolio.heading }}
+                          </h2>
+                          <p class="apple-lead" [style.fontFamily]="bodyFont">
+                            {{ portfolio.subtitle }}
+                          </p>
+                        </div>
+
+                        <div class="apple-portfolio-grid">
+                          @for (image of portfolio.images; let i = $index; track image + i) {
+                            <figure class="apple-portfolio-tile" [class.apple-portfolio-tile--wide]="i === 0">
+                              <img [src]="image" alt="Portfolio beeld" />
+                            </figure>
+                          }
+                        </div>
+
+                        <p class="apple-portfolio-intro" [style.fontFamily]="bodyFont">
+                          {{ portfolio.intro }}
+                        </p>
+                      </section>
+                    </div>
                   } @else if (isTeamPageActive) {
                     @let team = getTeamPageData(activePage);
 
-                    <div [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 96%, ' + selectedThemeColors[1] + ')'">
-                      <section class="grid gap-8 px-6 py-10 sm:px-10 sm:py-14">
-                        <div class="grid gap-3 text-center">
-                          <div class="text-xs font-semibold uppercase tracking-[0.28em]" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                    <div class="apple-page apple-page--team">
+                      <section class="apple-section">
+                        <div class="apple-center">
+                          <div class="apple-kicker" [style.fontFamily]="bodyFont">
                             {{ team.kicker }}
                           </div>
-                          <h2 class="m-0 text-5xl sm:text-7xl leading-none" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                          <h2 class="apple-title" [style.fontFamily]="headingFont">
                             {{ team.heading }}
                           </h2>
-                          <p class="mx-auto max-w-2xl text-sm sm:text-base leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                          <p class="apple-lead" [style.fontFamily]="bodyFont">
                             {{ team.intro }}
                           </p>
                         </div>
 
-                        <div class="grid gap-5">
+                        <div class="apple-team-grid">
                           @for (member of team.members; let i = $index; track member.name + i) {
-                            <article class="grid gap-5 rounded-[1.5rem] border p-5 md:grid-cols-[14rem_minmax(0,1fr)] md:items-center" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 14%, transparent)'" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 98%, ' + selectedThemeColors[1] + ')'">
-                              <div class="aspect-[4/5] overflow-hidden rounded-[1.25rem] md:aspect-[5/4]">
-                                <img [src]="member.image" [alt]="member.name" class="h-full w-full object-cover" />
+                            <article class="apple-card apple-team-card">
+                              <div class="apple-team-card__image">
+                                <img [src]="member.image" [alt]="member.name" />
                               </div>
-                              <div class="grid gap-3 md:gap-4">
-                                <h3 class="m-0 text-2xl" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                              <div class="apple-team-card__copy">
+                                <h3 class="apple-card-title" [style.fontFamily]="headingFont">
                                   {{ member.name }}
                                 </h3>
-                                <div class="text-sm font-semibold uppercase tracking-[0.18em]" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                                <div class="apple-meta" [style.fontFamily]="bodyFont">
                                   {{ member.role }}
                                 </div>
-                                <p class="m-0 max-w-2xl text-sm leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                                <p class="apple-card-text" [style.fontFamily]="bodyFont">
                                   {{ member.intro }}
                                 </p>
                               </div>
@@ -460,43 +479,40 @@
                     @let faq = getFaqPageData(activePage);
                     @let faqItems = getFilteredFaqItems(activePage);
 
-                    <div [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 96%, ' + selectedThemeColors[1] + ')'">
-                      <section class="grid gap-8 px-6 py-10 sm:px-10 sm:py-14">
-                        <div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_18rem] xl:items-start">
-                          <div class="grid gap-3">
-                            <h2 class="m-0 text-4xl leading-none sm:text-6xl" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
-                              {{ faq.heading }}
+                    <div class="apple-page apple-page--faq">
+                      <section class="apple-section">
+                        <div class="apple-faq-head">
+                          <div>
+                            <p class="apple-kicker" [style.fontFamily]="bodyFont">FAQ</p>
+                            <h2 class="apple-title apple-title--left" [style.fontFamily]="headingFont">
+                            {{ faq.heading }}
                             </h2>
                             @if (faq.intro) {
-                              <p class="m-0 max-w-3xl text-sm sm:text-base leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                              <p class="apple-lead apple-lead--left" [style.fontFamily]="bodyFont">
                                 {{ faq.intro }}
                               </p>
                             }
                           </div>
 
-                          <div class="justify-self-start xl:justify-self-end">
-                            <div class="flex min-w-[16rem] items-center gap-3 border-b pb-3" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 22%, transparent)'">
-                              <input
-                                [(ngModel)]="faqSearchQuery"
-                                class="w-full bg-transparent text-sm outline-none"
-                                [style.color]="selectedThemeColors[6]"
-                                [style.fontFamily]="bodyFont"
-                                [placeholder]="faq.searchPlaceholder"
-                                type="text"
-                              />
-                              <span class="text-base" [style.color]="selectedThemeColors[6]">⌕</span>
-                            </div>
+                          <div class="apple-search">
+                            <input
+                              [(ngModel)]="faqSearchQuery"
+                              class="w-full bg-transparent text-sm outline-none"
+                              [style.fontFamily]="bodyFont"
+                              [placeholder]="faq.searchPlaceholder"
+                              type="text"
+                            />
+                            <span>⌕</span>
                           </div>
                         </div>
 
-                        <div class="flex min-h-[3.5rem] flex-wrap gap-4 border-b pb-5" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 18%, transparent)'">
+                        <div class="apple-tabs">
                           @if (!(faq.categories.length === 1 && faq.categories[0] === 'Algemeen')) {
                             @for (category of faq.categories; track category) {
                               <button
                                 type="button"
-                                class="border-b-2 px-1 pb-3 text-sm"
-                                [style.borderColor]="faqActiveCategory === category ? selectedThemeColors[2] : 'transparent'"
-                                [style.color]="faqActiveCategory === category ? selectedThemeColors[2] : selectedThemeColors[6]"
+                                class="apple-tab"
+                                [class.apple-tab--active]="faqActiveCategory === category"
                                 [style.fontFamily]="bodyFont"
                                 (click)="faqActiveCategory = category"
                               >
@@ -506,24 +522,24 @@
                           }
                         </div>
 
-                        <div class="grid gap-3">
+                        <div class="apple-faq-list">
                           @for (item of faqItems; let i = $index; track item.question + i) {
-                            <article class="border px-5 py-4" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 18%, transparent)'">
+                            <article class="apple-card apple-faq-item">
                               <button
                                 type="button"
-                                class="flex w-full cursor-pointer items-start justify-between gap-4 text-left"
+                                class="apple-faq-question"
                                 (click)="expandedFaqIndex = expandedFaqIndex === item.index ? -1 : item.index"
                               >
-                                <span class="text-lg md:text-xl" [style.color]="selectedThemeColors[2]" [style.fontFamily]="bodyFont">
+                                <span [style.fontFamily]="bodyFont">
                                   {{ item.question }}
                                 </span>
-                                <span class="text-xl leading-none" [style.color]="selectedThemeColors[6]">
+                                <span>
                                   {{ expandedFaqIndex === item.index ? '↑' : '↓' }}
                                 </span>
                               </button>
 
                               @if (expandedFaqIndex === item.index) {
-                                <p class="mt-5 mb-0 max-w-4xl pr-8 text-sm leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                                <p class="apple-card-text apple-faq-answer" [style.fontFamily]="bodyFont">
                                   {{ item.answer }}
                                 </p>
                               }
@@ -535,40 +551,40 @@
                   } @else if (isReviewsPageActive) {
                     @let reviews = getReviewsPageData(activePage);
 
-                    <div [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 96%, ' + selectedThemeColors[1] + ')'">
-                      <section class="grid gap-8 px-6 py-10 sm:px-10 sm:py-14">
-                        <div class="grid gap-3 text-center">
-                          <div class="text-xs font-semibold uppercase tracking-[0.28em]" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                    <div class="apple-page apple-page--reviews">
+                      <section class="apple-section">
+                        <div class="apple-center">
+                          <div class="apple-kicker" [style.fontFamily]="bodyFont">
                             {{ reviews.kicker }}
                           </div>
-                          <h2 class="m-0 text-4xl sm:text-6xl leading-none" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                          <h2 class="apple-title" [style.fontFamily]="headingFont">
                             {{ reviews.heading }}
                           </h2>
-                          <p class="mx-auto max-w-2xl text-sm sm:text-base leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                          <p class="apple-lead" [style.fontFamily]="bodyFont">
                             {{ reviews.intro }}
                           </p>
                         </div>
 
-                        <div class="grid gap-4">
+                        <div class="apple-review-grid">
                           @for (item of reviews.items; let i = $index; track item.name + i) {
-                            <article class="grid gap-4 rounded-[1.4rem] border p-5 md:grid-cols-[auto_minmax(0,1fr)] md:items-start" [style.borderColor]="'color-mix(in srgb, ' + selectedThemeColors[6] + ' 16%, transparent)'" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[0] + ' 98%, ' + selectedThemeColors[1] + ')'">
-                              <div class="flex h-14 w-14 items-center justify-center rounded-full text-lg font-semibold" [style.background]="'color-mix(in srgb, ' + selectedThemeColors[2] + ' 12%, white)'" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                            <article class="apple-card apple-review-card">
+                              <div class="apple-review-avatar" [style.fontFamily]="headingFont">
                                 {{ item.name.charAt(0) }}
                               </div>
-                              <div class="grid gap-3">
-                                <div class="flex flex-wrap items-center gap-2">
+                              <div class="apple-review-copy">
+                                <div class="apple-stars">
                                   @for (star of [1, 2, 3, 4, 5]; track star) {
-                                    <span class="text-lg leading-none" [style.color]="star <= item.rating ? selectedThemeColors[2] : 'color-mix(in srgb, ' + selectedThemeColors[6] + ' 24%, transparent)'">★</span>
+                                    <span [class.apple-star--muted]="star > item.rating">★</span>
                                   }
                                 </div>
-                                <p class="m-0 text-sm sm:text-base leading-7" [style.color]="selectedThemeColors[6]" [style.fontFamily]="bodyFont">
+                                <p class="apple-review-quote" [style.fontFamily]="bodyFont">
                                   “{{ item.quote }}”
                                 </p>
-                                <div class="grid gap-1">
-                                  <strong class="text-base" [style.color]="selectedThemeColors[2]" [style.fontFamily]="headingFont">
+                                <div>
+                                  <strong class="apple-review-name" [style.fontFamily]="headingFont">
                                     {{ item.name }}
                                   </strong>
-                                  <span class="text-sm" [style.color]="selectedThemeColors[5]" [style.fontFamily]="bodyFont">
+                                  <span class="apple-meta" [style.fontFamily]="bodyFont">
                                     {{ item.role }}
                                   </span>
                                 </div>
