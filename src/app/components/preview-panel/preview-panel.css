@@ -520,8 +520,8 @@
   isolation: isolate;
   border-radius: clamp(1.5rem, 4vw, 2.4rem);
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(245, 245, 247, 0.9) 100%);
-  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.12);
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(245, 245, 247, 0.92) 100%);
+  box-shadow: none;
 }
 
 .about-page-modern__media {
@@ -531,19 +531,12 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.36);
+  box-shadow: none;
   transform: none;
 }
 
 .about-page-modern__hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.88) 43%, rgba(255, 255, 255, 0.08) 72%),
-    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.9), transparent 34%);
-  z-index: 1;
-  pointer-events: none;
+  content: none;
 }
 
 .about-page-modern__hero-copy {
@@ -608,9 +601,9 @@
   align-content: center;
   border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: clamp(1.25rem, 3vw, 2rem);
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.68);
   padding: clamp(1.25rem, 4vw, 2.35rem);
-  box-shadow: 0 18px 54px rgba(15, 23, 42, 0.08);
+  box-shadow: none;
   backdrop-filter: blur(18px);
 }
 
@@ -651,7 +644,7 @@
   border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: clamp(1.25rem, 3vw, 2rem);
   aspect-ratio: 4 / 5;
-  box-shadow: 0 18px 54px rgba(15, 23, 42, 0.09);
+  box-shadow: none;
 }
 
 .about-page-modern__portrait img {
@@ -675,7 +668,7 @@
   }
 
   .about-page-modern__hero::after {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.56));
+    content: none;
   }
 
   .about-page-modern__hero-copy {
