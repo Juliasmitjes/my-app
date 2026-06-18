@@ -81,13 +81,162 @@
 }
 
 .preview-panel-onepage {
-  background: #f7f9fc;
+  --onepage-bg: #f7f9fc;
+  --onepage-surface: #eef2f7;
+  --onepage-ink: #1d1d1f;
+  --onepage-muted: #4b5563;
+  --onepage-border: rgba(15, 23, 42, 0.12);
+  --onepage-band: color-mix(in srgb, var(--onepage-bg) 88%, white);
+  --onepage-band-alt: color-mix(in srgb, var(--onepage-surface) 64%, white);
+  background:
+    linear-gradient(180deg, rgba(247, 249, 252, 0) 0, var(--onepage-bg) 52px),
+    var(--onepage-bg);
+  color: var(--onepage-muted);
 }
 
 .preview-panel-onepage__section {
+  position: relative;
   scroll-margin-top: 72px;
+  background: var(--onepage-band);
 }
 
-.preview-panel-onepage__section + .preview-panel-onepage__section {
-  border-top: 1px solid rgba(15, 23, 42, 0.08);
+.preview-panel-onepage__section:nth-child(even) {
+  background: var(--onepage-band-alt);
+}
+
+.preview-panel-onepage__section::before {
+  content: "";
+  position: absolute;
+  inset: -1px 0 auto;
+  height: 48px;
+  pointer-events: none;
+  background: linear-gradient(180deg, var(--onepage-bg), rgba(247, 249, 252, 0));
+}
+
+.preview-panel-onepage__section:first-child::before {
+  content: none;
+}
+
+.preview-panel-onepage .apple-page,
+.preview-panel-onepage .about-page-modern {
+  min-height: auto;
+  background: transparent !important;
+}
+
+.preview-panel-onepage .apple-section,
+.preview-panel-onepage .apple-hero,
+.preview-panel-onepage .about-page-modern__split {
+  width: min(100%, 1040px);
+  padding-block: clamp(52px, 7vw, 82px);
+}
+
+.preview-panel-onepage .apple-hero {
+  gap: clamp(26px, 4vw, 48px);
+}
+
+.preview-panel-onepage .about-page-modern__split {
+  min-height: auto;
+}
+
+.preview-panel-onepage .apple-center {
+  margin-bottom: clamp(26px, 4vw, 42px);
+}
+
+.preview-panel-onepage .apple-title,
+.preview-panel-onepage .about-page-modern__name {
+  color: var(--onepage-ink) !important;
+  font-size: clamp(2.6rem, 6vw, 4.9rem);
+  font-weight: 650;
+  line-height: 0.98;
+}
+
+.preview-panel-onepage .apple-lead,
+.preview-panel-onepage .about-page-modern__role {
+  color: color-mix(in srgb, var(--onepage-muted) 82%, var(--onepage-ink)) !important;
+  font-size: clamp(1rem, 2vw, 1.28rem);
+  line-height: 1.48;
+}
+
+.preview-panel-onepage .apple-kicker,
+.preview-panel-onepage .apple-meta,
+.preview-panel-onepage .about-page-modern__eyebrow {
+  color: color-mix(in srgb, var(--onepage-muted) 72%, var(--onepage-ink)) !important;
+  font-size: 0.8rem;
+  font-weight: 760;
+}
+
+.preview-panel-onepage .apple-card-title {
+  color: var(--onepage-ink) !important;
+  font-size: clamp(1.35rem, 2.6vw, 2rem);
+  line-height: 1.12;
+}
+
+.preview-panel-onepage .apple-card-text,
+.preview-panel-onepage .apple-portfolio-intro,
+.preview-panel-onepage .about-page-modern__copy {
+  color: var(--onepage-muted) !important;
+  font-size: clamp(0.95rem, 1.7vw, 1.06rem);
+  line-height: 1.65;
+}
+
+.preview-panel-onepage .apple-card,
+.preview-panel-onepage .apple-search,
+.preview-panel-onepage .apple-field {
+  border-color: color-mix(in srgb, var(--onepage-border) 64%, transparent);
+  background: color-mix(in srgb, var(--onepage-bg) 78%, white);
+  backdrop-filter: blur(10px);
+}
+
+.preview-panel-onepage .apple-contact-card--info,
+.preview-panel-onepage .apple-pill--dark,
+.preview-panel-onepage .apple-tab--active,
+.preview-panel-onepage .apple-review-avatar {
+  background: var(--onepage-ink);
+}
+
+.preview-panel-onepage .apple-pill,
+.preview-panel-onepage .apple-tab,
+.preview-panel-onepage .apple-date-button,
+.preview-panel-onepage .apple-slot-button,
+.preview-panel-onepage .apple-field,
+.preview-panel-onepage .apple-search input {
+  font-family: inherit;
+}
+
+.preview-panel-onepage .apple-pill,
+.preview-panel-onepage .apple-tab,
+.preview-panel-onepage .apple-date-button,
+.preview-panel-onepage .apple-slot-button {
+  border-color: color-mix(in srgb, var(--onepage-border) 72%, transparent);
+}
+
+.preview-panel-onepage .apple-review-quote,
+.preview-panel-onepage .apple-faq-question {
+  color: var(--onepage-ink) !important;
+}
+
+.preview-panel-onepage .about-page-modern__visual,
+.preview-panel-onepage .apple-hero__media,
+.preview-panel-onepage .apple-portfolio-tile,
+.preview-panel-onepage .apple-team-card__image {
+  border-radius: 24px;
+  box-shadow: 0 18px 42px color-mix(in srgb, var(--onepage-ink) 10%, transparent);
+}
+
+.preview-panel-onepage .apple-card {
+  border-radius: 22px;
+  box-shadow: 0 16px 34px color-mix(in srgb, var(--onepage-ink) 6%, transparent);
+}
+
+@media (max-width: 720px) {
+  .preview-panel-onepage .apple-section,
+  .preview-panel-onepage .apple-hero,
+  .preview-panel-onepage .about-page-modern__split {
+    padding: 40px 20px;
+  }
+
+  .preview-panel-onepage .apple-title,
+  .preview-panel-onepage .about-page-modern__name {
+    font-size: clamp(2.35rem, 12vw, 3.7rem);
+  }
 }

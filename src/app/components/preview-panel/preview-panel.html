@@ -576,7 +576,14 @@
                 }
 
                 @if (activePage === 'home' && onePageSections.length) {
-                  <div class="preview-panel-onepage">
+                  <div
+                    class="preview-panel-onepage"
+                    [style.--onepage-bg]="selectedThemeColors[0]"
+                    [style.--onepage-surface]="selectedThemeColors[1]"
+                    [style.--onepage-ink]="selectedThemeColors[2]"
+                    [style.--onepage-muted]="selectedThemeColors[6]"
+                    [style.--onepage-border]="selectedThemeColors[9]"
+                  >
                     @for (pageId of onePageSections; track pageId) {
                       <section class="preview-panel-onepage__section" [id]="previewSectionId(pageId)">
                         @switch (pageId) {
