@@ -79,3 +79,15 @@
 .preview-panel--embedded .preview-panel__canvas > .flex-1 {
   min-height: 100%;
 }
+
+.preview-panel-onepage {
+  background: #f7f9fc;
+}
+
+.preview-panel-onepage__section {
+  scroll-margin-top: 72px;
+}
+
+.preview-panel-onepage__section + .preview-panel-onepage__section {
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}

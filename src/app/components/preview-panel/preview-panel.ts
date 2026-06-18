@@ -78,7 +78,7 @@ export class PreviewPanel implements OnChanges {
    */
 
   private _selectedThemeColors: string[] | null = null;
-  private readonly contentPageOrder = ['about', 'diensten', 'portfolio', 'team', 'blog', 'reviews', 'faq', 'contact'];
+  private readonly contentPageOrder = ['about', 'blog', 'contact', 'diensten', 'portfolio', 'team', 'faq', 'reviews'];
 
   private blobUrlCache = new Map<string, string>();
 
@@ -278,6 +278,10 @@ export class PreviewPanel implements OnChanges {
     return this.builderState.pages ?? ['home'];
   }
 
+  get onePageSections(): string[] {
+    return this.getOrderedContentPageItems().map(item => item.id);
+  }
+
   get logoLabel(): string {
     const businessName = this.getPortfolioBusinessName();
     if (businessName !== 'Bedrijfsnaam') {
@@ -346,14 +350,27 @@ export class PreviewPanel implements OnChanges {
   get activePage(): string {
     const pages = this.pages;
     if (!pages.length) return 'home';
+    if (this.onePageSections.length) return 'home';
     if (this.activePageId && pages.includes(this.activePageId)) return this.activePageId;
     return pages[0];
   }
 
   setActivePage(pageId: string): void {
-    this.activePageId = pageId;
+    this.activePageId = 'home';
     this.closeBooking();
     this.resetFaqState();
+
+    if (typeof document === 'undefined') return;
+
+    const target = pageId === 'home'
+      ? document.querySelector('.preview-panel__body')
+      : document.getElementById(this.previewSectionId(pageId));
+
+    target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  previewSectionId(pageId: string): string {
+    return `preview-onepage-${pageId}`;
   }
 
   /* ────────────────────────────────────────────────
