@@ -434,42 +434,6 @@ export class PreviewPanel implements OnChanges {
     );
   }
 
-  get isAboutPageActive(): boolean {
-    return this.activePage === 'about';
-  }
-
-  get isBlogPageActive(): boolean {
-    return this.activePage === 'blog';
-  }
-
-  get isContactPageActive(): boolean {
-    return this.activePage === 'contact';
-  }
-
-  get isServicesPageActive(): boolean {
-    return this.activePage === 'diensten';
-  }
-
-  get isPortfolioPageActive(): boolean {
-    return this.activePage === 'portfolio';
-  }
-
-  get isTeamPageActive(): boolean {
-    return this.activePage === 'team';
-  }
-
-  get isFaqPageActive(): boolean {
-    return this.activePage === 'faq';
-  }
-
-  get isReviewsPageActive(): boolean {
-    return this.activePage === 'reviews';
-  }
-
-  get aboutPageSectionTitle(): string {
-    return 'Over';
-  }
-
   getAboutBodyColumns(pageId: string): [string, string] {
     return this.splitBodyIntoColumns(this.getPageText(pageId)?.body ?? '');
   }
